@@ -1,0 +1,1554 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.38">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>2&nbsp; Data Wrangling – A Little R Survival Kit</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./03-Data-Visualization.html" rel="next">
+<link href="./01_Part1_Basic_R.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-e003a7e0a54ffaf3dcd0202e46ada9a7.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./02_Data_Wrangling.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Data Wrangling</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">A Little R Survival Kit</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">A Little R Survival Kit: Essential Data Analysis using R</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01_Part1_Basic_R.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Part I</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02_Data_Wrangling.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Data Wrangling</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03-Data-Visualization.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Data Visualization</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./04_Dive_Deeper.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Dive Deeper</span></span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#learning-objectives" id="toc-learning-objectives" class="nav-link active" data-scroll-target="#learning-objectives">Learning Objectives:</a></li>
+  <li><a href="#base-r" id="toc-base-r" class="nav-link" data-scroll-target="#base-r"><span class="header-section-number">2.1</span> Base R</a>
+  <ul class="collapse">
+  <li><a href="#select-rows-by-conditions" id="toc-select-rows-by-conditions" class="nav-link" data-scroll-target="#select-rows-by-conditions"><span class="header-section-number">2.1.1</span> Select Rows by Condition(s)</a></li>
+  <li><a href="#select-rows-randomly" id="toc-select-rows-randomly" class="nav-link" data-scroll-target="#select-rows-randomly"><span class="header-section-number">2.1.2</span> Select Rows Randomly</a></li>
+  <li><a href="#sort-rows" id="toc-sort-rows" class="nav-link" data-scroll-target="#sort-rows"><span class="header-section-number">2.1.3</span> Sort Rows</a></li>
+  <li><a href="#rearranging-columns" id="toc-rearranging-columns" class="nav-link" data-scroll-target="#rearranging-columns"><span class="header-section-number">2.1.4</span> Rearranging Columns</a></li>
+  <li><a href="#focus-on-a-subset-of-columns" id="toc-focus-on-a-subset-of-columns" class="nav-link" data-scroll-target="#focus-on-a-subset-of-columns"><span class="header-section-number">2.1.5</span> Focus on a Subset of Columns</a></li>
+  <li><a href="#add-a-new-column" id="toc-add-a-new-column" class="nav-link" data-scroll-target="#add-a-new-column"><span class="header-section-number">2.1.6</span> Add a New Column</a></li>
+  <li><a href="#remove-a-column" id="toc-remove-a-column" class="nav-link" data-scroll-target="#remove-a-column"><span class="header-section-number">2.1.7</span> Remove a Column</a></li>
+  <li><a href="#base-tabulation" id="toc-base-tabulation" class="nav-link" data-scroll-target="#base-tabulation"><span class="header-section-number">2.1.8</span> Tabulation</a></li>
+  </ul></li>
+  <li><a href="#tidyverse" id="toc-tidyverse" class="nav-link" data-scroll-target="#tidyverse"><span class="header-section-number">2.2</span> <code>tidyverse</code></a>
+  <ul class="collapse">
+  <li><a href="#select-rows-by-conditions-1" id="toc-select-rows-by-conditions-1" class="nav-link" data-scroll-target="#select-rows-by-conditions-1"><span class="header-section-number">2.2.1</span> Select Rows by Condition(s)</a></li>
+  <li><a href="#select-rows-randomly-1" id="toc-select-rows-randomly-1" class="nav-link" data-scroll-target="#select-rows-randomly-1"><span class="header-section-number">2.2.2</span> Select Rows Randomly</a></li>
+  <li><a href="#sort-rows-in-a-data-frame" id="toc-sort-rows-in-a-data-frame" class="nav-link" data-scroll-target="#sort-rows-in-a-data-frame"><span class="header-section-number">2.2.3</span> Sort Rows in a Data Frame</a></li>
+  <li><a href="#rearranging-columns-of-a-data-frame" id="toc-rearranging-columns-of-a-data-frame" class="nav-link" data-scroll-target="#rearranging-columns-of-a-data-frame"><span class="header-section-number">2.2.4</span> Rearranging columns of a data frame</a></li>
+  <li><a href="#focus-on-a-subset-of-columns-1" id="toc-focus-on-a-subset-of-columns-1" class="nav-link" data-scroll-target="#focus-on-a-subset-of-columns-1"><span class="header-section-number">2.2.5</span> Focus on a Subset of Columns</a></li>
+  <li><a href="#add-a-new-column-1" id="toc-add-a-new-column-1" class="nav-link" data-scroll-target="#add-a-new-column-1"><span class="header-section-number">2.2.6</span> Add a New Column</a></li>
+  <li><a href="#remove-a-column-1" id="toc-remove-a-column-1" class="nav-link" data-scroll-target="#remove-a-column-1"><span class="header-section-number">2.2.7</span> Remove a Column</a></li>
+  <li><a href="#rename-a-column" id="toc-rename-a-column" class="nav-link" data-scroll-target="#rename-a-column"><span class="header-section-number">2.2.8</span> Rename a Column</a></li>
+  <li><a href="#pipe" id="toc-pipe" class="nav-link" data-scroll-target="#pipe"><span class="header-section-number">2.2.9</span> Pipe</a></li>
+  <li><a href="#tidyverse-tabulation" id="toc-tidyverse-tabulation" class="nav-link" data-scroll-target="#tidyverse-tabulation"><span class="header-section-number">2.2.10</span> Tabulation and Summarize</a></li>
+  <li><a href="#a-summary-of-tidyverse-functions" id="toc-a-summary-of-tidyverse-functions" class="nav-link" data-scroll-target="#a-summary-of-tidyverse-functions"><span class="header-section-number">2.2.11</span> A Summary of <code>tidyverse</code> functions</a></li>
+  </ul></li>
+  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary"><span class="header-section-number">2.3</span> Summary</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Data Wrangling</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>Data wrangling refers to the way to view, change, and reorganize data in a data frame. Before we dive into the operations, it is important to know that there are two distinct schools of data wrangling: base R and <code>tidyverse</code>, where the latter has contributed substantially in enhancing the process. We will start with the base R version, followed by the <code>tidyverse</code>.</p>
+<section id="learning-objectives" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="learning-objectives">Learning Objectives:</h2>
+<p>This chapter covers common data wrangling techniques. After finishing this chapter, you should be able to:</p>
+<ul>
+<li><p>Select rows that fulfill specified conditions.</p></li>
+<li><p>Randomly sample rows from a data frame.</p></li>
+<li><p>Sort rows in a data frame.</p></li>
+<li><p>Select a subset of columns.</p></li>
+<li><p>Add and remove columns to an existing data frame.</p></li>
+<li><p>Tabulate data.</p></li>
+</ul>
+</section>
+<section id="base-r" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="base-r"><span class="header-section-number">2.1</span> Base R</h2>
+<section id="select-rows-by-conditions" class="level3" data-number="2.1.1">
+<h3 data-number="2.1.1" class="anchored" data-anchor-id="select-rows-by-conditions"><span class="header-section-number">2.1.1</span> Select Rows by Condition(s)</h3>
+<p>The <code>subset()</code> function selects rows if they satisfy the condition(s). Here are the three relational operators to support multi-parts conditions:</p>
+<ol type="1">
+<li><p>“or” is denoted by <code>|</code></p></li>
+<li><p>“and” is denoted by <code>&amp;</code></p></li>
+<li><p>“not” is denoted by <code>!</code></p></li>
+</ol>
+<p>Note that the operator for checking equality is “==”; two equal signs touching each other.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Choose all setosa iris. </span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>setosa_iris <span class="ot">&lt;-</span> <span class="fu">subset</span>(iris, Species <span class="sc">==</span> <span class="st">'setosa'</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># How many are selected?</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">paste</span>(<span class="st">"There are"</span>, <span class="fu">nrow</span>(setosa_iris), <span class="st">"rows."</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "There are 50 rows."</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Peek into the first few rows of the result.</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(setosa_iris)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Sepal.Length Sepal.Width Petal.Length Petal.Width Species
+1          5.1         3.5          1.4         0.2  setosa
+2          4.9         3.0          1.4         0.2  setosa
+3          4.7         3.2          1.3         0.2  setosa
+4          4.6         3.1          1.5         0.2  setosa
+5          5.0         3.6          1.4         0.2  setosa
+6          5.4         3.9          1.7         0.4  setosa</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># More than one condition. The relational operator is the logical OR, i.e., a vertical bar |</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>iris_or_eg <span class="ot">&lt;-</span> <span class="fu">subset</span>(iris, Sepal.Length <span class="sc">&gt;</span> <span class="dv">5</span> <span class="sc">|</span> Sepal.Width <span class="sc">&lt;</span> <span class="dv">3</span> )</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co"># How many?</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">paste</span>(<span class="st">"There are"</span>, <span class="fu">nrow</span>(iris_or_eg), <span class="st">"rows."</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "There are 124 rows."</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(iris_or_eg)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   Sepal.Length Sepal.Width Petal.Length Petal.Width Species
+1           5.1         3.5          1.4         0.2  setosa
+6           5.4         3.9          1.7         0.4  setosa
+9           4.4         2.9          1.4         0.2  setosa
+11          5.4         3.7          1.5         0.2  setosa
+15          5.8         4.0          1.2         0.2  setosa
+16          5.7         4.4          1.5         0.4  setosa</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># More than one condition. The relational AND operator.</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>iris_and_eg <span class="ot">&lt;-</span> <span class="fu">subset</span>(iris, Petal.Length <span class="sc">&gt;</span> <span class="dv">6</span> <span class="sc">&amp;</span> Petal.Width <span class="sc">&lt;</span> <span class="dv">2</span> )</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co"># How many?</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">paste</span>(<span class="st">"There are"</span>, <span class="fu">nrow</span>(iris_and_eg), <span class="st">"rows."</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "There are 2 rows."</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>iris_and_eg</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    Sepal.Length Sepal.Width Petal.Length Petal.Width   Species
+108          7.3         2.9          6.3         1.8 virginica
+131          7.4         2.8          6.1         1.9 virginica</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># No setosa iris</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>iris_no_setosa_eg <span class="ot">&lt;-</span> <span class="fu">subset</span>(iris, Species <span class="sc">!=</span> <span class="st">'setosa'</span>)</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="co"># How many?</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">paste</span>(<span class="st">"There are"</span>, <span class="fu">nrow</span>(iris_no_setosa_eg), <span class="st">"rows."</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "There are 100 rows."</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(iris_no_setosa_eg)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   Sepal.Length Sepal.Width Petal.Length Petal.Width    Species
+51          7.0         3.2          4.7         1.4 versicolor
+52          6.4         3.2          4.5         1.5 versicolor
+53          6.9         3.1          4.9         1.5 versicolor
+54          5.5         2.3          4.0         1.3 versicolor
+55          6.5         2.8          4.6         1.5 versicolor
+56          5.7         2.8          4.5         1.3 versicolor</code></pre>
+</div>
+</div>
+</section>
+<section id="select-rows-randomly" class="level3" data-number="2.1.2">
+<h3 data-number="2.1.2" class="anchored" data-anchor-id="select-rows-randomly"><span class="header-section-number">2.1.2</span> Select Rows Randomly</h3>
+<p>It is quite common to randomly sample a subset of rows from a data frame. It takes to two steps to achieve that:</p>
+<p><strong>Step 1.</strong> Create a list (vector) of random row indices by the <code>sample()</code> function. Specify the following parameters:</p>
+<p>a.) The range of values. For this example, the range is from 1 to the last row of <code>iris</code>, which is the return of <code>nrow(iris)</code>.</p>
+<ol start="2" type="a">
+<li><p>How many samples, e.g., <code>size = 5</code>.</p></li>
+<li><p>Can a sample be drawn repeatedly? If not, <code>replace = F</code>.</p></li>
+</ol>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># seq(nrow(iris)) generates 1, 2, 3, ..., 150.</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>rnd_idx <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">seq</span>(<span class="fu">nrow</span>(iris)), <span class="at">size =</span> <span class="dv">5</span>, <span class="at">replace =</span> F)</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>rnd_idx</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1]   9  24  58  96 136</code></pre>
+</div>
+</div>
+<p>Step 2: select rows from iris according to the indices in <code>rnd_idx</code>.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>a_random_sample <span class="ot">&lt;-</span> iris[rnd_idx,]</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>a_random_sample</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    Sepal.Length Sepal.Width Petal.Length Petal.Width    Species
+9            4.4         2.9          1.4         0.2     setosa
+24           5.1         3.3          1.7         0.5     setosa
+58           4.9         2.4          3.3         1.0 versicolor
+96           5.7         3.0          4.2         1.2 versicolor
+136          7.7         3.0          6.1         2.3  virginica</code></pre>
+</div>
+</div>
+</section>
+<section id="sort-rows" class="level3" data-number="2.1.3">
+<h3 data-number="2.1.3" class="anchored" data-anchor-id="sort-rows"><span class="header-section-number">2.1.3</span> Sort Rows</h3>
+<p>It is a two-step process similar to the random sampling of rows from the previus subsection. Suppose you want to sort <code>iris</code> in <code>Sepal.Length</code> in ascending order (small to large).</p>
+<p>Step 1: Obtain a list of row indices that indicates the sorting order to the data.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>sorted_idx <span class="ot">&lt;-</span> <span class="fu">order</span>(iris<span class="sc">$</span>Sepal.Length)</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>sorted_idx</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  [1]  14   9  39  43  42   4   7  23  48   3  30  12  13  25  31  46   2  10
+ [19]  35  38  58 107   5   8  26  27  36  41  44  50  61  94   1  18  20  22
+ [37]  24  40  45  47  99  28  29  33  60  49   6  11  17  21  32  85  34  37
+ [55]  54  81  82  90  91  65  67  70  89  95 122  16  19  56  80  96  97 100
+ [73] 114  15  68  83  93 102 115 143  62  71 150  63  79  84  86 120 139  64
+ [91]  72  74  92 128 135  69  98 127 149  57  73  88 101 104 124 134 137 147
+[109]  52  75 112 116 129 133 138  55 105 111 117 148  59  76  66  78  87 109
+[127] 125 141 145 146  77 113 144  53 121 140 142  51 103 110 126 130 108 131
+[145] 106 118 119 123 136 132</code></pre>
+</div>
+</div>
+<p>Step 2: Rearrange the rows in the data frame according to the sorted row indices.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># The 5 shortest Sepal Lengths</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(iris[sorted_idx,])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   Sepal.Length Sepal.Width Petal.Length Petal.Width Species
+14          4.3         3.0          1.1         0.1  setosa
+9           4.4         2.9          1.4         0.2  setosa
+39          4.4         3.0          1.3         0.2  setosa
+43          4.4         3.2          1.3         0.2  setosa
+42          4.5         2.3          1.3         0.3  setosa
+4           4.6         3.1          1.5         0.2  setosa</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># The 5 longest Sepal Lengths</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tail</span>(iris[sorted_idx,])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    Sepal.Length Sepal.Width Petal.Length Petal.Width   Species
+106          7.6         3.0          6.6         2.1 virginica
+118          7.7         3.8          6.7         2.2 virginica
+119          7.7         2.6          6.9         2.3 virginica
+123          7.7         2.8          6.7         2.0 virginica
+136          7.7         3.0          6.1         2.3 virginica
+132          7.9         3.8          6.4         2.0 virginica</code></pre>
+</div>
+</div>
+<p>Note that the above two steps do NOT change the original order of the rows in the data frame. If you intend to change the row order permanently, use the assignment operator to update the existing data frame or create a new data frame to store the sorted rows. See below:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>ascending_iris <span class="ot">&lt;-</span> iris[sorted_idx,]</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="co"># The shortest Sepal Length</span></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(ascending_iris)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   Sepal.Length Sepal.Width Petal.Length Petal.Width Species
+14          4.3         3.0          1.1         0.1  setosa
+9           4.4         2.9          1.4         0.2  setosa
+39          4.4         3.0          1.3         0.2  setosa
+43          4.4         3.2          1.3         0.2  setosa
+42          4.5         2.3          1.3         0.3  setosa
+4           4.6         3.1          1.5         0.2  setosa</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># The longest Sepal Length</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tail</span>(ascending_iris)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    Sepal.Length Sepal.Width Petal.Length Petal.Width   Species
+106          7.6         3.0          6.6         2.1 virginica
+118          7.7         3.8          6.7         2.2 virginica
+119          7.7         2.6          6.9         2.3 virginica
+123          7.7         2.8          6.7         2.0 virginica
+136          7.7         3.0          6.1         2.3 virginica
+132          7.9         3.8          6.4         2.0 virginica</code></pre>
+</div>
+</div>
+<p>To sort rows in descending order (large to small), add the parameter <code>decreasing = T</code> to the <code>order()</code> function.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>desc_idx <span class="ot">&lt;-</span> <span class="fu">order</span>(iris<span class="sc">$</span>Sepal.Length, <span class="at">decreasing =</span> T)</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>desc_idx</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  [1] 132 118 119 123 136 106 131 108 110 126 130 103  51  53 121 140 142  77
+ [19] 113 144  66  78  87 109 125 141 145 146  59  76  55 105 111 117 148  52
+ [37]  75 112 116 129 133 138  57  73  88 101 104 124 134 137 147  69  98 127
+ [55] 149  64  72  74  92 128 135  63  79  84  86 120 139  62  71 150  15  68
+ [73]  83  93 102 115 143  16  19  56  80  96  97 100 114  65  67  70  89  95
+ [91] 122  34  37  54  81  82  90  91   6  11  17  21  32  85  49  28  29  33
+[109]  60   1  18  20  22  24  40  45  47  99   5   8  26  27  36  41  44  50
+[127]  61  94   2  10  35  38  58 107  12  13  25  31  46   3  30   4   7  23
+[145]  48  42   9  39  43  14</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>decreasing_iris <span class="ot">&lt;-</span> iris[desc_idx,]</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(decreasing_iris)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    Sepal.Length Sepal.Width Petal.Length Petal.Width   Species
+132          7.9         3.8          6.4         2.0 virginica
+118          7.7         3.8          6.7         2.2 virginica
+119          7.7         2.6          6.9         2.3 virginica
+123          7.7         2.8          6.7         2.0 virginica
+136          7.7         3.0          6.1         2.3 virginica
+106          7.6         3.0          6.6         2.1 virginica</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tail</span>(decreasing_iris)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   Sepal.Length Sepal.Width Petal.Length Petal.Width Species
+48          4.6         3.2          1.4         0.2  setosa
+42          4.5         2.3          1.3         0.3  setosa
+9           4.4         2.9          1.4         0.2  setosa
+39          4.4         3.0          1.3         0.2  setosa
+43          4.4         3.2          1.3         0.2  setosa
+14          4.3         3.0          1.1         0.1  setosa</code></pre>
+</div>
+</div>
+</section>
+<section id="rearranging-columns" class="level3" data-number="2.1.4">
+<h3 data-number="2.1.4" class="anchored" data-anchor-id="rearranging-columns"><span class="header-section-number">2.1.4</span> Rearranging Columns</h3>
+<p>Suppose you want to move the <code>Species</code> column to the leftmost position. It can be done using two approaches.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Reorder columns by name</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>new_iris <span class="ot">&lt;-</span> iris[,<span class="fu">c</span>(<span class="st">"Species"</span>,<span class="st">"Sepal.Length"</span>,<span class="st">"Sepal.Width"</span>,<span class="st">"Petal.Length"</span>,<span class="st">"Petal.Width"</span>)]</span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(new_iris)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Species Sepal.Length Sepal.Width Petal.Length Petal.Width
+1  setosa          5.1         3.5          1.4         0.2
+2  setosa          4.9         3.0          1.4         0.2
+3  setosa          4.7         3.2          1.3         0.2
+4  setosa          4.6         3.1          1.5         0.2
+5  setosa          5.0         3.6          1.4         0.2
+6  setosa          5.4         3.9          1.7         0.4</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Reorder columns by index</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>new_iris <span class="ot">&lt;-</span> iris[,<span class="fu">c</span>(<span class="dv">5</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>)]</span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(new_iris)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Species Sepal.Length Sepal.Width Petal.Length Petal.Width
+1  setosa          5.1         3.5          1.4         0.2
+2  setosa          4.9         3.0          1.4         0.2
+3  setosa          4.7         3.2          1.3         0.2
+4  setosa          4.6         3.1          1.5         0.2
+5  setosa          5.0         3.6          1.4         0.2
+6  setosa          5.4         3.9          1.7         0.4</code></pre>
+</div>
+</div>
+<p>Note that if a data frame contains many columns, say &gt;100, it is daunting to use this approach. A much better way can be done using <code>dplyr</code>, so stay tuned.</p>
+</section>
+<section id="focus-on-a-subset-of-columns" class="level3" data-number="2.1.5">
+<h3 data-number="2.1.5" class="anchored" data-anchor-id="focus-on-a-subset-of-columns"><span class="header-section-number">2.1.5</span> Focus on a Subset of Columns</h3>
+<p>If a data frame contains many columns, way more than you need for analysis. It is neat to focus on those columns and remove the rest. Let’s suppose you want to focus only on sepal information and species.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>sepal_iris <span class="ot">&lt;-</span> iris[,<span class="fu">c</span>(<span class="st">"Sepal.Length"</span>,<span class="st">"Sepal.Width"</span>,<span class="st">"Species"</span>)]</span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(sepal_iris)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 150   3</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(sepal_iris)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Sepal.Length Sepal.Width Species
+1          5.1         3.5  setosa
+2          4.9         3.0  setosa
+3          4.7         3.2  setosa
+4          4.6         3.1  setosa
+5          5.0         3.6  setosa
+6          5.4         3.9  setosa</code></pre>
+</div>
+</div>
+</section>
+<section id="add-a-new-column" class="level3" data-number="2.1.6">
+<h3 data-number="2.1.6" class="anchored" data-anchor-id="add-a-new-column"><span class="header-section-number">2.1.6</span> Add a New Column</h3>
+<p>Suppose we want to add a new column called <code>Sepal.Ratio</code>, which is the ratio <code>Sepal.Length</code> to <code>Sepal.Width</code>. Here is the code:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>iris<span class="sc">$</span>Sepal.Ratio <span class="ot">&lt;-</span> iris<span class="sc">$</span>Sepal.Length<span class="sc">/</span>iris<span class="sc">$</span>Sepal.Width</span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(iris)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Sepal.Length Sepal.Width Petal.Length Petal.Width Species Sepal.Ratio
+1          5.1         3.5          1.4         0.2  setosa    1.457143
+2          4.9         3.0          1.4         0.2  setosa    1.633333
+3          4.7         3.2          1.3         0.2  setosa    1.468750
+4          4.6         3.1          1.5         0.2  setosa    1.483871
+5          5.0         3.6          1.4         0.2  setosa    1.388889
+6          5.4         3.9          1.7         0.4  setosa    1.384615</code></pre>
+</div>
+</div>
+<p>You can see the new column <code>Sepal.Ratio</code> is added to the rightmost position.</p>
+</section>
+<section id="remove-a-column" class="level3" data-number="2.1.7">
+<h3 data-number="2.1.7" class="anchored" data-anchor-id="remove-a-column"><span class="header-section-number">2.1.7</span> Remove a Column</h3>
+<p>You can remove a column from a data frame, e.g., remove the <code>Sepal.Ratio</code> added above.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>iris<span class="sc">$</span>Sepal.Ratio <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a><span class="co"># the column is gone</span></span>
+<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(iris)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Sepal.Length Sepal.Width Petal.Length Petal.Width Species
+1          5.1         3.5          1.4         0.2  setosa
+2          4.9         3.0          1.4         0.2  setosa
+3          4.7         3.2          1.3         0.2  setosa
+4          4.6         3.1          1.5         0.2  setosa
+5          5.0         3.6          1.4         0.2  setosa
+6          5.4         3.9          1.7         0.4  setosa</code></pre>
+</div>
+</div>
+</section>
+<section id="base-tabulation" class="level3" data-number="2.1.8">
+<h3 data-number="2.1.8" class="anchored" data-anchor-id="base-tabulation"><span class="header-section-number">2.1.8</span> Tabulation</h3>
+<p>Tally the number of samples per one or more categorical variables (factors) by the <code>table()</code> function.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(iris<span class="sc">$</span>Species)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    setosa versicolor  virginica 
+        50         50         50 </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Alternatively, use with()</span></span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(iris, <span class="fu">table</span>(Species))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Species
+    setosa versicolor  virginica 
+        50         50         50 </code></pre>
+</div>
+</div>
+<p>It can tally more than one categorical variable. Let’s us another built-in dataset <code>CO2</code> to illustrate the point.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(CO2, <span class="fu">table</span>(Plant, Type))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     Type
+Plant Quebec Mississippi
+  Qn1      7           0
+  Qn2      7           0
+  Qn3      7           0
+  Qc1      7           0
+  Qc3      7           0
+  Qc2      7           0
+  Mn3      0           7
+  Mn2      0           7
+  Mn1      0           7
+  Mc2      0           7
+  Mc3      0           7
+  Mc1      0           7</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="tidyverse" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="tidyverse"><span class="header-section-number">2.2</span> <code>tidyverse</code></h2>
+<p>There is an alternate, and importantly, less cryptic way to perform data wrangling. This new set of functions are offered by the R package <code>dplyr</code>. One design goal of <code>dplyr</code> is to use <strong>verbs</strong> to name these operations, a huge difference from the unpronounceable symbols, such as <code>$</code>, <code>[</code>, etc. by base R as shown in the previous section.</p>
+<p>Before we dive into <code>dplyr</code>, it is noteworthy to mention that there is a slew of packages with the aim of improving data cleaning, data visualization, and loading data in various formats. To spare people from the question of when to use what package, all these packages are bundled in a single package called <code>tidyverse</code>. Once you have activated <code>tidyverse</code>, <code>dplyr</code>, <code>ggplot</code> (for plotting data), and other packages are available for use. When you call a function, you don’t have to worry if it is from <code>dplyr</code> or <code>tidyr</code> because the <code>tidyverse</code> community has resolved all name conflicts. An analogy is like there is only one “Main Street” in <code>tidyverse</code> package; no ambiguity at all. <strong>The take home is: just activate <code>tidyverse</code> and you are good to go.</strong></p>
+<p><code>tidyverse</code> does not come with the base R so you have to install it manually. But the installation is simple, click the menu option Tools, select the first option “install packages”, type “tidyverse”, and click the “Install” button.</p>
+<p>Let’s activate <code>tidyverse</code> by using the <code>library()</code> function. Alternatively, you can use <code>require()</code>; they are largely doing the same thing. Note that you only need to activate a package once per session.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.2.1     ✔ readr     2.2.0
+✔ forcats   1.0.1     ✔ stringr   1.6.0
+✔ ggplot2   4.0.3     ✔ tibble    3.3.1
+✔ lubridate 1.9.5     ✔ tidyr     1.3.2
+✔ purrr     1.2.2     
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
+</div>
+</div>
+<p>The <code>library()</code> function has churned out many messages telling you what packages (9 of them) are loaded together.</p>
+<p>Let’s use <code>tidyverse</code> to repeat the data wrangling tasks by base R above.</p>
+<section id="select-rows-by-conditions-1" class="level3" data-number="2.2.1">
+<h3 data-number="2.2.1" class="anchored" data-anchor-id="select-rows-by-conditions-1"><span class="header-section-number">2.2.1</span> Select Rows by Condition(s)</h3>
+<p>The function is <code>filter()</code>. It chooses rows that satisfy the specified condition(s). The syntax is <code>filter(data_frame, conditions)</code>. E.g.,</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="co"># select all setosa iris</span></span>
+<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a>setosa_iris <span class="ot">&lt;-</span> <span class="fu">filter</span>(iris, Species <span class="sc">==</span> <span class="st">'setosa'</span>)</span>
+<span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-4"><a href="#cb57-4" aria-hidden="true" tabindex="-1"></a><span class="co"># How many?</span></span>
+<span id="cb57-5"><a href="#cb57-5" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">paste</span>(<span class="st">"There are"</span>, <span class="fu">nrow</span>(setosa_iris), <span class="st">"rows."</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "There are 50 rows."</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="co"># More than one condition. The symbol for the logical OR operator is a vertical bar |</span></span>
+<span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a>iris_or_eg <span class="ot">&lt;-</span> <span class="fu">filter</span>(iris, Sepal.Length <span class="sc">&gt;</span> <span class="dv">5</span> <span class="sc">|</span> Sepal.Width <span class="sc">&lt;</span> <span class="dv">3</span> )</span>
+<span id="cb59-3"><a href="#cb59-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb59-4"><a href="#cb59-4" aria-hidden="true" tabindex="-1"></a><span class="co"># How many?</span></span>
+<span id="cb59-5"><a href="#cb59-5" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">paste</span>(<span class="st">"There are"</span>, <span class="fu">nrow</span>(iris_or_eg), <span class="st">"rows."</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "There are 124 rows."</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(iris_or_eg)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Sepal.Length Sepal.Width Petal.Length Petal.Width Species
+1          5.1         3.5          1.4         0.2  setosa
+2          5.4         3.9          1.7         0.4  setosa
+3          4.4         2.9          1.4         0.2  setosa
+4          5.4         3.7          1.5         0.2  setosa
+5          5.8         4.0          1.2         0.2  setosa
+6          5.7         4.4          1.5         0.4  setosa</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="co"># More than one condition. The symbol for the logical AND operator is &amp;</span></span>
+<span id="cb63-2"><a href="#cb63-2" aria-hidden="true" tabindex="-1"></a>iris_and_eg <span class="ot">&lt;-</span> <span class="fu">filter</span>(iris, Petal.Length <span class="sc">&gt;</span> <span class="dv">6</span> <span class="sc">&amp;</span> Petal.Width <span class="sc">&lt;</span> <span class="dv">2</span> )</span>
+<span id="cb63-3"><a href="#cb63-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb63-4"><a href="#cb63-4" aria-hidden="true" tabindex="-1"></a><span class="co"># How many?</span></span>
+<span id="cb63-5"><a href="#cb63-5" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">paste</span>(<span class="st">"There are"</span>, <span class="fu">nrow</span>(iris_and_eg), <span class="st">"rows."</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "There are 2 rows."</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a>iris_and_eg</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Sepal.Length Sepal.Width Petal.Length Petal.Width   Species
+1          7.3         2.9          6.3         1.8 virginica
+2          7.4         2.8          6.1         1.9 virginica</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb67"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="co"># No setosa iris</span></span>
+<span id="cb67-2"><a href="#cb67-2" aria-hidden="true" tabindex="-1"></a>iris_not_eg <span class="ot">&lt;-</span> <span class="fu">filter</span>(iris, Species <span class="sc">!=</span> <span class="st">'setosa'</span>)</span>
+<span id="cb67-3"><a href="#cb67-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb67-4"><a href="#cb67-4" aria-hidden="true" tabindex="-1"></a><span class="co"># How many?</span></span>
+<span id="cb67-5"><a href="#cb67-5" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">paste</span>(<span class="st">"There are"</span>, <span class="fu">nrow</span>(iris_not_eg), <span class="st">"rows."</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "There are 100 rows."</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb69"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(iris_not_eg)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Sepal.Length Sepal.Width Petal.Length Petal.Width    Species
+1          7.0         3.2          4.7         1.4 versicolor
+2          6.4         3.2          4.5         1.5 versicolor
+3          6.9         3.1          4.9         1.5 versicolor
+4          5.5         2.3          4.0         1.3 versicolor
+5          6.5         2.8          4.6         1.5 versicolor
+6          5.7         2.8          4.5         1.3 versicolor</code></pre>
+</div>
+</div>
+</section>
+<section id="select-rows-randomly-1" class="level3" data-number="2.2.2">
+<h3 data-number="2.2.2" class="anchored" data-anchor-id="select-rows-randomly-1"><span class="header-section-number">2.2.2</span> Select Rows Randomly</h3>
+<p>With <code>tidyverse</code>, you can do it in one step by using the <code>sample_n()</code> function.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb71"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a>a_random_sample <span class="ot">&lt;-</span> <span class="fu">sample_n</span>(iris, <span class="at">size =</span> <span class="dv">5</span>)</span>
+<span id="cb71-2"><a href="#cb71-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb71-3"><a href="#cb71-3" aria-hidden="true" tabindex="-1"></a>a_random_sample</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Sepal.Length Sepal.Width Petal.Length Petal.Width    Species
+1          4.8         3.4          1.6         0.2     setosa
+2          7.3         2.9          6.3         1.8  virginica
+3          6.8         2.8          4.8         1.4 versicolor
+4          6.7         3.3          5.7         2.1  virginica
+5          7.7         3.0          6.1         2.3  virginica</code></pre>
+</div>
+</div>
+</section>
+<section id="sort-rows-in-a-data-frame" class="level3" data-number="2.2.3">
+<h3 data-number="2.2.3" class="anchored" data-anchor-id="sort-rows-in-a-data-frame"><span class="header-section-number">2.2.3</span> Sort Rows in a Data Frame</h3>
+<p>Use <code>arrange()</code>. Note that the function will not change the original data frame. Use the assignment operator (<code>&lt;-</code>) to change the original data frame or store the changes in a new data frame. For example, sort <code>iris</code> by <code>Sepal.Length</code>, and store the sorted result in a new data frame.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb73"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a>sorted_iris <span class="ot">&lt;-</span> <span class="fu">arrange</span>(iris, Sepal.Length)</span>
+<span id="cb73-2"><a href="#cb73-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb73-3"><a href="#cb73-3" aria-hidden="true" tabindex="-1"></a><span class="co"># The shortest Sepal Length</span></span>
+<span id="cb73-4"><a href="#cb73-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(sorted_iris)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Sepal.Length Sepal.Width Petal.Length Petal.Width Species
+1          4.3         3.0          1.1         0.1  setosa
+2          4.4         2.9          1.4         0.2  setosa
+3          4.4         3.0          1.3         0.2  setosa
+4          4.4         3.2          1.3         0.2  setosa
+5          4.5         2.3          1.3         0.3  setosa
+6          4.6         3.1          1.5         0.2  setosa</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb75"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a><span class="co"># The longest Sepal Length</span></span>
+<span id="cb75-2"><a href="#cb75-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tail</span>(sorted_iris)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    Sepal.Length Sepal.Width Petal.Length Petal.Width   Species
+145          7.6         3.0          6.6         2.1 virginica
+146          7.7         3.8          6.7         2.2 virginica
+147          7.7         2.6          6.9         2.3 virginica
+148          7.7         2.8          6.7         2.0 virginica
+149          7.7         3.0          6.1         2.3 virginica
+150          7.9         3.8          6.4         2.0 virginica</code></pre>
+</div>
+</div>
+<p>To sort rows according to the descending order of the sorting column, simply mark the sorting column with a minus <code>-</code>. E.g.,</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb77"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a href="#cb77-1" aria-hidden="true" tabindex="-1"></a>decreasing_iris <span class="ot">&lt;-</span> <span class="fu">arrange</span>(iris, <span class="sc">-</span>Sepal.Length)</span>
+<span id="cb77-2"><a href="#cb77-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(decreasing_iris)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Sepal.Length Sepal.Width Petal.Length Petal.Width   Species
+1          7.9         3.8          6.4         2.0 virginica
+2          7.7         3.8          6.7         2.2 virginica
+3          7.7         2.6          6.9         2.3 virginica
+4          7.7         2.8          6.7         2.0 virginica
+5          7.7         3.0          6.1         2.3 virginica
+6          7.6         3.0          6.6         2.1 virginica</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb79"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb79-1"><a href="#cb79-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tail</span>(decreasing_iris)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    Sepal.Length Sepal.Width Petal.Length Petal.Width Species
+145          4.6         3.2          1.4         0.2  setosa
+146          4.5         2.3          1.3         0.3  setosa
+147          4.4         2.9          1.4         0.2  setosa
+148          4.4         3.0          1.3         0.2  setosa
+149          4.4         3.2          1.3         0.2  setosa
+150          4.3         3.0          1.1         0.1  setosa</code></pre>
+</div>
+</div>
+<p>Specify more than one sorting column is much easier in <code>dplyr</code> than base R. E.g. sort <code>iris</code> in descending order <code>Sepal.Length</code> and ascending order of <code>Petal.Length</code>.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb81"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb81-1"><a href="#cb81-1" aria-hidden="true" tabindex="-1"></a>double_sorted_iris <span class="ot">&lt;-</span> <span class="fu">arrange</span>(iris, <span class="sc">-</span>Sepal.Length, Petal.Length)</span>
+<span id="cb81-2"><a href="#cb81-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(double_sorted_iris)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Sepal.Length Sepal.Width Petal.Length Petal.Width   Species
+1          7.9         3.8          6.4         2.0 virginica
+2          7.7         3.0          6.1         2.3 virginica
+3          7.7         3.8          6.7         2.2 virginica
+4          7.7         2.8          6.7         2.0 virginica
+5          7.7         2.6          6.9         2.3 virginica
+6          7.6         3.0          6.6         2.1 virginica</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb83"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb83-1"><a href="#cb83-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tail</span>(double_sorted_iris)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    Sepal.Length Sepal.Width Petal.Length Petal.Width Species
+145          4.6         3.1          1.5         0.2  setosa
+146          4.5         2.3          1.3         0.3  setosa
+147          4.4         3.0          1.3         0.2  setosa
+148          4.4         3.2          1.3         0.2  setosa
+149          4.4         2.9          1.4         0.2  setosa
+150          4.3         3.0          1.1         0.1  setosa</code></pre>
+</div>
+</div>
+<p>For rows with equal <code>Sepal.Length</code> (rows 2-5, 147-149), you can see their <code>Petal.Length</code> are in ascending order.</p>
+</section>
+<section id="rearranging-columns-of-a-data-frame" class="level3" data-number="2.2.4">
+<h3 data-number="2.2.4" class="anchored" data-anchor-id="rearranging-columns-of-a-data-frame"><span class="header-section-number">2.2.4</span> Rearranging columns of a data frame</h3>
+<p>Suppose you want to move the <code>Species</code> column to the leftmost position. You’re going to love <code>dplyr</code>, as it can be done easily by using two functions: <code>select()</code> and <code>everything()</code>.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb85"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb85-1"><a href="#cb85-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Reorder columns by name</span></span>
+<span id="cb85-2"><a href="#cb85-2" aria-hidden="true" tabindex="-1"></a>new_iris <span class="ot">&lt;-</span> <span class="fu">select</span>(iris, Species, <span class="fu">everything</span>())</span>
+<span id="cb85-3"><a href="#cb85-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(new_iris)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Species Sepal.Length Sepal.Width Petal.Length Petal.Width
+1  setosa          5.1         3.5          1.4         0.2
+2  setosa          4.9         3.0          1.4         0.2
+3  setosa          4.7         3.2          1.3         0.2
+4  setosa          4.6         3.1          1.5         0.2
+5  setosa          5.0         3.6          1.4         0.2
+6  setosa          5.4         3.9          1.7         0.4</code></pre>
+</div>
+</div>
+</section>
+<section id="focus-on-a-subset-of-columns-1" class="level3" data-number="2.2.5">
+<h3 data-number="2.2.5" class="anchored" data-anchor-id="focus-on-a-subset-of-columns-1"><span class="header-section-number">2.2.5</span> Focus on a Subset of Columns</h3>
+<p>If a data frame contains many columns, way more than you need for analysis. It is neat to focus on those columns and remove the rest. E.g., use the <code>select()</code> function to keep only sepal information and species.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb87"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb87-1"><a href="#cb87-1" aria-hidden="true" tabindex="-1"></a>sepal_iris <span class="ot">&lt;-</span> <span class="fu">select</span>(iris, Sepal.Length, Sepal.Width, Species)</span>
+<span id="cb87-2"><a href="#cb87-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(sepal_iris)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 150   3</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb89"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb89-1"><a href="#cb89-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(sepal_iris)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Sepal.Length Sepal.Width Species
+1          5.1         3.5  setosa
+2          4.9         3.0  setosa
+3          4.7         3.2  setosa
+4          4.6         3.1  setosa
+5          5.0         3.6  setosa
+6          5.4         3.9  setosa</code></pre>
+</div>
+</div>
+</section>
+<section id="add-a-new-column-1" class="level3" data-number="2.2.6">
+<h3 data-number="2.2.6" class="anchored" data-anchor-id="add-a-new-column-1"><span class="header-section-number">2.2.6</span> Add a New Column</h3>
+<p>Use the <code>mutate()</code> function add columns to a data frame.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb91"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb91-1"><a href="#cb91-1" aria-hidden="true" tabindex="-1"></a>iris <span class="ot">&lt;-</span> <span class="fu">mutate</span>(iris, <span class="at">Sepal.Ratio =</span> Sepal.Length<span class="sc">/</span>Sepal.Width)</span>
+<span id="cb91-2"><a href="#cb91-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(iris)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Sepal.Length Sepal.Width Petal.Length Petal.Width Species Sepal.Ratio
+1          5.1         3.5          1.4         0.2  setosa    1.457143
+2          4.9         3.0          1.4         0.2  setosa    1.633333
+3          4.7         3.2          1.3         0.2  setosa    1.468750
+4          4.6         3.1          1.5         0.2  setosa    1.483871
+5          5.0         3.6          1.4         0.2  setosa    1.388889
+6          5.4         3.9          1.7         0.4  setosa    1.384615</code></pre>
+</div>
+</div>
+</section>
+<section id="remove-a-column-1" class="level3" data-number="2.2.7">
+<h3 data-number="2.2.7" class="anchored" data-anchor-id="remove-a-column-1"><span class="header-section-number">2.2.7</span> Remove a Column</h3>
+<p>Use the <code>select()</code> function as before but put a minus <code>'-'</code> symbol before the column name to be removed.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb93"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb93-1"><a href="#cb93-1" aria-hidden="true" tabindex="-1"></a>iris <span class="ot">&lt;-</span> <span class="fu">select</span>(iris, <span class="sc">-</span>Sepal.Ratio)</span>
+<span id="cb93-2"><a href="#cb93-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(iris)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Sepal.Length Sepal.Width Petal.Length Petal.Width Species
+1          5.1         3.5          1.4         0.2  setosa
+2          4.9         3.0          1.4         0.2  setosa
+3          4.7         3.2          1.3         0.2  setosa
+4          4.6         3.1          1.5         0.2  setosa
+5          5.0         3.6          1.4         0.2  setosa
+6          5.4         3.9          1.7         0.4  setosa</code></pre>
+</div>
+</div>
+</section>
+<section id="rename-a-column" class="level3" data-number="2.2.8">
+<h3 data-number="2.2.8" class="anchored" data-anchor-id="rename-a-column"><span class="header-section-number">2.2.8</span> Rename a Column</h3>
+<p>So far, you have seen all the data wrangling tasks performed by base R using <code>tidyverse</code>. Starting from here, you are going to demonstrate tasks that are harder to do with base R. The first task is to rename a column. Suppose you want to rename <code>Species</code> to <code>Iris_Species</code>. You can do it by the <code>rename()</code> function:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb95"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb95-1"><a href="#cb95-1" aria-hidden="true" tabindex="-1"></a><span class="co"># new_name = existing_name</span></span>
+<span id="cb95-2"><a href="#cb95-2" aria-hidden="true" tabindex="-1"></a>iris <span class="ot">&lt;-</span> <span class="fu">rename</span>(iris, <span class="at">Iris_Species =</span> Species)</span>
+<span id="cb95-3"><a href="#cb95-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(iris)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Sepal.Length Sepal.Width Petal.Length Petal.Width Iris_Species
+1          5.1         3.5          1.4         0.2       setosa
+2          4.9         3.0          1.4         0.2       setosa
+3          4.7         3.2          1.3         0.2       setosa
+4          4.6         3.1          1.5         0.2       setosa
+5          5.0         3.6          1.4         0.2       setosa
+6          5.4         3.9          1.7         0.4       setosa</code></pre>
+</div>
+</div>
+<p>Let’s revert the renaming so it will not affect the following examples.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb97"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb97-1"><a href="#cb97-1" aria-hidden="true" tabindex="-1"></a>iris <span class="ot">&lt;-</span> <span class="fu">rename</span>(iris, <span class="at">Species =</span> Iris_Species)</span>
+<span id="cb97-2"><a href="#cb97-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(iris)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Sepal.Length Sepal.Width Petal.Length Petal.Width Species
+1          5.1         3.5          1.4         0.2  setosa
+2          4.9         3.0          1.4         0.2  setosa
+3          4.7         3.2          1.3         0.2  setosa
+4          4.6         3.1          1.5         0.2  setosa
+5          5.0         3.6          1.4         0.2  setosa
+6          5.4         3.9          1.7         0.4  setosa</code></pre>
+</div>
+</div>
+</section>
+<section id="pipe" class="level3" data-number="2.2.9">
+<h3 data-number="2.2.9" class="anchored" data-anchor-id="pipe"><span class="header-section-number">2.2.9</span> Pipe</h3>
+<p>Often, data wrangling is a multi-step process in which many intermediate steps are involved before producing the final result. E.g., select iris where its <code>Petal.Length</code> is between 0.5 and 2, and sort the results in descending order of <code>Petal.Length</code>. As you can see, it involves filtering, followed by sorting. It can done into two steps via an intermediate data frame as below:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb99"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb99-1"><a href="#cb99-1" aria-hidden="true" tabindex="-1"></a>tmp_iris <span class="ot">&lt;-</span> <span class="fu">filter</span>(iris, Petal.Length <span class="sc">&gt;=</span> <span class="fl">0.5</span> <span class="sc">&amp;</span> Petal.Length <span class="sc">&lt;=</span><span class="dv">2</span>)</span>
+<span id="cb99-2"><a href="#cb99-2" aria-hidden="true" tabindex="-1"></a>final_iris <span class="ot">&lt;-</span> <span class="fu">arrange</span>(tmp_iris, <span class="sc">-</span>Petal.Length)</span>
+<span id="cb99-3"><a href="#cb99-3" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(final_iris)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 50  5</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb101"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb101-1"><a href="#cb101-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(final_iris)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Sepal.Length Sepal.Width Petal.Length Petal.Width Species
+1          4.8         3.4          1.9         0.2  setosa
+2          5.1         3.8          1.9         0.4  setosa
+3          5.4         3.9          1.7         0.4  setosa
+4          5.7         3.8          1.7         0.3  setosa
+5          5.4         3.4          1.7         0.2  setosa
+6          5.1         3.3          1.7         0.5  setosa</code></pre>
+</div>
+</div>
+<p>The final result contains 50 rows.</p>
+<p><code>tidyverse</code> provides a neater way - no intermediate data frames - to do it by the concept of <strong>pip</strong>. You can imagine it like the assembly line of a factory, where an upstream work station passes (pipe) intermediate results to the next work station for further processing.</p>
+<p>The pip symbol is represented by <strong><code>%&gt;%</code></strong>, no space between them. Let’s see how to apply pip to the above example without creating the intermediate data frame <code>tmp_iris</code>.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb103"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb103-1"><a href="#cb103-1" aria-hidden="true" tabindex="-1"></a>final_results <span class="ot">&lt;-</span> iris <span class="sc">%&gt;%</span> </span>
+<span id="cb103-2"><a href="#cb103-2" aria-hidden="true" tabindex="-1"></a>                   <span class="fu">filter</span>(Petal.Length <span class="sc">&gt;=</span> <span class="fl">0.5</span> <span class="sc">&amp;</span> Petal.Length <span class="sc">&lt;=</span><span class="dv">2</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb103-3"><a href="#cb103-3" aria-hidden="true" tabindex="-1"></a>                   <span class="fu">arrange</span>(<span class="sc">-</span>Petal.Length)</span>
+<span id="cb103-4"><a href="#cb103-4" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(final_iris)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 50  5</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb105"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb105-1"><a href="#cb105-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(final_iris)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Sepal.Length Sepal.Width Petal.Length Petal.Width Species
+1          4.8         3.4          1.9         0.2  setosa
+2          5.1         3.8          1.9         0.4  setosa
+3          5.4         3.9          1.7         0.4  setosa
+4          5.7         3.8          1.7         0.3  setosa
+5          5.4         3.4          1.7         0.2  setosa
+6          5.1         3.3          1.7         0.5  setosa</code></pre>
+</div>
+</div>
+<p>Let’s walk through the code above line by line.</p>
+<ul>
+<li><p><code>iris %&gt;%</code> sends all rows, 150 in total, to the downstream <code>filter()</code> function.</p></li>
+<li><p><code>filter(Petal.Length &gt;= 0.5 &amp; Petal.Length &lt;=2) %&gt;%</code> receives the data, and check each row if it satisfies the specified conditions. If so, send it to the downstream process; otherwise do not pass down.</p></li>
+<li><p><code>arrange(-Petal.Length)</code> received rows that satisfy the previous filtering process, and sort them in descending order of <code>Petal.Length</code>.</p></li>
+<li><p><code>final_results &lt;-</code> the sorted result is assigned to the variable <code>final_results</code>.</p></li>
+</ul>
+<p>By using pip (<code>%&gt;%</code>), you can avoid intermediate variables, making the code cleaner and easily to read.</p>
+</section>
+<section id="tidyverse-tabulation" class="level3" data-number="2.2.10">
+<h3 data-number="2.2.10" class="anchored" data-anchor-id="tidyverse-tabulation"><span class="header-section-number">2.2.10</span> Tabulation and Summarize</h3>
+<p>Another task which is useful but difficult to get it done in base R is to produce summary information by group. E.g., you want to produce a table that shows the average sepal length for each species. Here’s how to do it using two new functions <code>group_by()</code> and <code>summarize()</code>, and pipe them together.</p>
+<p>E.g., tally the number of samples by <code>Plant</code> and ‘Type’ in <code>CO2</code>. The function that does the tallying is <code>n()</code>.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb107"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb107-1"><a href="#cb107-1" aria-hidden="true" tabindex="-1"></a>CO2 <span class="sc">%&gt;%</span></span>
+<span id="cb107-2"><a href="#cb107-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Plant, Type) <span class="sc">%&gt;%</span></span>
+<span id="cb107-3"><a href="#cb107-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">n=</span><span class="fu">n</span>())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`summarise()` has regrouped the output.
+ℹ Summaries were computed grouped by Plant and Type.
+ℹ Output is grouped by Plant.
+ℹ Use `summarise(.groups = "drop_last")` to silence this message.
+ℹ Use `summarise(.by = c(Plant, Type))` for per-operation grouping
+  (`?dplyr::dplyr_by`) instead.</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 12 × 3
+# Groups:   Plant [12]
+   Plant Type            n
+   &lt;ord&gt; &lt;fct&gt;       &lt;int&gt;
+ 1 Qn1   Quebec          7
+ 2 Qn2   Quebec          7
+ 3 Qn3   Quebec          7
+ 4 Qc1   Quebec          7
+ 5 Qc3   Quebec          7
+ 6 Qc2   Quebec          7
+ 7 Mn3   Mississippi     7
+ 8 Mn2   Mississippi     7
+ 9 Mn1   Mississippi     7
+10 Mc2   Mississippi     7
+11 Mc3   Mississippi     7
+12 Mc1   Mississippi     7</code></pre>
+</div>
+</div>
+<p>You do not see much difference between base R and <code>tidyverse</code> in the example above. But if you want to do more than tallying, <code>summarize()</code> is a treat, as <code>summarize()</code> supports the descriptive statistics functions mentioned before, such as mean(), sd(), median(), quantile(), etc. E.g,</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb110"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb110-1"><a href="#cb110-1" aria-hidden="true" tabindex="-1"></a>iris <span class="sc">%&gt;%</span></span>
+<span id="cb110-2"><a href="#cb110-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Species) <span class="sc">%&gt;%</span></span>
+<span id="cb110-3"><a href="#cb110-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">u=</span><span class="fu">mean</span>(Sepal.Length))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 2
+  Species        u
+  &lt;fct&gt;      &lt;dbl&gt;
+1 setosa      5.01
+2 versicolor  5.94
+3 virginica   6.59</code></pre>
+</div>
+</div>
+<p>You can apply multiple functions in <code>summarize()</code>. E.g., shows the number of samples and standard deviation.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb112"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb112-1"><a href="#cb112-1" aria-hidden="true" tabindex="-1"></a>iris <span class="sc">%&gt;%</span></span>
+<span id="cb112-2"><a href="#cb112-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Species) <span class="sc">%&gt;%</span></span>
+<span id="cb112-3"><a href="#cb112-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">n=</span><span class="fu">n</span>(),</span>
+<span id="cb112-4"><a href="#cb112-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">u=</span><span class="fu">mean</span>(Sepal.Length),</span>
+<span id="cb112-5"><a href="#cb112-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">s=</span><span class="fu">sd</span>(Sepal.Length))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 4
+  Species        n     u     s
+  &lt;fct&gt;      &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt;
+1 setosa        50  5.01 0.352
+2 versicolor    50  5.94 0.516
+3 virginica     50  6.59 0.636</code></pre>
+</div>
+</div>
+<p>You can group by more than one column. Let’s switch to <code>CO2</code> dataset to illustrate this point.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb114"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb114-1"><a href="#cb114-1" aria-hidden="true" tabindex="-1"></a>CO2 <span class="sc">%&gt;%</span></span>
+<span id="cb114-2"><a href="#cb114-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Plant, Type, Treatment) <span class="sc">%&gt;%</span></span>
+<span id="cb114-3"><a href="#cb114-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">n=</span><span class="fu">n</span>(),</span>
+<span id="cb114-4"><a href="#cb114-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">u=</span><span class="fu">mean</span>(conc),</span>
+<span id="cb114-5"><a href="#cb114-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">s=</span><span class="fu">sd</span>(conc))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`summarise()` has regrouped the output.
+ℹ Summaries were computed grouped by Plant, Type, and Treatment.
+ℹ Output is grouped by Plant and Type.
+ℹ Use `summarise(.groups = "drop_last")` to silence this message.
+ℹ Use `summarise(.by = c(Plant, Type, Treatment))` for per-operation grouping
+  (`?dplyr::dplyr_by`) instead.</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 12 × 6
+# Groups:   Plant, Type [12]
+   Plant Type        Treatment      n     u     s
+   &lt;ord&gt; &lt;fct&gt;       &lt;fct&gt;      &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt;
+ 1 Qn1   Quebec      nonchilled     7   435  318.
+ 2 Qn2   Quebec      nonchilled     7   435  318.
+ 3 Qn3   Quebec      nonchilled     7   435  318.
+ 4 Qc1   Quebec      chilled        7   435  318.
+ 5 Qc3   Quebec      chilled        7   435  318.
+ 6 Qc2   Quebec      chilled        7   435  318.
+ 7 Mn3   Mississippi nonchilled     7   435  318.
+ 8 Mn2   Mississippi nonchilled     7   435  318.
+ 9 Mn1   Mississippi nonchilled     7   435  318.
+10 Mc2   Mississippi chilled        7   435  318.
+11 Mc3   Mississippi chilled        7   435  318.
+12 Mc1   Mississippi chilled        7   435  318.</code></pre>
+</div>
+</div>
+<p><strong>Two remarks:</strong></p>
+<ol type="1">
+<li><p><code>group_by()</code> is never used alone. It is often followed by <code>summarize()</code>.</p></li>
+<li><p>The variables feed to <code>group_by()</code> must be factor, i.e., categorical.</p></li>
+</ol>
+</section>
+<section id="a-summary-of-tidyverse-functions" class="level3" data-number="2.2.11">
+<h3 data-number="2.2.11" class="anchored" data-anchor-id="a-summary-of-tidyverse-functions"><span class="header-section-number">2.2.11</span> A Summary of <code>tidyverse</code> functions</h3>
+<ul>
+<li><p><code>filter()</code>: select rows that satistify the specified conditions.</p></li>
+<li><p><code>select()</code>: choose or drop certain columns.</p></li>
+<li><p><code>arrange()</code>: sort rows by the specified columns.</p></li>
+<li><p><code>rename()</code>: change the name of a column.</p></li>
+<li><p><code>mutate()</code>: add a column or modify the values of an existing column.</p></li>
+<li><p><code>group_by()</code>, followed by <code>summarize()</code></p></li>
+<li><p>pip <code>%&gt;%</code>: funnel intermediate result from an upstream process to the input of an immediate downstream process.</p></li>
+</ul>
+</section>
+</section>
+<section id="summary" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="summary"><span class="header-section-number">2.3</span> Summary</h2>
+<p>In this chapter, you have seen how to perform data wrangling with basic R and <code>tidyverse</code>. What you have seen is only a fraction of what <code>tidyverse</code> can do. Readers who want to explore the full capability of <code>tidyverse</code> should consult the most authorative source: <strong>R for Data Science</strong> by Hadley Wickham &amp; Garrett Grolemund (https://r4ds.had.co.nz/). In the next chapter, you will see how to plot data. A picture is worth a thousand words. Data visualization is an indispensible step for data analysis. But before the next topic, let’s recall all the new R commands discussed in this chapter.</p>
+<!--
+`|`, `&`, `==`, `!`, `!=`, `subset()`, `sample()`, `order()`, `NONE` (a keyword), `table()`, `library()`, `require()`, `filter()`, `select()`, `arrange()`, `rename()`, `mutate()`, `group_by()`, `summarize()`, `n()`, and pip `%>%`.
+-->
+<div class="cell">
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>A Summary of R Operators and Functions</caption>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">|</td>
+<td style="text-align: left;"><code>sample()</code></td>
+<td style="text-align: left;"><code>filter()</code></td>
+<td style="text-align: left;"><code>summarize()</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>&amp;</code></td>
+<td style="text-align: left;"><code>order()</code></td>
+<td style="text-align: left;"><code>select()</code></td>
+<td style="text-align: left;"><code>n()</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>==</code></td>
+<td style="text-align: left;"><code>NONE</code> (a keyword)</td>
+<td style="text-align: left;"><code>arrange()</code></td>
+<td style="text-align: left;">pip <code>%&gt;%</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>!</code></td>
+<td style="text-align: left;"><code>table()</code></td>
+<td style="text-align: left;"><code>rename()</code></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>!=</code></td>
+<td style="text-align: left;"><code>library()</code></td>
+<td style="text-align: left;"><code>mutate()</code></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>subset()</code></td>
+<td style="text-align: left;"><code>require()</code></td>
+<td style="text-align: left;"><code>group_by()</code></td>
+<td style="text-align: left;"></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./01_Part1_Basic_R.html" class="pagination-link" aria-label="Part I">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Part I</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./03-Data-Visualization.html" class="pagination-link" aria-label="Data Visualization">
+        <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Data Visualization</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
