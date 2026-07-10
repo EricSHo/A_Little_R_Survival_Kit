@@ -7,14 +7,22 @@ execute:
 
 book:
   title: "A Little R Survival Kit"
+  sidebar:
+    style: "docked"
   author: "Eric S. Ho, Ph.D."
   date: "6/16/2026"
   chapters:
-    - index.qmd
-    - 01_Part1_Basic_R.qmd
-    - 02_Data_Wrangling.qmd
-    - 03-Data-Visualization.qmd
-    - 04_Dive_Deeper.qmd
+    - index.qmd                  # Preface
+
+    - part: "Part I"
+      chapters:
+      - 01_Part1_Basic_R.qmd
+      - 02_Data_Wrangling.qmd
+      - 03-Data-Visualization.qmd
+      
+    - part: "Part II"
+      chapters:
+      - 04_Dive_Deeper.qmd
 
 bibliography:
   - book.bib
@@ -26,6 +34,7 @@ format:
     css: style.css
     code-copy: true
     linkcolor: "#096B72"
+    link-external-newwindow: true
   pdf:
     documentclass: scrreprt
     pdf-engine: xelatex

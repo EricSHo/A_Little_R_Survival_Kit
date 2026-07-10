@@ -1,32 +1,36 @@
-# Part I {.unnumbered}
+# Basic R {#sec-01-basic-r}
 
-Part I focuses on the basic R objects and commands, such as atomic and object variables, descriptive statistical functions, and data wrangling using base R and `tidyverse`.
+## Learning Objectives: {.unnumbered}
 
-# Basic R
+The journey of R scripting starts with a basic understanding of R objects and commands. After finishing this chapter, you should be able to:
 
-## Learning Objectives: {-}
+- Define R variables.
 
-This chapter covers common basic R functions used for statistical analysis. After finishing this chapter, you should be able to:
+- Know the differences between an atomic variable and an object variable.
 
--   Define R variables.
+- Store results in variables through the assignment operator.
 
--   Know the differences between an atomic variable and an object variable.
+- Perform arithmetic operations.
 
--   Perform arithmetic operators.
+- Handle composite objects: vectors, and data frames.
 
--   Store results in variables.
+- Define categorical variables.
 
--   Format and print the contents of variables to the console.
+- Calculate descriptive and summary statistics.
 
--   Calculate non-robust and robust statistics.
+- Utilize inspection functions to figure out basic information of data.
 
--   Use `seq()` and `with()` functions.
+- Format and print the contents of variables to the console.
+
+- Use `seq()` and `with()` functions.
 
 As R scripting is a hands-on topic, I encourage you to open RStudio alongside this book and try out the code to maximize understanding. Let's get started.
 
-## Rules of Naming Variables
+## R Variables
 
-The name of an R variable must follow these two rules:
+An R variable is a named location in the computer's memory that stores some values. Imagine it as a labeled (name) shoebox (memory location) keeping a pair sneakers (value).
+
+Two rules determines how an R variable be named:
 
 1.  It must begin with a letter (A-Z or a-z), a dot "`.`", or an underscore "`_`", and
 
@@ -34,99 +38,121 @@ The name of an R variable must follow these two rules:
 
 Note that:
 
--   Variable names are case-sensitive, e.g., `volume` and `Volume` are different in the eyes of R.
+- A variable name can be as short as one character to way longer than a normal person wishes (10,000 characters!).
 
--   Give meaningful names to variables, e.g., `zone2` instead of `z` or even worse `x`. That will help a bunch in understanding the code, even your own code.
+- My suggestion is to give variables meaningful names that can help a bunch for you or someone to comprehend the the code. For instance, in a problem about heart rate, use `zone2` instead of `z` or even worse `x`. 
 
--   Watch out that some names have been used by R, e.g., `c`, and `head` are function names. However, R is permissive for people to use them as variable names. So, the rule of thumb is to exercise self-discipline not to choose R function names as variable names.
+- Be careful that variable names are case-sensitive, e.g., `volume` and `Volume` are different in the eyes of R.
+
+- Avoid naming variables with names that have been reserved by R (https://rdrr.io/r/base/Reserved.html) or names already used to name R's built-in functions, e.g., `c`, and `head`. For the latter, unfortunately, R is permissive for misnaming variables by remaining silence, costing time to identify the issue. Therefore, the rule of thumb is to exercise self-discipline not to choose R function names as variable names.
 
 ## R Objects
 
-### Atomic and Object Variables {#atomic-and-object-variables}
+Every variable is an R object. In scripting, it is important to know the type(s) of value(s) being stored in a variable, as the types dictate the legitimate operations that act on the variable. Let's begin with data types.
 
-R classifies variables into two broad categories: **atomic type** , and **object**. In the former, the value cannot be split further into smaller R objects. Let us begin with two atomic types: `**numeric**`, and `**character**`.
+### Data Types {#sec-data-types}
+
+R supports six data types:
+
+- Double: decimal numbers, e.g., 5.6, -4.3
+
+- Integer: whole numbers, e.g, -10, 56
+
+- Character: they contain text, e.g., "ACGT", "Hello World"
+
+- Logical: `TRUE` or `FALSE`
+
+- Complex^`*`^: Complex numbers containing real and imaginary components, e.g., 5+2i
+
+- Raw^`*`^: Bare bytes of data.
+
+`*` We will only discuss the first four types in this book, you can ignore complex and raw types.
+
+
+### Atomic and Composite Variables {#sec-atomic-and-composite-variables}
+
+From a practical perspective, R variables can be viewed as **atomic variables** , and **composite variables**. An atomic variable contain a single value, and a composite variable consists of a collection of values. Let us begin with two atomic variables: **`numeric`**, and **`character`**.
 
 #### Numeric Variables
 
-The simplest atomic type in R is the `numeric` data type. That includes whole numbers, decimal numbers, and numbers represented in scientific notation ($6.023\times10^{23}$). In mathematics, an atomic variable is a **scalar**. Here are some examples:
+An atomic numeric variable holds a decimal number (`double`) or a whole number (`integer`). Numbers can be represented in scientific notation. Here are some examples:
 
 ```{r}
 # Decimal
 height <- 5.6
 
 # Whole number (Integer)
-sample_size <- 15
+sample_size <- 15L
 
 # Scientific notation
 avogadro_number <- 6.023e23
 ```
 
-Don't be mistaken, the `e` in the scientific notation refers to base `10`, e.g., `6.023e23` is $6.023\times10^{23}$.
+`<-` is the assignment operator. It looks like a left-pointing arrow, depicting the transfer of value from the right-hand side to the left-hand side. Upon execution, the resultant value of the expression on the right-hand side, if no error, is stored in the named variable on the left-hand side. In RStudio, you can see the variable name and its associated value under the **Environment** tab, which usually occupies the top right quadrant of the RStudio desktop.
 
-`<-` denotes the assignment operator. Upon execution, the resultant value of the expression on the right-hand side, if no error, is stored in the named variable on the left-hand side. In RStudio, you can see the variable name and its associated value under the **Environment** tab, which usually occupies the top right quadrant of the RStudio desktop.
+Note that R supports another assignment operator: `=`. You can use `<-` and `=` interchangeably. I prefer `<-` to `=`, as `=` can easily confuse with the equality checking operator `==`.
 
-Note that R supports two equivalent assignment operators. You can use `<-` and `=` interchangeably. I prefer `<-` to `=` as `=` can easily confuse with the equality checking operator `==`.
+A few words about the scientific notation. It comprises three parts: the coefficient, a constant literal `e`, and the exponent. The `e` refers to the base `10`. For example, the R's scientific notation of $6.023\times10^{23}$  is `6.023e23`, where the coefficient and the exponent are $6.023$ and $23$, respectively. Note that you must not include spaces in a scientific notation, e.g., `6.023e 23`, `6.023 e23`, or `6.023 e 23` will return errors.
 
 **Arithmetic Operators**
 
-Arithmetic operators that can apply to numeric variables include `+`, `-`, `*`, `/`, `**`, and `^`. The last two operators - `**` and `^` - are exponential; they perform exactly the same function. Here are some examples:
+You can apply arithmetic operations on numeric variables. Here are the arithmetic operators: `+` (addition), `-` (subtraction), `*` (multiplication), `/` (division), `**` (exponentiation), and `^` (exponentiation). The last two exponentiation operators perform exactly the same function. Here are some examples:
 
 ```{r}
 radius <- 2.5
 diameter <- 2*pi*radius
+pi <- 3.1416
 area <- pi*radius**2
 volume <- (4/3)*pi*radius^3
 ```
 
-Note that `pi` is $\pi$, which is a built-in variable with the value 3.141593.
-
-E.g., the height of an object is 5.6 feet:
-
-```{r}
-height <- 5.6
-```
-
 #### Character Variables
 
-Besides numeric values, R also support operations of non-numeric values, which is called `**character**`. To define a character value, embrace the string of characters with a pair of quotes, either a pair of single or double quotes. E.g.,
+R also support text values, which is in `character` data type. To define a character value, you need to use a pair of quotes to embrace the text. Either a pair of single (`'`) or double quotes (`"`) works. E.g.,
 
 ```{r}
 course <- 'BIOL265'
 ```
 
-To figure out whether a variable's type is numeric, character, or something else, use the `class()` function,
+To figure out whether a variable's type is numeric, character, or something else, use the `typeof()` function,
 
 ```{r}
-class(course)
+typeof(course)
 ```
 
 ```{r}
-class(height)
+typeof(area)
 ```
 
 Obviously, it does not make sense to do math with character type. E.g.,
 
 ```{r error=TRUE}
-nucleotides*4
+course*4
 ```
 
-#### Vectors {#vectors}
+You can use `nchar()` function to figure out the number of characters, including spaces and punctuations, of a character variable. E.g., 
 
-One commonly used object in R is **`vectors`**. It comprises different components that can be processed collectively as a whole, or individually. A vector can be viewed pictorially as a wagon train. E.g.,
+```{r}
+nchar(course)
+```
+
+### Vectors {#sec-vectors}
+
+One common composite variable in R is **`vectors`**. It is an ordered sequence of items that can be processed collectively as a whole, or individually. A vector can be viewed pictorially as a wagon train in which carriages are coupled one after the other. E.g.,
 
 ```{r}
 # A simple numeric vector for the days in each month
 days_of_month <- c(31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31)
 ```
 
-`days_of_month` is a `vector` object in R. **`c()`** is the function that **combines or collates** several objects, as its name suggests, into a vector object. Elements are indexed or numbered from 1 to the total number of elements in the vector. You can extract a particular element by specifying the index within a pair of square-brackets. E.g.,
+`days_of_month` is a `vector` object in R. **`c()`** is the function that **combines or collates** several objects into a vector object. Items are indexed or numbered from 1 to the total number of items in the vector. You can extract a particular item by specifying the index within a pair of square-brackets. E.g.,
 
 ```{r}
 # Days in February
 print(days_of_month[2])
 ```
 
-`[2]` means the 2^nd^ element of a vector. We will discuss more about indexing below. 
+The `[2]` means the 2^nd^ element of a vector. We will discuss more about indexing below.
 
 Here is an example of a character vector:
 
@@ -134,7 +160,7 @@ Here is an example of a character vector:
 nucleotides <- c('A','C','G','T')
 ```
 
-Noteworthy that all elements held inside a vector must have the same data type (**homogeneous**). For instance, `days_of_month` contains all numeric values, and `nucleotides` contains all character values. If you try to combine objects of different data types into a vector, R will convert them to character type. In the example below, even the first and third values are entered as numeric, R coerces them into character type, the common denominator type, `"1"` and `"0"`.
+Noteworthy that all items held inside a vector must have the same data type. In other words, vectors are always **homogeneous**. For instance, `days_of_month` contains all numeric values, and `nucleotides` contains all character values. If you try to combine objects of different data types into a vector, R will automatically convert them to character type, the lowest denominator of data types. In the example below, even the first and third values are entered as numeric, R coerces them into text `"1"` and `"0"`.
 
 ```{r}
 a_vector <- c(1, "success", 0, "fail")
@@ -151,13 +177,15 @@ std_heights <- (heights - x_bar)/s
 std_heights
 ```
 
-The convenience is that you don't have to specify how to subtract and divide each height individually. Instead, R recognizes the expression `(heights-x_bar)` is to subtract an atomic `x_bar` (scalar) from a vector `heights`. Under the vectorization mechanism, it will subtract `x_bar` from every height in the vector `heights`, similarly for the division by `s`. 
+`mean()` and `sd()` are built-in functions that calcuate the average and standard deviation of a sample, respectively.
 
-`vector` is only one of the many types of objects supported by R, data frame is another commonly used object types, which will be discussed later.
+The convenience is that you don't have to specify how to subtract and divide each height individually. Instead, R recognizes the expression `(heights-x_bar)` is to subtract an atomic `x_bar` (scalar) from a vector `heights`. Under the vectorization mechanism, it will subtract `x_bar` from every height in the vector `heights`, similarly for the division by `s`.
 
-### Factors/Categorical Variables {#factor-levels}
+`vector` is only one of the many types of objects supported by R. Data frame is another commonly used object types, which will be discussed later.
 
-In R, a categorical variable in statistics is called a **factor**. A categorical variable is further classified into **nominal** or **ordinal**. A nominal variable has no intrinsic order. The `factor()` function is used to define a categorical variable. E.g., a sample of colors is stored in a vector, and you want to define it as a nominal categorical variable.
+### Factors/Categorical Variables {#sec-factor-levels}
+
+In R, a **factor** refers to a categorical variable in statistics. A categorical variable is further classified into **nominal** or **ordinal**. A nominal variable has no intrinsic order. Use the `factor()` function to define a categorical variable in R. E.g., a sample of colors is stored in a vector, and you want to define it as a nominal categorical variable.
 
 ```{r}
 colors <- c("Red","Blue","Blue","Red","Green","Green","Blue","Green","Red","Blue")
@@ -175,10 +203,11 @@ patients <- factor(patients,
 patients
 ```
 
-As you can see above, the hypertension levels are ordered and connected by a less than sign (`<`). 
-### Data frames
+As you can see above, the last line (`Levels`) shows the hypertension levels in ascending order and levels are connected by a less than sign (`<`).
 
-Besides `vector`, another commonly used object is `data frame`. Almost. all the datasets we will use for analysis are in a data frame format. Simply speaking, a data frame is a **tabular** or spreadsheet-like object, like an Excel or Google Sheets. A data frame consists of rows and columns. Each row represents a sample. Each column represents a variable. Rows are expected to have equal length, i.e., the same number of columns. If not, R will either complain or pad the missing columns with a special value `NA` (not available). Let's take a look at an R's built-in data frame `iris`:
+### Data Frames
+
+Besides `vector`, another common R object is `data frame`. Almost all the datasets used for data analysis are organized in data frames. Simply speaking, a data frame is a **tabular** or spreadsheet-like object where values are organized in rows and columns. Each row represents a sample and each column represents a variable. Rows are expected to have equal length, i.e., the same number of columns. If not, R will either complain or pad the missing columns with a special value `NA` (it stands for not available). Let's take a look at an R's built-in data frame `iris`:
 
 ```{r}
 # Show the first five rows
@@ -205,131 +234,142 @@ ncol(iris)
 
 ```
 
-So, we know that `iris` contains 150 rows (flowers) and five columns.
+So, we know that `iris` contains 150 rows (flower samples) and five columns.
 
-#### Accessing Rows and Columns of a Data Frame
+#### Accessing Rows and Columns of a Data Frame {#sec-access-rows-columns}
 
-Each element in a data frame can be referenced by row and column indexes like the X-Y Cartesian system. Rows are automatically indexed (numbered), where the 1st row is index 1, the 2nd row is index 2, and the index of the last row is the total number of rows, similarly for columns. But often time, columns are named, such as the columns of `iris`; `Sepal.Width`, `Sepal.Length`, etc., as shown in Figure (\@ref(fig:Fig1-1)). The two equivalent indexing schemes can occur in parallel.^[Rows can be named as well. This is left as an exercise for the readers.]
+Each element in a data frame can be referenced by row and column indexes like a X-Y Cartesian system. Rows are automatically indexed (numbered), where the 1st row is index 1, the 2nd row is index 2, and the index of the last row is the total number of rows, similarly for columns. 
 
-The syntax of accessing individual elements is `<data frame name>[row, column]`.
-E.g., the cell at the 5^th^ row and 3^rd^ column of the iris is:
+The syntax of accessing individual elements by indexes is `<data frame name>[row, column]`. E.g., the cell at the 5^th^ row and 3^rd^ column of the iris is:
 
 ```{r}
 iris[5,3]
 ```
 
-```{r Fig1-1, fig.cap="Accessing rows and columns of a data frame.", echo=FALSE}
-knitr::include_graphics(rep("images/Figure_1.1.png"))
-```
-
-If the column index is ignored, all columns of the specified row(s) are returned as shown in Figure (\@ref(fig:Fig1-1)). For example, show all columns of the 3^rd^ row by:
+If the column index is ignored, all columns of the specified row(s) are returned as shown in Figure 1.1. For example, show all columns of the 3^rd^ row by:
 
 ```{r}
 # Specify the row number only and leave out the column index.
 iris[3,]
 ```
 
-Similarly, if the row index is skipped, all rows of the specified column(s) are returned (\@ref(fig:Fig1-1)). For example, 
+
+```{r fig-Fig1-1, fig.cap="Accessing rows and columns of a data frame.", echo=FALSE}
+knitr::include_graphics(rep("images/Figure_1.1.png"))
+```
+
+Similarly, if the row index is skipped, all rows of the specified column(s) are returned. For example,
 
 ```{r}
 # Specify only the column index.
 head(iris[,5])
 ```
 
-R provides an alternative way to access a single column of a data frame. The syntax is `<data frame name>$<column name>`. The equivalence of `iris[,5]` is `iris$Species`:
+Note that the `head()` above is used to limit the number rows displayed by avoiding listing page after page of data rows.
+
+You are not limited to display one row or one column using this indexing scheme. For example, show to 110^th and 34^th rows and 2^nd^ and 5^th^ columns,
 
 ```{r}
-head(iris$Species)
+iris[c(110,34), c(2,5)]
 ```
-
-Note that the `$` method only works for a single column. We will discuss a way shortly how to access multiple columns in one R command.
-
-Besides the numeric column index, columns can be referenced by names as shown in Figure (\@ref(fig:Fig1-1)). E.g., the `Petal.Length` of the 5^th^ row:
+As columns are often named [^01_part1_basic_r-1], columns can be referenced by their names as well (@fig-Fig1-1). E.g., the `Petal.Length` of the 5^th^ row:
 
 ```{r}
 iris[5,'Petal.Length']
 ```
 
-To access more than one column and row, pack the row indices and column names in vectors by the function `c(...)`, which **c**ombines or **c**ollates several items into a vector object. For example, show the `Petal.Length` and `Sepal.Length` of the 123^th^ and 96^th^ rows:
+[^01_part1_basic_r-1]: If rows are named, rows can be referenced by their names.
+
+To access more than one column and row, pack the row indexes and column names in vectors by the `c(...)` function, which **c**ombines or **c**ollates several items into a vector object (see @sec-vectors). For example, show the `Petal.Length` and `Sepal.Length` of the 123^th^ and 96^th^ rows:
 
 ```{r}
 iris[c(123,96),c('Petal.Length','Sepal.Length')]
 ```
 
-Using row index and column names is the basic accessing method. R provides additional methods to select rows and columns by conditions. More of this topic will be discussed in **Chapter 2: Data Wrangling**.
+If your task is to extract a single column, R provides an alternative way to access a column by its name. The syntax is `<data frame name>$<column name>` [^01_part1_basic_r-2]. For example, `iris$Species`, which is equivalent of `iris[,5]`,
+
+```{r}
+head(iris$Species)
+```
+
+[^01_part1_basic_r-2]: The `$` method only works for a single column.
+
+We have covered several ways to access rows, columns, or both using indexes and column names. There are additional methods to select rows and columns by conditions. More of this topic will be discussed in @sec-02-data-wrangling.
 
 #### Create a Data Frame
 
+We can use the `data.frame()` function with the concept of vector to create a dataset in data frame format. For example, a study collected 10 fish with their sex and age. To create the data frame, vectors must be created to represent each variable (column). Here's the R code:
 
+```{r}
+sex <- c('F','M','M','F','F','F','M','M','M','M')
+age <- c(1,3,2,3,1,1,3,3,1,1)
+fish <- data.frame(sex,age)
+fish
+```
+
+You can use the `summary()` function to examine the summary statistics of the variables. 
+
+```{r}
+summary(fish)
+```
+Find out more information about `summary()` function below @sec-summary-function.
+
+It is almost done. There is one nuance. In the current form, `sex` is a character variable so its summary statistics are a bit strange. Most often, variable likes that should be categorical/nominal. Therefore, we need to convert `sex` into a `factor` @sec-factor-levels. Here's the revised code:
+
+```{r}
+sex <- c('F','M','M','F','F','F','M','M','M','M')
+sex <- factor(sex, levels=c('F','M'))
+age <- c(1,3,2,3,1,1,3,3,1,1)
+fish <- data.frame(sex,age)
+fish
+```
+
+See the differences for `sex` after revision.
+
+```{r}
+summary(fish)
+```
 ## Descriptive Statistics
-
-### Summary Functions
-
-`length()` shows the number elements in an object. We will use a sample of pumpkin's weights for illustration.
-
-```{r}
-# A sample of pumpkins' weights
-pumpkins <- c(6.85,6.56,6.23,7.55,4.45,10.14,3.52,6.62,3.76,7.62)
-```
-
-The `length()` shows the number of weights defined in `pumpkins`.
-
-```{r}
-length(pumpkins)
-```
-
-To be clear, `length()` counts the number of elements in an R object, such as a vector or a data frame. **If the object is atomic, the function will return 1.** For example, in the following example, `dna` is a character (atomic). The function will return 1, not the number of characters.
-
-```{r}
-dna <- 'ACGTAGC'
-length(dna)
-```
-
-The `range()` prints the minimum and maximum values - numeric and non-numeric - of an object.
-
-```{r}
-range(pumpkins)
-```
-
-If you are interested in either the minimum or maximum, here are the corresponding functions:
-
-```{r}
-# The lightness
-min(pumpkins)
-```
-
-```{r}
-# The heaviest
-max(pumpkins)
-```
 
 ### Non-robust Statistics
 
-Mean, variance, and standard deviation are non-robust statistics, as they are sensitive to outliers (extreme values).
+Sample mean, variance, and standard deviation are non-robust statistics, as they are sensitive to outliers (extreme values).
 
 ```{r}
 # A sample of pumpkins' weights
 pumpkins <- c(6.85,6.56,6.23,7.55,4.45,10.14,3.52,6.62,3.76,7.62)
 ```
 
+*Sample Mean*
+
 ```{r}
-# The average weight
+# Sample mean or the average weight
 mean(pumpkins)
 ```
 
+*Sample Variance*
+
 ```{r}
-# The variance
+# Sample variance
 var(pumpkins)
 ```
 
+*Sample Standard Deviation*
+
 ```{r}
-# the standard deviation
+# Sample standard deviation
 sd(pumpkins)
+```
+
+By the way, the square root of the sample variance $\sqrt{variance}$ is the standard deviation. See below:
+
+```{r}
+sqrt(var(pumpkins))
 ```
 
 ### Robust Statistics
 
-Median and quantile are robust statistics, as outliers minimally influence their values.
+Median and quantile are called robust statistics, as they impede outliers' influence.
 
 *Median*
 
@@ -344,19 +384,19 @@ median(pumpkins)
 
 *Quantile*
 
-Standard quantile intervals.
+The default quantile interval, as the name suggests, is 25%. Note that the R function name is `quantile()`, not ~~`quartile()`~~, as users can override the default 25% interval.
 
 ```{r}
 quantile(pumpkins)
 ```
 
-A customized quantile intervals.
+Instead of the default 25% interval, you can specify your preferred quantile(s) and they don't have to be equally divided. Here are some examples:
 
 ```{r}
 quantile(pumpkins, probs = c(0.1,0.9))
 ```
 
-A specific quantile.
+Or, a specific quantile.
 
 ```{r}
 quantile(pumpkins, probs = c(0.05))
@@ -366,7 +406,9 @@ quantile(pumpkins, probs = c(0.05))
 quantile(pumpkins, probs = c(0.95))
 ```
 
-**Inter-quantile Region (IQR)**
+**Inter-Quartile Region (IQR)**
+
+Here is the definition of IQR:
 
 $$IQR = Q3 - Q1$$
 
@@ -374,9 +416,14 @@ $$IQR = Q3 - Q1$$
 IQR(pumpkins)
 ```
 
-### `summary()` Function
+IQR is used to determine the upper and lower whiskers in a boxplot. Data points below or above the lower or upper whisker are considered as outliers.
 
-A data frame may consists of many variables of different types in various ranges. Therefore, it makes a lot of sense to take a glimpse of all variables before analysis. It can be done by the `summary()` function to reveal:
+$$Lower\space whisker = Q1 - 1.5\times{IQR}$$
+$$Upper\space whisker = Q3 + 1.5\times{IQR}$$
+
+### `summary()` Function {#sec-summary-function}
+
+A data frame may consists of many variables of different types in various ranges. Therefore, it makes a lot of sense to take a glimpse of all variables before analysis. It can be done by using the `summary()` function to reveal:
 
 1.  The variable type of each column.
 
@@ -392,7 +439,57 @@ summary(iris)
 
 The summary will show the range (min. and max.) and quantiles of a numeric column. For a categorical variable (factor), it will show the levels with the number of samples (rows) found for each level, e.g., `Species` is a nominal variable, with 50 samples per species.
 
-## Utilities
+## Utility Functions
+
+### Inspection Functions
+
+Before diving into data analysis, we often want to know some basic information about it, such as the number of samples, what is the range of a numeric variable, etc. Here we will discuss a few R functions to do that, and we coin them inspection functions.
+
+We will use a sample of pumpkin's weights for illustration.
+
+```{r}
+# A sample of pumpkins' weights
+pumpkins <- c(6.85,6.56,6.23,7.55,4.45,10.14,3.52,6.62,3.76,7.62)
+```
+
+The `length()` shows the number of items in a vector.
+
+```{r}
+length(pumpkins)
+```
+
+To be clear, `length()` counts the number of items in an R composite object; the number of items in a vector or the number of columns in a data frame. **If the object is atomic, the function will return 1.** For example, in the following example, `dna` is an atomic, character variable. The function will return 1, not the number of characters.
+
+```{r}
+dna <- 'ACGTAGC'
+length(dna)
+```
+
+To count the number of characters in a character variable, use the `nchar()` function.
+
+```{r}
+nchar(dna)
+```
+
+The `range()` prints the minimum and maximum values of an object [^01_part1_basic_r-3]. 
+
+[^01_part1_basic_r-3]: Note that `range()` works for non-numeric vector, but we will skip such special operation.
+
+```{r}
+range(pumpkins)
+```
+
+If you are interested in either the minimum or maximum, here are the corresponding functions:
+
+```{r}
+# The lightest
+min(pumpkins)
+```
+
+```{r}
+# The heaviest
+max(pumpkins)
+```
 
 ### Printing and Formatting
 
@@ -428,7 +525,7 @@ As you can see, there is no more space between the diameter and the period. But 
 print(paste0("The diameter of a circle with radius ",radius," cm is ",diameter,"."))
 ```
 
-### `seq()` - create a series of numbers {#seq-function}
+### `seq()` - create a series of numbers {#sec-seq-function}
 
 There are situations where we need a series of equal-interval numbers. For example, override the default breaks - x-ticks - of a histogram, a vector containing all possible outcomes of tossing two dice, i.e, from 2 to 12.
 
@@ -475,6 +572,7 @@ Just specify the desired numbers to be generated. As you can see, the interval i
 ```{r}
 seq(-5,7,length.out=20)
 ```
+
 Generate a sequence that matches the same number in another sequence.
 
 ```{r}
@@ -500,7 +598,7 @@ Is it really important? No, unless you're a R developer.
 
 ### `with()`
 
-It set up the context of a data frame so it spares you from using the `$` to access the columns of a data frame. It is commonly used together with a function applied to one or more columns. E.g., the median of `Petal.Width`. It can done in two ways:
+The function set up the context of a data frame so it spares you from using the `$` to access the columns of a data frame, as it often leads to longer commands, which makes harder to comprehend and troubleshooting. It is also commonly used together with a function applied to one or more columns. E.g., the median of `Petal.Width`. It can done in two ways:
 
 ```{r}
 # Use $
@@ -524,16 +622,20 @@ with(iris, Sepal.Length[Petal.Length<4 & Petal.Width>1])
 
 In short, `with()` is English, so it improves the readability of R statements. Second, it saves some typing of the data frame's name. I recommend using `with()` whenever possible.
 
+
+
 ## Summary
 
 That's a bare minimum of R scripting required for data analysis. In the next chapter, we will focus on operations applied to data frames. Before you leave, it is useful to recap the R functions discussed in this chapter:
 
+```{=html}
 <!--
-`<-`, `c()`, `print()`, `paste()`, `paste0()`, `cat()`, `class()`, `factor()`, `head()`, `tail()`, `dim()`, `nrow()`, `ncol()`, `summary()`, `mean()`, `var()`, `sd()`, `range()`, `min()`, `max()`, `median()`, `quantile()`, `IQR()`, `seq()`, and `with()`.
+`<-`, `c()`, `print()`, `paste()`, `paste0()`, `cat()`, `typeof()`, `nchar()`, `factor()`, `head()`, `tail()`, `dim()`, `nrow()`, `ncol()`, `summary()`, `mean()`, `var()`, `sd()`, `range()`, `min()`, `max()`, `median()`, `quantile()`, `IQR()`, `seq()`, and `with()`.
 -->
+```
 
 ```{r echo=F, warning=FALSE}
-cmds <- c("`<-`", "`c()`", "`print()`", "`paste()`", "`paste0()`", "`cat()`", "`class()`", "`factor()`", "`head()`", "`tail()`", "`dim()`", "`nrow()`", "`ncol()`", "`summary()`", "`mean()`", "`var()`", "`sd()`", "`range()`", "`min()`", "`max()`", "`median()`", "`quantile()`", "`IQR()`", "`seq()`", "`with()`", "+", "-", "*", "/", "**", "^", "==") # fill up the matrix by padding it with empty strings
+cmds <- c("`<-`", "`c()`", "`print()`", "`paste()`", "`paste0()`", "`cat()`", "`typeof()`", "`nchar()`", "`factor()`", "`head()`", "`tail()`", "`dim()`", "`nrow()`", "`ncol()`", "`data.frame()`", "`summary()`", "`mean()`", "`var()`", "`sd()`", "`range()`", "`min()`", "`max()`", "`median()`", "`quantile()`", "`IQR()`", "`seq()`", "`with()`", "+", "-", "*", "/", "**", "^", "==") # fill up the matrix by padding it with empty strings
 
 cmds_mat <- matrix(cmds, ncol = 4)
 knitr::kable(
@@ -541,6 +643,8 @@ knitr::kable(
   caption = "A Summary of R Operators and Functions"
 )
 ```
+
+````{=html}
 <!--
 ## Exercises {-}
 
@@ -556,3 +660,4 @@ A. `fiveguys` B. `5guys` C. `five.guys` D. `five-guys` E. `five_guys`
 
 
 -->
+````

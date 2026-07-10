@@ -1,18 +1,3 @@
----
-title: "A Little R Survival Kit: Essential Data Analysis using R"
-author: "Eric S. Ho"
-date: "`r Sys.Date()`"
-site: bookdown::bookdown_site
-documentclass: book
-bibliography: [book.bib, packages.bib]
-# url: your book url like https://bookdown.org/hoe/ALittleR
-# cover-image: path to the social sharing image like images/cover.jpg
-description: |
-  A little book of R that supports readers who have scant programming experience to get a quick start of statistical analysis using R.
-biblio-style: apalike
-csl: chicago-fullnote-bibliography.csl
----
-
 # Preface {.unnumbered}
 
 In the 21st century, nobody does statistics by pen and paper. Those statistical tables found at the back of statistics textbooks belong in the museum. Statistics you hear from the news and research are produced by computers. This book uses R. You may ask why not using a spreadsheet, such as Microsoft Excel or Google Sheets. While they are excellent tools - easy to use, they have significant shortcomings. In particular, they lack of reproducibility, as they operate through point-clicking, drag-and-drop, etc.
@@ -21,9 +6,13 @@ This book intends to provide readers with the bare minimum of R to start analyzi
 
 ## Usage {.unnumbered}
 
-The book consists of two parts. Part I focuses on the basics. Chapter 1 discusses R objects and operations act on these objects, descriptive statistical functions, and data wrangling using base R and `tidyverse`. Chapter 2 covers on data visualization. Both base R and `ggplot2` graphical systems will be discussed. Importantly, it provides guidelines to readers how to choose the most suitable graph according to the properties of data. A picture is worth a thousand words. This book will discuss the purpose, pros and cons of each type of graph. Part II includes use cases that leverage the topics discussed in the previous parts.
+The book consists of two parts. Part I focuses on the basics. Chapter 1 discusses R objects and operations act on these objects, including descriptive statistical functions. Chapter 2 deals with data wrangling - the process of acquiring, selecting, and organizing data stored in a spreadsheet-like format. Both base R and `tidyverse` data wrangling functions will be discussed. Part I is concluded with data visualization in Chapter 3. A picture is worth a thousand words. The chapter offers guidelines for choosing the most suitable graph according to the intended message and properties of data. Both base R and `ggplot2` graphical systems will be discussed. Part II includes use cases of common statistical tests and intermediate-level R functions that leverage the concepts discussed in Part I.
 
-Scripting is best learned through hands-on practice; it is like learning to swim. You don't just listen to lectures. You've got to jump into the water and get wet! To try out the examples and exercises, you need to have access to RStudio. There are two options: sign in to the RStudio cloud service from here: (https://posit.cloud/plans?utm_source=Website&utm_medium=IDE_Download), or install R and RStudio on your own computers. Let me use a car analogy to illustrate the relationship between R and RStudio. R is the engine and RStudio is the dashboard. RStudio provides an Interactive Development Environment (IDE) that provides a user-friendly environment for you to unleash the power of R. Both of them work on household Windows and macOS computers. The installation is straightforward; it involves few double-clicks. Here are the links to download R (https://cran.r-project.org/) and RStudio (https://posit.co/download/rstudio-desktop/).
+## RStudio {.unnumbered}
+
+Scripting is best learned through hands-on practice; it is like learning to swim. You don't just listen to lectures. You've got to jump into the water and get wet! To try out the examples and exercises, you need to use RStudio. There are two options to gain access to RStudio: cloud service (Posit Cloud) and installing RStudio on your own computers. For the first option, no software installation is required. All you need is a Web Browser with Internet connection. For the first time, you can sign up for an account and choose the plan from [Posit Cloud](https://posit.cloud/plans?utm_source=Website&utm_medium=IDE_Download). As this book covers the foundational R features, the basic, free plan will work. Your work will be saved in the cloud under your account, regardless what computer you use, as long as you log in to the same account.
+
+Alternatively, if you prefer to have a better control of RStudio, you can install R and RStudio on your own computers. However, it becomes your responsibility to maintain and update them in the future. Why do you need to install two programs instead of just RStudio? In a car analogy, R is like the engine, and RStudio is like the dashboard. RStudio provides a user-friendly Interactive Development Environment (IDE) for users to instruct R to perform the actual work. A favorable feature of R is that it can be installed on a Windows or a Mac computer. If your computer is a Chromebook, Posit Cloud is a preferred, as the installation of R and RStudio on a Chromebook is less straightforward. For Windows and Mac, the installation is simple; it only takes a few double-clicks. Note that you must install R before RStudio. Here are the links to download [R](https://cran.r-project.org/) and [RStudio](https://posit.co/download/rstudio-desktop/).
 
 Lastly, this is a live book that I will continue to update with topics to help readers like you. I invite you to check back periodically to discover new material.
 

@@ -2,10 +2,12 @@
 % Options for packages loaded elsewhere
 \PassOptionsToPackage{unicode}{hyperref}
 \PassOptionsToPackage{hyphens}{url}
+\PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
 %
 \documentclass[
   letterpaper,
-]{book}
+  DIV=11,
+  numbers=noendperiod]{scrreprt}
 \usepackage{xcolor}
 \usepackage{amsmath,amssymb}
 \setcounter{secnumdepth}{5}
@@ -131,6 +133,12 @@
 \def\fps@figure{htbp}
 \makeatother
 
+\ifLuaTeX
+  \usepackage{luacolor}
+  \usepackage[soul]{lua-ul}
+\else
+  \usepackage{soul}
+\fi
 
 
 
@@ -144,10 +152,11 @@
 
  
 \usepackage[]{natbib}
-\bibliographystyle{apalike}
+\bibliographystyle{plainnat}
 
 
 \usepackage{booktabs}
+\KOMAoption{captions}{tableheading}
 \makeatletter
 \@ifpackageloaded{bookmark}{}{\usepackage{bookmark}}
 \makeatother
@@ -198,7 +207,11 @@
 \hypersetup{
   pdftitle={A Little R Survival Kit},
   pdfauthor={Eric S. Ho, Ph.D.},
-  hidelinks,
+  colorlinks=true,
+  linkcolor={blue},
+  filecolor={Maroon},
+  citecolor={Blue},
+  urlcolor={Blue},
   pdfcreator={LaTeX via pandoc}}
 
 
@@ -206,7 +219,6 @@
 \author{Eric S. Ho, Ph.D.}
 \date{2026-06-16}
 \begin{document}
-\frontmatter
 \maketitle
 
 \renewcommand*\contentsname{Table of contents}
@@ -214,12 +226,6 @@
 \setcounter{tocdepth}{2}
 \tableofcontents
 }
-
-\mainmatter
-\bookmarksetup{startatroot}
-
-\chapter{A Little R Survival Kit: Essential Data Analysis using
-R}\label{a-little-r-survival-kit-essential-data-analysis-using-r}
 
 \bookmarksetup{startatroot}
 
@@ -256,61 +262,68 @@ parameters, please process them and return the results.
 \markright{Usage}
 
 The book consists of two parts. Part I focuses on the basics. Chapter 1
-discusses R objects and operations act on these objects, descriptive
-statistical functions, and data wrangling using base R and
-\texttt{tidyverse}. Chapter 2 covers on data visualization. Both base R
-and \texttt{ggplot2} graphical systems will be discussed. Importantly,
-it provides guidelines to readers how to choose the most suitable graph
-according to the properties of data. A picture is worth a thousand
-words. This book will discuss the purpose, pros and cons of each type of
-graph. Part II includes use cases that leverage the topics discussed in
-the previous parts.
+discusses R objects and operations act on these objects, including
+descriptive statistical functions. Chapter 2 deals with data wrangling -
+the process of acquiring, selecting, and organizing data stored in a
+spreadsheet-like format. Both base R and \texttt{tidyverse} data
+wrangling functions will be discussed. Part I is concluded with data
+visualization in Chapter 3. A picture is worth a thousand words. The
+chapter offers guidelines for choosing the most suitable graph according
+to the intended message and properties of data. Both base R and
+\texttt{ggplot2} graphical systems will be discussed. Part II includes
+use cases of common statistical tests and intermediate-level R functions
+that leverage the concepts discussed in Part I.
+
+\section*{RStudio}\label{rstudio}
+\addcontentsline{toc}{section}{RStudio}
+
+\markright{RStudio}
 
 Scripting is best learned through hands-on practice; it is like learning
 to swim. You don't just listen to lectures. You've got to jump into the
 water and get wet! To try out the examples and exercises, you need to
-have access to RStudio. There are two options: sign in to the RStudio
-cloud service from here:
-(https://posit.cloud/plans?utm\_source=Website\&utm\_medium=IDE\_Download),
-or install R and RStudio on your own computers. Let me use a car analogy
-to illustrate the relationship between R and RStudio. R is the engine
-and RStudio is the dashboard. RStudio provides an Interactive
-Development Environment (IDE) that provides a user-friendly environment
-for you to unleash the power of R. Both of them work on household
-Windows and macOS computers. The installation is straightforward; it
-involves few double-clicks. Here are the links to download R
-(https://cran.r-project.org/) and RStudio
-(https://posit.co/download/rstudio-desktop/).
+use RStudio. There are two options to gain access to RStudio: cloud
+service (Posit Cloud) and installing RStudio on your own computers. For
+the first option, no software installation is required. All you need is
+a Web Browser with Internet connection. For the first time, you can sign
+up for an account and choose the plan from
+\href{https://posit.cloud/plans?utm_source=Website&utm_medium=IDE_Download}{Posit
+Cloud}. As this book covers the foundational R features, the basic, free
+plan will work. Your work will be saved in the cloud under your account,
+regardless what computer you use, as long as you log in to the same
+account.
+
+Alternatively, if you prefer to have a better control of RStudio, you
+can install R and RStudio on your own computers. However, it becomes
+your responsibility to maintain and update them in the future. Why do
+you need to install two programs instead of just RStudio? In a car
+analogy, R is like the engine, and RStudio is like the dashboard.
+RStudio provides a user-friendly Interactive Development Environment
+(IDE) for users to instruct R to perform the actual work. A favorable
+feature of R is that it can be installed on a Windows or a Mac computer.
+If your computer is a Chromebook, Posit Cloud is a preferred, as the
+installation of R and RStudio on a Chromebook is less straightforward.
+For Windows and Mac, the installation is simple; it only takes a few
+double-clicks. Note that you must install R before RStudio. Here are the
+links to download \href{https://cran.r-project.org/}{R} and
+\href{https://posit.co/download/rstudio-desktop/}{RStudio}.
 
 Lastly, this is a live book that I will continue to update with topics
 to help readers like you. I invite you to check back periodically to
 discover new material.
 
-\bookmarksetup{startatroot}
+\part{Part I}
 
-\chapter*{Part I}\label{part-i}
-\addcontentsline{toc}{chapter}{Part I}
-
-\markboth{Part I}{Part I}
-
-Part I focuses on the basic R objects and commands, such as atomic and
-object variables, descriptive statistical functions, and data wrangling
-using base R and \texttt{tidyverse}.
-
-\bookmarksetup{startatroot}
-
-\chapter*{Basic R}\label{basic-r}
-\addcontentsline{toc}{chapter}{Basic R}
-
-\markboth{Basic R}{Basic R}
+\chapter{Basic R}\label{sec-01-basic-r}
 
 \section*{Learning Objectives:}\label{learning-objectives}
 \addcontentsline{toc}{section}{Learning Objectives:}
 
 \markright{Learning Objectives:}
 
-This chapter covers common basic R functions used for statistical
-analysis. After finishing this chapter, you should be able to:
+The journey of R scripting starts with a basic understanding of R
+objects and commands. After finishing this chapter, you should be able
+to:
 
 \begin{itemize}
 \item
@@ -319,13 +332,19 @@ analysis. After finishing this chapter, you should be able to:
   Know the differences between an atomic variable and an object
   variable.
 \item
-  Perform arithmetic operators.
+  Store results in variables through the assignment operator.
 \item
-  Store results in variables.
+  Perform arithmetic operations.
+\item
+  Handle composite objects: vectors, and data frames.
+\item
+  Define categorical variables.
+\item
+  Calculate descriptive and summary statistics.
+\item
+  Utilize inspection functions to figure out basic information of data.
 \item
   Format and print the contents of variables to the console.
-\item
-  Calculate non-robust and robust statistics.
 \item
   Use \texttt{seq()} and \texttt{with()} functions.
 \end{itemize}
@@ -334,12 +353,13 @@ As R scripting is a hands-on topic, I encourage you to open RStudio
 alongside this book and try out the code to maximize understanding.
 Let's get started.
 
-\section*{Rules of Naming Variables}\label{rules-of-naming-variables}
-\addcontentsline{toc}{section}{Rules of Naming Variables}
+\section{R Variables}\label{r-variables}
 
-\markright{Rules of Naming Variables}
+An R variable is a named location in the computer's memory that stores
+some values. Imagine it as a labeled (name) shoebox (memory location)
+keeping a pair sneakers (value).
 
-The name of an R variable must follow these two rules:
+Two rules determines how an R variable be named:
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -355,40 +375,70 @@ Note that:
 
 \begin{itemize}
 \item
-  Variable names are case-sensitive, e.g., \texttt{volume} and
-  \texttt{Volume} are different in the eyes of R.
+  A variable name can be as short as one character to way longer than a
+  normal person wishes (10,000 characters!).
 \item
-  Give meaningful names to variables, e.g., \texttt{zone2} instead of
-  \texttt{z} or even worse \texttt{x}. That will help a bunch in
-  understanding the code, even your own code.
+  My suggestion is to give variables meaningful names that can help a
+  bunch for you or someone to comprehend the the code. For instance, in
+  a problem about heart rate, use \texttt{zone2} instead of \texttt{z}
+  or even worse \texttt{x}.
 \item
-  Watch out that some names have been used by R, e.g., \texttt{c}, and
-  \texttt{head} are function names. However, R is permissive for people
-  to use them as variable names. So, the rule of thumb is to exercise
-  self-discipline not to choose R function names as variable names.
+  Be careful that variable names are case-sensitive, e.g.,
+  \texttt{volume} and \texttt{Volume} are different in the eyes of R.
+\item
+  Avoid naming variables with names that have been reserved by R
+  (https://rdrr.io/r/base/Reserved.html) or names already used to name
+  R's built-in functions, e.g., \texttt{c}, and \texttt{head}. For the
+  latter, unfortunately, R is permissive for misnaming variables by
+  remaining silence, costing time to identify the issue. Therefore, the
+  rule of thumb is to exercise self-discipline not to choose R function
+  names as variable names.
 \end{itemize}
 
-\section*{R Objects}\label{r-objects}
-\addcontentsline{toc}{section}{R Objects}
+\section{R Objects}\label{r-objects}
 
-\markright{R Objects}
+Every variable is an R object. In scripting, it is important to know the
+type(s) of value(s) being stored in a variable, as the types dictate the
+legitimate operations that act on the variable. Let's begin with data
+types.
 
-\subsection*{Atomic and Object
-Variables}\label{atomic-and-object-variables}
-\addcontentsline{toc}{subsection}{Atomic and Object Variables}
+\subsection{Data Types}\label{sec-data-types}
 
-R classifies variables into two broad categories: \textbf{atomic type} ,
-and \textbf{object}. In the former, the value cannot be split further
-into smaller R objects. Let us begin with two atomic types:
-\texttt{**numeric**}, and \texttt{**character**}.
+R supports six data types:
 
-\subsubsection*{Numeric Variables}\label{numeric-variables}
-\addcontentsline{toc}{subsubsection}{Numeric Variables}
+\begin{itemize}
+\item
+  Double: decimal numbers, e.g., 5.6, -4.3
+\item
+  Integer: whole numbers, e.g, -10, 56
+\item
+  Character: they contain text, e.g., ``ACGT'', ``Hello World''
+\item
+  Logical: \texttt{TRUE} or \texttt{FALSE}
+\item
+  Complex\textsuperscript{\texttt{*}}: Complex numbers containing real
+  and imaginary components, e.g., 5+2i
+\item
+  Raw\textsuperscript{\texttt{*}}: Bare bytes of data.
+\end{itemize}
 
-The simplest atomic type in R is the \texttt{numeric} data type. That
-includes whole numbers, decimal numbers, and numbers represented in
-scientific notation (\(6.023\times10^{23}\)). In mathematics, an atomic
-variable is a \textbf{scalar}. Here are some examples:
+\texttt{*} We will only discuss the first four types in this book, you
+can ignore complex and raw types.
+
+\subsection{Atomic and Composite
+Variables}\label{sec-atomic-and-composite-variables}
+
+From a practical perspective, R variables can be viewed as
+\textbf{atomic variables} , and \textbf{composite variables}. An atomic
+variable contain a single value, and a composite variable consists of a
+collection of values. Let us begin with two atomic variables:
+\textbf{\texttt{numeric}}, and \textbf{\texttt{character}}.
+
+\subsubsection{Numeric Variables}\label{numeric-variables}
+
+An atomic numeric variable holds a decimal number (\texttt{double}) or a
+whole number (\texttt{integer}). Numbers can be represented in
+scientific notation. Here are some examples:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -396,63 +446,60 @@ variable is a \textbf{scalar}. Here are some examples:
 \NormalTok{height }\OtherTok{\textless{}{-}} \FloatTok{5.6}
 
 \CommentTok{\# Whole number (Integer)}
-\NormalTok{sample\_size }\OtherTok{\textless{}{-}} \DecValTok{15}
+\NormalTok{sample\_size }\OtherTok{\textless{}{-}} \DecValTok{15}\NormalTok{L}
 
 \CommentTok{\# Scientific notation}
 \NormalTok{avogadro\_number }\OtherTok{\textless{}{-}} \FloatTok{6.023e23}
 \end{Highlighting}
 \end{Shaded}
 
-Don't be mistaken, the \texttt{e} in the scientific notation refers to
-base \texttt{10}, e.g., \texttt{6.023e23} is \(6.023\times10^{23}\).
+\texttt{\textless{}-} is the assignment operator. It looks like a
+left-pointing arrow, depicting the transfer of value from the right-hand
+side to the left-hand side. Upon execution, the resultant value of the
+expression on the right-hand side, if no error, is stored in the named
+variable on the left-hand side. In RStudio, you can see the variable
+name and its associated value under the \textbf{Environment} tab, which
+usually occupies the top right quadrant of the RStudio desktop.
 
-\texttt{\textless{}-} denotes the assignment operator. Upon execution,
-the resultant value of the expression on the right-hand side, if no
-error, is stored in the named variable on the left-hand side. In
-RStudio, you can see the variable name and its associated value under
-the \textbf{Environment} tab, which usually occupies the top right
-quadrant of the RStudio desktop.
-
-Note that R supports two equivalent assignment operators. You can use
-\texttt{\textless{}-} and \texttt{=} interchangeably. I prefer
-\texttt{\textless{}-} to \texttt{=} as \texttt{=} can easily confuse
+Note that R supports another assignment operator: \texttt{=}. You can
+use \texttt{\textless{}-} and \texttt{=} interchangeably. I prefer
+\texttt{\textless{}-} to \texttt{=}, as \texttt{=} can easily confuse
 with the equality checking operator \texttt{==}.
+
+A few words about the scientific notation. It comprises three parts: the
+coefficient, a constant literal \texttt{e}, and the exponent. The
+\texttt{e} refers to the base \texttt{10}. For example, the R's
+scientific notation of \(6.023\times10^{23}\) is \texttt{6.023e23},
+where the coefficient and the exponent are \(6.023\) and \(23\),
+respectively. Note that you must not include spaces in a scientific
+notation, e.g., \texttt{6.023e\ 23}, \texttt{6.023\ e23}, or
+\texttt{6.023\ e\ 23} will return errors.
 
 \textbf{Arithmetic Operators}
 
-Arithmetic operators that can apply to numeric variables include
-\texttt{+}, \texttt{-}, \texttt{*}, \texttt{/}, \texttt{**}, and
-\texttt{\^{}}. The last two operators - \texttt{**} and \texttt{\^{}} -
-are exponential; they perform exactly the same function. Here are some
-examples:
+You can apply arithmetic operations on numeric variables. Here are the
+arithmetic operators: \texttt{+} (addition), \texttt{-} (subtraction),
+\texttt{*} (multiplication), \texttt{/} (division), \texttt{**}
+(exponentiation), and \texttt{\^{}} (exponentiation). The last two
+exponentiation operators perform exactly the same function. Here are
+some examples:
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{radius }\OtherTok{\textless{}{-}} \FloatTok{2.5}
 \NormalTok{diameter }\OtherTok{\textless{}{-}} \DecValTok{2}\SpecialCharTok{*}\NormalTok{pi}\SpecialCharTok{*}\NormalTok{radius}
+\NormalTok{pi }\OtherTok{\textless{}{-}} \FloatTok{3.1416}
 \NormalTok{area }\OtherTok{\textless{}{-}}\NormalTok{ pi}\SpecialCharTok{*}\NormalTok{radius}\SpecialCharTok{**}\DecValTok{2}
 \NormalTok{volume }\OtherTok{\textless{}{-}}\NormalTok{ (}\DecValTok{4}\SpecialCharTok{/}\DecValTok{3}\NormalTok{)}\SpecialCharTok{*}\NormalTok{pi}\SpecialCharTok{*}\NormalTok{radius}\SpecialCharTok{\^{}}\DecValTok{3}
 \end{Highlighting}
 \end{Shaded}
 
-Note that \texttt{pi} is \(\pi\), which is a built-in variable with the
-value 3.141593.
+\subsubsection{Character Variables}\label{character-variables}
 
-E.g., the height of an object is 5.6 feet:
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{height }\OtherTok{\textless{}{-}} \FloatTok{5.6}
-\end{Highlighting}
-\end{Shaded}
-
-\subsubsection*{Character Variables}\label{character-variables}
-\addcontentsline{toc}{subsubsection}{Character Variables}
-
-Besides numeric values, R also support operations of non-numeric values,
-which is called \texttt{**character**}. To define a character value,
-embrace the string of characters with a pair of quotes, either a pair of
-single or double quotes. E.g.,
+R also support text values, which is in \texttt{character} data type. To
+define a character value, you need to use a pair of quotes to embrace
+the text. Either a pair of single (\texttt{\textquotesingle{}}) or
+double quotes (\texttt{"}) works. E.g.,
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -461,11 +508,11 @@ single or double quotes. E.g.,
 \end{Shaded}
 
 To figure out whether a variable's type is numeric, character, or
-something else, use the \texttt{class()} function,
+something else, use the \texttt{typeof()} function,
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{class}\NormalTok{(course)}
+\FunctionTok{typeof}\NormalTok{(course)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -475,33 +522,47 @@ something else, use the \texttt{class()} function,
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{class}\NormalTok{(height)}
+\FunctionTok{typeof}\NormalTok{(area)}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
-[1] "numeric"
+[1] "double"
 \end{verbatim}
 
 Obviously, it does not make sense to do math with character type. E.g.,
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{nucleotides}\SpecialCharTok{*}\DecValTok{4}
+\NormalTok{course}\SpecialCharTok{*}\DecValTok{4}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
-Error:
-! object 'nucleotides' not found
+Error in `course * 4`:
+! non-numeric argument to binary operator
 \end{verbatim}
 
-\subsubsection*{Vectors}\label{vectors}
-\addcontentsline{toc}{subsubsection}{Vectors}
+You can use \texttt{nchar()} function to figure out the number of
+characters, including spaces and punctuations, of a character variable.
+E.g.,
 
-One commonly used object in R is \textbf{\texttt{vectors}}. It comprises
-different components that can be processed collectively as a whole, or
-individually. A vector can be viewed pictorially as a wagon train. E.g.,
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{nchar}\NormalTok{(course)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] 7
+\end{verbatim}
+
+\subsection{Vectors}\label{sec-vectors}
+
+One common composite variable in R is \textbf{\texttt{vectors}}. It is
+an ordered sequence of items that can be processed collectively as a
+whole, or individually. A vector can be viewed pictorially as a wagon
+train in which carriages are coupled one after the other. E.g.,
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -512,10 +573,10 @@ individually. A vector can be viewed pictorially as a wagon train. E.g.,
 
 \texttt{days\_of\_month} is a \texttt{vector} object in R.
 \textbf{\texttt{c()}} is the function that \textbf{combines or collates}
-several objects, as its name suggests, into a vector object. Elements
-are indexed or numbered from 1 to the total number of elements in the
-vector. You can extract a particular element by specifying the index
-within a pair of square-brackets. E.g.,
+several objects into a vector object. Items are indexed or numbered from
+1 to the total number of items in the vector. You can extract a
+particular item by specifying the index within a pair of
+square-brackets. E.g.,
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -528,8 +589,8 @@ within a pair of square-brackets. E.g.,
 [1] 28
 \end{verbatim}
 
-\texttt{{[}2{]}} means the 2\textsuperscript{nd} element of a vector. We
-will discuss more about indexing below.
+The \texttt{{[}2{]}} means the 2\textsuperscript{nd} element of a
+vector. We will discuss more about indexing below.
 
 Here is an example of a character vector:
 
@@ -539,13 +600,14 @@ Here is an example of a character vector:
 \end{Highlighting}
 \end{Shaded}
 
-Noteworthy that all elements held inside a vector must have the same
-data type (\textbf{homogeneous}). For instance, \texttt{days\_of\_month}
-contains all numeric values, and \texttt{nucleotides} contains all
-character values. If you try to combine objects of different data types
-into a vector, R will convert them to character type. In the example
-below, even the first and third values are entered as numeric, R coerces
-them into character type, the common denominator type, \texttt{"1"} and
+Noteworthy that all items held inside a vector must have the same data
+type. In other words, vectors are always \textbf{homogeneous}. For
+instance, \texttt{days\_of\_month} contains all numeric values, and
+\texttt{nucleotides} contains all character values. If you try to
+combine objects of different data types into a vector, R will
+automatically convert them to character type, the lowest denominator of
+data types. In the example below, even the first and third values are
+entered as numeric, R coerces them into text \texttt{"1"} and
 \texttt{"0"}.
 
 \begin{Shaded}
@@ -581,6 +643,9 @@ respectively. Here's an example
 [1] -1.2677314  0.8451543  1.2677314 -0.4225771  0.4225771 -0.8451543
 \end{verbatim}
 
+\texttt{mean()} and \texttt{sd()} are built-in functions that calcuate
+the average and standard deviation of a sample, respectively.
+
 The convenience is that you don't have to specify how to subtract and
 divide each height individually. Instead, R recognizes the expression
 \texttt{(heights-x\_bar)} is to subtract an atomic \texttt{x\_bar}
@@ -588,19 +653,18 @@ divide each height individually. Instead, R recognizes the expression
 mechanism, it will subtract \texttt{x\_bar} from every height in the
 vector \texttt{heights}, similarly for the division by \texttt{s}.
 
-\texttt{vector} is only one of the many types of objects supported by R,
-data frame is another commonly used object types, which will be
+\texttt{vector} is only one of the many types of objects supported by R.
+Data frame is another commonly used object types, which will be
 discussed later.
 
-\subsection*{Factors/Categorical Variables}\label{factor-levels}
-\addcontentsline{toc}{subsection}{Factors/Categorical Variables}
+\subsection{Factors/Categorical Variables}\label{sec-factor-levels}
 
-In R, a categorical variable in statistics is called a \textbf{factor}.
+In R, a \textbf{factor} refers to a categorical variable in statistics.
 A categorical variable is further classified into \textbf{nominal} or
-\textbf{ordinal}. A nominal variable has no intrinsic order. The
-\texttt{factor()} function is used to define a categorical variable.
-E.g., a sample of colors is stored in a vector, and you want to define
-it as a nominal categorical variable.
+\textbf{ordinal}. A nominal variable has no intrinsic order. Use the
+\texttt{factor()} function to define a categorical variable in R. E.g.,
+a sample of colors is stored in a vector, and you want to define it as a
+nominal categorical variable.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -634,18 +698,21 @@ variables. E.g., the stages of hypertension.
 Levels: normal < elevated < Stage 1 < Stage 2 < Hyperintensive
 \end{verbatim}
 
-As you can see above, the hypertension levels are ordered and connected
-by a less than sign (\texttt{\textless{}}). \#\#\# Data frames
+As you can see above, the last line (\texttt{Levels}) shows the
+hypertension levels in ascending order and levels are connected by a
+less than sign (\texttt{\textless{}}).
 
-Besides \texttt{vector}, another commonly used object is
-\texttt{data\ frame}. Almost. all the datasets we will use for analysis
-are in a data frame format. Simply speaking, a data frame is a
-\textbf{tabular} or spreadsheet-like object, like an Excel or Google
-Sheets. A data frame consists of rows and columns. Each row represents a
-sample. Each column represents a variable. Rows are expected to have
-equal length, i.e., the same number of columns. If not, R will either
-complain or pad the missing columns with a special value \texttt{NA}
-(not available). Let's take a look at an R's built-in data frame
+\subsection{Data Frames}\label{data-frames}
+
+Besides \texttt{vector}, another common R object is
+\texttt{data\ frame}. Almost all the datasets used for data analysis are
+organized in data frames. Simply speaking, a data frame is a
+\textbf{tabular} or spreadsheet-like object where values are organized
+in rows and columns. Each row represents a sample and each column
+represents a variable. Rows are expected to have equal length, i.e., the
+same number of columns. If not, R will either complain or pad the
+missing columns with a special value \texttt{NA} (it stands for not
+available). Let's take a look at an R's built-in data frame
 \texttt{iris}:
 
 \begin{Shaded}
@@ -720,25 +787,18 @@ data frame:
 [1] 5
 \end{verbatim}
 
-So, we know that \texttt{iris} contains 150 rows (flowers) and five
-columns.
+So, we know that \texttt{iris} contains 150 rows (flower samples) and
+five columns.
 
-\subsubsection*{Accessing Rows and Columns of a Data
-Frame}\label{accessing-rows-and-columns-of-a-data-frame}
-\addcontentsline{toc}{subsubsection}{Accessing Rows and Columns of a
-Data Frame}
+\subsubsection{Accessing Rows and Columns of a Data
+Frame}\label{sec-access-rows-columns}
 
 Each element in a data frame can be referenced by row and column indexes
-like the X-Y Cartesian system. Rows are automatically indexed
-(numbered), where the 1st row is index 1, the 2nd row is index 2, and
-the index of the last row is the total number of rows, similarly for
-columns. But often time, columns are named, such as the columns of
-\texttt{iris}; \texttt{Sepal.Width}, \texttt{Sepal.Length}, etc., as
-shown in Figure (@ref(fig:Fig1-1)). The two equivalent indexing schemes
-can occur in parallel.\footnote{Rows can be named as well. This is left
-  as an exercise for the readers.}
+like a X-Y Cartesian system. Rows are automatically indexed (numbered),
+where the 1st row is index 1, the 2nd row is index 2, and the index of
+the last row is the total number of rows, similarly for columns.
 
-The syntax of accessing individual elements is
+The syntax of accessing individual elements by indexes is
 \texttt{\textless{}data\ frame\ name\textgreater{}{[}row,\ column{]}}.
 E.g., the cell at the 5\textsuperscript{th} row and
 3\textsuperscript{rd} column of the iris is:
@@ -753,19 +813,9 @@ E.g., the cell at the 5\textsuperscript{th} row and
 [1] 1.4
 \end{verbatim}
 
-\begin{figure}[H]
-
-{\centering \pandocbounded{\includegraphics[keepaspectratio]{images/Figure_1.1.png}}
-
-}
-
-\caption{Accessing rows and columns of a data frame.}
-
-\end{figure}%
-
 If the column index is ignored, all columns of the specified row(s) are
-returned as shown in Figure (@ref(fig:Fig1-1)). For example, show all
-columns of the 3\textsuperscript{rd} row by:
+returned as shown in Figure 1.1. For example, show all columns of the
+3\textsuperscript{rd} row by:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -779,8 +829,20 @@ columns of the 3\textsuperscript{rd} row by:
 3          4.7         3.2          1.3         0.2  setosa
 \end{verbatim}
 
+\begin{figure}
+
+\centering{
+
+\pandocbounded{\includegraphics[keepaspectratio]{images/Figure_1.1.png}}
+
+}
+
+\caption{\label{fig-Fig1-1}Accessing rows and columns of a data frame.}
+
+\end{figure}%
+
 Similarly, if the row index is skipped, all rows of the specified
-column(s) are returned (@ref(fig:Fig1-1)). For example,
+column(s) are returned. For example,
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -794,27 +856,28 @@ column(s) are returned (@ref(fig:Fig1-1)). For example,
 Levels: setosa versicolor virginica
 \end{verbatim}
 
-R provides an alternative way to access a single column of a data frame.
-The syntax is
-\texttt{\textless{}data\ frame\ name\textgreater{}\$\textless{}column\ name\textgreater{}}.
-The equivalence of \texttt{iris{[},5{]}} is \texttt{iris\$Species}:
+Note that the \texttt{head()} above is used to limit the number rows
+displayed by avoiding listing page after page of data rows.
+
+You are not limited to display one row or one column using this indexing
+scheme. For example, show to 110\^{}th and 34\^{}th rows and
+2\textsuperscript{nd} and 5\textsuperscript{th} columns,
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{head}\NormalTok{(iris}\SpecialCharTok{$}\NormalTok{Species)}
+\NormalTok{iris[}\FunctionTok{c}\NormalTok{(}\DecValTok{110}\NormalTok{,}\DecValTok{34}\NormalTok{), }\FunctionTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{,}\DecValTok{5}\NormalTok{)]}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
-[1] setosa setosa setosa setosa setosa setosa
-Levels: setosa versicolor virginica
+    Sepal.Width   Species
+110         3.6 virginica
+34          4.2    setosa
 \end{verbatim}
 
-Note that the \texttt{\$} method only works for a single column. We will
-discuss a way shortly how to access multiple columns in one R command.
-
-Besides the numeric column index, columns can be referenced by names as
-shown in Figure (@ref(fig:Fig1-1)). E.g., the \texttt{Petal.Length} of
+As columns are often named \footnote{If rows are named, rows can be
+  referenced by their names.}, columns can be referenced by their names
+as well (Figure~\ref{fig-Fig1-1}). E.g., the \texttt{Petal.Length} of
 the 5\textsuperscript{th} row:
 
 \begin{Shaded}
@@ -827,12 +890,12 @@ the 5\textsuperscript{th} row:
 [1] 1.4
 \end{verbatim}
 
-To access more than one column and row, pack the row indices and column
-names in vectors by the function \texttt{c(...)}, which
+To access more than one column and row, pack the row indexes and column
+names in vectors by the \texttt{c(...)} function, which
 \textbf{c}ombines or \textbf{c}ollates several items into a vector
-object. For example, show the \texttt{Petal.Length} and
-\texttt{Sepal.Length} of the 123\textsuperscript{th} and
-96\textsuperscript{th} rows:
+object (see Section~\ref{sec-vectors}). For example, show the
+\texttt{Petal.Length} and \texttt{Sepal.Length} of the
+123\textsuperscript{th} and 96\textsuperscript{th} rows:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -846,24 +909,135 @@ object. For example, show the \texttt{Petal.Length} and
 96           4.2          5.7
 \end{verbatim}
 
-Using row index and column names is the basic accessing method. R
-provides additional methods to select rows and columns by conditions.
-More of this topic will be discussed in \textbf{Chapter 2: Data
-Wrangling}.
+If your task is to extract a single column, R provides an alternative
+way to access a column by its name. The syntax is
+\texttt{\textless{}data\ frame\ name\textgreater{}\$\textless{}column\ name\textgreater{}}
+\footnote{The \texttt{\$} method only works for a single column.}. For
+example, \texttt{iris\$Species}, which is equivalent of
+\texttt{iris{[},5{]}},
 
-\subsubsection*{Create a Data Frame}\label{create-a-data-frame}
-\addcontentsline{toc}{subsubsection}{Create a Data Frame}
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{head}\NormalTok{(iris}\SpecialCharTok{$}\NormalTok{Species)}
+\end{Highlighting}
+\end{Shaded}
 
-\section*{Descriptive Statistics}\label{descriptive-statistics}
-\addcontentsline{toc}{section}{Descriptive Statistics}
+\begin{verbatim}
+[1] setosa setosa setosa setosa setosa setosa
+Levels: setosa versicolor virginica
+\end{verbatim}
 
-\markright{Descriptive Statistics}
+We have covered several ways to access rows, columns, or both using
+indexes and column names. There are additional methods to select rows
+and columns by conditions. More of this topic will be discussed in
+Chapter~\ref{sec-02-data-wrangling}.
 
-\subsection*{Summary Functions}\label{summary-functions}
-\addcontentsline{toc}{subsection}{Summary Functions}
+\subsubsection{Create a Data Frame}\label{create-a-data-frame}
 
-\texttt{length()} shows the number elements in an object. We will use a
-sample of pumpkin's weights for illustration.
+We can use the \texttt{data.frame()} function with the concept of vector
+to create a dataset in data frame format. For example, a study collected
+10 fish with their sex and age. To create the data frame, vectors must
+be created to represent each variable (column). Here's the R code:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{sex }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{\textquotesingle{}F\textquotesingle{}}\NormalTok{,}\StringTok{\textquotesingle{}M\textquotesingle{}}\NormalTok{,}\StringTok{\textquotesingle{}M\textquotesingle{}}\NormalTok{,}\StringTok{\textquotesingle{}F\textquotesingle{}}\NormalTok{,}\StringTok{\textquotesingle{}F\textquotesingle{}}\NormalTok{,}\StringTok{\textquotesingle{}F\textquotesingle{}}\NormalTok{,}\StringTok{\textquotesingle{}M\textquotesingle{}}\NormalTok{,}\StringTok{\textquotesingle{}M\textquotesingle{}}\NormalTok{,}\StringTok{\textquotesingle{}M\textquotesingle{}}\NormalTok{,}\StringTok{\textquotesingle{}M\textquotesingle{}}\NormalTok{)}
+\NormalTok{age }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{3}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{3}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{3}\NormalTok{,}\DecValTok{3}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{)}
+\NormalTok{fish }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(sex,age)}
+\NormalTok{fish}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+   sex age
+1    F   1
+2    M   3
+3    M   2
+4    F   3
+5    F   1
+6    F   1
+7    M   3
+8    M   3
+9    M   1
+10   M   1
+\end{verbatim}
+
+You can use the \texttt{summary()} function to examine the summary
+statistics of the variables.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{summary}\NormalTok{(fish)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+        sex          age     
+ Length   :10   Min.   :1.0  
+ N.unique : 2   1st Qu.:1.0  
+ N.blank  : 0   Median :1.5  
+ Min.nchar: 1   Mean   :1.9  
+ Max.nchar: 1   3rd Qu.:3.0  
+                Max.   :3.0  
+\end{verbatim}
+
+Find out more information about \texttt{summary()} function below
+Section~\ref{sec-summary-function}.
+
+It is almost done. There is one nuance. In the current form,
+\texttt{sex} is a character variable so its summary statistics are a bit
+strange. Most often, variable likes that should be categorical/nominal.
+Therefore, we need to convert \texttt{sex} into a \texttt{factor}
+Section~\ref{sec-factor-levels}. Here's the revised code:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{sex }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{\textquotesingle{}F\textquotesingle{}}\NormalTok{,}\StringTok{\textquotesingle{}M\textquotesingle{}}\NormalTok{,}\StringTok{\textquotesingle{}M\textquotesingle{}}\NormalTok{,}\StringTok{\textquotesingle{}F\textquotesingle{}}\NormalTok{,}\StringTok{\textquotesingle{}F\textquotesingle{}}\NormalTok{,}\StringTok{\textquotesingle{}F\textquotesingle{}}\NormalTok{,}\StringTok{\textquotesingle{}M\textquotesingle{}}\NormalTok{,}\StringTok{\textquotesingle{}M\textquotesingle{}}\NormalTok{,}\StringTok{\textquotesingle{}M\textquotesingle{}}\NormalTok{,}\StringTok{\textquotesingle{}M\textquotesingle{}}\NormalTok{)}
+\NormalTok{sex }\OtherTok{\textless{}{-}} \FunctionTok{factor}\NormalTok{(sex, }\AttributeTok{levels=}\FunctionTok{c}\NormalTok{(}\StringTok{\textquotesingle{}F\textquotesingle{}}\NormalTok{,}\StringTok{\textquotesingle{}M\textquotesingle{}}\NormalTok{))}
+\NormalTok{age }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{3}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{3}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{3}\NormalTok{,}\DecValTok{3}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{)}
+\NormalTok{fish }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(sex,age)}
+\NormalTok{fish}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+   sex age
+1    F   1
+2    M   3
+3    M   2
+4    F   3
+5    F   1
+6    F   1
+7    M   3
+8    M   3
+9    M   1
+10   M   1
+\end{verbatim}
+
+See the differences for \texttt{sex} after revision.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{summary}\NormalTok{(fish)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+ sex        age     
+ F:4   Min.   :1.0  
+ M:6   1st Qu.:1.0  
+       Median :1.5  
+       Mean   :1.9  
+       3rd Qu.:3.0  
+       Max.   :3.0  
+\end{verbatim}
+
+\section{Descriptive Statistics}\label{descriptive-statistics}
+
+\subsection{Non-robust Statistics}\label{non-robust-statistics}
+
+Sample mean, variance, and standard deviation are non-robust statistics,
+as they are sensitive to outliers (extreme values).
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -872,90 +1046,11 @@ sample of pumpkin's weights for illustration.
 \end{Highlighting}
 \end{Shaded}
 
-The \texttt{length()} shows the number of weights defined in
-\texttt{pumpkins}.
+\emph{Sample Mean}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{length}\NormalTok{(pumpkins)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-[1] 10
-\end{verbatim}
-
-To be clear, \texttt{length()} counts the number of elements in an R
-object, such as a vector or a data frame. \textbf{If the object is
-atomic, the function will return 1.} For example, in the following
-example, \texttt{dna} is a character (atomic). The function will return
-1, not the number of characters.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{dna }\OtherTok{\textless{}{-}} \StringTok{\textquotesingle{}ACGTAGC\textquotesingle{}}
-\FunctionTok{length}\NormalTok{(dna)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-[1] 1
-\end{verbatim}
-
-The \texttt{range()} prints the minimum and maximum values - numeric and
-non-numeric - of an object.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{range}\NormalTok{(pumpkins)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-[1]  3.52 10.14
-\end{verbatim}
-
-If you are interested in either the minimum or maximum, here are the
-corresponding functions:
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\# The lightness}
-\FunctionTok{min}\NormalTok{(pumpkins)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-[1] 3.52
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\# The heaviest}
-\FunctionTok{max}\NormalTok{(pumpkins)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-[1] 10.14
-\end{verbatim}
-
-\subsection*{Non-robust Statistics}\label{non-robust-statistics}
-\addcontentsline{toc}{subsection}{Non-robust Statistics}
-
-Mean, variance, and standard deviation are non-robust statistics, as
-they are sensitive to outliers (extreme values).
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\# A sample of pumpkins\textquotesingle{} weights}
-\NormalTok{pumpkins }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\FloatTok{6.85}\NormalTok{,}\FloatTok{6.56}\NormalTok{,}\FloatTok{6.23}\NormalTok{,}\FloatTok{7.55}\NormalTok{,}\FloatTok{4.45}\NormalTok{,}\FloatTok{10.14}\NormalTok{,}\FloatTok{3.52}\NormalTok{,}\FloatTok{6.62}\NormalTok{,}\FloatTok{3.76}\NormalTok{,}\FloatTok{7.62}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\# The average weight}
+\CommentTok{\# Sample mean or the average weight}
 \FunctionTok{mean}\NormalTok{(pumpkins)}
 \end{Highlighting}
 \end{Shaded}
@@ -964,9 +1059,11 @@ they are sensitive to outliers (extreme values).
 [1] 6.33
 \end{verbatim}
 
+\emph{Sample Variance}
+
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{\# The variance}
+\CommentTok{\# Sample variance}
 \FunctionTok{var}\NormalTok{(pumpkins)}
 \end{Highlighting}
 \end{Shaded}
@@ -975,9 +1072,11 @@ they are sensitive to outliers (extreme values).
 [1] 4.013489
 \end{verbatim}
 
+\emph{Sample Standard Deviation}
+
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{\# the standard deviation}
+\CommentTok{\# Sample standard deviation}
 \FunctionTok{sd}\NormalTok{(pumpkins)}
 \end{Highlighting}
 \end{Shaded}
@@ -986,11 +1085,23 @@ they are sensitive to outliers (extreme values).
 [1] 2.003369
 \end{verbatim}
 
-\subsection*{Robust Statistics}\label{robust-statistics}
-\addcontentsline{toc}{subsection}{Robust Statistics}
+By the way, the square root of the sample variance \(\sqrt{variance}\)
+is the standard deviation. See below:
 
-Median and quantile are robust statistics, as outliers minimally
-influence their values.
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{sqrt}\NormalTok{(}\FunctionTok{var}\NormalTok{(pumpkins))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] 2.003369
+\end{verbatim}
+
+\subsection{Robust Statistics}\label{robust-statistics}
+
+Median and quantile are called robust statistics, as they impede
+outliers' influence.
 
 \emph{Median}
 
@@ -1013,7 +1124,10 @@ influence their values.
 
 \emph{Quantile}
 
-Standard quantile intervals.
+The default quantile interval, as the name suggests, is 25\%. Note that
+the R function name is \texttt{quantile()}, not
+\st{\mbox{\texttt{quartile()}}}, as users can override the default 25\%
+interval.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1026,7 +1140,9 @@ Standard quantile intervals.
  3.520  4.895  6.590  7.375 10.140 
 \end{verbatim}
 
-A customized quantile intervals.
+Instead of the default 25\% interval, you can specify your preferred
+quantile(s) and they don't have to be equally divided. Here are some
+examples:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1039,7 +1155,7 @@ A customized quantile intervals.
 3.736 7.872 
 \end{verbatim}
 
-A specific quantile.
+Or, a specific quantile.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1063,7 +1179,9 @@ A specific quantile.
 9.006 
 \end{verbatim}
 
-\textbf{Inter-quantile Region (IQR)}
+\textbf{Inter-Quartile Region (IQR)}
+
+Here is the definition of IQR:
 
 \[IQR = Q3 - Q1\]
 
@@ -1077,14 +1195,20 @@ A specific quantile.
 [1] 2.48
 \end{verbatim}
 
-\subsection*{\texorpdfstring{\texttt{summary()}
-Function}{summary() Function}}\label{summary-function}
-\addcontentsline{toc}{subsection}{\texttt{summary()} Function}
+IQR is used to determine the upper and lower whiskers in a boxplot. Data
+points below or above the lower or upper whisker are considered as
+outliers.
+
+\[Lower\space whisker = Q1 - 1.5\times{IQR}\]
+\[Upper\space whisker = Q3 + 1.5\times{IQR}\]
+
+\subsection{\texorpdfstring{\texttt{summary()}
+Function}{summary() Function}}\label{sec-summary-function}
 
 A data frame may consists of many variables of different types in
 various ranges. Therefore, it makes a lot of sense to take a glimpse of
-all variables before analysis. It can be done by the \texttt{summary()}
-function to reveal:
+all variables before analysis. It can be done by using the
+\texttt{summary()} function to reveal:
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -1127,13 +1251,107 @@ numeric column. For a categorical variable (factor), it will show the
 levels with the number of samples (rows) found for each level, e.g.,
 \texttt{Species} is a nominal variable, with 50 samples per species.
 
-\section*{Utilities}\label{utilities}
-\addcontentsline{toc}{section}{Utilities}
+\section{Utility Functions}\label{utility-functions}
 
-\markright{Utilities}
+\subsection{Inspection Functions}\label{inspection-functions}
 
-\subsection*{Printing and Formatting}\label{printing-and-formatting}
-\addcontentsline{toc}{subsection}{Printing and Formatting}
+Before diving into data analysis, we often want to know some basic
+information about it, such as the number of samples, what is the range
+of a numeric variable, etc. Here we will discuss a few R functions to do
+that, and we coin them inspection functions.
+
+We will use a sample of pumpkin's weights for illustration.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# A sample of pumpkins\textquotesingle{} weights}
+\NormalTok{pumpkins }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\FloatTok{6.85}\NormalTok{,}\FloatTok{6.56}\NormalTok{,}\FloatTok{6.23}\NormalTok{,}\FloatTok{7.55}\NormalTok{,}\FloatTok{4.45}\NormalTok{,}\FloatTok{10.14}\NormalTok{,}\FloatTok{3.52}\NormalTok{,}\FloatTok{6.62}\NormalTok{,}\FloatTok{3.76}\NormalTok{,}\FloatTok{7.62}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+The \texttt{length()} shows the number of items in a vector.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{length}\NormalTok{(pumpkins)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] 10
+\end{verbatim}
+
+To be clear, \texttt{length()} counts the number of items in an R
+composite object; the number of items in a vector or the number of
+columns in a data frame. \textbf{If the object is atomic, the function
+will return 1.} For example, in the following example, \texttt{dna} is
+an atomic, character variable. The function will return 1, not the
+number of characters.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{dna }\OtherTok{\textless{}{-}} \StringTok{\textquotesingle{}ACGTAGC\textquotesingle{}}
+\FunctionTok{length}\NormalTok{(dna)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] 1
+\end{verbatim}
+
+To count the number of characters in a character variable, use the
+\texttt{nchar()} function.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{nchar}\NormalTok{(dna)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] 7
+\end{verbatim}
+
+The \texttt{range()} prints the minimum and maximum values of an object
+\footnote{Note that \texttt{range()} works for non-numeric vector, but
+  we will skip such special operation.}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{range}\NormalTok{(pumpkins)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1]  3.52 10.14
+\end{verbatim}
+
+If you are interested in either the minimum or maximum, here are the
+corresponding functions:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# The lightest}
+\FunctionTok{min}\NormalTok{(pumpkins)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] 3.52
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# The heaviest}
+\FunctionTok{max}\NormalTok{(pumpkins)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] 10.14
+\end{verbatim}
+
+\subsection{Printing and Formatting}\label{printing-and-formatting}
 
 R provides a function called \texttt{print()} that prints text to the
 console. E.g.,
@@ -1157,7 +1375,7 @@ console. E.g.,
 \end{Shaded}
 
 \begin{verbatim}
-[1] 15.70796
+[1] 15.708
 \end{verbatim}
 
 Suppose you want to improve the printout by making it more readable, say
@@ -1174,7 +1392,7 @@ how to use it:
 \end{Shaded}
 
 \begin{verbatim}
-[1] "The diameter of a circle with radius 2.5 cm is 15.707963267949 ."
+[1] "The diameter of a circle with radius 2.5 cm is 15.708 ."
 \end{verbatim}
 
 The above printout is almost perfect. If you're picky, you don't like
@@ -1192,7 +1410,7 @@ with \texttt{paste0()}:
 \end{Shaded}
 
 \begin{verbatim}
-[1] "The diameter of a circle with radius2.5cm is15.707963267949."
+[1] "The diameter of a circle with radius2.5cm is15.708."
 \end{verbatim}
 
 As you can see, there is no more space between the diameter and the
@@ -1209,13 +1427,11 @@ separation yourselves. Here is the final version for using
 \end{Shaded}
 
 \begin{verbatim}
-[1] "The diameter of a circle with radius 2.5 cm is 15.707963267949."
+[1] "The diameter of a circle with radius 2.5 cm is 15.708."
 \end{verbatim}
 
-\subsection*{\texorpdfstring{\texttt{seq()} - create a series of
-numbers}{seq() - create a series of numbers}}\label{seq-function}
-\addcontentsline{toc}{subsection}{\texttt{seq()} - create a series of
-numbers}
+\subsection{\texorpdfstring{\texttt{seq()} - create a series of
+numbers}{seq() - create a series of numbers}}\label{sec-seq-function}
 
 There are situations where we need a series of equal-interval numbers.
 For example, override the default breaks - x-ticks - of a histogram, a
@@ -1387,13 +1603,14 @@ NULL
 
 Is it really important? No, unless you're a R developer.
 
-\subsection*{\texorpdfstring{\texttt{with()}}{with()}}\label{with}
-\addcontentsline{toc}{subsection}{\texttt{with()}}
+\subsection{\texorpdfstring{\texttt{with()}}{with()}}\label{with}
 
-It set up the context of a data frame so it spares you from using the
-\texttt{\$} to access the columns of a data frame. It is commonly used
-together with a function applied to one or more columns. E.g., the
-median of \texttt{Petal.Width}. It can done in two ways:
+The function set up the context of a data frame so it spares you from
+using the \texttt{\$} to access the columns of a data frame, as it often
+leads to longer commands, which makes harder to comprehend and
+troubleshooting. It is also commonly used together with a function
+applied to one or more columns. E.g., the median of
+\texttt{Petal.Width}. It can done in two ways:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1450,10 +1667,7 @@ In short, \texttt{with()} is English, so it improves the readability of
 R statements. Second, it saves some typing of the data frame's name. I
 recommend using \texttt{with()} whenever possible.
 
-\section*{Summary}\label{summary}
-\addcontentsline{toc}{section}{Summary}
-
-\markright{Summary}
+\section{Summary}\label{summary}
 
 That's a bare minimum of R scripting required for data analysis. In the
 next chapter, we will focus on operations applied to data frames. Before
@@ -1467,27 +1681,30 @@ chapter:
 \endhead
 \bottomrule\noalign{}
 \endlastfoot
-\texttt{\textless{}-} & \texttt{head()} & \texttt{sd()} &
-\texttt{with()} \\
-\texttt{c()} & \texttt{tail()} & \texttt{range()} & + \\
-\texttt{print()} & \texttt{dim()} & \texttt{min()} & - \\
-\texttt{paste()} & \texttt{nrow()} & \texttt{max()} & * \\
-\texttt{paste0()} & \texttt{ncol()} & \texttt{median()} & / \\
-\texttt{cat()} & \texttt{summary()} & \texttt{quantile()} & ** \\
-\texttt{class()} & \texttt{mean()} & \texttt{IQR()} & \^{} \\
-\texttt{factor()} & \texttt{var()} & \texttt{seq()} & == \\
+\texttt{\textless{}-} & \texttt{head()} & \texttt{sd()} & + \\
+\texttt{c()} & \texttt{tail()} & \texttt{range()} & - \\
+\texttt{print()} & \texttt{dim()} & \texttt{min()} & * \\
+\texttt{paste()} & \texttt{nrow()} & \texttt{max()} & / \\
+\texttt{paste0()} & \texttt{ncol()} & \texttt{median()} & ** \\
+\texttt{cat()} & \texttt{data.frame()} & \texttt{quantile()} & \^{} \\
+\texttt{typeof()} & \texttt{summary()} & \texttt{IQR()} & == \\
+\texttt{nchar()} & \texttt{mean()} & \texttt{seq()} &
+\texttt{\textless{}-} \\
+\texttt{factor()} & \texttt{var()} & \texttt{with()} & \texttt{c()} \\
 \end{longtable}
 
-\bookmarksetup{startatroot}
+\chapter{Data Wrangling}\label{sec-02-data-wrangling}
 
-\chapter{Data Wrangling}\label{data-wrangling}
-
-Data wrangling refers to the way to view, change, and reorganize data in
-a data frame. Before we dive into the operations, it is important to
-know that there are two distinct schools of data wrangling: base R and
-\texttt{tidyverse}, where the latter has contributed substantially in
-enhancing the process. We will start with the base R version, followed
-by the \texttt{tidyverse}.
+Data wrangling refers to the way to view, change, and reorganize rows
+and columns in a data frame. Before we dive into the operations, it is
+important to know that there are two distinct schools of data wrangling:
+base R and \texttt{tidyverse}. The base R approach means that no
+additional packages are required, but the \texttt{tidyverse} approach
+requires the installation of \texttt{tidyverse}, even though the
+installation is very straightforward. In my opinion, \texttt{tidyverse}
+has substantially refined and enhanced data wrangling. You will see it
+in this chapter. Regardless, we will discuss both approaches. Let's
+start with the base R version.
 
 \section*{Learning Objectives:}\label{learning-objectives-1}
 \addcontentsline{toc}{section}{Learning Objectives:}
@@ -1518,25 +1735,97 @@ this chapter, you should be able to:
 Condition(s)}\label{select-rows-by-conditions}
 
 The \texttt{subset()} function selects rows if they satisfy the
-condition(s). Here are the three relational operators to support
-multi-parts conditions:
+condition(s). Below are six relational operators:
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
 \item
-  ``or'' is denoted by \texttt{\textbar{}}
+  \texttt{\textgreater{}} greater than.
 \item
-  ``and'' is denoted by \texttt{\&}
+  \texttt{\textgreater{}=}\footnote{No spaces between the two symbols.}
+  greater than or equal to.
 \item
-  ``not'' is denoted by \texttt{!}
+  \texttt{\textless{}} less than.
+\item
+  \texttt{\textless{}=}\footnote{No spaces between the two symbols.}
+  less than or equal to.
+\item
+  \texttt{==}\footnote{No spaces between the two symbols.} equal to.
+\item
+  \texttt{!=}\footnote{No spaces between the two symbols.} not equal to.
 \end{enumerate}
 
-Note that the operator for checking equality is ``==''; two equal signs
-touching each other.
+If the selection involves multiple conditions, they must be specified in
+conjunction with relational operators. Here are the three logical
+operators required for multi-parts conditions:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  \texttt{\textbar{}} denotes the logical OR.
+\item
+  \texttt{\&} denotes the logical AND.
+\item
+  \texttt{!} denotes the logical NOT.
+\end{enumerate}
+
+\subsubsection{\texorpdfstring{\texttt{subset()} with
+Vectors}{subset() with Vectors}}\label{subset-with-vectors}
+
+Let's define a vector.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{\# Choose all setosa iris. }
+\CommentTok{\# A sample of pumpkins\textquotesingle{} weights}
+\NormalTok{pumpkins }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\FloatTok{6.85}\NormalTok{,}\FloatTok{6.56}\NormalTok{,}\FloatTok{6.23}\NormalTok{,}\FloatTok{7.55}\NormalTok{,}\FloatTok{4.45}\NormalTok{,}\FloatTok{10.14}\NormalTok{,}\FloatTok{3.52}\NormalTok{,}\FloatTok{6.62}\NormalTok{,}\FloatTok{3.76}\NormalTok{,}\FloatTok{7.62}\NormalTok{, }\DecValTok{7}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Select pumpkins heavier than 7 lbs.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{subset}\NormalTok{(pumpkins, pumpkins}\SpecialCharTok{\textgreater{}}\DecValTok{7}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1]  7.55 10.14  7.62
+\end{verbatim}
+
+Select pumpkins is exactly 7 lbs.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{subset}\NormalTok{(pumpkins, pumpkins}\SpecialCharTok{==}\DecValTok{7}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] 7
+\end{verbatim}
+
+Select pumpkins between 6 and 7 lbs, inclusive.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{subset}\NormalTok{(pumpkins, pumpkins}\SpecialCharTok{\textgreater{}=}\DecValTok{6} \SpecialCharTok{\&}\NormalTok{ pumpkins}\SpecialCharTok{\textless{}=}\DecValTok{7}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] 6.85 6.56 6.23 6.62 7.00
+\end{verbatim}
+
+\subsubsection{\texorpdfstring{\texttt{subset()} with Data
+Frames}{subset() with Data Frames}}\label{subset-with-data-frames}
+
+Here is an example that chooses only the \texttt{setosa} species from
+\texttt{iris} data frame and keeps them in a new data frame. Note that
+the equality check is case-sensitive.
+
+\begin{Shaded}
+\begin{Highlighting}[]
 \NormalTok{setosa\_iris }\OtherTok{\textless{}{-}} \FunctionTok{subset}\NormalTok{(iris, Species }\SpecialCharTok{==} \StringTok{\textquotesingle{}setosa\textquotesingle{}}\NormalTok{)}
 
 \CommentTok{\# How many are selected?}
@@ -1565,9 +1854,11 @@ touching each other.
 6          5.4         3.9          1.7         0.4  setosa
 \end{verbatim}
 
+More than one condition. Select rows with \texttt{Sepal.Length} is
+greater than 5 or Sepal.Width` is smaller than 3.
+
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{\# More than one condition. The relational operator is the logical OR, i.e., a vertical bar |}
 \NormalTok{iris\_or\_eg }\OtherTok{\textless{}{-}} \FunctionTok{subset}\NormalTok{(iris, Sepal.Length }\SpecialCharTok{\textgreater{}} \DecValTok{5} \SpecialCharTok{|}\NormalTok{ Sepal.Width }\SpecialCharTok{\textless{}} \DecValTok{3}\NormalTok{ )}
 
 \CommentTok{\# How many?}
@@ -1595,6 +1886,9 @@ touching each other.
 16          5.7         4.4          1.5         0.4  setosa
 \end{verbatim}
 
+Select rows with \texttt{Petal.Length} is greater than 6 and
+Petal.Width` is smaller than 2.
+
 \begin{Shaded}
 \begin{Highlighting}[]
 \CommentTok{\# More than one condition. The relational AND operator.}
@@ -1620,6 +1914,8 @@ touching each other.
 108          7.3         2.9          6.3         1.8 virginica
 131          7.4         2.8          6.1         1.9 virginica
 \end{verbatim}
+
+Select everything except for \texttt{setosa}.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1651,16 +1947,58 @@ touching each other.
 56          5.7         2.8          4.5         1.3 versicolor
 \end{verbatim}
 
-\subsection{Select Rows Randomly}\label{select-rows-randomly}
+\subsection{Random Sampling}\label{random-sampling}
 
-It is quite common to randomly sample a subset of rows from a data
-frame. It takes to two steps to achieve that:
+It is quite common to randomly sample a subset of items from a vector or
+rows from a data frame.
 
-\textbf{Step 1.} Create a list (vector) of random row indices by the
+\subsubsection{Sample Items Randomly from a
+Vector}\label{sample-items-randomly-from-a-vector}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# A sample of pumpkins\textquotesingle{} weights}
+\NormalTok{pumpkins }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\FloatTok{6.85}\NormalTok{,}\FloatTok{6.56}\NormalTok{,}\FloatTok{6.23}\NormalTok{,}\FloatTok{7.55}\NormalTok{,}\FloatTok{4.45}\NormalTok{,}\FloatTok{10.14}\NormalTok{,}\FloatTok{3.52}\NormalTok{,}\FloatTok{6.62}\NormalTok{,}\FloatTok{3.76}\NormalTok{,}\FloatTok{7.62}\NormalTok{, }\DecValTok{7}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Randomly pick 5 samples without replacement.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{sample}\NormalTok{(pumpkins, }\AttributeTok{size=}\DecValTok{5}\NormalTok{, }\AttributeTok{replace=}\NormalTok{F)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] 6.56 6.62 7.00 6.23 3.52
+\end{verbatim}
+
+The \texttt{replace=} option can be twisted to simulate tossing a coin N
+times. E.g.,
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{sample}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\StringTok{\textquotesingle{}H\textquotesingle{}}\NormalTok{,}\StringTok{\textquotesingle{}T\textquotesingle{}}\NormalTok{), }\AttributeTok{size=}\DecValTok{10}\NormalTok{, }\AttributeTok{replace=}\NormalTok{T)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+ [1] "T" "T" "H" "H" "H" "T" "H" "H" "T" "H"
+\end{verbatim}
+
+\subsubsection{Sample Rows Randomly from a Data
+Frame}\label{sample-rows-randomly-from-a-data-frame}
+
+Let say we want to randomly pick 5 samples from \texttt{iris}. It takes
+to two steps to do that:
+
+\textbf{Step 1:} Create a list (vector) of random row indexes by the
 \texttt{sample()} function. Specify the following parameters:
 
-a.) The range of values. For this example, the range is from 1 to the
-last row of \texttt{iris}, which is the return of \texttt{nrow(iris)}.
+a.) The range of indexes. In this example, the range is from 1 to the
+last row of \texttt{iris}, which can be obtained from
+\texttt{nrow(iris)}.
 
 \begin{enumerate}
 \def\labelenumi{\alph{enumi})}
@@ -1673,17 +2011,19 @@ last row of \texttt{iris}, which is the return of \texttt{nrow(iris)}.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{\# seq(nrow(iris)) generates 1, 2, 3, ..., 150.}
 \NormalTok{rnd\_idx }\OtherTok{\textless{}{-}} \FunctionTok{sample}\NormalTok{(}\FunctionTok{seq}\NormalTok{(}\FunctionTok{nrow}\NormalTok{(iris)), }\AttributeTok{size =} \DecValTok{5}\NormalTok{, }\AttributeTok{replace =}\NormalTok{ F)}
 \NormalTok{rnd\_idx}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
-[1]  12  79  24 124   7
+[1] 25 62 38 16 44
 \end{verbatim}
 
-Step 2: select rows from iris according to the indices in
+\texttt{seq(nrow(iris))} generates a vector containing 1, 2, 3, \ldots,
+150.
+
+\textbf{Step 2:} Select rows from iris according to the indexes in
 \texttt{rnd\_idx}.
 
 \begin{Shaded}
@@ -1695,22 +2035,56 @@ Step 2: select rows from iris according to the indices in
 \end{Shaded}
 
 \begin{verbatim}
-    Sepal.Length Sepal.Width Petal.Length Petal.Width    Species
-12           4.8         3.4          1.6         0.2     setosa
-79           6.0         2.9          4.5         1.5 versicolor
-24           5.1         3.3          1.7         0.5     setosa
-124          6.3         2.7          4.9         1.8  virginica
-7            4.6         3.4          1.4         0.3     setosa
+   Sepal.Length Sepal.Width Petal.Length Petal.Width    Species
+25          4.8         3.4          1.9         0.2     setosa
+62          5.9         3.0          4.2         1.5 versicolor
+38          4.9         3.6          1.4         0.1     setosa
+16          5.7         4.4          1.5         0.4     setosa
+44          5.0         3.5          1.6         0.6     setosa
 \end{verbatim}
 
-\subsection{Sort Rows}\label{sort-rows}
+The indexing method is based on the previous chapter. Check out here:
+Section~\ref{sec-access-rows-columns}.
 
-It is a two-step process similar to the random sampling of rows from the
-previus subsection. Suppose you want to sort \texttt{iris} in
-\texttt{Sepal.Length} in ascending order (small to large).
+\subsection{Sort Items}\label{sort-items}
 
-Step 1: Obtain a list of row indices that indicates the sorting order to
-the data.
+\subsubsection{Sort Items in a Vector}\label{sort-items-in-a-vector}
+
+It can be done using the \texttt{sort()} function.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{sort}\NormalTok{(pumpkins)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+ [1]  3.52  3.76  4.45  6.23  6.56  6.62  6.85  7.00  7.55  7.62 10.14
+\end{verbatim}
+
+Sort it descending order (large to small).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{sort}\NormalTok{(pumpkins, }\AttributeTok{decreasing =} \ConstantTok{TRUE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+ [1] 10.14  7.62  7.55  7.00  6.85  6.62  6.56  6.23  4.45  3.76  3.52
+\end{verbatim}
+
+\subsubsection{Sort Rows in a Data
+Frame}\label{sort-rows-in-a-data-frame}
+
+Unfortunately, the \texttt{sort()} function does not work for the
+two-dimensional data frame. We have to use the method similar to
+sampling rows. It takes two steps to sort rows in a certain order.
+Suppose you want to sort rows in \texttt{iris} by \texttt{Sepal.Length}
+in ascending order (small to large).
+
+\textbf{Step 1:} Obtain a list (vector) of row indexes that reflects the
+sorting order of the data frame.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1731,8 +2105,8 @@ the data.
 [145] 106 118 119 123 136 132
 \end{verbatim}
 
-Step 2: Rearrange the rows in the data frame according to the sorted row
-indices.
+\textbf{Step 2:} Rearrange the rows in the data frame according to the
+sorted row indexes.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1768,10 +2142,10 @@ indices.
 132          7.9         3.8          6.4         2.0 virginica
 \end{verbatim}
 
-Note that the above two steps do NOT change the original order of the
-rows in the data frame. If you intend to change the row order
-permanently, use the assignment operator to update the existing data
-frame or create a new data frame to store the sorted rows. See below:
+Note that the steps above do NOT change the original order of the rows
+in the data frame. If you intend to change the row order permanently,
+use the assignment operator to update the existing data frame or create
+a new data frame to store the sorted rows. See below:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1867,7 +2241,7 @@ To sort rows in descending order (large to small), add the parameter
 \subsection{Rearranging Columns}\label{rearranging-columns}
 
 Suppose you want to move the \texttt{Species} column to the leftmost
-position. It can be done using two approaches.
+position. It can be done in two ways.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1905,15 +2279,15 @@ position. It can be done using two approaches.
 6  setosa          5.4         3.9          1.7         0.4
 \end{verbatim}
 
-Note that if a data frame contains many columns, say \textgreater100, it
-is daunting to use this approach. A much better way can be done using
-\texttt{dplyr}, so stay tuned.
+Note that if a data frame contains many columns, say \textgreater100,
+this method is daunting. A much better way can be done using
+\texttt{tidyverse}, so stay tuned.
 
 \subsection{Focus on a Subset of
 Columns}\label{focus-on-a-subset-of-columns}
 
 If a data frame contains many columns, way more than you need for
-analysis. It is neat to focus on those columns and remove the rest.
+analysis. It is neat to focus on those columns and leave out the rest.
 Let's suppose you want to focus only on sepal information and species.
 
 \begin{Shaded}
@@ -1969,16 +2343,45 @@ code:
 You can see the new column \texttt{Sepal.Ratio} is added to the
 rightmost position.
 
+Suppose you want to add a new column that records the name of the
+researcher who collected the sample. If it is done by one researcher,
+you don't have to repeat the same name in a vector. Here is the code:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{iris}\SpecialCharTok{$}\NormalTok{Researcher }\OtherTok{\textless{}{-}} \StringTok{"Brian"}
+\FunctionTok{head}\NormalTok{(iris)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+  Sepal.Length Sepal.Width Petal.Length Petal.Width Species Sepal.Ratio
+1          5.1         3.5          1.4         0.2  setosa    1.457143
+2          4.9         3.0          1.4         0.2  setosa    1.633333
+3          4.7         3.2          1.3         0.2  setosa    1.468750
+4          4.6         3.1          1.5         0.2  setosa    1.483871
+5          5.0         3.6          1.4         0.2  setosa    1.388889
+6          5.4         3.9          1.7         0.4  setosa    1.384615
+  Researcher
+1      Brian
+2      Brian
+3      Brian
+4      Brian
+5      Brian
+6      Brian
+\end{verbatim}
+
 \subsection{Remove a Column}\label{remove-a-column}
 
 You can remove a column from a data frame, e.g., remove the
-\texttt{Sepal.Ratio} added above.
+\texttt{Sepal.Ratio} and \texttt{Researcher} added above.
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{iris}\SpecialCharTok{$}\NormalTok{Sepal.Ratio }\OtherTok{\textless{}{-}} \ConstantTok{NULL}
+\NormalTok{iris}\SpecialCharTok{$}\NormalTok{Researcher }\OtherTok{\textless{}{-}} \ConstantTok{NULL}
 
-\CommentTok{\# the column is gone}
+\CommentTok{\# the columns are gone}
 \FunctionTok{head}\NormalTok{(iris)}
 \end{Highlighting}
 \end{Shaded}
@@ -1993,7 +2396,7 @@ You can remove a column from a data frame, e.g., remove the
 6          5.4         3.9          1.7         0.4  setosa
 \end{verbatim}
 
-\subsection{Tabulation}\label{base-tabulation}
+\subsection{Tabulation}\label{sec-base-tabulation}
 
 Tally the number of samples per one or more categorical variables
 (factors) by the \texttt{table()} function.
@@ -2023,8 +2426,8 @@ Species
         50         50         50 
 \end{verbatim}
 
-It can tally more than one categorical variable. Let's us another
-built-in dataset \texttt{CO2} to illustrate the point.
+The data frame can be tallied by more than one categorical variable.
+Let's us another built-in dataset \texttt{CO2} to illustrate the point.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2049,43 +2452,47 @@ Plant Quebec Mississippi
   Mc1      0           7
 \end{verbatim}
 
+That's all for data wrangling using base R.
+
 \section{\texorpdfstring{\texttt{tidyverse}}{tidyverse}}\label{tidyverse}
 
-There is an alternate, and importantly, less cryptic way to perform data
-wrangling. This new set of functions are offered by the R package
-\texttt{dplyr}. One design goal of \texttt{dplyr} is to use
-\textbf{verbs} to name these operations, a huge difference from the
-unpronounceable symbols, such as \texttt{\$}, \texttt{{[}}, etc. by base
-R as shown in the previous section.
+\texttt{tidyverse} is an alternative, and importantly, less cryptic way
+for performing data wrangling of data frames. One design goal of is to
+name functions using \textbf{verbs}, which improves code readability,
+setting its apart from using unpronounceable symbols, such as
+\texttt{\$}, \texttt{{[}}, etc. by base R as shown in the previous
+section. \textbf{However, \texttt{tidyverse} works with data frames
+only.} You still need the base R to process vectors.
 
-Before we dive into \texttt{dplyr}, it is noteworthy to mention that
-there is a slew of packages with the aim of improving data cleaning,
-data visualization, and loading data in various formats. To spare people
-from the question of when to use what package, all these packages are
-bundled in a single package called \texttt{tidyverse}. Once you have
-activated \texttt{tidyverse}, \texttt{dplyr}, \texttt{ggplot} (for
-plotting data), and other packages are available for use. When you call
-a function, you don't have to worry if it is from \texttt{dplyr} or
-\texttt{tidyr} because the \texttt{tidyverse} community has resolved all
-name conflicts. An analogy is like there is only one ``Main Street'' in
-\texttt{tidyverse} package; no ambiguity at all. \textbf{The take home
-is: just activate \texttt{tidyverse} and you are good to go.}
+Before we dive into \texttt{tidyverse}, it is noteworthy to clarify that
+\texttt{tidyverse} is an integrated ecosystem of R packages designed for
+data science. The data wrangling functions discuss below are actually
+provided by two packages: \texttt{dplyr}, and \texttt{tidyr}. As this
+book is a little book, you can simply assume everything provided by the
+umbrella package \texttt{tidyverse}.
 
-\texttt{tidyverse} does not come with the base R so you have to install
-it manually. But the installation is simple, click the menu option
-Tools, select the first option ``install packages'', type ``tidyverse'',
-and click the ``Install'' button.
+As \texttt{tidyverse} is an add-on package, you have to install it
+manually. But the installation is simple. In RStudio, click the menu
+option \emph{Tools}, select the first option \emph{Install Packages}. At
+the \emph{Packages} box, type ``tidyverse'', and click the ``Install''
+button. If you only need to install it once until after a major R
+upgrade.
 
-Let's activate \texttt{tidyverse} by using the \texttt{library()}
-function. Alternatively, you can use \texttt{require()}; they are
-largely doing the same thing. Note that you only need to activate a
-package once per session.
+\subsection{\texorpdfstring{Activate
+\texttt{tidyverse}}{Activate tidyverse}}\label{activate-tidyverse}
+
+After opening a new session, you need to activate \texttt{tidyverse}
+using the \texttt{require()} function.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{library}\NormalTok{(tidyverse)}
+\FunctionTok{require}\NormalTok{(tidyverse)}
 \end{Highlighting}
 \end{Shaded}
+
+\begin{verbatim}
+Loading required package: tidyverse
+\end{verbatim}
 
 \begin{verbatim}
 -- Attaching core tidyverse packages ------------------------ tidyverse 2.0.0 --
@@ -2100,8 +2507,15 @@ x dplyr::lag()    masks stats::lag()
 i Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors
 \end{verbatim}
 
-The \texttt{library()} function has churned out many messages telling
-you what packages (9 of them) are loaded together.
+The \texttt{require()} function has churned out messages telling you
+what packages (9 of them) are loaded together.
+
+Alternatively, you can use the \texttt{library()} function to activate a
+package. Putting aside technical nuances, these two functions are
+largely doing the same thing. Since activation is an action, using a
+verb (\texttt{require()}) makes more sense than using a noun
+(\texttt{library()}). Note that you only need to activate a package once
+per R session.
 
 Let's use \texttt{tidyverse} to repeat the data wrangling tasks by base
 R above.
@@ -2157,9 +2571,11 @@ specified condition(s). The syntax is
 6          5.7         4.4          1.5         0.4  setosa
 \end{verbatim}
 
+Specify more than one condition. Use a relational operator to join
+conditions together.
+
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{\# More than one condition. The symbol for the logical AND operator is \&}
 \NormalTok{iris\_and\_eg }\OtherTok{\textless{}{-}} \FunctionTok{filter}\NormalTok{(iris, Petal.Length }\SpecialCharTok{\textgreater{}} \DecValTok{6} \SpecialCharTok{\&}\NormalTok{ Petal.Width }\SpecialCharTok{\textless{}} \DecValTok{2}\NormalTok{ )}
 
 \CommentTok{\# How many?}
@@ -2213,7 +2629,7 @@ specified condition(s). The syntax is
 6          5.7         2.8          4.5         1.3 versicolor
 \end{verbatim}
 
-\subsection{Select Rows Randomly}\label{select-rows-randomly-1}
+\subsection{Select Rows Randomly}\label{select-rows-randomly}
 
 With \texttt{tidyverse}, you can do it in one step by using the
 \texttt{sample\_n()} function.
@@ -2228,20 +2644,21 @@ With \texttt{tidyverse}, you can do it in one step by using the
 
 \begin{verbatim}
   Sepal.Length Sepal.Width Petal.Length Petal.Width    Species
-1          5.8         2.7          5.1         1.9  virginica
-2          4.9         2.4          3.3         1.0 versicolor
-3          4.6         3.1          1.5         0.2     setosa
-4          5.8         2.7          5.1         1.9  virginica
-5          5.5         4.2          1.4         0.2     setosa
+1          4.8         3.4          1.9         0.2     setosa
+2          6.7         3.1          4.4         1.4 versicolor
+3          5.8         2.7          4.1         1.0 versicolor
+4          5.7         2.8          4.1         1.3 versicolor
+5          6.1         2.9          4.7         1.4 versicolor
 \end{verbatim}
 
-\subsection{Sort Rows in a Data Frame}\label{sort-rows-in-a-data-frame}
+\subsection{Sort Rows in a Data
+Frame}\label{sort-rows-in-a-data-frame-1}
 
 Use \texttt{arrange()}. Note that the function will not change the
 original data frame. Use the assignment operator (\texttt{\textless{}-})
-to change the original data frame or store the changes in a new data
-frame. For example, sort \texttt{iris} by \texttt{Sepal.Length}, and
-store the sorted result in a new data frame.
+to make permanent changes to the original data frame or store the
+changes in a new data frame. For example, sort \texttt{iris} by
+\texttt{Sepal.Length}, and store the sorted result in a new data frame.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2279,8 +2696,8 @@ store the sorted result in a new data frame.
 150          7.9         3.8          6.4         2.0 virginica
 \end{verbatim}
 
-To sort rows according to the descending order of the sorting column,
-simply mark the sorting column with a minus \texttt{-}. E.g.,
+To sort rows in descending order, simply mark the sorting column with a
+minus \texttt{-}. E.g.,
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2315,9 +2732,10 @@ simply mark the sorting column with a minus \texttt{-}. E.g.,
 150          4.3         3.0          1.1         0.1  setosa
 \end{verbatim}
 
-Specify more than one sorting column is much easier in \texttt{dplyr}
-than base R. E.g. sort \texttt{iris} in descending order
-\texttt{Sepal.Length} and ascending order of \texttt{Petal.Length}.
+Specify more than one sorting column is much easier in
+\texttt{tidyverse} than base R. E.g. sort \texttt{iris} in descending
+order of \texttt{Sepal.Length} and ascending order of
+\texttt{Petal.Length}.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2355,12 +2773,13 @@ than base R. E.g. sort \texttt{iris} in descending order
 For rows with equal \texttt{Sepal.Length} (rows 2-5, 147-149), you can
 see their \texttt{Petal.Length} are in ascending order.
 
-\subsection{Rearranging columns of a data
-frame}\label{rearranging-columns-of-a-data-frame}
+\subsection{Reorganize columns of a data
+frame}\label{reorganize-columns-of-a-data-frame}
 
 Suppose you want to move the \texttt{Species} column to the leftmost
-position. You're going to love \texttt{dplyr}, as it can be done easily
-by using two functions: \texttt{select()} and \texttt{everything()}.
+position. You're going to love \texttt{tidyverse}, as it can be done
+easily by using two functions: \texttt{select()} and
+\texttt{everything()}.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2417,7 +2836,7 @@ and species.
 
 \subsection{Add a New Column}\label{add-a-new-column-1}
 
-Use the \texttt{mutate()} function add columns to a data frame.
+Use the \texttt{mutate()} function to add columns to a data frame.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2438,9 +2857,9 @@ Use the \texttt{mutate()} function add columns to a data frame.
 
 \subsection{Remove a Column}\label{remove-a-column-1}
 
-Use the \texttt{select()} function as before but put a minus
+Use the \texttt{select()} function and put a minus
 \texttt{\textquotesingle{}-\textquotesingle{}} symbol before the column
-name to be removed.
+name(s) to be removed.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2506,12 +2925,12 @@ Let's revert the renaming so it will not affect the following examples.
 
 \subsection{Pipe}\label{pipe}
 
-Often, data wrangling is a multi-step process in which many intermediate
-steps are involved before producing the final result. E.g., select iris
-where its \texttt{Petal.Length} is between 0.5 and 2, and sort the
-results in descending order of \texttt{Petal.Length}. As you can see, it
-involves filtering, followed by sorting. It can done into two steps via
-an intermediate data frame as below:
+Often, a data wrangling is a multi-step process in which many
+intermediate steps are involved before producing the final result. E.g.,
+select iris where its \texttt{Petal.Length} is between 0.5 and 2, and
+sort the results in descending order of \texttt{Petal.Length}. As you
+can see, it involves filtering, followed by sorting. It can done into
+two steps via an intermediate data frame as below:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2543,14 +2962,15 @@ an intermediate data frame as below:
 
 The final result contains 50 rows.
 
-\texttt{tidyverse} provides a neater way - no intermediate data frames -
-to do it by the concept of \textbf{pip}. You can imagine it like the
-assembly line of a factory, where an upstream work station passes (pipe)
-intermediate results to the next work station for further processing.
+\texttt{tidyverse} provides a neater way in which no intermediate data
+frames are produced. What is new is the \textbf{pipe} concept. You can
+imagine a pipe is like the assembly line of a factory, where an upstream
+work station passes (pipe) intermediate results to the next work station
+for further processing.
 
-The pip symbol is represented by \textbf{\texttt{\%\textgreater{}\%}},
-no space between them. Let's see how to apply pip to the above example
-without creating the intermediate data frame \texttt{tmp\_iris}.
+The pipe symbol is represented by \textbf{\texttt{\%\textgreater{}\%}},
+no space between them. Let's see how to apply the pipe to the above
+example without creating the intermediate data frame \texttt{tmp\_iris}.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2601,10 +3021,10 @@ Let's walk through the code above line by line.
   the variable \texttt{final\_results}.
 \end{itemize}
 
-By using pip (\texttt{\%\textgreater{}\%}), you can avoid intermediate
+By using pipe (\texttt{\%\textgreater{}\%}), you can avoid intermediate
 variables, making the code cleaner and easily to read.
 
-\subsection{Tabulation and Summarize}\label{tidyverse-tabulation}
+\subsection{Tabulation and Summarize}\label{sec-tidyverse-tabulation}
 
 Another task which is useful but difficult to get it done in base R is
 to produce summary information by group. E.g., you want to produce a
@@ -2696,7 +3116,7 @@ the number of samples and standard deviation.
 3 virginica     50  6.59 0.636
 \end{verbatim}
 
-You can group by more than one column. Let's switch to \texttt{CO2}
+You can group by more than one column. Let's switch to the \texttt{CO2}
 dataset to illustrate this point.
 
 \begin{Shaded}
@@ -2768,7 +3188,7 @@ functions}{A Summary of tidyverse functions}}\label{a-summary-of-tidyverse-funct
 \item
   \texttt{group\_by()}, followed by \texttt{summarize()}
 \item
-  pip \texttt{\%\textgreater{}\%}: funnel intermediate result from an
+  pipe \texttt{\%\textgreater{}\%}: funnel intermediate result from an
   upstream process to the input of an immediate downstream process.
 \end{itemize}
 
@@ -2777,11 +3197,11 @@ functions}{A Summary of tidyverse functions}}\label{a-summary-of-tidyverse-funct
 In this chapter, you have seen how to perform data wrangling with basic
 R and \texttt{tidyverse}. What you have seen is only a fraction of what
 \texttt{tidyverse} can do. Readers who want to explore the full
-capability of \texttt{tidyverse} should consult the most authorative
-source: \textbf{R for Data Science} by Hadley Wickham \& Garrett
-Grolemund (https://r4ds.had.co.nz/). In the next chapter, you will see
+capability of \texttt{tidyverse} should consult the most authoritative
+source: \href{https://r4ds.had.co.nz/}{\textbf{R for Data Science}} by
+Hadley Wickham \& Garrett Grolemund. In the next chapter, you will see
 how to plot data. A picture is worth a thousand words. Data
-visualization is an indispensible step for data analysis. But before the
+visualization is an indispensable step for data analysis. But before the
 next topic, let's recall all the new R commands discussed in this
 chapter.
 
@@ -2795,33 +3215,29 @@ chapter.
 \textbar{} & \texttt{sample()} & \texttt{filter()} &
 \texttt{summarize()} \\
 \texttt{\&} & \texttt{order()} & \texttt{select()} & \texttt{n()} \\
-\texttt{==} & \texttt{NONE} (a keyword) & \texttt{arrange()} & pip
+\texttt{==} & \texttt{NULL} (a keyword) & \texttt{arrange()} & pipe
 \texttt{\%\textgreater{}\%} \\
 \texttt{!} & \texttt{table()} & \texttt{rename()} & \\
 \texttt{!=} & \texttt{library()} & \texttt{mutate()} & \\
 \texttt{subset()} & \texttt{require()} & \texttt{group\_by()} & \\
 \end{longtable}
 
-\bookmarksetup{startatroot}
+\chapter{Data Visualization}\label{sec-03-data-visualization}
 
-\chapter{Data Visualization}\label{data-visualization}
-
-After laboring yourselves to collect, clean, and analyze the data, you
-want to share the findings and engage the audience with insights about
-the significance of the study. But most people are not good at
-extracting insights from rows and columns of numbers. It is the job of
-the researchers to get important messages across to the audience so they
-can understand them with as little effort as possible.
+Now you have cleaned, organized, and analyzed the data, the next step is
+to share the findings and insights with the audience, raising their
+attention to the study. Row and columns of numbers may not be palatable
+to most people. To assist the audience to unpack the message embedded in
+the data, a graph is recommended. In this chapter, we will discuss
+various types of graphs, what they are good at and not so good at, and
+how to make them in R using two different graphical systems.
 
 \section*{Learning Objectives:}\label{learning-objectives-2}
 \addcontentsline{toc}{section}{Learning Objectives:}
 
 \markright{Learning Objectives:}
 
-This chapter discusses the properties of various graphs, what they are
-good at and not so good at, and how to plot them in R using two
-different graphical systems. After finishing this chapter, you should be
-able to:
+After finishing this chapter, you should be able to:
 
 \begin{itemize}
 \item
@@ -2840,8 +3256,8 @@ able to:
 \section{Types of Graphs}\label{types-of-graphs}
 
 The best way to choose the most appropriate graph depends on the data.
-Specially, the types of variables (numeric or categorical) and how many
-of them. You will plot graph for:
+Specifically, the types of variables (numeric or categorical) and how
+many of them. Here, you will plot graphs that entail:
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -2862,20 +3278,25 @@ of them. You will plot graph for:
 This graphical system is built into the base R; no additional package is
 required. It is simple, ideal for creating graphs promptly for
 prototyping purposes and get the job done. The flip side is that the
-graphs may appear a bit primitive. Some features are hard to be
-implemented. Anyway, if plotting graphs using R is new to you, base R is
-a great starting point. You will understand the basic characteristics of
-different graphs without requiring too much technical details.
+graphs may be bare-bones and unrefined. Some features are hard to be
+implemented. There is no one graphical system for all data visualization
+tasks. It is highly recommended to master both systems. Let's dive into
+each graph one by one.
 
 \subsection{One Numeric Variable}\label{one-numeric-variable}
 
-You can plot a histogram of the numeric variable to see its
-distribution, such as the spread, the peak, symmetry, and flatness. If
-your concern is robust statistics, a boxplot will do the job.
+If you want to examine the distribution of a numeric variable (such as
+the spread, peak(s), symmetry, and flatness), a histogram is the choice.
+On the other hand, if your concern is robust statistics (median,
+outliers, etc.), a box plot will do the job. Let's start with plotting a
+histogram.
 
 \subsubsection{Histogram}\label{histogram}
 
-Let's examine the distribution of \texttt{iris}'s \texttt{Sepal.Width}.
+Let's examine the distribution of \texttt{iris}'s \texttt{Sepal.Width},
+a numeric variable, using a histogram. Below are the codes for creating
+four histograms that display the same information but with different
+refinements.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2911,28 +3332,33 @@ Let's examine the distribution of \texttt{iris}'s \texttt{Sepal.Width}.
 
 \begin{figure}[H]
 
-{\centering \pandocbounded{\includegraphics[keepaspectratio]{03-Data-Visualization_files/figure-pdf/Fig3-1-1.pdf}}
+\centering{
+
+\pandocbounded{\includegraphics[keepaspectratio]{03-Data-Visualization_files/figure-pdf/fig-3-1-1.pdf}}
 
 }
 
-\caption{Base R Histogram. Top left: default. Top right: Customized X-Y
-labels and the main title. Bottom left: change color of bars and border.
-Bottom right: change the bin width (\texttt{breaks=})}
+\caption{\label{fig-3-1}Base R Histogram. Top left: default. Top right:
+Customized X-Y labels and the main title. Bottom left: change color of
+bars and border. Bottom right: change the bin width (\texttt{breaks=})}
 
 \end{figure}%
 
-For the bottom-right graph, the \texttt{seq()} function
-(@ref(seq-function)) is used to generate a list of numbers for the
-\texttt{breaks} parameter that represents x-ticks.
+For the bottom-right graph, check out this line:
+\texttt{breaks\ =\ seq(2,4.5,by=0.1)}. The aim is to customize the width
+of the bars. The \texttt{seq()} function
+(Section~\ref{sec-seq-function}) generates a list of numbers
+(\texttt{2.0,\ 2.1\ ...\ 4.4,\ 4.5}) that represents the x-ticks.
 
 Note: \texttt{par(mfrow=c(2,2))} splits the plotting area into a 2x2
-grid such that multiple graphs can be grouped
+grid such that multiple graphs can be displayed together. If you plot
+contains only one graph, it can be ignored.
 
-\subsubsection{Boxplot}\label{boxplot}
+\subsubsection{Box Plot}\label{box-plot}
 
-If the message is robust statistics, such as median and quantiles, or
-the presence of outliers, the best graph is a boxplot. The y-axis
-represents the numeric variable, and the x-axis has no meaning.
+If robust statistics of the data is the message, the most appropriate
+graph is a box plot. In a box plot, the y-axis represents the numeric
+variable, and the x-axis has no meaning.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2944,7 +3370,7 @@ represents the numeric variable, and the x-axis has no meaning.
 \CommentTok{\# Top right}
 \FunctionTok{boxplot}\NormalTok{(iris}\SpecialCharTok{$}\NormalTok{Sepal.Width,}
         \AttributeTok{ylab=}\StringTok{"Sepal Width"}\NormalTok{,}
-        \AttributeTok{main=}\StringTok{"Boxplot of Sepal Width"}\NormalTok{)}
+        \AttributeTok{main=}\StringTok{"Box plot of Sepal Width"}\NormalTok{)}
 
 \CommentTok{\# Bottom left}
 \FunctionTok{boxplot}\NormalTok{(iris}\SpecialCharTok{$}\NormalTok{Sepal.Width,}
@@ -2958,28 +3384,33 @@ represents the numeric variable, and the x-axis has no meaning.
 \FunctionTok{boxplot}\NormalTok{(iris}\SpecialCharTok{$}\NormalTok{Sepal.Width, }
         \AttributeTok{horizontal =} \ConstantTok{TRUE}\NormalTok{, }
         \AttributeTok{xlab=}\StringTok{"Sepal Width"}\NormalTok{, }
-        \AttributeTok{main=}\StringTok{"Horizontal Boxplot"}\NormalTok{)}
+        \AttributeTok{main=}\StringTok{"Horizontal Box plot"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{figure}[H]
 
-{\centering \pandocbounded{\includegraphics[keepaspectratio]{03-Data-Visualization_files/figure-pdf/Fig3-2-1.pdf}}
+\centering{
+
+\pandocbounded{\includegraphics[keepaspectratio]{03-Data-Visualization_files/figure-pdf/fig-3-2-1.pdf}}
 
 }
 
-\caption{Boxplot. Top left: Default, Top right: labels and main title.
-Bottom left: color options. Bottom right: \texttt{horizontal\ =\ TRUE}}
+\caption{\label{fig-3-2}Base R Box plot. Top left: Default, Top right:
+labels and main title. Bottom left: color options. Bottom right:
+\texttt{horizontal\ =\ TRUE}}
 
 \end{figure}%
 
-\begin{figure}[H]
+\begin{figure}
 
-{\centering \pandocbounded{\includegraphics[keepaspectratio]{images/Figure_3.3.png}}
+\centering{
+
+\includegraphics[width=0.6\linewidth,height=\textheight,keepaspectratio]{images/Figure_3.3.png}
 
 }
 
-\caption{Anatomy of a Boxplot}
+\caption{\label{fig-3-3}Anatomy of a Box plot}
 
 \end{figure}%
 
@@ -2988,16 +3419,15 @@ The upper and lower whiskers are defined as:
 \[Upper\ Whisker = Q3 + 1.5 \times IQR\]
 \[Lower\ Whisker = Q1 - 1.5 \times IQR\] , where \(IQR=(Q3-Q1)\).
 
-In practice, values that are greater or less than the upper or lower
-whiskers are treated as outliers.
+As a practice, data points above the upper whisker or below the lower
+whiskers are labeled as outliers.
 
-Histogram offers a glimpse of how the data is distributed, displaying
-the peak(s), and long tail, if any, that is less obvious in a boxplot.
-However, pinpointing the median and outliers on a histogram is
-non-trivial. Therefore, it makes sense to combine the strengths of both
-plots in a single graph. To be sure the two plots are comparable, make
-sure to set the axes in the same range by the \texttt{xlim} and/or
-\texttt{ylim=} parameters. Here's an example below:
+While a box plot summarizes data into quartiles, a histogram portrays
+the underlying distribution---such as peaks and symmetry---that is
+otherwise difficult to spot. Is it a great idea to combine the best of
+both plots in a single graph? To ensure that the combined plot makes
+sense, we need to ensure that the axes of the two plots are in the same
+range. Here's an example below:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -3022,34 +3452,40 @@ sure to set the axes in the same range by the \texttt{xlim} and/or
 
 \begin{figure}[H]
 
-{\centering \pandocbounded{\includegraphics[keepaspectratio]{03-Data-Visualization_files/figure-pdf/Fig3-4-1.pdf}}
+\centering{
+
+\pandocbounded{\includegraphics[keepaspectratio]{03-Data-Visualization_files/figure-pdf/fig-3-4-1.pdf}}
 
 }
 
-\caption{Stacking up two graphs.}
+\caption{\label{fig-3-4}Stacking up a histogram and a box plot.}
 
 \end{figure}%
 
-Figure (@ref(fig:Fig3-4))) illustrated the added advantage of combining
-graphs. It is clear that the peak in the histogram is almost perfectly
-aligned with the median shown in the boxplot, indicating symmetric data
-distribution. Additionally, the outliers hardly visible from the
-histogram can easily be spotted in the boxplot. This example illustrates
-the synergy and additional perspectives created by combining different
-graphs.
+The \texttt{ylim} of the histogram and the \texttt{xlim=} of the box
+plot are the specific parameters used to align the two graphs in the
+same scale.
+
+Figure 3.4 illustrates the added advantage of combining graphs. It is
+clear that the peak in the histogram is almost perfectly aligned with
+the median shown in the box plot, suggesting the data distribution is
+nearly symmetric. Additionally, the outliers, hardly visible in the
+histogram, can easily be spotted in the box plot. This example
+demonstrates the synergy offered by combining different types of graphs,
+and the technique used to implement it.
 
 \subsection{One Categorical Variable}\label{one-categorical-variable}
 
 When it comes to categorical variables, we are usually interested in the
 number of samples fall in each category of a categorical variable. As
-discussed in Chapter 2, the tallying can be done using the
-\texttt{table()} function (@ref(base-tabulation)) or
-\texttt{group\_by()} followed by \texttt{summarize(n=n())}
-(@ref(tidyverse-tabulation)).
+discussed in Chapter~\ref{sec-02-data-wrangling}, the tallying can be
+done using the \texttt{table()} function
+(Section~\ref{sec-base-tabulation}) or \texttt{group\_by()} followed by
+\texttt{summarize(n=n())} (Section~\ref{sec-tidyverse-tabulation}).
 
-\subsubsection{Barplot}\label{barplot}
+\subsubsection{Bar Plot}\label{bar-plot}
 
-Barplot is the standard choice for visualizing tallied data. The only
+Bar plot is the standard choice for visualizing tallied data. The only
 input to the R's \texttt{barplot()} graph function is a tabulated count
 of the categorical variable. Here's an example:
 
@@ -3087,18 +3523,21 @@ of the categorical variable. Here's an example:
 
 \begin{figure}[H]
 
-{\centering \pandocbounded{\includegraphics[keepaspectratio]{03-Data-Visualization_files/figure-pdf/Fig3-5-1.pdf}}
+\centering{
+
+\pandocbounded{\includegraphics[keepaspectratio]{03-Data-Visualization_files/figure-pdf/fig-3-5-1.pdf}}
 
 }
 
-\caption{A simple bar plot. Top left: Default. Top right: with tables}
+\caption{\label{fig-3-5}A simple bar plot. Top left: Default. Top right:
+with tables}
 
 \end{figure}%
 
 Sometime you might want to reorder the categories along the x- or
 y-axis. By default, \texttt{barplot()} places the bars from left to
-right according to the current order of the levels. E.g., the levels of
-\texttt{iris\$Species} is:
+right according to the order of the levels. E.g., show the levels of
+\texttt{iris\$Species} by:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -3110,9 +3549,10 @@ right according to the current order of the levels. E.g., the levels of
 [1] "setosa"     "versicolor" "virginica" 
 \end{verbatim}
 
-You can change the current order by updating the factor variable by the
-\texttt{factor()} function (@ref(factor-levels)). Suppose, the desired
-order is \texttt{virginica}, \texttt{setosa}, and \texttt{veriscolor}.
+You can change the order of the levels by updating the factor variable
+using the \texttt{factor()} function (Section~\ref{sec-factor-levels}).
+Suppose, the desired order is \texttt{virginica}, \texttt{setosa}, and
+\texttt{veriscolor}. Here's the code:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -3127,6 +3567,8 @@ order is \texttt{virginica}, \texttt{setosa}, and \texttt{veriscolor}.
 [1] "virginica"  "setosa"     "versicolor"
 \end{verbatim}
 
+Here's the revised bar plot.
+
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{barplot}\NormalTok{(}\FunctionTok{with}\NormalTok{(iris, }\FunctionTok{table}\NormalTok{(Species)), }
@@ -3140,18 +3582,19 @@ order is \texttt{virginica}, \texttt{setosa}, and \texttt{veriscolor}.
 
 \begin{figure}[H]
 
-{\centering \pandocbounded{\includegraphics[keepaspectratio]{03-Data-Visualization_files/figure-pdf/Fig3-6-1.pdf}}
+\centering{
+
+\pandocbounded{\includegraphics[keepaspectratio]{03-Data-Visualization_files/figure-pdf/fig-3-6-1.pdf}}
 
 }
 
-\caption{Reorder the Bars of a Barplot}
+\caption{\label{fig-3-6}Reorder the Bars of a Barplot}
 
 \end{figure}%
 
 \subsubsection{Pie Chart}\label{pie-chart}
 
-Besides a barplot, a pie chart is also a good fit for displaying tallied
-data.
+An alternative to bar plots is pie charts.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -3187,25 +3630,30 @@ data.
 
 \begin{figure}[H]
 
-{\centering \pandocbounded{\includegraphics[keepaspectratio]{03-Data-Visualization_files/figure-pdf/Fig3-7-1.pdf}}
+\centering{
+
+\pandocbounded{\includegraphics[keepaspectratio]{03-Data-Visualization_files/figure-pdf/fig-3-7-1.pdf}}
 
 }
 
-\caption{A simple pie chart. Top left: Default. Top right: with tables}
+\caption{\label{fig-3-7}A simple pie chart. Top left: Default. Top
+right: with tables. Bottom left: Add a title. Show count for each
+category. Bottom right: Add a fraction or proportion for each category.}
 
 \end{figure}%
 
 \subsection{One Categorical and One Numeric
 Variables}\label{one-categorical-and-one-numeric-variables}
 
-The categorical is usually served as a group identifier that splits the
-data into groups so the numerical variable can be compared between
-groups. This kind of graph is generally named side-by-side plot. You can
-choose a side-by-side boxplot or a side-by-side barplot. For example,
-visually compare the robust statistics between different species of
-iris.
+The categorical variable in this situation is usually served as a group
+identifier that splits the data into groups so the numerical variable
+can be compared between groups. This kind of graph is generally named
+\textbf{side-by-side plot}. You can choose a side-by-side box plot or a
+side-by-side bar plot. For example, a side-by-side box plot that
+visually compares the robust statistics of \texttt{Sepal.Length} between
+different species of iris.
 
-\subsubsection{Side-by-side Boxplot}\label{side-by-side-boxplot}
+\subsubsection{Side-by-side box plot}\label{side-by-side-box-plot}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -3213,22 +3661,24 @@ iris.
 
 \FunctionTok{boxplot}\NormalTok{(Sepal.Length }\SpecialCharTok{\textasciitilde{}}\NormalTok{ Species,}
         \AttributeTok{data=}\NormalTok{iris, }
-        \AttributeTok{main=}\StringTok{"A Side{-}by{-}Side Boxplot"}\NormalTok{)}
+        \AttributeTok{main=}\StringTok{"A Side{-}by{-}Side Box plot"}\NormalTok{)}
 
 \FunctionTok{boxplot}\NormalTok{(Sepal.Length }\SpecialCharTok{\textasciitilde{}}\NormalTok{ Species,}
         \AttributeTok{data=}\NormalTok{iris, }
         \AttributeTok{horizontal =} \ConstantTok{TRUE}\NormalTok{,}
-        \AttributeTok{main=}\StringTok{"A Horizontal Side{-}by{-}Side Boxplot"}\NormalTok{)}
+        \AttributeTok{main=}\StringTok{"A Horizontal Side{-}by{-}Side Box plot"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{figure}[H]
 
-{\centering \pandocbounded{\includegraphics[keepaspectratio]{03-Data-Visualization_files/figure-pdf/Fig3-8-1.pdf}}
+\centering{
+
+\pandocbounded{\includegraphics[keepaspectratio]{03-Data-Visualization_files/figure-pdf/fig-3-8-1.pdf}}
 
 }
 
-\caption{Side-by-side plot}
+\caption{\label{fig-3-8}A side-by-side box plot}
 
 \end{figure}%
 
@@ -3236,31 +3686,55 @@ iris.
 length \textbf{by} species'', the tilde symbol
 ``\texttt{\textasciitilde{}}'' means ``by''.
 
-However, there is glitch in the horizontal boxplot. The tick y-labels
-collided. It can be fixed by adding \texttt{las=2} parameter to the
-\texttt{boxplot()} function.
+However, there is glitch in the horizontal box plot (bottom): the
+y-labels collide. It can be fixed by:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  Expand the left margin of the plotting area.
+\item
+  Add the \texttt{las=2} parameter to the \texttt{boxplot()} function,
+  and disable the default \texttt{ylab=}.
+\item
+  Mannually add the y-label.
+\end{enumerate}
 
 \begin{Shaded}
 \begin{Highlighting}[]
+\CommentTok{\# Expand the left margin so the text doesn\textquotesingle{}t truncate}
+\CommentTok{\# The numbers correspond to margins: c(bottom, left, top, right)}
+\CommentTok{\# Default is c(5, 4, 4, 2). We are increasing the left margin from 4 to 7. }
+\FunctionTok{par}\NormalTok{(}\AttributeTok{mar =} \FunctionTok{c}\NormalTok{(}\DecValTok{5}\NormalTok{, }\DecValTok{7}\NormalTok{, }\DecValTok{4}\NormalTok{, }\DecValTok{2}\NormalTok{) }\SpecialCharTok{+} \FloatTok{0.1}\NormalTok{)}
+
+\CommentTok{\# Draw the plot, but explicitly tell R NOT to draw the y{-}axis label yet}
 \FunctionTok{boxplot}\NormalTok{(Sepal.Length }\SpecialCharTok{\textasciitilde{}}\NormalTok{ Species,}
         \AttributeTok{data=}\NormalTok{iris, }
         \AttributeTok{horizontal =} \ConstantTok{TRUE}\NormalTok{,}
         \AttributeTok{las =} \DecValTok{2}\NormalTok{,}
+        \AttributeTok{ylab =} \StringTok{""}\NormalTok{, }\CommentTok{\# This suppresses the default colliding label}
         \AttributeTok{main=}\StringTok{"Y{-}tick Labels Reorientated"}\NormalTok{)}
+
+\CommentTok{\# Add the y{-}axis label manually, pushing it further away from the axis}
+\CommentTok{\# The \textquotesingle{}line\textquotesingle{} argument controls how many text lines away from the axis it sits}
+\FunctionTok{title}\NormalTok{(}\AttributeTok{ylab =} \StringTok{"Species"}\NormalTok{, }\AttributeTok{line =} \DecValTok{5}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{figure}[H]
 
-{\centering \pandocbounded{\includegraphics[keepaspectratio]{03-Data-Visualization_files/figure-pdf/Fig3-9-1.pdf}}
+\centering{
+
+\pandocbounded{\includegraphics[keepaspectratio]{03-Data-Visualization_files/figure-pdf/fig-3-9-1.pdf}}
 
 }
 
-\caption{Side-by-side plot}
+\caption{\label{fig-3-9}A Side-by-Side Box Plot with Horizontal
+Y-Labels}
 
 \end{figure}%
 
-\subsubsection{Side-by-side Barplot}\label{side-by-side-barplot}
+\subsubsection{Side-by-side Bar Plot}\label{side-by-side-bar-plot}
 
 Suppose you want to visually compare the average sepal length among
 different iris species. You will begin to feel the cumbersome of base R,
@@ -3304,20 +3778,22 @@ And then, pass the \texttt{mean\_data} object to \texttt{barplot()}.
 
 \begin{figure}[H]
 
-{\centering \pandocbounded{\includegraphics[keepaspectratio]{03-Data-Visualization_files/figure-pdf/Fig3-10-1.pdf}}
+\centering{
+
+\pandocbounded{\includegraphics[keepaspectratio]{03-Data-Visualization_files/figure-pdf/fig-3-10-1.pdf}}
 
 }
 
-\caption{Side-by-side Barplot}
+\caption{\label{fig-3-10}A Side-by-Side Bar Plot}
 
 \end{figure}%
 
-\subsubsection{Side-by-side Barplot with Error
-Bar\^{}*}\label{side-by-side-barplot-with-error-bar}
+\subsubsection{Side-by-side Bar Plot with Error
+Bar\^{}*}\label{side-by-side-bar-plot-with-error-bar}
 
-*This topic is slightly advanced. It is much easier to use
-\texttt{ggplot2}. So, feel free to skip this and jump to
-@ref(ggplot-error-bar).
+\emph{This topic is slightly advanced. It is much easier to use
+\texttt{ggplot2}. So, feel free to skip this or jump to
+Section~\ref{sec-ggplot-error-bar}.}
 
 The error bar represents the standard error of the mean (SEM). Here is
 the formula:
@@ -3356,9 +3832,10 @@ First, calculate the mean and standard of errors using the
 \end{verbatim}
 
 First, create the bar plot and store the height of bars in the object
-\texttt{bar\_midpoints}. Use the \texttt{arrows()} function create the
-error bars, where each error bar consists of the upper whisker
-\((x_{1}, y_{1})\) and lower whisker \((x_{0}, y_{0})\).
+\texttt{bar\_midpoints}. Use the \texttt{arrows()} function to
+create/add the error bars to the bar plot, where each error bar consists
+of the upper whisker \((x_{1}, y_{1})\) and lower whisker
+\((x_{0}, y_{0})\).
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -3379,22 +3856,25 @@ error bars, where each error bar consists of the upper whisker
 
 \begin{figure}[H]
 
-{\centering \pandocbounded{\includegraphics[keepaspectratio]{03-Data-Visualization_files/figure-pdf/Fig3-11-1.pdf}}
+\centering{
+
+\pandocbounded{\includegraphics[keepaspectratio]{03-Data-Visualization_files/figure-pdf/fig-3-11-1.pdf}}
 
 }
 
-\caption{Side-by-side Barplot with Error Bars}
+\caption{\label{fig-3-11}A Side-by-side Bar Plot with Error Bars}
 
 \end{figure}%
 
 Once again, if you found this confusing, see the \texttt{ggplot} version
-of error bars (Section @ref(ggplot-error-bar)).
+of error bars (Section~\ref{sec-ggplot-error-bar}).
 
 \subsubsection{Line Graph with Error
 Bar}\label{line-graph-with-error-bar}
 
-A line graph is an alternative to a bar plot that is good at showing a
-trend. Here you see how to create a line graph overlaid with solid dots.
+If your message is to show a trend from left to right, a line graph is
+the default choice. Here is an example to create a line graph with solid
+dots.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -3404,17 +3884,19 @@ trend. Here you see how to create a line graph overlaid with solid dots.
       \AttributeTok{pch=}\DecValTok{19}\NormalTok{,}
       \AttributeTok{xlab=}\StringTok{"Species"}\NormalTok{,}
       \AttributeTok{ylab=}\StringTok{"Average Sepal.Length"}\NormalTok{,}
-      \AttributeTok{main=}\StringTok{"Line Plot"}\NormalTok{)}
+      \AttributeTok{main=}\StringTok{"A Line Plot"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{figure}[H]
 
-{\centering \pandocbounded{\includegraphics[keepaspectratio]{03-Data-Visualization_files/figure-pdf/Fig3-12-1.pdf}}
+\centering{
+
+\pandocbounded{\includegraphics[keepaspectratio]{03-Data-Visualization_files/figure-pdf/fig-3-12-1.pdf}}
 
 }
 
-\caption{Line plot}
+\caption{\label{fig-3-12}A Line Plot}
 
 \end{figure}%
 
@@ -3426,8 +3908,9 @@ trend. Here you see how to create a line graph overlaid with solid dots.
 \item
   To join the dots together in a line plot, specify
   \texttt{type=\textquotesingle{}b\textquotesingle{}}, the \texttt{b}
-  means to plot \textbf{both} dots and line. More options of
-  \texttt{type} can be found in the \texttt{help(plot)} documentation.
+  means \textbf{both} dots and line are plotted. More options of
+  \texttt{type} can be found using the help function:
+  \texttt{help(plot)} documentation.
 \end{itemize}
 
 But, there is a glitch in the x-tick.The x-tick should show the actual
@@ -3453,16 +3936,18 @@ names can be obtained by \texttt{names(mean\_data)}.
 
 \begin{figure}[H]
 
-{\centering \pandocbounded{\includegraphics[keepaspectratio]{03-Data-Visualization_files/figure-pdf/Fig3-13-1.pdf}}
+\centering{
+
+\pandocbounded{\includegraphics[keepaspectratio]{03-Data-Visualization_files/figure-pdf/fig-3-13-1.pdf}}
 
 }
 
-\caption{Line plot with proper x-tick labels}
+\caption{\label{fig-3-13}A Line plot with proper x-tick labels}
 
 \end{figure}%
 
-Here's how to add error bars to the line plot. It is similar to the
-barplot above, except that \texttt{x0} and \texttt{x1} should take the
+Now we can add error bars to the line plot. It is similar to the bar
+plot above, except that \texttt{x0} and \texttt{x1} should take the
 values \texttt{1,2,3}.
 
 \begin{Shaded}
@@ -3489,22 +3974,25 @@ values \texttt{1,2,3}.
 
 \begin{figure}[H]
 
-{\centering \pandocbounded{\includegraphics[keepaspectratio]{03-Data-Visualization_files/figure-pdf/Fig3-14-1.pdf}}
+\centering{
+
+\pandocbounded{\includegraphics[keepaspectratio]{03-Data-Visualization_files/figure-pdf/fig-3-14-1.pdf}}
 
 }
 
-\caption{Line plot with error bars}
+\caption{\label{fig-3-14}A Line plot with Error Bars}
 
 \end{figure}%
 
-\subsubsection{Overlapping Histogram\^{}*}\label{overlapping-histogram}
+\subsubsection{Overlapping Histogram}\label{overlapping-histogram}
 
-/* The code for creating this plot is a bit convoluted. It is easier to
+\emph{The code for creating this plot can be convoluted. It is easier to
 make it using \texttt{ggplot2}. Feel free to skip to
-@ref(ggplot-overlapping-histogram).
+Section~\ref{sec-ggplot-overlapping-histogram}.}
 
-Suppose you are interested in comparing the distribution of sepal
-lengths among the three iris species. Here are the steps:
+Suppose you are interested in visualizing and comparing the distribution
+of sepal lengths among the three iris species. Here are the steps to do
+it:
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -3514,18 +4002,18 @@ lengths among the three iris species. Here are the steps:
   Calculate the range for the x- and y-axis so as to ensure the
   histograms are in the same scale.
 \item
-  Create a histogram for a data subset from step 1, which becomes the
-  template of the final graph. Additionally, color is used to
-  distinguish one species from the other.
+  Create a histogram in certain color for a species from step 1, and use
+  it as a template.
 \item
-  Overlay the histograms for other data subsets on top of the template.
+  Overlay the histograms from other species on top of each other.
 \end{enumerate}
 
 Let's do it step by step below:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{\# Step 1}
+\CommentTok{\# Step 1: Split the data by individual species}
+
 \NormalTok{setosa }\OtherTok{\textless{}{-}} \FunctionTok{subset}\NormalTok{(iris, Species }\SpecialCharTok{==} \StringTok{"setosa"}\NormalTok{)}
 \NormalTok{versicolor }\OtherTok{\textless{}{-}} \FunctionTok{subset}\NormalTok{(iris, Species }\SpecialCharTok{==} \StringTok{"versicolor"}\NormalTok{)}
 \NormalTok{virginica }\OtherTok{\textless{}{-}} \FunctionTok{subset}\NormalTok{(iris, Species }\SpecialCharTok{==} \StringTok{"virginica"}\NormalTok{)}
@@ -3534,7 +4022,8 @@ Let's do it step by step below:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{\# Step 2}
+\CommentTok{\# Step 2: Set up the range for the x{-} and y{-}axis}
+
 \NormalTok{x\_range }\OtherTok{\textless{}{-}} \FunctionTok{range}\NormalTok{(iris}\SpecialCharTok{$}\NormalTok{Sepal.Length)}
 \NormalTok{y\_range }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{25}\NormalTok{) }\CommentTok{\# 25 is arbitrary.}
 \end{Highlighting}
@@ -3551,7 +4040,8 @@ red, no green and blue at all, and transparency is 50\%.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{\# Step 3}
+\CommentTok{\# Step 3: Create a template}
+
 \FunctionTok{hist}\NormalTok{(setosa}\SpecialCharTok{$}\NormalTok{Sepal.Length,}
      \AttributeTok{main =} \StringTok{"Overlapping Histogram of Sepal Length"}\NormalTok{,}
      \AttributeTok{xlab =} \StringTok{"Sepal Length"}\NormalTok{,}
@@ -3560,7 +4050,8 @@ red, no green and blue at all, and transparency is 50\%.
      \AttributeTok{xlim =}\NormalTok{ x\_range,}
      \AttributeTok{ylim =}\NormalTok{ y\_range)}
 
-\CommentTok{\# Step 4}
+\CommentTok{\# Step 4: Overlay histograms from other species}
+
 \FunctionTok{hist}\NormalTok{(versicolor}\SpecialCharTok{$}\NormalTok{Sepal.Length, }\AttributeTok{col=}\FunctionTok{rgb}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{0}\NormalTok{, }\FloatTok{0.5}\NormalTok{), }\AttributeTok{add =} \ConstantTok{TRUE}\NormalTok{) }\CommentTok{\# green with 50\% transparency}
 \FunctionTok{hist}\NormalTok{(virginica}\SpecialCharTok{$}\NormalTok{Sepal.Length, }\AttributeTok{col=}\FunctionTok{rgb}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{, }\FloatTok{0.5}\NormalTok{), }\AttributeTok{add =} \ConstantTok{TRUE}\NormalTok{)  }\CommentTok{\# blue with 50\% transparency}
 \end{Highlighting}
@@ -3568,27 +4059,59 @@ red, no green and blue at all, and transparency is 50\%.
 
 \begin{figure}[H]
 
-{\centering \pandocbounded{\includegraphics[keepaspectratio]{03-Data-Visualization_files/figure-pdf/Fig3-15-1.pdf}}
+\centering{
+
+\pandocbounded{\includegraphics[keepaspectratio]{03-Data-Visualization_files/figure-pdf/fig-3-15-1.pdf}}
 
 }
 
-\caption{Overlapping histogram}
+\caption{\label{fig-3-15}Overlapping histograms}
 
 \end{figure}%
 
 \subsection{Contingency Table}\label{contingency-table}
 
-If a dataset comprises two categorical variables. A two-dimensional
-contingency table, or a 2D table, depicts the number of samples present
-in different combinations of categories of the two categorical
-variables. The distribution of the counts can reveal the dependency of
-the two categorical variables. Let's use another built-in dataset
-\texttt{penguins} for illustration. It contains two categorical
-variables: \texttt{species} and \texttt{island}. Suppose you are
-interested to explore how geographical location affects the distribution
-of penguins.
+Here we deal with a data set that comprises two categorical variables. A
+two-dimensional contingency table is used to tally the number of samples
+for different combinations of categories of the two categorical
+variables.
 
-Create a 2D table as below:
+The distribution of the counts can reveal whether or not the two
+categorical variables are dependent. To illustrate how to visualize a
+contingency table, we will use the built-in data set \texttt{penguins}.
+The data set contains two categorical variables: \texttt{species} and
+\texttt{island}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{summary}\NormalTok{(penguins)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+      species          island       bill_len        bill_dep    
+ Adelie   :152   Biscoe   :168   Min.   :32.10   Min.   :13.10  
+ Chinstrap: 68   Dream    :124   1st Qu.:39.23   1st Qu.:15.60  
+ Gentoo   :124   Torgersen: 52   Median :44.45   Median :17.30  
+                                 Mean   :43.92   Mean   :17.15  
+                                 3rd Qu.:48.50   3rd Qu.:18.70  
+                                 Max.   :59.60   Max.   :21.50  
+                                 NAs    :2       NAs    :2      
+  flipper_len      body_mass        sex           year     
+ Min.   :172.0   Min.   :2700   female:165   Min.   :2007  
+ 1st Qu.:190.0   1st Qu.:3550   male  :168   1st Qu.:2007  
+ Median :197.0   Median :4050   NAs   : 11   Median :2008  
+ Mean   :200.9   Mean   :4202                Mean   :2008  
+ 3rd Qu.:213.0   3rd Qu.:4750                3rd Qu.:2009  
+ Max.   :231.0   Max.   :6300                Max.   :2009  
+ NAs    :2       NAs    :2                                 
+\end{verbatim}
+
+Suppose you are interested to explore whether or not different species
+has shown preference in habitat or geographical location
+(\texttt{island}).
+
+Let's begin with creating a 2D table as below:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -3606,7 +4129,7 @@ species     Biscoe Dream Torgersen
 \end{verbatim}
 
 Obviously, \texttt{species} and \texttt{island} are not independent, as
-you can see not all three species can be found in each island. If
+you can see not all three species are present in all islands. If
 \texttt{species} and \texttt{island} are independent, the counts in the
 contingency table should be below:
 
@@ -3624,11 +4147,13 @@ species     Biscoe Dream Torgersen
   Gentoo        61    45        19
 \end{verbatim}
 
-Two popular graphs are used to visualize counts from a contingency
-table: a side-by-side barplot, and mosaic plot.
+Two popular graphs are suitable for visualizing a contingency table: a
+side-by-side bar plot, or a mosaic plot.
 
 \begin{Shaded}
 \begin{Highlighting}[]
+\FunctionTok{par}\NormalTok{(}\AttributeTok{mfrow=}\FunctionTok{c}\NormalTok{(}\DecValTok{3}\NormalTok{,}\DecValTok{1}\NormalTok{))}
+
 \FunctionTok{barplot}\NormalTok{(mytab,}
         \AttributeTok{beside=}\NormalTok{T,}
         \AttributeTok{xlab =} \StringTok{"Island"}\NormalTok{,}
@@ -3636,65 +4161,38 @@ table: a side-by-side barplot, and mosaic plot.
         \AttributeTok{main =} \StringTok{"A 2D Table"}\NormalTok{,}
         \AttributeTok{col =} \FunctionTok{c}\NormalTok{(}\StringTok{"skyblue"}\NormalTok{, }\StringTok{"lightgreen"}\NormalTok{, }\StringTok{"lightcoral"}\NormalTok{),}
         \AttributeTok{legend.text =} \FunctionTok{rownames}\NormalTok{(mytab))}
-\end{Highlighting}
-\end{Shaded}
 
-\begin{figure}[H]
-
-{\centering \pandocbounded{\includegraphics[keepaspectratio]{03-Data-Visualization_files/figure-pdf/Fig3-16-1.pdf}}
-
-}
-
-\caption{Visualization of a 2D Contingency Table. A. A side-by-side
-barplot. B. Mosaic plot.}
-
-\end{figure}%
-
-\begin{Shaded}
-\begin{Highlighting}[]
 \FunctionTok{mosaicplot}\NormalTok{(mytab, }\AttributeTok{main =} \StringTok{"Mosaic Plot of Two Dependent Variables"}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
 
-\begin{figure}[H]
-
-{\centering \pandocbounded{\includegraphics[keepaspectratio]{03-Data-Visualization_files/figure-pdf/Fig3-16-2.pdf}}
-
-}
-
-\caption{Visualization of a 2D Contingency Table. A. A side-by-side
-barplot. B. Mosaic plot.}
-
-\end{figure}%
-
-\begin{Shaded}
-\begin{Highlighting}[]
 \FunctionTok{mosaicplot}\NormalTok{(indep\_tab, }\AttributeTok{main =} \StringTok{"Mosaic Plot of Two Independent Variables"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{figure}[H]
 
-{\centering \pandocbounded{\includegraphics[keepaspectratio]{03-Data-Visualization_files/figure-pdf/Fig3-16-3.pdf}}
+\centering{
+
+\pandocbounded{\includegraphics[keepaspectratio]{03-Data-Visualization_files/figure-pdf/fig-3-16-1.pdf}}
 
 }
 
-\caption{Visualization of a 2D Contingency Table. A. A side-by-side
-barplot. B. Mosaic plot.}
+\caption{\label{fig-3-16}Visualization of a 2D Contingency Table. Top. A
+side-by-side barplot. Middle. Mosaic plot. Bottom. Mosaic plot for
+independent categorical variables}
 
 \end{figure}%
 
 \subsection{Two Numeric Variables}\label{two-numeric-variables}
 
-If you want to gain a gut feeling about the relationship between two
-numeric variables, a scatter plot is the best choice. Note that the
-relationship can be manifold, ranging from linear to cyclical. So,
-visualizing how the data points are distributed in a 2D plan is a quick
-and easy way in gaining intuition of the two variables. Importantly, it
-should be done before performing any statistical analysis, e.g., linear
-regression. Here is how to create a scatter plot that shows the
-relationship between sepal width and sepal length. Note that each point
-\((x_{i},y_{i})\) is a pair of values from one sample.
+A scatter plot is the default choice to visualize the relationship
+between two numeric variables. The relationship can be manifold, ranging
+from linear to cyclical. So, visualizing how the data points are
+distributed in a 2D plan is an intuitive way to learn about there
+relationship. Importantly, visualization should be done before
+performing any statistical analysis, e.g., linear regression. Here is
+how to create a scatter plot that shows the relationship between sepal
+width and sepal length. Note that each point \((x_{i},y_{i})\) is a pair
+of values from one sample.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -3719,11 +4217,14 @@ relationship between sepal width and sepal length. Note that each point
 
 \begin{figure}[H]
 
-{\centering \pandocbounded{\includegraphics[keepaspectratio]{03-Data-Visualization_files/figure-pdf/Fig3-17-1.pdf}}
+\centering{
+
+\pandocbounded{\includegraphics[keepaspectratio]{03-Data-Visualization_files/figure-pdf/fig-3-17-1.pdf}}
 
 }
 
-\caption{Visualizing the relationship between two numeric variables.}
+\caption{\label{fig-3-17}Visualizing the relationship between two
+numeric variables.}
 
 \end{figure}%
 
@@ -3747,17 +4248,20 @@ relationship between sepal width and sepal length. Note that each point
 
 \begin{figure}[H]
 
-{\centering \pandocbounded{\includegraphics[keepaspectratio]{03-Data-Visualization_files/figure-pdf/Fig3-18-1.pdf}}
+\centering{
+
+\pandocbounded{\includegraphics[keepaspectratio]{03-Data-Visualization_files/figure-pdf/fig-3-18-1.pdf}}
 
 }
 
-\caption{Color data points by species.}
+\caption{\label{fig-3-18}Color data points by species.}
 
 \end{figure}%
 
 If your aim is to explore linear relationship between the two variables,
-it can be emphasized by plotting a regression line for the two variables
-on top of the data points.
+it can be emphasized by addingg a regression line for the two variables
+on top of the data points. Here is an example, regress
+\texttt{Sepal.Length} (response) on \texttt{Sepal.Width} (independent).
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -3800,17 +4304,19 @@ on top of the data points.
 
 \begin{figure}[H]
 
-{\centering \pandocbounded{\includegraphics[keepaspectratio]{03-Data-Visualization_files/figure-pdf/Fig3-19-1.pdf}}
+\centering{
+
+\pandocbounded{\includegraphics[keepaspectratio]{03-Data-Visualization_files/figure-pdf/fig-3-19-1.pdf}}
 
 }
 
-\caption{Add a regression line}
+\caption{\label{fig-3-19}A scatter plot with a regression line.}
 
 \end{figure}%
 
-\subsection{Multi-panel Scatter Plot}\label{multi-panel-scatter-plot}
+\subsection{Multipanel Scatter Plot}\label{multipanel-scatter-plot}
 
-A multi-panel scatter plot offers a glimpse of the relationship between
+A multipanel scatter plot offers a glimpse of the relationship between
 all possible pairs of numeric variables. Suppose, you are interested in
 the pairwise relationship between all numeric variables in
 \texttt{iris}. It can easily be done using the \texttt{pairs()} plot
@@ -3824,37 +4330,44 @@ function.
 
 \begin{figure}[H]
 
-{\centering \pandocbounded{\includegraphics[keepaspectratio]{03-Data-Visualization_files/figure-pdf/Fig3-20-1.pdf}}
+\centering{
+
+\pandocbounded{\includegraphics[keepaspectratio]{03-Data-Visualization_files/figure-pdf/fig-3-20-1.pdf}}
 
 }
 
-\caption{A Multi-panel Scatter Plot}
+\caption{\label{fig-3-20}A Multipanel Scatter Plot}
 
 \end{figure}%
 
-Here, it concludes our journey of data visualization using base R
+Here it concludes our journey of data visualization using base R
 functions. As you can see, some plots can be made easily using base R
-(e.g., multi-panel scatter plot), while others are complicated (e.g.,
-barplot with error bars). To compare the pros and cons of the two
-graphical systems, let's continue our journey to \texttt{ggplot}.
+(e.g., multipanel scatter plot), while others are less direct (e.g., bar
+plot with error bars). There is no one system you should use, choose
+whatever fits your requirements.
 
 \section{\texorpdfstring{\texttt{ggplot2}}{ggplot2}}\label{ggplot2}
 
-\texttt{ggplot2} is bundled in \texttt{tidyverse}. So, you have to
-activate \texttt{tidyverse} before using \texttt{ggplot2}. Here, the
-focus is on using \texttt{ggplot2}to plot the graphs that were created
+\texttt{ggplot2} is bundled in \texttt{tidyverse}. Once you have
+activated \texttt{tidyverse}, \texttt{ggplot2} is available. Here, the
+focus is on using \texttt{ggplot2} to plot the graphs that were created
 using base R above. We will not repeat the discussion of strengths and
 weaknesses of each graph in this section. Readers should refer to the
 corresponding section above for the characteristics and functions of the
 graphs.
 
-To use \texttt{ggplot2}, load it into R.
+If \texttt{tidyverse} has not been activated, load it into R before
+using \texttt{ggplot2}.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{library}\NormalTok{(tidyverse)}
+\FunctionTok{require}\NormalTok{(tidyverse)}
 \end{Highlighting}
 \end{Shaded}
+
+\begin{verbatim}
+Loading required package: tidyverse
+\end{verbatim}
 
 \begin{verbatim}
 -- Attaching core tidyverse packages ------------------------ tidyverse 2.0.0 --
@@ -3869,29 +4382,32 @@ x dplyr::lag()    masks stats::lag()
 i Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors
 \end{verbatim}
 
-\subsection{\texorpdfstring{Grammer of
-\texttt{ggplot2}}{Grammer of ggplot2}}\label{grammer-of-ggplot2}
+\subsection{\texorpdfstring{Grammar of
+\texttt{ggplot2}}{Grammar of ggplot2}}\label{grammar-of-ggplot2}
 
 The two '\texttt{g}'s of \texttt{ggplot2} stand for \textbf{Grammar of
-Graphics}. The graphical widgets are arranged in layers that provides
-the flexibility for decorating a graph by adding layers to it. The
-\textbf{data} layer forms the foundation of a graph. The
-\textbf{Aesthetics} defines the association between data variable(s) and
-the axes. \textbf{Geometries} are the types of graphs, e.g., line plot,
-histogram, etc. \textbf{Facets} split a graph into multi-panels.
-\textbf{Statistics} defines how to aggregate data, e.g., in proportion
-or take the face value in a barplot. \textbf{Coordinates} supports an
-X-Y Cartesian coordinate system, and a polar coordinate system. (See the
-Pie Chart section below) \textbf{Themes} offers different color schemes,
-font type, font size, etc.
+Graphics}. In \texttt{ggplot2}, the graphical widgets are arranged in
+layers. That idea gives developers the flexibility to decorate a graph
+by adding layers to an existing graph. The \textbf{data} layer forms the
+foundation of a graph. The \textbf{Aesthetics} defines the association
+between data variable(s) and the axes. \textbf{Geometries} are the types
+of graphs, e.g., line plot, histogram, etc. \textbf{Facets} split a
+graph into multi-panels. \textbf{Statistics} defines how to aggregate
+data, e.g., in proportion or take the face value in a barplot.
+\textbf{Coordinates} supports an X-Y Cartesian coordinate system, and a
+polar coordinate system. (See the Pie Chart section below)
+\textbf{Themes} offers different color schemes, font type, font size,
+etc.
 
-\begin{figure}[H]
+\begin{figure}
 
-{\centering \includegraphics[width=0.5\linewidth,height=0.5\textheight]{images/Figure_3-21-ggplot-anatomy.png}
+\centering{
+
+\includegraphics[width=0.5\linewidth,height=0.5\textheight]{images/Figure_3-21-ggplot-anatomy.png}
 
 }
 
-\caption{Anatomy of \texttt{ggplot2}}
+\caption{\label{fig-3-21}Anatomy of \texttt{ggplot2}}
 
 \end{figure}%
 
@@ -3899,17 +4415,17 @@ font type, font size, etc.
 
 You can plot a histogram of the numeric variable to see its
 distribution, such as the spread, the peak, symmetry, and flatness. If
-your concern is robust statistics, a boxplot will do the job.
+your concern is robust statistics, make a box plot instead.
 
 \subsubsection{Histogram}\label{histogram-1}
 
-Let's redraw the histogram in Figure (@ref(fig:Fig3-1))) using
-\texttt{ggplot2}. The first line is the data layer that specifies the
-data source, and it must be a data frame (or tibble), e.g.,
-\texttt{iris}. The aesthetic option designates the x-axis for
-\texttt{Sepal.Width}. The second line is the geometry of the graph. For
-a histogram, the function name is \texttt{geom\_histogram()}. Here is
-the bare minimum of a \texttt{ggplot2} histogram:
+Let's redraw the histogram in Figure~\ref{fig-3-1} using
+\texttt{ggplot2}. The first line is the \emph{data layer} that specifies
+the data source, and it must be a data frame (or tibble), e.g.,
+\texttt{iris}. The \emph{aesthetic} option designates the x-axis for
+\texttt{Sepal.Width}. The second line is the \emph{geometry} of the
+graph. For a histogram, the function name is \texttt{geom\_histogram()}.
+Here is the bare minimum of a \texttt{ggplot2} histogram:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -3925,19 +4441,26 @@ the bare minimum of a \texttt{ggplot2} histogram:
 
 \begin{figure}[H]
 
-{\centering \pandocbounded{\includegraphics[keepaspectratio]{03-Data-Visualization_files/figure-pdf/Fig3-22-1.pdf}}
+\centering{
+
+\pandocbounded{\includegraphics[keepaspectratio]{03-Data-Visualization_files/figure-pdf/fig-3-22-1.pdf}}
 
 }
 
-\caption{\texttt{ggplot2} Histogram.}
+\caption{\label{fig-3-22}\texttt{ggplot2} Histogram.}
 
 \end{figure}%
 
+\emph{If you see this message: ``\texttt{stat\_bin()} using
+\texttt{bins\ =\ 30}. Pick better value \texttt{binwidth}'', R just
+informs you that 30 bins was used by default. You can ignore it or
+specify a new \texttt{binwidth} value.}
+
 It is always a good idea to give the graph a title at the top so people
-what the key message is. Equally important is the x- and y-labels. This
-task can be done by the \texttt{labs()} function. By default, the title
-is left-justified. To center it, see the last line and the comment above
-it.
+know what the key message is. Equally important is the x- and y-labels.
+This task can be done by the \texttt{labs()} function. By default, the
+title is left-justified. To center it, see the last line and the comment
+above it.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -3956,12 +4479,14 @@ it.
 
 \begin{figure}[H]
 
-{\centering \pandocbounded{\includegraphics[keepaspectratio]{03-Data-Visualization_files/figure-pdf/Fig3-23-1.pdf}}
+\centering{
+
+\pandocbounded{\includegraphics[keepaspectratio]{03-Data-Visualization_files/figure-pdf/fig-3-23-1.pdf}}
 
 }
 
-\caption{\texttt{ggplot2} Histogram - specify your own labels and
-title.}
+\caption{\label{fig-3-23}A \texttt{ggplot2} Histogram with customized
+labels and title.}
 
 \end{figure}%
 
@@ -3986,17 +4511,20 @@ additional parameters to the \texttt{geom\_histogram()}.
 
 \begin{figure}[H]
 
-{\centering \pandocbounded{\includegraphics[keepaspectratio]{03-Data-Visualization_files/figure-pdf/Fig3-24-1.pdf}}
+\centering{
+
+\pandocbounded{\includegraphics[keepaspectratio]{03-Data-Visualization_files/figure-pdf/fig-3-24-1.pdf}}
 
 }
 
-\caption{\texttt{ggplot2} Histogram - choose your own color}
+\caption{\label{fig-3-24}A \texttt{ggplot2} Histogram with a customized
+color.}
 
 \end{figure}%
 
-The bin width of the histogram is calculated automatically by
-\texttt{ggplot2} according to the range of x. To overwrite it by the
-\texttt{breaks} parameter.
+The bin width of a histogram is calculated automatically by
+\texttt{ggplot2} according to the range of x. You can use the
+\texttt{breaks} parameter to overwrite it.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -4011,23 +4539,26 @@ The bin width of the histogram is calculated automatically by
 
 \begin{figure}[H]
 
-{\centering \pandocbounded{\includegraphics[keepaspectratio]{03-Data-Visualization_files/figure-pdf/Fig3-25-1.pdf}}
+\centering{
+
+\pandocbounded{\includegraphics[keepaspectratio]{03-Data-Visualization_files/figure-pdf/fig-3-25-1.pdf}}
 
 }
 
-\caption{\texttt{ggplot2} Histogram - choose your own color}
+\caption{\label{fig-3-25}A \texttt{ggplot2} Histogram with a non-default
+bin width.}
 
 \end{figure}%
 
 \textbf{Optional topic}
 
 As you might notice that each of the four histograms occupies the entire
-plotting area instead of displaying in a 2x2 grid as Figure
-(@ref(fig:Fig3-1))). It is because \texttt{ggolot2} does not work with
+plotting area instead of displaying in a 2x2 grid as
+Figure~\ref{fig-3-1}. It is because \texttt{ggolot2} does not work with
 \texttt{par(mfrow(2,2))}. To divide the plotting area into a grid that
 is compatible with \texttt{ggplot2}, use the \texttt{patchwork} package.
 Use the menu option \textbf{Tools} \(\rightarrow\) Install Packages to
-install it the very first time.
+install it.
 
 Another new concept is that a graph can be stored in a variable so it
 can be displayed later in the grid. In the example below, the four
@@ -4036,7 +4567,7 @@ histograms above are initially stored in variables \texttt{p1},
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{library}\NormalTok{(patchwork)}
+\FunctionTok{require}\NormalTok{(patchwork)}
 
 \CommentTok{\# Default}
 \NormalTok{p1 }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data=}\NormalTok{iris, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Sepal.Width)) }\SpecialCharTok{+}
@@ -4072,27 +4603,30 @@ histograms above are initially stored in variables \texttt{p1},
 
 \begin{figure}[H]
 
-{\centering \pandocbounded{\includegraphics[keepaspectratio]{03-Data-Visualization_files/figure-pdf/Fig3-26-1.pdf}}
+\centering{
+
+\pandocbounded{\includegraphics[keepaspectratio]{03-Data-Visualization_files/figure-pdf/fig-3-26-1.pdf}}
 
 }
 
-\caption{\texttt{ggplot2} Grid System by \texttt{patchwork}. Top left:
-Default (bare minimum). Top right: with labels and title. Bottom left:
-change the color. Bottom right: change the number of bins.}
+\caption{\label{fig-3-26}\texttt{ggplot2} Grid System by
+\texttt{patchwork}. Top left: Default (bare minimum). Top right: with
+labels and title. Bottom left: change the color. Bottom right: change
+the number of bins.}
 
 \end{figure}%
 
-\subsubsection{Boxplot}\label{boxplot-1}
+\subsubsection{Box plot}\label{box-plot-1}
 
-For an anatomy of a boxplot, reference the Figure (@ref(fig:Fig3-3))).
-The geometry function of a boxplot is \texttt{geom\_boxplot()}. Unlike a
+The anatomy of a box plot can be found in Figure~\ref{fig-3-3}. The
+geometry function of a box plot is \texttt{geom\_boxplot()}. Unlike a
 histogram, the numeric variable is mapped to the y-axis for a vertical
-boxplot. If you want a horizontal boxplot, map the numeric variable to
+box plot. If you want a horizontal box plot, map the numeric variable to
 the x-axis, and don't forget to specify the label for the x-axis.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{library}\NormalTok{(patchwork)}
+\FunctionTok{require}\NormalTok{(patchwork)}
 
 \CommentTok{\# Default}
 \NormalTok{p1 }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data=}\NormalTok{iris, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{y=}\NormalTok{Sepal.Width)) }\SpecialCharTok{+}
@@ -4101,7 +4635,7 @@ the x-axis, and don't forget to specify the label for the x-axis.
 \CommentTok{\# Add y{-}label and title}
 \NormalTok{p2 }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data=}\NormalTok{iris, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{y=}\NormalTok{Sepal.Width)) }\SpecialCharTok{+}
         \FunctionTok{geom\_boxplot}\NormalTok{() }\SpecialCharTok{+}
-        \FunctionTok{labs}\NormalTok{(}\AttributeTok{y=}\StringTok{"Sepal Width"}\NormalTok{, }\AttributeTok{title =} \StringTok{"Boxplot of Sepal Width"}\NormalTok{) }\SpecialCharTok{+}
+        \FunctionTok{labs}\NormalTok{(}\AttributeTok{y=}\StringTok{"Sepal Width"}\NormalTok{, }\AttributeTok{title =} \StringTok{"box plot of Sepal Width"}\NormalTok{) }\SpecialCharTok{+}
         \FunctionTok{theme}\NormalTok{(}\AttributeTok{plot.title =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{hjust =} \FloatTok{0.5}\NormalTok{))}
 
 \CommentTok{\# Change color}
@@ -4110,10 +4644,10 @@ the x-axis, and don't forget to specify the label for the x-axis.
         \FunctionTok{labs}\NormalTok{(}\AttributeTok{y=}\StringTok{"Sepal Width"}\NormalTok{, }\AttributeTok{title =} \StringTok{"Color options"}\NormalTok{) }\SpecialCharTok{+}
         \FunctionTok{theme}\NormalTok{(}\AttributeTok{plot.title =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{hjust =} \FloatTok{0.5}\NormalTok{))}
 
-\CommentTok{\# Horizontal boxplot}
+\CommentTok{\# Horizontal box plot}
 \NormalTok{p4 }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data=}\NormalTok{iris, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Sepal.Width)) }\SpecialCharTok{+}
         \FunctionTok{geom\_boxplot}\NormalTok{() }\SpecialCharTok{+}
-        \FunctionTok{labs}\NormalTok{(}\AttributeTok{x=}\StringTok{"Sepal Width"}\NormalTok{, }\AttributeTok{title =} \StringTok{"Horizontal Boxplot"}\NormalTok{) }\SpecialCharTok{+}
+        \FunctionTok{labs}\NormalTok{(}\AttributeTok{x=}\StringTok{"Sepal Width"}\NormalTok{, }\AttributeTok{title =} \StringTok{"Horizontal box plot"}\NormalTok{) }\SpecialCharTok{+}
         \FunctionTok{theme}\NormalTok{(}\AttributeTok{plot.title =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{hjust =} \FloatTok{0.5}\NormalTok{))}
 
 \NormalTok{(p1 }\SpecialCharTok{+}\NormalTok{ p2)}\SpecialCharTok{/}\NormalTok{(p3 }\SpecialCharTok{+}\NormalTok{ p4)}
@@ -4122,26 +4656,28 @@ the x-axis, and don't forget to specify the label for the x-axis.
 
 \begin{figure}[H]
 
-{\centering \pandocbounded{\includegraphics[keepaspectratio]{03-Data-Visualization_files/figure-pdf/Fig3-27-1.pdf}}
+\centering{
+
+\pandocbounded{\includegraphics[keepaspectratio]{03-Data-Visualization_files/figure-pdf/fig-3-27-1.pdf}}
 
 }
 
-\caption{Boxplot using \texttt{ggplot2}. Top left: default (bare
-minimum). Top right: with y-label and title. Bottom left: change color.
-Bottom right: horizontal boxplot.}
+\caption{\label{fig-3-27}box plot using \texttt{ggplot2}. Top left:
+default (bare minimum). Top right: with y-label and title. Bottom left:
+change color. Bottom right: horizontal box plot.}
 
 \end{figure}%
 
 \subsection{One Categorical Variable}\label{one-categorical-variable-1}
 
-\subsubsection{Barplot}\label{barplot-1}
+\subsubsection{Bar Plot}\label{bar-plot-1}
 
-Here we will show how to make a barplot and a piechart using
+Here we will show how to make a bar plot and a pie chart using
 \texttt{ggplot2}.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{library}\NormalTok{(patchwork)}
+\FunctionTok{require}\NormalTok{(patchwork)}
 
 \CommentTok{\# Default}
 \NormalTok{p1 }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data=}\NormalTok{iris, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Species)) }\SpecialCharTok{+}
@@ -4171,38 +4707,40 @@ Here we will show how to make a barplot and a piechart using
 
 \begin{figure}[H]
 
-{\centering \pandocbounded{\includegraphics[keepaspectratio]{03-Data-Visualization_files/figure-pdf/Fig3-28-1.pdf}}
+\centering{
+
+\pandocbounded{\includegraphics[keepaspectratio]{03-Data-Visualization_files/figure-pdf/fig-3-28-1.pdf}}
 
 }
 
-\caption{Barplot using \texttt{ggplot2}. Top left: default (bare
-minimum).}
+\caption{\label{fig-3-28}Barplot using \texttt{ggplot2}. Top left:
+default (bare minimum).}
 
 \end{figure}%
 
 \subsubsection{Pie Chart}\label{pie-chart-1}
 
-Although \texttt{ggplots} is portrayed as an improved method to compose
-graphs based upon its grammatical architecture, it does not always make
-plotting as simple as you might think, like the histograms and barplots
-illustrated above. A pie chart is one of those graphs in which
-\texttt{geom\_pie()} does not exist! Plotting it is not as
-straightforward as the base R \texttt{pie()} function, as shown in
-Figure (@ref(fig:Fig3-7))). Despite that, it is worth to see how a pie
-chart can be plotted using foundational building-block functions. To
-give you a heads-up, \texttt{ggplot2} views a pie chart as a twisted
-barplot. There is an internal logic to justify such a view but we will
-not discuss it in detail.
+Here's a curve ball. You may give an impression that \texttt{ggplots} is
+an upgrade. Plotting a pie chart should be a piece of cake. The fact is
+NO.
+
+Despite the the disappointment, it is worth to see how a pie chart can
+be plotted using the foundational building-block functions. To give you
+a heads-up, \texttt{ggplot2} views a pie chart as a twisted bar plot.
+There is an internal logic to justify such a view but we will not
+discuss it in detail.
 
 Suppose we want to create a pie chart like the one below:
 
-\begin{figure}[H]
+\begin{figure}
 
-{\centering \pandocbounded{\includegraphics[keepaspectratio]{03-Data-Visualization_files/figure-pdf/Fig3-29-1.pdf}}
+\centering{
+
+\pandocbounded{\includegraphics[keepaspectratio]{03-Data-Visualization_files/figure-pdf/fig-3-29-1.pdf}}
 
 }
 
-\caption{Pie chart or a donut chart}
+\caption{\label{fig-3-29}Pie chart or a donut chart}
 
 \end{figure}%
 
@@ -4224,29 +4762,33 @@ placed at the position 2 units on the right from the origin
 
 \begin{figure}[H]
 
-{\centering \pandocbounded{\includegraphics[keepaspectratio]{03-Data-Visualization_files/figure-pdf/Fig3-30-1.pdf}}
+\centering{
+
+\pandocbounded{\includegraphics[keepaspectratio]{03-Data-Visualization_files/figure-pdf/fig-3-30-1.pdf}}
 
 }
 
-\caption{A stacked barplot}
+\caption{\label{fig-3-30}A stacked barplot}
 
 \end{figure}%
 
 Now, use your imagination to picture that the stacked bar is bent into a
-ring. Does it look like the pie chart in Figure (@ref(fig:Fig3-30)))? To
-way to ``bend'' it in \texttt{ggplot2} is to change the x-y Cartesian
+ring. Does it look like the pie chart in Figure~\ref{fig-3-30}? To way
+to ``bend'' it in \texttt{ggplot2} is to change the x-y Cartesian
 coordinate system to the polar (circular) coordinate system in which a
 point is characterized by two parameters: the distance from the origin
 (\(r\)), and the angle (\(\theta\)) from the horizontal \textbf{polar
 axis} in an counter-clockwise direction.
 
-\begin{figure}[H]
+\begin{figure}
 
-{\centering \includegraphics[width=0.5\linewidth,height=0.5\textheight]{images/Figure_3-25-polar-coords.png}
+\centering{
+
+\includegraphics[width=0.5\linewidth,height=0.5\textheight]{images/Figure_3-25-polar-coords.png}
 
 }
 
-\caption{Polar Coordinate. (generated by Gemini)}
+\caption{\label{fig-3-31}Polar Coordinate. (generated by Gemini)}
 
 \end{figure}%
 
@@ -4268,11 +4810,14 @@ quarter, the angle \(\theta=360^{\circ}\times\frac{1}{4}=90^{\circ}\).
 
 \begin{figure}[H]
 
-{\centering \pandocbounded{\includegraphics[keepaspectratio]{03-Data-Visualization_files/figure-pdf/Fig3-32-1.pdf}}
+\centering{
+
+\pandocbounded{\includegraphics[keepaspectratio]{03-Data-Visualization_files/figure-pdf/fig-3-32-1.pdf}}
 
 }
 
-\caption{A Piechart by changing to the polar coordinate system.}
+\caption{\label{fig-3-32}A Piechart by changing to the polar coordinate
+system.}
 
 \end{figure}%
 
@@ -4292,11 +4837,13 @@ aesthetic reasons. But this modification is optional.
 
 \begin{figure}[H]
 
-{\centering \pandocbounded{\includegraphics[keepaspectratio]{03-Data-Visualization_files/figure-pdf/Fig3-33-1.pdf}}
+\centering{
+
+\pandocbounded{\includegraphics[keepaspectratio]{03-Data-Visualization_files/figure-pdf/fig-3-33-1.pdf}}
 
 }
 
-\caption{Piechart using \texttt{ggplot2}}
+\caption{\label{fig-3-33}A Piechart using \texttt{ggplot2}.}
 
 \end{figure}%
 
@@ -4318,33 +4865,36 @@ journey!
 
 \begin{figure}[H]
 
-{\centering \pandocbounded{\includegraphics[keepaspectratio]{03-Data-Visualization_files/figure-pdf/Fig3-34-1.pdf}}
+\centering{
+
+\pandocbounded{\includegraphics[keepaspectratio]{03-Data-Visualization_files/figure-pdf/fig-3-34-1.pdf}}
 
 }
 
-\caption{Piechart using \texttt{ggplot2} without no background.}
+\caption{\label{fig-3-34}Piechart using \texttt{ggplot2} without no
+background.}
 
 \end{figure}%
 
 \subsection{One Categorical and One Numeric
 Variables}\label{one-categorical-and-one-numeric-variables-1}
 
-\subsubsection{Side-by-side Boxplot}\label{side-by-side-boxplot-1}
+\subsubsection{Side-by-side Box Plot}\label{side-by-side-box-plot-1}
 
 Here you want to compare the robust statistics among different species.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{library}\NormalTok{(patchwork)}
+\FunctionTok{require}\NormalTok{(patchwork)}
 
 \NormalTok{p1 }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data=}\NormalTok{iris, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Species, }\AttributeTok{y=}\NormalTok{Sepal.Length)) }\SpecialCharTok{+}
         \FunctionTok{geom\_boxplot}\NormalTok{() }\SpecialCharTok{+}
-        \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"A Side{-}by{-}Side Boxplot"}\NormalTok{) }\SpecialCharTok{+}
+        \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"A Side{-}by{-}Side box plot"}\NormalTok{) }\SpecialCharTok{+}
         \FunctionTok{theme}\NormalTok{(}\AttributeTok{plot.title =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{hjust =} \FloatTok{0.5}\NormalTok{))}
 
 \NormalTok{p2 }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data=}\NormalTok{iris, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Sepal.Length, }\AttributeTok{y=}\NormalTok{Species)) }\SpecialCharTok{+}
         \FunctionTok{geom\_boxplot}\NormalTok{() }\SpecialCharTok{+}
-        \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"A Horizontal Side{-}by{-}Side Boxplot"}\NormalTok{) }\SpecialCharTok{+}
+        \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"A Horizontal Side{-}by{-}Side box plot"}\NormalTok{) }\SpecialCharTok{+}
         \FunctionTok{theme}\NormalTok{(}\AttributeTok{plot.title =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{hjust =} \FloatTok{0.5}\NormalTok{))}
 
 \NormalTok{p1}\SpecialCharTok{/}\NormalTok{p2}
@@ -4353,19 +4903,22 @@ Here you want to compare the robust statistics among different species.
 
 \begin{figure}[H]
 
-{\centering \pandocbounded{\includegraphics[keepaspectratio]{03-Data-Visualization_files/figure-pdf/Fig3-35-1.pdf}}
+\centering{
+
+\pandocbounded{\includegraphics[keepaspectratio]{03-Data-Visualization_files/figure-pdf/fig-3-35-1.pdf}}
 
 }
 
-\caption{Side-by-side boxplot}
+\caption{\label{fig-3-35}A side-by-side box plot}
 
 \end{figure}%
 
-\subsubsection{Side-by-side Barplot}\label{side-by-side-barplot-1}
+\subsubsection{Side-by-side Bar Plot}\label{side-by-side-bar-plot-1}
 
 Here, you want to compare the average \texttt{Sepal.Length} among iris
 species. As discussed above, you calculate the averages and store them
-in a separate table.
+in a separate table. It makes use of pipe, group by, and summarize
+concepts discussed in Section~\ref{sec-tidyverse-tabulation}.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -4402,16 +4955,18 @@ function to set up the height of the bars according to the face value of
 
 \begin{figure}[H]
 
-{\centering \pandocbounded{\includegraphics[keepaspectratio]{03-Data-Visualization_files/figure-pdf/Fig3-36-1.pdf}}
+\centering{
+
+\pandocbounded{\includegraphics[keepaspectratio]{03-Data-Visualization_files/figure-pdf/fig-3-36-1.pdf}}
 
 }
 
-\caption{Side-by-side barplot}
+\caption{\label{fig-3-36}A side-by-side bar plot}
 
 \end{figure}%
 
-\subsubsection{Side-by-side Barplot with Error
-Bar}\label{ggplot-error-bar}
+\subsubsection{Side-by-side Bar Plot with Error
+Bar}\label{sec-ggplot-error-bar}
 
 The calculation of the error bar (i.e., the standard error \texttt{se})
 requires standard deviation and sample size. Once \texttt{se} is
@@ -4453,16 +5008,20 @@ calculated, it can be used to calculate the minimum (lower) and maximum
 
 \begin{figure}[H]
 
-{\centering \pandocbounded{\includegraphics[keepaspectratio]{03-Data-Visualization_files/figure-pdf/Fig3-37-1.pdf}}
+\centering{
+
+\pandocbounded{\includegraphics[keepaspectratio]{03-Data-Visualization_files/figure-pdf/fig-3-37-1.pdf}}
 
 }
 
-\caption{Side-by-side barplot with error bar}
+\caption{\label{fig-3-37}A side-by-side bar plot with error bar.}
 
 \end{figure}%
 
 \subsubsection{Line Graph with Error
 Bar}\label{line-graph-with-error-bar-1}
+
+Calculate the SE as above:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -4486,6 +5045,8 @@ Bar}\label{line-graph-with-error-bar-1}
 3 versicolor              5.94    50 0.0730  5.86  6.01
 \end{verbatim}
 
+Incorporate the SE into a line plot.
+
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{ggplot}\NormalTok{(iris\_summary3, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Species, }\AttributeTok{y=}\NormalTok{mean\_sepal\_length, }\AttributeTok{group =} \DecValTok{1}\NormalTok{)) }\SpecialCharTok{+}
@@ -4499,16 +5060,18 @@ Bar}\label{line-graph-with-error-bar-1}
 
 \begin{figure}[H]
 
-{\centering \pandocbounded{\includegraphics[keepaspectratio]{03-Data-Visualization_files/figure-pdf/Fig3-38-1.pdf}}
+\centering{
+
+\pandocbounded{\includegraphics[keepaspectratio]{03-Data-Visualization_files/figure-pdf/fig-3-38-1.pdf}}
 
 }
 
-\caption{Line plot with error bar}
+\caption{\label{fig-3-38}A line plot with error bar.}
 
 \end{figure}%
 
 \subsubsection{Overlapping
-Histogram}\label{ggplot-overlapping-histogram}
+Histogram}\label{sec-ggplot-overlapping-histogram}
 
 Like the base R side-by-side histogram, you will set the transparency to
 0.5 and bin width to 0.25. Note that there is no need to care about the
@@ -4525,18 +5088,20 @@ x- and y-limit in \texttt{ggplot2}.
 
 \begin{figure}[H]
 
-{\centering \pandocbounded{\includegraphics[keepaspectratio]{03-Data-Visualization_files/figure-pdf/Fig3-39-1.pdf}}
+\centering{
+
+\pandocbounded{\includegraphics[keepaspectratio]{03-Data-Visualization_files/figure-pdf/fig-3-39-1.pdf}}
 
 }
 
-\caption{Side-by-side Histogram}
+\caption{\label{fig-3-39}A side-by-side histogram.}
 
 \end{figure}%
 
 \subsection{Contingency Table}\label{contingency-table-1}
 
-We will use the \texttt{penguins} data set to demonstrate how to create
-a side-by-side bar plot of the counts, and a mosaic plot.
+The \texttt{penguins} data set is used to illustrate how to create a
+side-by-side bar plot or a mosaic plot for displaying count data.
 
 First, let's create a contingency table as below:
 
@@ -4555,14 +5120,9 @@ species     Biscoe Dream Torgersen
   Gentoo       124     0         0
 \end{verbatim}
 
-As said above, \texttt{ggplot2} only works with data frames. Therefore,
-you need to convert the contingency table into a data frame with column
-names. During the conversion process, the R function will pair up each
-species with an island and create a new column that stores the count. It
-means that the resultant data frame will consists of RxC rows, where R
-and C are the number of rows and columns, respectively. A 3x3
-contingency table like yours, will be converted to a data frame
-consisting of 9 rows as shown below:
+As \texttt{ggplot2} only works with data frames, \texttt{mytab} is
+\textbf{not} a data frame. Therefore, the first step is to convert the
+contingency table into a data frame.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -4585,6 +5145,8 @@ consisting of 9 rows as shown below:
 9    Gentoo Torgersen     0
 \end{verbatim}
 
+Now we can plot \texttt{mydf}.
+
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data=}\NormalTok{mydf, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{island, }\AttributeTok{y=}\NormalTok{Count, }\AttributeTok{fill=}\NormalTok{species)) }\SpecialCharTok{+}
@@ -4595,47 +5157,50 @@ consisting of 9 rows as shown below:
 
 \begin{figure}[H]
 
-{\centering \pandocbounded{\includegraphics[keepaspectratio]{03-Data-Visualization_files/figure-pdf/Fig3-40-1.pdf}}
+\centering{
+
+\pandocbounded{\includegraphics[keepaspectratio]{03-Data-Visualization_files/figure-pdf/fig-3-40-1.pdf}}
 
 }
 
-\caption{Side-by-side Barplot}
+\caption{\label{fig-3-40}Plotting a contingency table using a
+side-by-side bar plot.}
 
 \end{figure}%
 
 \subsection{Two Numeric Variables}\label{two-numeric-variables-1}
 
-Here, you are going to visualize the relationship between two numeric
-variables using a scatter plot. As said above, the revealed relationship
-can be linear and non-linear. Visualizing how data points are
-distributed on a scatter plot is the most intuitive way to understand
-their true relationship.
+Use a scatter plot to visualize the relationship between two numeric
+variables. As said above, the revealed relationship can be linear and
+non-linear.
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{ggplot}\NormalTok{(iris, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Sepal.Width, }\AttributeTok{y=}\NormalTok{Sepal.Length)) }\SpecialCharTok{+}
   \FunctionTok{geom\_point}\NormalTok{() }\SpecialCharTok{+}
-  \FunctionTok{labs}\NormalTok{(}\AttributeTok{x=}\StringTok{"Sepal Width"}\NormalTok{, }\AttributeTok{y=}\StringTok{"Sepal Length"}\NormalTok{, }\AttributeTok{title =} \StringTok{"Scatter Plot"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{x=}\StringTok{"Sepal Width"}\NormalTok{, }\AttributeTok{y=}\StringTok{"Sepal Length"}\NormalTok{, }\AttributeTok{title =} \StringTok{"A Scatter Plot"}\NormalTok{) }\SpecialCharTok{+}
   \FunctionTok{theme}\NormalTok{(}\AttributeTok{plot.title =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{hjust =} \FloatTok{0.5}\NormalTok{))}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{figure}[H]
 
-{\centering \pandocbounded{\includegraphics[keepaspectratio]{03-Data-Visualization_files/figure-pdf/Fig3-42-1.pdf}}
+\centering{
+
+\pandocbounded{\includegraphics[keepaspectratio]{03-Data-Visualization_files/figure-pdf/fig-3-42-1.pdf}}
 
 }
 
-\caption{Visualizing the relationship between two numeric variables
-using a scatter plot.}
+\caption{\label{fig-3-42}Visualizing the relationship between two
+numeric variables using a scatter plot.}
 
 \end{figure}%
 
 If you wanted to emphasize their linear relationship, it can be done
 convincingly by adding a regression line on top of the scatter plot.
 \texttt{ggplot2} spares you the effort to create a linear model like
-above to determine what the slope and intercept are. Instead, it can be
-done by adding the \texttt{geom\_smooth()}. You tell
+base R. Instead, it can be done by adding the \texttt{geom\_smooth()}.
+You tell
 \texttt{geom\_smooth(method\ =\ "lm",\ se\ =\ FALSE,\ color\ =\ "red")}
 to use a linear method (\texttt{lm}) for smoothing the data points. See
 the code below:
@@ -4656,11 +5221,14 @@ the code below:
 
 \begin{figure}[H]
 
-{\centering \pandocbounded{\includegraphics[keepaspectratio]{03-Data-Visualization_files/figure-pdf/Fig3-43-1.pdf}}
+\centering{
+
+\pandocbounded{\includegraphics[keepaspectratio]{03-Data-Visualization_files/figure-pdf/fig-3-43-1.pdf}}
 
 }
 
-\caption{A scatter plot overlaid with a regression line.}
+\caption{\label{fig-3-43}A scatter plot overlaid with a regression
+line.}
 
 \end{figure}%
 
@@ -4669,17 +5237,19 @@ If you see this message ``\texttt{geom\_smooth()} using formula = `y
 \texttt{ggplot2} is just to let you know what the response and predictor
 are used by \texttt{geom\_smooth()} in creating the regression line.
 
-\subsection{Multi-panel Scatter Plot}\label{multi-panel-scatter-plot-1}
+\subsection{Multipanel Scatter Plot}\label{multipanel-scatter-plot-1}
 
-Often times before multiple linear regression, it is a good idea to
-visualize the linear relationship between the response variable and the
-independent variables pairwisely. Or, the linear relationship between
-independent variables, as it may cause the collinearity issue in which
-independent variables are linearly correlated. A multi-panel scatter
-plot can do this. However, \texttt{ggplot2} does not have a geometry
-function for it. The simplest way is to use the \texttt{ggpairs()}
-function provided by the \texttt{GGally} package, which requires
-installation, if you have not done so.
+Often times before multiple linear regression, it is recommended to
+visualize the relationship between the response variable and the
+independent variables pairwisely, or the linear relationship between
+independent variables. The latter is important, as it may cause the
+\textbf{collinearity} issue if independent variables are linearly
+correlated.
+
+A multipanel scatter plot can do this. However, \texttt{ggplot2} does
+not have a geometry function for it. The simplest way is to use the
+\texttt{ggpairs()} function provided by the \texttt{GGally} package,
+which requires installation, if you have not done so.
 
 Suppose, you are interested in the pairwise relationship between all
 numeric variables in \texttt{iris}. It can easily be done using the
@@ -4696,11 +5266,13 @@ printing of the progress bar.
 
 \begin{figure}[H]
 
-{\centering \pandocbounded{\includegraphics[keepaspectratio]{03-Data-Visualization_files/figure-pdf/Fig3-44-1.pdf}}
+\centering{
+
+\pandocbounded{\includegraphics[keepaspectratio]{03-Data-Visualization_files/figure-pdf/fig-3-44-1.pdf}}
 
 }
 
-\caption{A Multi-panel Scatter Plot}
+\caption{\label{fig-3-44}A Multipanel Scatter Plot}
 
 \end{figure}%
 
@@ -4712,29 +5284,31 @@ visualization recipes. So, instead of listing all the functions here, it
 is helpful to list several useful resources that you can fine-tune the
 graphs yourselves.
 
-\textbf{\texttt{pch}}
+\textbf{pch}
 
 If you type \texttt{help(pch)} at the console, R shows the \texttt{pch}
 section of the help page for \texttt{points}. Below is a snapshot of
 \texttt{pch} values and the corresponding plotting characters:
 
-\begin{figure}[H]
+\begin{figure}
 
-{\centering \includegraphics[width=0.5\linewidth,height=0.5\textheight]{images/pch_symbols.png}
+\centering{
+
+\includegraphics[width=0.8\linewidth,height=0.8\textheight]{images/pch_symbols.png}
 
 }
 
-\caption{\texttt{pch} values}
+\caption{\label{fig-3-45}\texttt{pch} values}
 
 \end{figure}%
 
 \textbf{Color}
 
-R supports a large number of colors and palettes. Here is a great
-resource to see what are available and their names:
-https://r-graph-gallery.com/colors.html.
+R supports a large number of colors and palettes.
+\href{https://r-graph-gallery.com/colors.html}{R Graph Gallery} is a
+great resource to see what choices are available and their names .
 
-\bookmarksetup{startatroot}
+\part{Part II}
 
 \chapter{Dive Deeper}\label{dive-deeper}
 
@@ -5028,7 +5602,6 @@ Functions}{Different apply Functions}}\label{different-apply-functions}
 Use AirPassengers dataset
 
 
-\backmatter
 \bibliography{book.bib,packages.bib}
 
 
