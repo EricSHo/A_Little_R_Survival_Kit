@@ -1,0 +1,7 @@
+# Statistical Tests {#sec-04-statistical-tests}
+
+R was inherently designed for statistical analysis. Therefore, a chapter for statistical tests is justified. Here, we will discuss
+
+This are a test sentence.
+
+## Learning Objectives: {.unnumbered}

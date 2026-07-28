@@ -18,11 +18,12 @@ book:
       chapters:
       - 01_Part1_Basic_R.qmd
       - 02_Data_Wrangling.qmd
-      - 03-Data-Visualization.qmd
+      - 03_Data_Visualization.qmd
       
     - part: "Part II"
       chapters:
-      - 04_Dive_Deeper.qmd
+      - 04_Statistical_Tests.qmd
+      - 05_Dive_Deeper.qmd
 
 bibliography:
   - book.bib
@@ -41,5 +42,6 @@ format:
     include-in-header: preamble.tex
     keep-tex: true
     cite-method: natbib
-  epub: default
+
+epub: default
 

@@ -12,7 +12,7 @@ The journey of R scripting starts with a basic understanding of R objects and co
 
 - Perform arithmetic operations.
 
-- Handle composite objects: vectors, and data frames.
+- Handle composite objects: vectors and data frames.
 
 - Define categorical variables.
 

@@ -270,9 +270,11 @@ wrangling functions will be discussed. Part I is concluded with data
 visualization in Chapter 3. A picture is worth a thousand words. The
 chapter offers guidelines for choosing the most suitable graph according
 to the intended message and properties of data. Both base R and
-\texttt{ggplot2} graphical systems will be discussed. Part II includes
-use cases of common statistical tests and intermediate-level R functions
-that leverage the concepts discussed in Part I.
+\texttt{ggplot2} graphical systems will be discussed. Part II covers
+common statistical tests in Chapter 4. For readers who want to dive
+deeper into intermediate R functions, Chapter 5 discusses R functions
+that create or import data sets from files, restructure data sets, and
+accelerate execution time.
 
 \section*{RStudio}\label{rstudio}
 \addcontentsline{toc}{section}{RStudio}
@@ -336,7 +338,7 @@ to:
 \item
   Perform arithmetic operations.
 \item
-  Handle composite objects: vectors, and data frames.
+  Handle composite objects: vectors and data frames.
 \item
   Define categorical variables.
 \item
@@ -3334,7 +3336,7 @@ refinements.
 
 \centering{
 
-\pandocbounded{\includegraphics[keepaspectratio]{03-Data-Visualization_files/figure-pdf/fig-3-1-1.pdf}}
+\pandocbounded{\includegraphics[keepaspectratio]{03_Data_Visualization_files/figure-pdf/fig-3-1-1.pdf}}
 
 }
 
@@ -3392,7 +3394,7 @@ variable, and the x-axis has no meaning.
 
 \centering{
 
-\pandocbounded{\includegraphics[keepaspectratio]{03-Data-Visualization_files/figure-pdf/fig-3-2-1.pdf}}
+\pandocbounded{\includegraphics[keepaspectratio]{03_Data_Visualization_files/figure-pdf/fig-3-2-1.pdf}}
 
 }
 
@@ -3454,7 +3456,7 @@ range. Here's an example below:
 
 \centering{
 
-\pandocbounded{\includegraphics[keepaspectratio]{03-Data-Visualization_files/figure-pdf/fig-3-4-1.pdf}}
+\pandocbounded{\includegraphics[keepaspectratio]{03_Data_Visualization_files/figure-pdf/fig-3-4-1.pdf}}
 
 }
 
@@ -3525,7 +3527,7 @@ of the categorical variable. Here's an example:
 
 \centering{
 
-\pandocbounded{\includegraphics[keepaspectratio]{03-Data-Visualization_files/figure-pdf/fig-3-5-1.pdf}}
+\pandocbounded{\includegraphics[keepaspectratio]{03_Data_Visualization_files/figure-pdf/fig-3-5-1.pdf}}
 
 }
 
@@ -3584,7 +3586,7 @@ Here's the revised bar plot.
 
 \centering{
 
-\pandocbounded{\includegraphics[keepaspectratio]{03-Data-Visualization_files/figure-pdf/fig-3-6-1.pdf}}
+\pandocbounded{\includegraphics[keepaspectratio]{03_Data_Visualization_files/figure-pdf/fig-3-6-1.pdf}}
 
 }
 
@@ -3632,7 +3634,7 @@ An alternative to bar plots is pie charts.
 
 \centering{
 
-\pandocbounded{\includegraphics[keepaspectratio]{03-Data-Visualization_files/figure-pdf/fig-3-7-1.pdf}}
+\pandocbounded{\includegraphics[keepaspectratio]{03_Data_Visualization_files/figure-pdf/fig-3-7-1.pdf}}
 
 }
 
@@ -3674,7 +3676,7 @@ different species of iris.
 
 \centering{
 
-\pandocbounded{\includegraphics[keepaspectratio]{03-Data-Visualization_files/figure-pdf/fig-3-8-1.pdf}}
+\pandocbounded{\includegraphics[keepaspectratio]{03_Data_Visualization_files/figure-pdf/fig-3-8-1.pdf}}
 
 }
 
@@ -3725,7 +3727,7 @@ y-labels collide. It can be fixed by:
 
 \centering{
 
-\pandocbounded{\includegraphics[keepaspectratio]{03-Data-Visualization_files/figure-pdf/fig-3-9-1.pdf}}
+\pandocbounded{\includegraphics[keepaspectratio]{03_Data_Visualization_files/figure-pdf/fig-3-9-1.pdf}}
 
 }
 
@@ -3780,7 +3782,7 @@ And then, pass the \texttt{mean\_data} object to \texttt{barplot()}.
 
 \centering{
 
-\pandocbounded{\includegraphics[keepaspectratio]{03-Data-Visualization_files/figure-pdf/fig-3-10-1.pdf}}
+\pandocbounded{\includegraphics[keepaspectratio]{03_Data_Visualization_files/figure-pdf/fig-3-10-1.pdf}}
 
 }
 
@@ -3858,7 +3860,7 @@ of the upper whisker \((x_{1}, y_{1})\) and lower whisker
 
 \centering{
 
-\pandocbounded{\includegraphics[keepaspectratio]{03-Data-Visualization_files/figure-pdf/fig-3-11-1.pdf}}
+\pandocbounded{\includegraphics[keepaspectratio]{03_Data_Visualization_files/figure-pdf/fig-3-11-1.pdf}}
 
 }
 
@@ -3892,7 +3894,7 @@ dots.
 
 \centering{
 
-\pandocbounded{\includegraphics[keepaspectratio]{03-Data-Visualization_files/figure-pdf/fig-3-12-1.pdf}}
+\pandocbounded{\includegraphics[keepaspectratio]{03_Data_Visualization_files/figure-pdf/fig-3-12-1.pdf}}
 
 }
 
@@ -3938,7 +3940,7 @@ names can be obtained by \texttt{names(mean\_data)}.
 
 \centering{
 
-\pandocbounded{\includegraphics[keepaspectratio]{03-Data-Visualization_files/figure-pdf/fig-3-13-1.pdf}}
+\pandocbounded{\includegraphics[keepaspectratio]{03_Data_Visualization_files/figure-pdf/fig-3-13-1.pdf}}
 
 }
 
@@ -3976,7 +3978,7 @@ values \texttt{1,2,3}.
 
 \centering{
 
-\pandocbounded{\includegraphics[keepaspectratio]{03-Data-Visualization_files/figure-pdf/fig-3-14-1.pdf}}
+\pandocbounded{\includegraphics[keepaspectratio]{03_Data_Visualization_files/figure-pdf/fig-3-14-1.pdf}}
 
 }
 
@@ -4061,7 +4063,7 @@ red, no green and blue at all, and transparency is 50\%.
 
 \centering{
 
-\pandocbounded{\includegraphics[keepaspectratio]{03-Data-Visualization_files/figure-pdf/fig-3-15-1.pdf}}
+\pandocbounded{\includegraphics[keepaspectratio]{03_Data_Visualization_files/figure-pdf/fig-3-15-1.pdf}}
 
 }
 
@@ -4172,7 +4174,7 @@ side-by-side bar plot, or a mosaic plot.
 
 \centering{
 
-\pandocbounded{\includegraphics[keepaspectratio]{03-Data-Visualization_files/figure-pdf/fig-3-16-1.pdf}}
+\pandocbounded{\includegraphics[keepaspectratio]{03_Data_Visualization_files/figure-pdf/fig-3-16-1.pdf}}
 
 }
 
@@ -4219,7 +4221,7 @@ of values from one sample.
 
 \centering{
 
-\pandocbounded{\includegraphics[keepaspectratio]{03-Data-Visualization_files/figure-pdf/fig-3-17-1.pdf}}
+\pandocbounded{\includegraphics[keepaspectratio]{03_Data_Visualization_files/figure-pdf/fig-3-17-1.pdf}}
 
 }
 
@@ -4250,7 +4252,7 @@ numeric variables.}
 
 \centering{
 
-\pandocbounded{\includegraphics[keepaspectratio]{03-Data-Visualization_files/figure-pdf/fig-3-18-1.pdf}}
+\pandocbounded{\includegraphics[keepaspectratio]{03_Data_Visualization_files/figure-pdf/fig-3-18-1.pdf}}
 
 }
 
@@ -4306,7 +4308,7 @@ on top of the data points. Here is an example, regress
 
 \centering{
 
-\pandocbounded{\includegraphics[keepaspectratio]{03-Data-Visualization_files/figure-pdf/fig-3-19-1.pdf}}
+\pandocbounded{\includegraphics[keepaspectratio]{03_Data_Visualization_files/figure-pdf/fig-3-19-1.pdf}}
 
 }
 
@@ -4332,7 +4334,7 @@ function.
 
 \centering{
 
-\pandocbounded{\includegraphics[keepaspectratio]{03-Data-Visualization_files/figure-pdf/fig-3-20-1.pdf}}
+\pandocbounded{\includegraphics[keepaspectratio]{03_Data_Visualization_files/figure-pdf/fig-3-20-1.pdf}}
 
 }
 
@@ -4443,7 +4445,7 @@ Here is the bare minimum of a \texttt{ggplot2} histogram:
 
 \centering{
 
-\pandocbounded{\includegraphics[keepaspectratio]{03-Data-Visualization_files/figure-pdf/fig-3-22-1.pdf}}
+\pandocbounded{\includegraphics[keepaspectratio]{03_Data_Visualization_files/figure-pdf/fig-3-22-1.pdf}}
 
 }
 
@@ -4481,7 +4483,7 @@ above it.
 
 \centering{
 
-\pandocbounded{\includegraphics[keepaspectratio]{03-Data-Visualization_files/figure-pdf/fig-3-23-1.pdf}}
+\pandocbounded{\includegraphics[keepaspectratio]{03_Data_Visualization_files/figure-pdf/fig-3-23-1.pdf}}
 
 }
 
@@ -4513,7 +4515,7 @@ additional parameters to the \texttt{geom\_histogram()}.
 
 \centering{
 
-\pandocbounded{\includegraphics[keepaspectratio]{03-Data-Visualization_files/figure-pdf/fig-3-24-1.pdf}}
+\pandocbounded{\includegraphics[keepaspectratio]{03_Data_Visualization_files/figure-pdf/fig-3-24-1.pdf}}
 
 }
 
@@ -4541,7 +4543,7 @@ The bin width of a histogram is calculated automatically by
 
 \centering{
 
-\pandocbounded{\includegraphics[keepaspectratio]{03-Data-Visualization_files/figure-pdf/fig-3-25-1.pdf}}
+\pandocbounded{\includegraphics[keepaspectratio]{03_Data_Visualization_files/figure-pdf/fig-3-25-1.pdf}}
 
 }
 
@@ -4605,7 +4607,7 @@ histograms above are initially stored in variables \texttt{p1},
 
 \centering{
 
-\pandocbounded{\includegraphics[keepaspectratio]{03-Data-Visualization_files/figure-pdf/fig-3-26-1.pdf}}
+\pandocbounded{\includegraphics[keepaspectratio]{03_Data_Visualization_files/figure-pdf/fig-3-26-1.pdf}}
 
 }
 
@@ -4658,7 +4660,7 @@ the x-axis, and don't forget to specify the label for the x-axis.
 
 \centering{
 
-\pandocbounded{\includegraphics[keepaspectratio]{03-Data-Visualization_files/figure-pdf/fig-3-27-1.pdf}}
+\pandocbounded{\includegraphics[keepaspectratio]{03_Data_Visualization_files/figure-pdf/fig-3-27-1.pdf}}
 
 }
 
@@ -4709,7 +4711,7 @@ Here we will show how to make a bar plot and a pie chart using
 
 \centering{
 
-\pandocbounded{\includegraphics[keepaspectratio]{03-Data-Visualization_files/figure-pdf/fig-3-28-1.pdf}}
+\pandocbounded{\includegraphics[keepaspectratio]{03_Data_Visualization_files/figure-pdf/fig-3-28-1.pdf}}
 
 }
 
@@ -4736,7 +4738,7 @@ Suppose we want to create a pie chart like the one below:
 
 \centering{
 
-\pandocbounded{\includegraphics[keepaspectratio]{03-Data-Visualization_files/figure-pdf/fig-3-29-1.pdf}}
+\pandocbounded{\includegraphics[keepaspectratio]{03_Data_Visualization_files/figure-pdf/fig-3-29-1.pdf}}
 
 }
 
@@ -4764,7 +4766,7 @@ placed at the position 2 units on the right from the origin
 
 \centering{
 
-\pandocbounded{\includegraphics[keepaspectratio]{03-Data-Visualization_files/figure-pdf/fig-3-30-1.pdf}}
+\pandocbounded{\includegraphics[keepaspectratio]{03_Data_Visualization_files/figure-pdf/fig-3-30-1.pdf}}
 
 }
 
@@ -4812,7 +4814,7 @@ quarter, the angle \(\theta=360^{\circ}\times\frac{1}{4}=90^{\circ}\).
 
 \centering{
 
-\pandocbounded{\includegraphics[keepaspectratio]{03-Data-Visualization_files/figure-pdf/fig-3-32-1.pdf}}
+\pandocbounded{\includegraphics[keepaspectratio]{03_Data_Visualization_files/figure-pdf/fig-3-32-1.pdf}}
 
 }
 
@@ -4839,7 +4841,7 @@ aesthetic reasons. But this modification is optional.
 
 \centering{
 
-\pandocbounded{\includegraphics[keepaspectratio]{03-Data-Visualization_files/figure-pdf/fig-3-33-1.pdf}}
+\pandocbounded{\includegraphics[keepaspectratio]{03_Data_Visualization_files/figure-pdf/fig-3-33-1.pdf}}
 
 }
 
@@ -4867,7 +4869,7 @@ journey!
 
 \centering{
 
-\pandocbounded{\includegraphics[keepaspectratio]{03-Data-Visualization_files/figure-pdf/fig-3-34-1.pdf}}
+\pandocbounded{\includegraphics[keepaspectratio]{03_Data_Visualization_files/figure-pdf/fig-3-34-1.pdf}}
 
 }
 
@@ -4905,7 +4907,7 @@ Here you want to compare the robust statistics among different species.
 
 \centering{
 
-\pandocbounded{\includegraphics[keepaspectratio]{03-Data-Visualization_files/figure-pdf/fig-3-35-1.pdf}}
+\pandocbounded{\includegraphics[keepaspectratio]{03_Data_Visualization_files/figure-pdf/fig-3-35-1.pdf}}
 
 }
 
@@ -4957,7 +4959,7 @@ function to set up the height of the bars according to the face value of
 
 \centering{
 
-\pandocbounded{\includegraphics[keepaspectratio]{03-Data-Visualization_files/figure-pdf/fig-3-36-1.pdf}}
+\pandocbounded{\includegraphics[keepaspectratio]{03_Data_Visualization_files/figure-pdf/fig-3-36-1.pdf}}
 
 }
 
@@ -5010,7 +5012,7 @@ calculated, it can be used to calculate the minimum (lower) and maximum
 
 \centering{
 
-\pandocbounded{\includegraphics[keepaspectratio]{03-Data-Visualization_files/figure-pdf/fig-3-37-1.pdf}}
+\pandocbounded{\includegraphics[keepaspectratio]{03_Data_Visualization_files/figure-pdf/fig-3-37-1.pdf}}
 
 }
 
@@ -5062,7 +5064,7 @@ Incorporate the SE into a line plot.
 
 \centering{
 
-\pandocbounded{\includegraphics[keepaspectratio]{03-Data-Visualization_files/figure-pdf/fig-3-38-1.pdf}}
+\pandocbounded{\includegraphics[keepaspectratio]{03_Data_Visualization_files/figure-pdf/fig-3-38-1.pdf}}
 
 }
 
@@ -5090,7 +5092,7 @@ x- and y-limit in \texttt{ggplot2}.
 
 \centering{
 
-\pandocbounded{\includegraphics[keepaspectratio]{03-Data-Visualization_files/figure-pdf/fig-3-39-1.pdf}}
+\pandocbounded{\includegraphics[keepaspectratio]{03_Data_Visualization_files/figure-pdf/fig-3-39-1.pdf}}
 
 }
 
@@ -5159,7 +5161,7 @@ Now we can plot \texttt{mydf}.
 
 \centering{
 
-\pandocbounded{\includegraphics[keepaspectratio]{03-Data-Visualization_files/figure-pdf/fig-3-40-1.pdf}}
+\pandocbounded{\includegraphics[keepaspectratio]{03_Data_Visualization_files/figure-pdf/fig-3-40-1.pdf}}
 
 }
 
@@ -5187,7 +5189,7 @@ non-linear.
 
 \centering{
 
-\pandocbounded{\includegraphics[keepaspectratio]{03-Data-Visualization_files/figure-pdf/fig-3-42-1.pdf}}
+\pandocbounded{\includegraphics[keepaspectratio]{03_Data_Visualization_files/figure-pdf/fig-3-42-1.pdf}}
 
 }
 
@@ -5223,7 +5225,7 @@ the code below:
 
 \centering{
 
-\pandocbounded{\includegraphics[keepaspectratio]{03-Data-Visualization_files/figure-pdf/fig-3-43-1.pdf}}
+\pandocbounded{\includegraphics[keepaspectratio]{03_Data_Visualization_files/figure-pdf/fig-3-43-1.pdf}}
 
 }
 
@@ -5268,7 +5270,7 @@ printing of the progress bar.
 
 \centering{
 
-\pandocbounded{\includegraphics[keepaspectratio]{03-Data-Visualization_files/figure-pdf/fig-3-44-1.pdf}}
+\pandocbounded{\includegraphics[keepaspectratio]{03_Data_Visualization_files/figure-pdf/fig-3-44-1.pdf}}
 
 }
 
@@ -5310,6 +5312,18 @@ great resource to see what choices are available and their names .
 
 \part{Part II}
 
+\chapter{Statistical Tests}\label{sec-04-statistical-tests}
+
+R was inherently designed for statistical analysis. Therefore, a chapter
+for statistical tests is justified. Here, we will discuss
+
+This are a test sentence.
+
+\section*{Learning Objectives:}\label{learning-objectives-3}
+\addcontentsline{toc}{section}{Learning Objectives:}
+
+\markright{Learning Objectives:}
+
 \chapter{Dive Deeper}\label{dive-deeper}
 
 So far, we have discussed the basic functions of R that are sufficient
@@ -5320,7 +5334,7 @@ converting a dataset from a wide format to a long format, and vice
 versa, the family of \texttt{apply()} functions, and a second look at
 \texttt{group\_by()}.
 
-\section*{Learning Objectives:}\label{learning-objectives-3}
+\section*{Learning Objectives:}\label{learning-objectives-4}
 \addcontentsline{toc}{section}{Learning Objectives:}
 
 \markright{Learning Objectives:}
@@ -5425,7 +5439,7 @@ independence, etc.
 \end{Highlighting}
 \end{Shaded}
 
-\pandocbounded{\includegraphics[keepaspectratio]{04_Dive_Deeper_files/figure-pdf/unnamed-chunk-4-1.pdf}}
+\pandocbounded{\includegraphics[keepaspectratio]{05_Dive_Deeper_files/figure-pdf/unnamed-chunk-4-1.pdf}}
 
 \begin{Shaded}
 \begin{Highlighting}[]

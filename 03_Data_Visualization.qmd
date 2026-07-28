@@ -1,0 +1,1208 @@
+# Data Visualization {#sec-03-data-visualization}
+
+Now you have cleaned, organized, and analyzed the data, the next step is to share the findings and insights with the audience, raising their attention to the study. Row and columns of numbers may not be palatable to most people. To assist the audience to unpack the message embedded in the data, a graph is recommended. In this chapter, we will discuss various types of graphs, what they are good at and not so good at, and how to make them in R using two different graphical systems.
+
+## Learning Objectives: {.unnumbered}
+
+After finishing this chapter, you should be able to:
+
+- Choose the most appropriate graph based on the number of variables and their types.
+
+- Convey the message you want to convey to the audience embedded in the data through graphs.
+
+- Decorate graphs with labels, a main title, color, and other graphical attributes using the base R graphical system.
+
+- Create publication-quality graphs using the `ggplot2` package.
+
+## Types of Graphs
+
+The best way to choose the most appropriate graph depends on the data. Specifically, the types of variables (numeric or categorical) and how many of them. Here, you will plot graphs that entail:
+
+1.  One numeric variable.
+
+2.  One categorical variable.
+
+3.  One categorical and one numeric variables.
+
+4.  Two or more numeric variables.
+
+5.  A summary table.
+
+<!-- Put a table here -->
+
+## Base R Graphics
+
+This graphical system is built into the base R; no additional package is required. It is simple, ideal for creating graphs promptly for prototyping purposes and get the job done. The flip side is that the graphs may be bare-bones and unrefined. Some features are hard to be implemented. There is no one graphical system for all data visualization tasks. It is highly recommended to master both systems. Let's dive into each graph one by one.
+
+### One Numeric Variable
+
+If you want to examine the distribution of a numeric variable (such as the spread, peak(s), symmetry, and flatness), a histogram is the choice. On the other hand, if your concern is robust statistics (median, outliers, etc.), a box plot will do the job. Let's start with plotting a histogram.
+
+#### Histogram
+
+Let's examine the distribution of `iris`'s `Sepal.Width`, a numeric variable, using a histogram. Below are the codes for creating four histograms that display the same information but with different refinements.
+
+```{r}
+#| label: fig-3-1
+#| fig-cap: "Base R Histogram. Top left: default. Top right: Customized X-Y labels and the main title. Bottom left: change color of bars and border. Bottom right: change the bin width (`breaks=`)"
+#| fig-show: hold
+
+par(mfrow=c(2,2))
+
+# Top left
+hist(iris$Sepal.Width)
+
+# Top right
+hist(iris$Sepal.Width,
+     xlab="Sepal Width",
+     ylab = "Count",
+     main = "Histogram of Sepal Width")
+
+# Bottom left
+hist(iris$Sepal.Width,
+     col = 'skyblue', 
+     border = 'white', 
+     xlab="Sepal Width", 
+     ylab = "Count", 
+     main = "Color options")
+
+# Bottom right
+hist(iris$Sepal.Width, 
+     breaks = seq(2,4.5,by=0.1), 
+     col = 'skyblue', 
+     border = 'white', 
+     xlab="Sepal Width", 
+     ylab = "Count", 
+     main = "breaks option")
+
+```
+
+```{=html}
+<!--
+hist() alone cannot show the proportion of each bin in the y-axis.
+It keeps the sum(h$density*binwidth) == 1
+
+# Run hist() without plotting to get the counts
+h <- hist(iris$Sepal.Width, plot = FALSE, breaks = 10)
+
+# Calculate the proportion for each bar
+# (Count in each bin) / (Total number of observations)
+proportions <- h$counts / sum(h$counts)
+
+# Create the bar plot with proportions on the y-axis
+barplot(proportions,
+        names.arg = h$mids, # Label bars with bin midpoints
+        main = "Proportion Histogram (Base R)",
+        xlab = "Sepal Width",
+        ylab = "Proportion",
+        col = "steelblue")
+-->
+```
+
+For the bottom-right graph, check out this line: `breaks = seq(2,4.5,by=0.1)`. The aim is to customize the width of the bars. The `seq()` function (@sec-seq-function) generates a list of numbers (`2.0, 2.1 ... 4.4, 4.5`) that represents the x-ticks.
+
+Note: `par(mfrow=c(2,2))` splits the plotting area into a 2x2 grid such that multiple graphs can be displayed together. If you plot contains only one graph, it can be ignored.
+
+#### Box Plot
+
+If robust statistics of the data is the message, the most appropriate graph is a box plot. In a box plot, the y-axis represents the numeric variable, and the x-axis has no meaning.
+
+```{r}
+#| label: fig-3-2
+#| fig-cap: "Base R Box plot. Top left: Default, Top right: labels and main title. Bottom left: color options. Bottom right: `horizontal = TRUE`"
+#| fig-show: hold
+
+par(mfrow=c(2,2))
+
+# Top left
+boxplot(iris$Sepal.Width)
+
+# Top right
+boxplot(iris$Sepal.Width,
+        ylab="Sepal Width",
+        main="Box plot of Sepal Width")
+
+# Bottom left
+boxplot(iris$Sepal.Width,
+            col = "skyblue",
+            ylab="Sepal Width",
+            outcol = 'red',
+            outpch = 19,
+            main="Color options")
+
+# Bottom right
+boxplot(iris$Sepal.Width, 
+        horizontal = TRUE, 
+        xlab="Sepal Width", 
+        main="Horizontal Box plot")
+
+```
+
+```{r echo=FALSE}
+#| label: fig-3-3
+#| fig-cap: "Anatomy of a Box plot"
+#| fig-show: hold
+#| out-width: "60%"
+#| fig-align: center
+knitr::include_graphics(rep("images/Figure_3.3.png"))
+```
+
+The upper and lower whiskers are defined as:
+
+$$Upper\ Whisker = Q3 + 1.5 \times IQR$$ $$Lower\ Whisker = Q1 - 1.5 \times IQR$$ , where $IQR=(Q3-Q1)$.
+
+As a practice, data points above the upper whisker or below the lower whiskers are labeled as outliers.
+
+While a box plot summarizes data into quartiles, a histogram portrays the underlying distribution—such as peaks and symmetry—that is otherwise difficult to spot. Is it a great idea to combine the best of both plots in a single graph? To ensure that the combined plot makes sense, we need to ensure that the axes of the two plots are in the same range. Here's an example below:
+
+```{r}
+#| label: fig-3-4
+#| fig-cap: "Stacking up a histogram and a box plot."
+#| fig-width: 7
+#| fig-height: 5
+
+par(mfrow=c(2,1))
+
+hist(iris$Sepal.Width, 
+     breaks = seq(2,4.5,by=0.1), 
+     col = 'skyblue', 
+     border = 'white', 
+     xlim = c(2,4.5),
+     xlab = "",
+     ylab = "Count", 
+     main = "Stacking Up Graphs")
+
+boxplot(iris$Sepal.Width, 
+        horizontal = TRUE, 
+        ylim = c(2,4.5),
+        xlab="Sepal Width", 
+        main="")
+
+```
+
+The `ylim` of the histogram and the `xlim=` of the box plot are the specific parameters used to align the two graphs in the same scale.
+
+Figure 3.4 illustrates the added advantage of combining graphs. It is clear that the peak in the histogram is almost perfectly aligned with the median shown in the box plot, suggesting the data distribution is nearly symmetric. Additionally, the outliers, hardly visible in the histogram, can easily be spotted in the box plot. This example demonstrates the synergy offered by combining different types of graphs, and the technique used to implement it.
+
+### One Categorical Variable
+
+When it comes to categorical variables, we are usually interested in the number of samples fall in each category of a categorical variable. As discussed in @sec-02-data-wrangling, the tallying can be done using the `table()` function (@sec-base-tabulation) or `group_by()` followed by `summarize(n=n())` (@sec-tidyverse-tabulation).
+
+#### Bar Plot
+
+Bar plot is the standard choice for visualizing tallied data. The only input to the R's `barplot()` graph function is a tabulated count of the categorical variable. Here's an example:
+
+```{r}
+#| label: fig-3-5
+#| fig-cap: "A simple bar plot. Top left: Default. Top right: with tables"
+#| fig-show: hold
+
+par(mfrow=c(2,2))
+
+# Top left
+barplot(with(iris, table(Species)))
+
+# Top right
+barplot(with(iris, table(Species)), 
+        xlab="Species", 
+        ylab="Count", 
+        main="A Barplot of Species")
+
+# Bottom left
+barplot(with(iris, table(Species)), 
+        col='skyblue', 
+        border='blue', 
+        xlab="Species", 
+        ylab="Count", 
+        main="Color Options")
+
+# Bottom right
+barplot(with(iris, table(Species)), 
+        horiz = TRUE, 
+        col='skyblue', 
+        border='blue', 
+        xlab="Count", 
+        ylab="Species", 
+        main="A Horizontal Barplot")
+
+```
+
+Sometime you might want to reorder the categories along the x- or y-axis. By default, `barplot()` places the bars from left to right according to the order of the levels. E.g., show the levels of `iris$Species` by:
+
+```{r}
+levels(iris$Species)
+```
+
+You can change the order of the levels by updating the factor variable using the `factor()` function (@sec-factor-levels). Suppose, the desired order is `virginica`, `setosa`, and `veriscolor`. Here's the code:
+
+```{r}
+iris$Species <- factor(iris$Species, 
+                       levels = c("virginica", "setosa", "versicolor"), 
+                       ordered = TRUE)
+levels(iris$Species)
+```
+
+Here's the revised bar plot.
+
+```{r}
+#| label: fig-3-6
+#| fig-cap: "Reorder the Bars of a Barplot"
+#| fig-show: hold
+
+barplot(with(iris, table(Species)), 
+        col='skyblue', 
+        border='blue', 
+        xlab="Species", 
+        ylab="Count", 
+        main="Reordered Species")
+```
+
+#### Pie Chart
+
+An alternative to bar plots is pie charts.
+
+```{r}
+#| label: fig-3-7
+#| fig-cap: "A simple pie chart. Top left: Default. Top right: with tables. Bottom left: Add a title. Show count for each category. Bottom right: Add a fraction or proportion for each category."
+#| fig-show: hold
+
+par(mfrow=c(2,2))
+
+# Top left
+pie(with(iris, table(Species)))
+
+# Top left
+pie(with(iris, table(Species)), 
+    col = c('skyblue', 'orange', 'white'), 
+    main="Species")
+
+# Bottom right
+counts <- with(iris, table(Species))
+my_labs <- paste0(names(counts),"(",counts,")")
+pie(counts, 
+    labels = my_labs, 
+    col = c('skyblue', 'orange', 'white'), 
+    main = "Species Counts")
+
+
+# Bottom right
+counts <- with(iris, table(Species))
+fractions <- round(counts/sum(counts),2)
+my_labs <- paste0(names(counts),"(",fractions,")")
+pie(counts, 
+    labels = my_labs, 
+    col = c('skyblue', 'orange', 'white'), 
+    main = "Species Fractions")
+
+```
+
+### One Categorical and One Numeric Variables
+
+The categorical variable in this situation is usually served as a group identifier that splits the data into groups so the numerical variable can be compared between groups. This kind of graph is generally named **side-by-side plot**. You can choose a side-by-side box plot or a side-by-side bar plot. For example, a side-by-side box plot that visually compares the robust statistics of `Sepal.Length` between different species of iris.
+
+#### Side-by-side box plot
+
+```{r}
+#| label: fig-3-8
+#| fig-cap: "A side-by-side box plot"
+#| fig-width: 7
+#| fig-height: 5
+#| 
+par(mfrow=c(2,1))
+
+boxplot(Sepal.Length ~ Species,
+        data=iris, 
+        main="A Side-by-Side Box plot")
+
+boxplot(Sepal.Length ~ Species,
+        data=iris, 
+        horizontal = TRUE,
+        main="A Horizontal Side-by-Side Box plot")
+
+```
+
+`Sepal.Length ~ Species` is read as "Sepal length **by** species", the tilde symbol "`~`" means "by".
+
+However, there is glitch in the horizontal box plot (bottom): the y-labels collide. It can be fixed by:
+
+1.  Expand the left margin of the plotting area.
+
+2.  Add the `las=2` parameter to the `boxplot()` function, and disable the default `ylab=`.
+
+3.  Mannually add the y-label.
+
+```{r}
+#| label: fig-3-9
+#| fig-cap: "A Side-by-Side Box Plot with Horizontal Y-Labels"
+
+# Expand the left margin so the text doesn't truncate
+# The numbers correspond to margins: c(bottom, left, top, right)
+# Default is c(5, 4, 4, 2). We are increasing the left margin from 4 to 7. 
+par(mar = c(5, 7, 4, 2) + 0.1)
+
+# Draw the plot, but explicitly tell R NOT to draw the y-axis label yet
+boxplot(Sepal.Length ~ Species,
+        data=iris, 
+        horizontal = TRUE,
+        las = 2,
+        ylab = "", # This suppresses the default colliding label
+        main="Y-tick Labels Reorientated")
+
+# Add the y-axis label manually, pushing it further away from the axis
+# The 'line' argument controls how many text lines away from the axis it sits
+title(ylab = "Species", line = 5)
+
+```
+
+#### Side-by-side Bar Plot
+
+Suppose you want to visually compare the average sepal length among different iris species. You will begin to feel the cumbersome of base R, and appreciate the power of `tidyverse`. Anyway, you will see how to make such a graph with a new function, `tapply()`, in two steps.
+
+First, make a table of average sepal length by species. Apparently, the `table()` function may help. But it does not work for this case, as it only tallies the number of samples by species. Hence, you need to use a new function `tapply()`. Here's an example:
+
+```{r}
+mean_data <- tapply(iris$Sepal.Length, iris$Species, FUN = mean)
+mean_data
+```
+
+How does `tapply()` work? The "`t`" represents table. The function applies the `mean` function to the input data `iris$Sepal.Length` grouped by `iris$Species`. In other words, the `mean()` is applied to the sepal lengths for each species separately.
+
+And then, pass the `mean_data` object to `barplot()`.
+
+```{r}
+#| label: fig-3-10
+#| fig-cap: "A Side-by-Side Bar Plot"
+
+barplot(mean_data,
+        xlab="Species", 
+        ylab="Average Sepal.Length", 
+        main="Side-by-side Barplot")
+```
+
+#### Side-by-side Bar Plot with Error Bar\^\*
+
+*This topic is slightly advanced. It is much easier to use `ggplot2`. So, feel free to skip this or jump to @sec-ggplot-error-bar.*
+
+The error bar represents the standard error of the mean (SEM). Here is the formula:
+
+$$\huge{\bar{x}\pm\frac{s}{\sqrt{n}}}$$ , where $s$ and $n$ are the standard deviation and sample size, respectively. In the bar plot you are going to plot, the height of the bar is $\bar{x}$, and the error bars span above and below the bar's top by $\frac{s}{\sqrt{n}}$ units.
+
+First, calculate the mean and standard of errors using the `tapply()` function.
+
+```{r}
+mean_data <- tapply(iris$Sepal.Length, iris$Species, FUN = mean)
+mean_data
+```
+
+```{r}
+sem <- function(x) {sd(x)/sqrt(length(x))}
+sem_data <- tapply(iris$Sepal.Length, iris$Species, FUN = sem)
+sem_data
+```
+
+First, create the bar plot and store the height of bars in the object `bar_midpoints`. Use the `arrows()` function to create/add the error bars to the bar plot, where each error bar consists of the upper whisker $(x_{1}, y_{1})$ and lower whisker $(x_{0}, y_{0})$.
+
+```{r}
+#| label: fig-3-11
+#| fig-cap: "A Side-by-side Bar Plot with Error Bars"
+#| 
+bar_midpoints <- barplot(mean_data,
+                  xlab="Species", 
+                  ylab="Average Sepal.Length", 
+                  main="Side-by-side Barplot")
+
+arrows(x0 = bar_midpoints,
+       y0 = mean_data - sem_data, # Start of the bar
+       x1 = bar_midpoints,
+       y1 = mean_data + sem_data, # End of the bar
+       angle = 90,                # Makes the ends of the bars flat
+       code = 3,                  # Draws ticks at both ends
+       length = 0.5, col='red')   # Sets the length of the ticks
+
+```
+
+Once again, if you found this confusing, see the `ggplot` version of error bars (@sec-ggplot-error-bar).
+
+#### Line Graph with Error Bar
+
+If your message is to show a trend from left to right, a line graph is the default choice. Here is an example to create a line graph with solid dots.
+
+```{r}
+#| label: fig-3-12
+#| fig-cap: "A Line Plot"
+
+# Default line plot
+plot(mean_data,
+      type='b',
+      pch=19,
+      xlab="Species",
+      ylab="Average Sepal.Length",
+      main="A Line Plot")
+```
+
+- Use `pch=19` to specify the shape of the data points. `pch` stands for **p**lotting **ch**aracter. The value `19` denotes a solid dot ($\bullet$).
+
+- To join the dots together in a line plot, specify `type='b'`, the `b` means **both** dots and line are plotted. More options of `type` can be found using the help function: `help(plot)` documentation.
+
+But, there is a glitch in the x-tick.The x-tick should show the actual species names instead of number. It can be fixed in two steps: 1. Suppress the default x-tick labeling feature of the `plot()` function by setting the parameter `xaxt="n"`. And then, paste the customized x-tick back by the `axis()` function. The species names can be obtained by `names(mean_data)`.
+
+```{r}
+#| label: fig-3-13
+#| fig-cap: "A Line plot with proper x-tick labels"
+#| 
+# Fix x-tick labels
+plot(mean_data,
+      type='b',
+      pch=19,
+      xlab="Species",
+      ylab="Average Sepal.Length",
+      main="Change x-tick Labels",
+      xaxt="n")
+axis(side=1, at=1:length(mean_data), labels=names(mean_data))
+```
+
+Now we can add error bars to the line plot. It is similar to the bar plot above, except that `x0` and `x1` should take the values `1,2,3`.
+
+```{r}
+#| label: fig-3-14
+#| fig-cap: "A Line plot with Error Bars"
+#| 
+# Add Error Bar
+plot(mean_data,
+      type='b',
+      pch=19,
+      xlab="Species", 
+      ylab="Average Sepal.Length", 
+      main="Change x-tick Labels",
+      xaxt="n")
+axis(side=1, at=1:length(mean_data), labels=names(mean_data))
+
+arrows(x0 = seq(length(mean_data)),
+       y0 = mean_data - sem_data, # Start of the bar
+       x1 = seq(length(mean_data)),
+       y1 = mean_data + sem_data, # End of the bar
+       angle = 90,                # Makes the ends of the bars flat
+       code = 3,                  # Draws ticks at both ends
+       length = 0.05, col='red')   # Sets the length of the ticks
+
+```
+
+#### Overlapping Histogram
+
+*The code for creating this plot can be convoluted. It is easier to make it using `ggplot2`. Feel free to skip to @sec-ggplot-overlapping-histogram.*
+
+Suppose you are interested in visualizing and comparing the distribution of sepal lengths among the three iris species. Here are the steps to do it:
+
+1.  Split the data by individual species.
+
+2.  Calculate the range for the x- and y-axis so as to ensure the histograms are in the same scale.
+
+3.  Create a histogram in certain color for a species from step 1, and use it as a template.
+
+4.  Overlay the histograms from other species on top of each other.
+
+Let's do it step by step below:
+
+```{r}
+# Step 1: Split the data by individual species
+
+setosa <- subset(iris, Species == "setosa")
+versicolor <- subset(iris, Species == "versicolor")
+virginica <- subset(iris, Species == "virginica")
+```
+
+```{r}
+# Step 2: Set up the range for the x- and y-axis
+
+x_range <- range(iris$Sepal.Length)
+y_range <- c(0, 25) # 25 is arbitrary.
+```
+
+Below is the code for plotting the template histogram, and how additional histograms are added to it. To distinguish species, different color is attributed to different species. It is done by `col = rgb(...)`. The `rgb()` function stands for **r**ed, **g**reen, and **b**lue. It takes four parameters: the intensity of red, green, blue, and transparency. All are in the range of 0 and 1. E.g., `rgb(1, 0, 0, 0.5)` means 100% red, no green and blue at all, and transparency is 50%.
+
+```{r}
+#| label: fig-3-15
+#| fig-cap: "Overlapping histograms"
+#| 
+# Step 3: Create a template
+
+hist(setosa$Sepal.Length,
+     main = "Overlapping Histogram of Sepal Length",
+     xlab = "Sepal Length",
+     col = rgb(1, 0, 0, 0.5), # Red with 50% transparency
+     breaks = seq(4,9,by=0.25),
+     xlim = x_range,
+     ylim = y_range)
+
+# Step 4: Overlay histograms from other species
+
+hist(versicolor$Sepal.Length, col=rgb(0, 1, 0, 0.5), add = TRUE) # green with 50% transparency
+hist(virginica$Sepal.Length, col=rgb(0, 0, 1, 0.5), add = TRUE)  # blue with 50% transparency
+```
+
+### Contingency Table
+
+Here we deal with a data set that comprises two categorical variables. A two-dimensional contingency table is used to tally the number of samples for different combinations of categories of the two categorical variables.
+
+The distribution of the counts can reveal whether or not the two categorical variables are dependent. To illustrate how to visualize a contingency table, we will use the built-in data set `penguins`. The data set contains two categorical variables: `species` and `island`.
+
+```{r}
+summary(penguins)
+```
+
+Suppose you are interested to explore whether or not different species has shown preference in habitat or geographical location (`island`).
+
+Let's begin with creating a 2D table as below:
+
+```{r}
+mytab <- with(penguins, table(species, island))
+mytab
+```
+
+Obviously, `species` and `island` are not independent, as you can see not all three species are present in all islands. If `species` and `island` are independent, the counts in the contingency table should be below:
+
+```{r echo=FALSE}
+res <- chisq.test(mytab)
+indep_tab <- round(res$expected,0)
+```
+
+```{r}
+indep_tab
+```
+
+Two popular graphs are suitable for visualizing a contingency table: a side-by-side bar plot, or a mosaic plot.
+
+```{r}
+#| label: fig-3-16
+#| fig-cap: "Visualization of a 2D Contingency Table. Top. A side-by-side barplot. Middle. Mosaic plot. Bottom. Mosaic plot for independent categorical variables"
+#| fig-width: 6
+#| fig-height: 12
+
+par(mfrow=c(3,1))
+
+barplot(mytab,
+        beside=T,
+        xlab = "Island",
+        ylab = "Count",
+        main = "A 2D Table",
+        col = c("skyblue", "lightgreen", "lightcoral"),
+        legend.text = rownames(mytab))
+
+mosaicplot(mytab, main = "Mosaic Plot of Two Dependent Variables")
+
+mosaicplot(indep_tab, main = "Mosaic Plot of Two Independent Variables")
+```
+
+### Two Numeric Variables
+
+A scatter plot is the default choice to visualize the relationship between two numeric variables. The relationship can be manifold, ranging from linear to cyclical. So, visualizing how the data points are distributed in a 2D plan is an intuitive way to learn about there relationship. Importantly, visualization should be done before performing any statistical analysis, e.g., linear regression. Here is how to create a scatter plot that shows the relationship between sepal width and sepal length. Note that each point $(x_{i},y_{i})$ is a pair of values from one sample.
+
+```{r}
+#| label: fig-3-17
+#| fig-cap: "Visualizing the relationship between two numeric variables."
+#| 
+par(mfrow=c(1,2))
+
+# Top left
+plot(x=iris$Sepal.Width,
+     y=iris$Sepal.Length,
+     xlab = "Sepal Width",
+     ylab = "Sepal Length",
+     main = "Default")
+
+# Top right
+plot(x=iris$Sepal.Width,
+     y=iris$Sepal.Length,
+     pch=3,
+     xlab = "Sepal Width",
+     ylab = "Sepal Length",
+     main = "Change the Point Style")
+```
+
+```{r}
+#| label: fig-3-18
+#| fig-cap: "Color data points by species."
+#| 
+plot(x=iris$Sepal.Width,
+     y=iris$Sepal.Length,
+     pch=3,
+     xlab = "Sepal Width",
+     ylab = "Sepal Length",
+     main = "Segregate Data Points by Color (Species)",
+     col = c("skyblue", "lightgreen", "lightcoral")[as.numeric(iris$Species)])
+
+legend("topright",
+       legend = levels(iris$Species),
+       col = c("skyblue", "lightgreen", "lightcoral"),
+       pch = 3,
+       title = "Species")
+```
+
+If your aim is to explore linear relationship between the two variables, it can be emphasized by addingg a regression line for the two variables on top of the data points. Here is an example, regress `Sepal.Length` (response) on `Sepal.Width` (independent).
+
+```{r}
+lm_model <- lm(Sepal.Length ~ Sepal.Width, data=iris)
+
+# intercept
+intercept <- lm_model$coefficients[1]
+
+# slope
+slope = lm_model$coefficients[2]
+
+print(paste("Slope =", slope, "Intercept =", intercept))
+```
+
+```{r}
+#| label: fig-3-19
+#| fig-cap: "A scatter plot with a regression line."
+#| 
+plot(x=iris$Sepal.Width,
+     y=iris$Sepal.Length,
+     pch=3,
+     xlab = "Sepal Width",
+     ylab = "Sepal Length",
+     main = "Add a Regression Line",
+     col = c("skyblue", "lightgreen", "lightcoral")[as.numeric(iris$Species)])
+
+legend("topright",
+       legend = levels(iris$Species),
+       col = c("skyblue", "lightgreen", "lightcoral"),
+       pch = 3,
+       title = "Species")
+
+# Add a line
+abline(a=intercept, b=slope, col='red')
+```
+
+<!-- https://www.r-bloggers.com/2021/06/r-plot-pch-symbols-different-point-shapes-in-r/ -->
+
+### Multipanel Scatter Plot
+
+A multipanel scatter plot offers a glimpse of the relationship between all possible pairs of numeric variables. Suppose, you are interested in the pairwise relationship between all numeric variables in `iris`. It can easily be done using the `pairs()` plot function.
+
+```{r}
+#| label: fig-3-20
+#| fig.cap: "A Multipanel Scatter Plot"
+#| 
+pairs(iris[,1:4], main="A Multi-Panel Scatter Plot")
+```
+
+Here it concludes our journey of data visualization using base R functions. As you can see, some plots can be made easily using base R (e.g., multipanel scatter plot), while others are less direct (e.g., bar plot with error bars). There is no one system you should use, choose whatever fits your requirements.
+
+## `ggplot2`
+
+`ggplot2` is bundled in `tidyverse`. Once you have activated `tidyverse`, `ggplot2` is available. Here, the focus is on using `ggplot2` to plot the graphs that were created using base R above. We will not repeat the discussion of strengths and weaknesses of each graph in this section. Readers should refer to the corresponding section above for the characteristics and functions of the graphs.
+
+If `tidyverse` has not been activated, load it into R before using `ggplot2`.
+
+```{r}
+require(tidyverse)
+```
+
+### Grammar of `ggplot2`
+
+The two '`g`'s of `ggplot2` stand for **Grammar of Graphics**. In `ggplot2`, the graphical widgets are arranged in layers. That idea gives developers the flexibility to decorate a graph by adding layers to an existing graph. The **data** layer forms the foundation of a graph. The **Aesthetics** defines the association between data variable(s) and the axes. **Geometries** are the types of graphs, e.g., line plot, histogram, etc. **Facets** split a graph into multi-panels. **Statistics** defines how to aggregate data, e.g., in proportion or take the face value in a barplot. **Coordinates** supports an X-Y Cartesian coordinate system, and a polar coordinate system. (See the Pie Chart section below) **Themes** offers different color schemes, font type, font size, etc.
+
+```{r echo=FALSE}
+#| label: fig-3-21
+#| fig-cap: "Anatomy of `ggplot2`"
+#| out-width: "50%"
+#| out-height: "50%"
+knitr::include_graphics(rep("images/Figure_3-21-ggplot-anatomy.png"))
+```
+
+### One Numeric Variable
+
+You can plot a histogram of the numeric variable to see its distribution, such as the spread, the peak, symmetry, and flatness. If your concern is robust statistics, make a box plot instead.
+
+#### Histogram
+
+Let's redraw the histogram in @fig-3-1 using `ggplot2`. The first line is the *data layer* that specifies the data source, and it must be a data frame (or tibble), e.g., `iris`. The *aesthetic* option designates the x-axis for `Sepal.Width`. The second line is the *geometry* of the graph. For a histogram, the function name is `geom_histogram()`. Here is the bare minimum of a `ggplot2` histogram:
+
+```{r}
+#| label: fig-3-22
+#| fig-cap: "`ggplot2` Histogram."
+#| 
+# Default
+ggplot(data=iris, aes(x=Sepal.Width)) +
+  geom_histogram()
+```
+
+*If you see this message: "`stat_bin()` using `bins = 30`. Pick better value `binwidth`", R just informs you that 30 bins was used by default. You can ignore it or specify a new `binwidth` value.*
+
+It is always a good idea to give the graph a title at the top so people know what the key message is. Equally important is the x- and y-labels. This task can be done by the `labs()` function. By default, the title is left-justified. To center it, see the last line and the comment above it.
+
+```{r}
+#| label: fig-3-23
+#| fig-cap: "A `ggplot2` Histogram with customized labels and title."
+#| 
+# Overwrite default x-/y-label and title
+ggplot(data=iris, aes(x=Sepal.Width)) +
+  geom_histogram() +
+  labs(x="Sepal Width", y="Count", title="Histogram of Sepal Width") +
+  # hjust = 0.5 means the horizontal adjustment is the midpoint.
+  theme(plot.title = element_text(hjust = 0.5))
+```
+
+Change the fill color and border color. It can be done by providing additional parameters to the `geom_histogram()`.
+
+```{r}
+#| label: fig-3-24
+#| fig-cap: "A `ggplot2` Histogram with a customized color."
+#| 
+# fill = filled color
+# color = border color
+ggplot(data=iris, aes(x=Sepal.Width)) +
+  geom_histogram(fill="skyblue", color = "white") +
+  labs(x="Sepal Width", y="Count", title="Color Options") +
+  # hjust = 0.5 means the horizontal adjustment is the midpoint.
+  theme(plot.title = element_text(hjust = 0.5))
+```
+
+The bin width of a histogram is calculated automatically by `ggplot2` according to the range of x. You can use the `breaks` parameter to overwrite it.
+
+```{r}
+#| label: fig-3-25
+#| fig-cap: "A `ggplot2` Histogram with a non-default bin width."
+#| 
+# breaks
+ggplot(data=iris, aes(x=Sepal.Width)) +
+  geom_histogram(fill="skyblue", color = "white", breaks=seq(2,4.5,by=0.1)) +
+  labs(x="Sepal Width", y="Count", title="`breaks` option") +
+  # hjust = 0.5 means the horizontal adjustment is the midpoint.
+  theme(plot.title = element_text(hjust = 0.5))
+```
+
+**Optional topic**
+
+As you might notice that each of the four histograms occupies the entire plotting area instead of displaying in a 2x2 grid as @fig-3-1. It is because `ggolot2` does not work with `par(mfrow(2,2))`. To divide the plotting area into a grid that is compatible with `ggplot2`, use the `patchwork` package. Use the menu option **Tools** $\rightarrow$ Install Packages to install it.
+
+Another new concept is that a graph can be stored in a variable so it can be displayed later in the grid. In the example below, the four histograms above are initially stored in variables `p1`, `p2`, `p3`, and `p4`. See the example below:
+
+```{r warning=FALSE, message=FALSE}
+#| label: fig-3-26
+#| fig-cap: "`ggplot2` Grid System by `patchwork`. Top left: Default (bare minimum). Top right: with labels and title. Bottom left: change the color. Bottom right: change the number of bins."
+#| 
+require(patchwork)
+
+# Default
+p1 <- ggplot(data=iris, aes(x=Sepal.Width)) +
+        geom_histogram()
+
+# With labels and title
+p2 <- ggplot(data=iris, aes(x=Sepal.Width)) +
+        geom_histogram() +
+        labs(x="Sepal Width", y="Count", title="Histogram of Sepal Width") +
+        # hjust = 0.5 means the horizontal adjustment is the midpoint.
+        theme(plot.title = element_text(hjust = 0.5))
+
+# fill = filled color
+# colour = border color
+p3 <- ggplot(data=iris, aes(x=Sepal.Width)) +
+        geom_histogram(fill="skyblue", color = "white") +
+        labs(x="Sepal Width", y="Count", title="Color Options") +
+        # hjust = 0.5 means the horizontal adjustment is the midpoint.
+        theme(plot.title = element_text(hjust = 0.5))
+
+# Change the number of bins
+p4 <- ggplot(data=iris, aes(x=Sepal.Width)) +
+        geom_histogram(fill="skyblue", color = "white", breaks=seq(2,4.5,by=0.1)) +
+        labs(x="Sepal Width", y="Count", title="`breaks` option") +
+        # hjust = 0.5 means the horizontal adjustment is the midpoint.
+        theme(plot.title = element_text(hjust = 0.5))
+
+# Arrange them in a 2x2 grid
+# '+' places plots next to each other, '/' stacks them
+(p1 + p2) / (p3 + p4)
+```
+
+#### Box plot
+
+The anatomy of a box plot can be found in @fig-3-3. The geometry function of a box plot is `geom_boxplot()`. Unlike a histogram, the numeric variable is mapped to the y-axis for a vertical box plot. If you want a horizontal box plot, map the numeric variable to the x-axis, and don't forget to specify the label for the x-axis.
+
+```{r warning=FALSE}
+#| label: fig-3-27
+#| fig-cap: "box plot using `ggplot2`. Top left: default (bare minimum). Top right: with y-label and title. Bottom left: change color. Bottom right: horizontal box plot."
+#| 
+require(patchwork)
+
+# Default
+p1 <- ggplot(data=iris, aes(y=Sepal.Width)) +
+        geom_boxplot()
+
+# Add y-label and title
+p2 <- ggplot(data=iris, aes(y=Sepal.Width)) +
+        geom_boxplot() +
+        labs(y="Sepal Width", title = "box plot of Sepal Width") +
+        theme(plot.title = element_text(hjust = 0.5))
+
+# Change color
+p3 <- ggplot(data=iris, aes(y=Sepal.Width)) +
+        geom_boxplot(fill="skyblue", outlier.color = "red") +
+        labs(y="Sepal Width", title = "Color options") +
+        theme(plot.title = element_text(hjust = 0.5))
+
+# Horizontal box plot
+p4 <- ggplot(data=iris, aes(x=Sepal.Width)) +
+        geom_boxplot() +
+        labs(x="Sepal Width", title = "Horizontal box plot") +
+        theme(plot.title = element_text(hjust = 0.5))
+
+(p1 + p2)/(p3 + p4)
+
+```
+
+### One Categorical Variable
+
+#### Bar Plot
+
+Here we will show how to make a bar plot and a pie chart using `ggplot2`.
+
+```{r warning=FALSE}
+#| label: fig-3-28
+#| fig-cap: "Barplot using `ggplot2`. Top left: default (bare minimum)."
+#| 
+require(patchwork)
+
+# Default
+p1 <- ggplot(data=iris, aes(x=Species)) +
+        geom_bar()
+
+# With labels and title
+p2 <- ggplot(data=iris, aes(x=Species)) +
+        geom_bar() +
+        labs(x="Species", y="Count", title = "A Barplot of Species") +
+        theme(plot.title = element_text(hjust = 0.5))
+
+# Color option
+p3 <- ggplot(data=iris, aes(x=Species)) +
+        geom_bar(fill="skyblue", color="blue") +
+        labs(x="Species", y="Count", title = "A Barplot of Species") +
+        theme(plot.title = element_text(hjust = 0.5))
+
+# Horizontal barplot
+p4 <- ggplot(data=iris, aes(y=Species)) +
+        geom_bar(fill="skyblue", color="blue") +
+        labs(y="Species", x="Count", title = "A Horizontal Barplot of Species") +
+        theme(plot.title = element_text(hjust = 0.5))
+
+(p1 + p2)/(p3 + p4)
+```
+
+#### Pie Chart
+
+Here's a curve ball. You may give an impression that `ggplots` is an upgrade. Plotting a pie chart should be a piece of cake. The fact is NO.
+
+Despite the the disappointment, it is worth to see how a pie chart can be plotted using the foundational building-block functions. To give you a heads-up, `ggplot2` views a pie chart as a twisted bar plot. There is an internal logic to justify such a view but we will not discuss it in detail.
+
+Suppose we want to create a pie chart like the one below:
+
+```{r echo=FALSE}
+#| label: fig-3-29
+#| fig-cap: "Pie chart or a donut chart"
+#| 
+#knitr::include_graphics(rep("images/Figure_3-24-Donut.png"))
+
+ggplot(iris, aes(x = 2, fill = Species)) +
+  geom_bar(stat = "count") +
+  coord_polar(theta = "y", start = 0) +
+  # This is the key part that creates the hole
+  xlim(0.5, 2.5) +
+  theme_void() +
+  labs(title = "Donut Chart of Iris Species")
+```
+
+Here we will walk through each of the intermediate steps until getting the final pie chart.
+
+Let's begin with a stacked barplot, where the bars are stacked up into a single column, and the fill-color is an attribute to distinguish different iris species (`fill=Species`). The stacked bar is placed at the position 2 units on the right from the origin (`aes(x=2)`), but the exact position does not matter.
+
+```{r warning=FALSE}
+#| label: fig-3-30
+#| fig-cap: "A stacked barplot"
+#| 
+ggplot(data=iris, aes(x=2, fill=Species)) +
+  geom_bar()
+```
+
+Now, use your imagination to picture that the stacked bar is bent into a ring. Does it look like the pie chart in @fig-3-30? To way to "bend" it in `ggplot2` is to change the x-y Cartesian coordinate system to the polar (circular) coordinate system in which a point is characterized by two parameters: the distance from the origin ($r$), and the angle ($\theta$) from the horizontal **polar axis** in an counter-clockwise direction.
+
+```{r echo=FALSE}
+#| label: fig-3-31
+#| fig-cap: "Polar Coordinate. (generated by Gemini)"
+#| out-width: "50%"
+#| out-height: "50%"
+#| 
+knitr::include_graphics(rep("images/Figure_3-25-polar-coords.png"))
+```
+
+By adding this line `coord_polar(theta="y", start = 0)` in the code below, it transforms the height of the bar for each species into an angle ($\theta$) in the polar coordinate, where the zero position is the 12 o'clock (`start = 0`). In this example, one third of the samples is `setosa`. As such, the angle $\theta$ is $360^{\circ}\times\frac{1}{3}=120^{\circ}$. If the proportion is a quarter, the angle $\theta=360^{\circ}\times\frac{1}{4}=90^{\circ}$.
+
+```{r warning=FALSE}
+#| label: fig-3-32
+#| fig-cap: "A Piechart by changing to the polar coordinate system."
+#| 
+ggplot(data=iris, aes(x="", fill=Species)) +
+  geom_bar() + 
+  coord_polar(theta="y", start = 0)
+```
+
+The final step is to open a hole in the pie chart if you like, for aesthetic reasons. But this modification is optional.
+
+```{r warning=FALSE}
+#| label: fig-3-33
+#| fig-cap: "A Piechart using `ggplot2`."
+#| 
+ggplot(iris, aes(x = 2, fill = Species)) +
+  geom_bar(width = 1, stat = "count") +
+  coord_polar(theta = "y", start = 0) +
+  # This is the key part that creates the hole
+  xlim(0.5, 2.5) +
+  labs(title = "Donut Chart of Iris Species")
+```
+
+If you prefer to have a clean background, add the line `theme_void()`. Finally, here's the desired pie chart. What a journey!
+
+```{r warning=FALSE}
+#| label: fig-3-34
+#| fig-cap: "Piechart using `ggplot2` without no background."
+#| 
+ggplot(iris, aes(x = 2, fill = Species)) +
+  geom_bar(width = 1, stat = "count") +
+  coord_polar(theta = "y", start = 0) +
+  # This is the key part that creates the hole
+  xlim(0.5, 2.5) +
+  theme_void() +
+  labs(title = "Donut Chart of Iris Species")
+```
+
+### One Categorical and One Numeric Variables
+
+#### Side-by-side Box Plot
+
+Here you want to compare the robust statistics among different species.
+
+```{r warning=FALSE}
+#| label: fig-3-35
+#| fig-cap: "A side-by-side box plot"
+#| 
+require(patchwork)
+
+p1 <- ggplot(data=iris, aes(x=Species, y=Sepal.Length)) +
+        geom_boxplot() +
+        labs(title = "A Side-by-Side box plot") +
+        theme(plot.title = element_text(hjust = 0.5))
+
+p2 <- ggplot(data=iris, aes(x=Sepal.Length, y=Species)) +
+        geom_boxplot() +
+        labs(title = "A Horizontal Side-by-Side box plot") +
+        theme(plot.title = element_text(hjust = 0.5))
+
+p1/p2
+```
+
+#### Side-by-side Bar Plot
+
+Here, you want to compare the average `Sepal.Length` among iris species. As discussed above, you calculate the averages and store them in a separate table. It makes use of pipe, group by, and summarize concepts discussed in @sec-tidyverse-tabulation.
+
+```{r}
+iris_summary1 <- iris %>%
+                  group_by(Species) %>%
+                  summarize(mean_sepal_length = mean(Sepal.Length))
+iris_summary1
+```
+
+And then, you can plot the summary table. The geometry function is `geom_bar(stat = "identity")`. The `stat = "identity"` parameter tells the `geom_bar()` function to set up the height of the bars according to the face value of `mean_sepal_length`.
+
+```{r warning=FALSE}
+#| label: fig-3-36
+#| fig-cap: "A side-by-side bar plot"
+#| 
+ggplot(data=iris_summary1, aes(x=Species, y=mean_sepal_length)) +
+  geom_bar(stat = "identity") +
+  labs(x="Species", y="Average Sepal Length", title = "Side-by-side Barplot") +
+  theme(plot.title = element_text(hjust = 0.5))
+```
+
+#### Side-by-side Bar Plot with Error Bar {#sec-ggplot-error-bar}
+
+The calculation of the error bar (i.e., the standard error `se`) requires standard deviation and sample size. Once `se` is calculated, it can be used to calculate the minimum (lower) and maximum (upper) of the error bar.
+
+```{r}
+iris_summary2 <- iris %>%
+                  group_by(Species) %>%
+                  summarize(mean_sepal_length = mean(Sepal.Length),
+                            N=n(),
+                            se=sd(Sepal.Length)/sqrt(N)) %>%
+                  # add the y minimum and y maximum columns
+                  mutate(ymin = mean_sepal_length - se,
+                         ymax = mean_sepal_length + se)
+iris_summary2
+```
+
+```{r warning=FALSE}
+#| label: fig-3-37
+#| fig-cap: "A side-by-side bar plot with error bar."
+#| 
+ggplot(data=iris_summary2, aes(x=Species, y=mean_sepal_length)) +
+  geom_bar(stat = "identity") +
+  geom_errorbar(aes(ymin = ymin, ymax = ymax), width = 0.2, color='red') +
+  labs(x="Species", y="Average Sepal Length", title = "Side-by-side Barplot") +
+  theme(plot.title = element_text(hjust = 0.5))
+```
+
+#### Line Graph with Error Bar
+
+Calculate the SE as above:
+
+```{r}
+iris_summary3 <- iris %>%
+                  group_by(Species) %>%
+                  summarize(mean_sepal_length = mean(Sepal.Length),
+                            N=n(),
+                            se=sd(Sepal.Length)/sqrt(N)) %>%
+                  mutate(ymin=mean_sepal_length-se,
+                         ymax=mean_sepal_length+se)
+iris_summary3
+```
+
+Incorporate the SE into a line plot.
+
+```{r}
+#| label: fig-3-38
+#| fig-cap: "A line plot with error bar."
+#| 
+ggplot(iris_summary3, aes(x=Species, y=mean_sepal_length, group = 1)) +
+  geom_line(color = 'skyblue') +
+  geom_point(size = 3, color = 'skyblue') +
+  geom_errorbar(aes(ymin = ymin, ymax = ymax), width = 0.1, linewidth = 1) +
+  labs(x="Species", y="Sepal Length", title = "Line Plot with Erorr Bar") +
+  theme(plot.title = element_text(hjust = 0.5))
+```
+
+#### Overlapping Histogram {#sec-ggplot-overlapping-histogram}
+
+Like the base R side-by-side histogram, you will set the transparency to 0.5 and bin width to 0.25. Note that there is no need to care about the x- and y-limit in `ggplot2`.
+
+```{r}
+#| label: fig-3-39
+#| fig-cap: "A side-by-side histogram."
+#| 
+ggplot(data=iris, aes(x=Sepal.Length, fill=Species)) +
+  geom_histogram(alpha=0.5, binwidth = 0.25) +
+  labs(x="Sepal Length", title = "Overlapping Histogram") +
+  theme(plot.title = element_text(hjust = 0.5))
+
+```
+
+### Contingency Table
+
+The `penguins` data set is used to illustrate how to create a side-by-side bar plot or a mosaic plot for displaying count data.
+
+First, let's create a contingency table as below:
+
+```{r}
+mytab <- with(penguins, table(species, island))
+mytab
+```
+
+As `ggplot2` only works with data frames, `mytab` is **not** a data frame. Therefore, the first step is to convert the contingency table into a data frame.
+
+```{r}
+mydf <- as.data.frame(mytab)
+colnames(mydf) <- c("species","island","Count")
+mydf
+```
+
+<!-- During the conversion process, the R function will pair up each species with an island and create a new column that stores the count. It means that the resultant data frame will consists of RxC rows, where R and C are the number of rows and columns, respectively. A 3x3 contingency table like yours, will be converted to a data frame consisting of 9 rows as shown below: -->
+
+Now we can plot `mydf`.
+
+```{r}
+#| label: fig-3-40
+#| fig-cap: "Plotting a contingency table using a side-by-side bar plot."
+#| 
+
+ggplot(data=mydf, aes(x=island, y=Count, fill=species)) +
+  geom_col(position = "dodge") +
+  labs(title = "Side-by-side Barplot", x = "Island", y = "Count")
+```
+
+<!-- package ‘ggmosaic’ is not available for this version of R -->
+
+<!-- `ggplot2` does not have a geometry function for mosaic plot. To create a mosaic within the `ggplot2` framework, you need to install the package `ggmosaic` in which the installation is straightforward. -->
+
+<!-- ```{r Fig3-41, fig.cap="Mosaic Barplot", warning=FALSE} -->
+
+<!-- library(ggmosaic) -->
+
+<!-- ggplot(data=penguins) + -->
+
+<!--   geom_mosaic(aes(x=product(species,island), fill=species)) -->
+
+<!-- ``` -->
+
+### Two Numeric Variables
+
+Use a scatter plot to visualize the relationship between two numeric variables. As said above, the revealed relationship can be linear and non-linear.
+
+```{r}
+#| label: fig-3-42
+#| fig-cap: "Visualizing the relationship between two numeric variables using a scatter plot."
+
+ggplot(iris, aes(x=Sepal.Width, y=Sepal.Length)) +
+  geom_point() +
+  labs(x="Sepal Width", y="Sepal Length", title = "A Scatter Plot") +
+  theme(plot.title = element_text(hjust = 0.5))
+```
+
+If you wanted to emphasize their linear relationship, it can be done convincingly by adding a regression line on top of the scatter plot. `ggplot2` spares you the effort to create a linear model like base R. Instead, it can be done by adding the `geom_smooth()`. You tell `geom_smooth(method = "lm", se = FALSE, color = "red")` to use a linear method (`lm`) for smoothing the data points. See the code below:
+
+```{r warning=FALSE}
+#| label: fig-3-43
+#| fig-cap: "A scatter plot overlaid with a regression line."
+#| 
+ggplot(iris, aes(x=Sepal.Width, y=Sepal.Length)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE, color = "red") +
+  labs(x="Sepal Width", y="Sepal Length", title = "Scatter Plot with the Regression Line") +
+  theme(plot.title = element_text(hjust = 0.5))
+```
+
+If you see this message "`geom_smooth()` using formula = 'y \~ x'", it is harmless, and informational. `ggplot2` is just to let you know what the response and predictor are used by `geom_smooth()` in creating the regression line.
+
+### Multipanel Scatter Plot
+
+Often times before multiple linear regression, it is recommended to visualize the relationship between the response variable and the independent variables pairwisely, or the linear relationship between independent variables. The latter is important, as it may cause the **collinearity** issue if independent variables are linearly correlated.
+
+A multipanel scatter plot can do this. However, `ggplot2` does not have a geometry function for it. The simplest way is to use the `ggpairs()` function provided by the `GGally` package, which requires installation, if you have not done so.
+
+Suppose, you are interested in the pairwise relationship between all numeric variables in `iris`. It can easily be done using the `ggpairs()` plot function. Color is the attribute used to distinguish species. `progress = FALSE` is to suppress the printing of the progress bar.
+
+```{r warning=FALSE, message=FALSE}
+#| label: fig-3-44
+#| fig-cap: "A Multipanel Scatter Plot"
+#| 
+library(GGally)
+ggpairs(iris, aes(color = Species), title = "A Multi-panel Scatter Plot", progress = FALSE)
+```
+
+## Summary
+
+This is big chapter that has discussed an array of plot functions both from base R and `ggplot2`. It is more like a cookbook of various visualization recipes. So, instead of listing all the functions here, it is helpful to list several useful resources that you can fine-tune the graphs yourselves.
+
+**pch**
+
+If you type `help(pch)` at the console, R shows the `pch` section of the help page for `points`. Below is a snapshot of `pch` values and the corresponding plotting characters:
+
+```{r echo=FALSE}
+#| label: fig-3-45
+#| fig-cap: "`pch` values"
+#| out-width: "80%"
+#| out-height: "80%"
+#| 
+knitr::include_graphics(rep("images/pch_symbols.png"))
+```
+
+**Color**
+
+R supports a large number of colors and palettes. [R Graph Gallery](https://r-graph-gallery.com/colors.html) is a great resource to see what choices are available and their names .
