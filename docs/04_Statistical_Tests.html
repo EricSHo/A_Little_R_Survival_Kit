@@ -415,6 +415,69 @@ mean in group AA mean in group UA
 <h3 data-number="4.2.3" class="anchored" data-anchor-id="one-way-anova"><span class="header-section-number">4.2.3</span> One-way ANOVA</h3>
 <p>A one-way ANOVA test tests whether the means of three or more groups are the same or not. Two key differences from the two-sample t-test above: 1. a two-sample t-test can handle only two groups, but ANOVA can handle two or more groups. 2. The <span class="math inline">\(H_{0}\)</span> of ANOVA is rejected if any pair(s) of groups have unequal means.</p>
 <p>For example, test whether mean delays vary by destination.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>aov_results <span class="ot">&lt;-</span> <span class="fu">aov</span>(Delay <span class="sc">~</span> Destination, <span class="at">data=</span>FlightDelays)</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(aov_results)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>              Df  Sum Sq Mean Sq F value   Pr(&gt;F)    
+Destination    6   62891   10482   6.094 2.29e-06 ***
+Residuals   4022 6918028    1720                     
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+<p>If you only care whether the <span class="math inline">\(H_{0}\)</span> can be rejected, focus on the overall p-value (2.29e-06) under the <code>Pr(&gt;F)</code> column on the right. It is undeniably smaller than <span class="math inline">\(\alpha\)</span> = 0.05, so the <span class="math inline">\(H_{0}\)</span> can be rejected.</p>
+<p>In some situations, you may be interested in finding out which pair(s) do not have the same mean. Tukey’s Honest Significant Difference (HSD) test can answer this question.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">TukeyHSD</span>(aov_results)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Tukey multiple comparisons of means
+    95% family-wise confidence level
+
+Fit: aov(formula = Delay ~ Destination, data = FlightDelays)
+
+$Destination
+               diff         lwr        upr     p adj
+DEN-BNA   7.1454369  -4.8424432 19.1333171 0.5765602
+DFW-BNA   3.2646932  -6.8999706 13.4293570 0.9647119
+IAD-BNA  19.4461945   0.4951700 38.3972191 0.0399134
+MIA-BNA  12.9137057   2.3518660 23.4755453 0.0058064
+ORD-BNA   8.4338186  -1.3335463 18.2011835 0.1430105
+STL-BNA   0.9181137 -11.4728506 13.3090780 0.9999910
+DFW-DEN  -3.8807437 -12.4245377  4.6630503 0.8331281
+IAD-DEN  12.3007576  -5.8325642 30.4340793 0.4140643
+MIA-DEN   5.7682688  -3.2444158 14.7809533 0.4884472
+ORD-DEN   1.2883817  -6.7786774  9.3554408 0.9991892
+STL-DEN  -6.2273232 -17.3274143  4.8727678 0.6463375
+IAD-DFW  16.1815013  -0.8016809 33.1646835 0.0736782
+MIA-DFW   9.6490125   3.2584254 16.0395995 0.0001755
+ORD-DFW   5.1691254   0.2003667 10.1378841 0.0352035
+STL-DFW  -2.3465795 -11.4473015  6.7541425 0.9885164
+MIA-IAD  -6.5324888 -23.7563253 10.6913477 0.9225580
+ORD-IAD -11.0123759 -27.7607938  5.7360421 0.4540417
+STL-IAD -18.5280808 -36.9303655 -0.1257961 0.0471723
+ORD-MIA  -4.4798870 -10.2175372  1.2577631 0.2425378
+STL-MIA -11.9955920 -21.5378772 -2.4533067 0.0039784
+STL-ORD  -7.5157049 -16.1704244  1.1390145 0.1382159</code></pre>
+</div>
+</div>
+<p>It lists all possible pairs of destinations. Since there are seven destinations, the total number of pairs is 21 (<code>choose(7,2)</code>).</p>
+<p>Each row shows the difference of means (<code>diff</code>), the lower (<code>lwr</code>) and upper (<code>upr</code>) bounds of the confidence interval, and the adjusted p-value (<code>p adj</code>). Examining the p-value is the quickest way to identify pairs with unequal means. E.g., IAD-BNA in which the p-value is less than 0.05.</p>
+<p>To ease analysis, it is suggested to plot the HSD result as below:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>hsd_results <span class="ot">&lt;-</span> <span class="fu">TukeyHSD</span>(aov_results)</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="co"># las=1 causes the plot to print the pair name horizontally.</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(hsd_results, <span class="at">las=</span><span class="dv">1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="04_Statistical_Tests_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Confidence intervals not crossing zero (the vertical line) indicate pairs have unequal means.</p>
 </section>
 </section>
 <section id="tests-for-categorical-variables" class="level2" data-number="4.3">

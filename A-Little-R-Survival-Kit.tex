@@ -5317,15 +5317,326 @@ great resource to see what choices are available and their names .
 
 \chapter{Statistical Tests}\label{sec-04-statistical-tests}
 
-R was inherently designed for statistical analysis. Therefore, a chapter
-for statistical tests is justified. Here, we will discuss
-
-This are a test sentence.
+R was inherently designed for statistical analysis. Therefore, it is
+justified to devote a chapter to statistical tests. Here, we will
+discuss a list of classic statistical tests with an emphasis on the Null
+Hypothesis Significance Test (NHST). While understanding the core
+principles of the tests is essential, this chapter, as well as the whole
+book, emphasizes using R; as such, the underlying concepts of the tests
+are omitted. There are many excellent open introductory statistics
+textbooks\footnote{Introductory Statistics for Life and Biomedical
+  Sciences: \url{https://openintro.org/book/biostat/}} \footnote{Introduction
+  to Modern Statistics: \url{https://openintro.org/book/ims/}}
+\footnote{Handbook of Biological Statistics:
+  \url{https://www.biostathandbook.com/}}. Interested readers should
+consult them for further detail.
 
 \section*{Learning Objectives:}\label{learning-objectives-3}
 \addcontentsline{toc}{section}{Learning Objectives:}
 
 \markright{Learning Objectives:}
+
+\begin{itemize}
+\item
+  Test a quantitative variable in one, two, or more groups.
+\item
+  Test for one or two categorical variables.
+\item
+  Linear regression
+\end{itemize}
+
+\section{Data Set}\label{data-set}
+
+We will use a new data set for this chapter. Follow the steps below to
+import the data set \texttt{FlightDelays} into RStudio.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ControlFlowTok{if}\NormalTok{ (}\SpecialCharTok{!}\FunctionTok{require}\NormalTok{(resampledata)) \{}
+  \FunctionTok{install.packages}\NormalTok{(}\StringTok{\textquotesingle{}resampledata\textquotesingle{}}\NormalTok{)}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Loading required package: resampledata
+\end{verbatim}
+
+\begin{verbatim}
+
+Attaching package: 'resampledata'
+\end{verbatim}
+
+\begin{verbatim}
+The following object is masked from 'package:datasets':
+
+    Titanic
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{require}\NormalTok{(resampledata)}
+\FunctionTok{data}\NormalTok{(FlightDelays)}
+\end{Highlighting}
+\end{Shaded}
+
+Take a glimpse of the data set.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{summary}\NormalTok{(FlightDelays)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+       ID       Carrier      FlightNo      Destination    DepartTime  
+ Min.   :   1   AA:2906   Min.   :  71.0   BNA: 172    4-8am   : 699  
+ 1st Qu.:1008   UA:1123   1st Qu.: 371.0   DEN: 264    8-Noon  :1053  
+ Median :2015             Median : 691.0   DFW: 918    Noon-4pm:1048  
+ Mean   :2015             Mean   : 827.1   IAD:  55    4-8pm   : 972  
+ 3rd Qu.:3022             3rd Qu.: 787.0   MIA: 610    8-Mid   : 257  
+ Max.   :4029             Max.   :2255.0   ORD:1785                   
+                                           STL: 225                   
+  Day       Month       FlightLength       Delay        Delayed30 
+ Sun:551   May :1999   Min.   : 68.0   Min.   :-19.00   No :3432  
+ Mon:630   June:2030   1st Qu.:155.0   1st Qu.: -6.00   Yes: 597  
+ Tue:628               Median :163.0   Median : -3.00             
+ Wed:564               Mean   :185.3   Mean   : 11.74             
+ Thu:566               3rd Qu.:228.0   3rd Qu.:  5.00             
+ Fri:637               Max.   :295.0   Max.   :693.00             
+ Sat:453                                                          
+\end{verbatim}
+
+It contains 10 variables, out of which two are quantitative variables
+(\texttt{FlightLength}, and \texttt{Delay}), and the rest are
+categorical variables. Notice that there is a glitch: R mistakenly
+considered \texttt{FlightNo} as a quantitative variable. However, it
+does not affect us, as we do not use this variable here. If you want to
+convert it to a categorical variable (factor), here is the step:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{FlightDelays}\SpecialCharTok{$}\NormalTok{FlightNo }\OtherTok{\textless{}{-}} \FunctionTok{as.factor}\NormalTok{(FlightDelays}\SpecialCharTok{$}\NormalTok{FlightNo)}
+\end{Highlighting}
+\end{Shaded}
+
+\section{Tests for Quantitative
+Variables}\label{tests-for-quantitative-variables}
+
+\subsection{One-sample t-tests}\label{one-sample-t-tests}
+
+The goal of a one-sample t-test is to test if the mean of a quantitative
+variable is equal to a certain value. For example, if the aviation
+regulatory agency states that acceptable flight delay is 12 minutes. We
+want to see if the flights meet the requirement. The null hypothesis
+(\$H\_\{0\}\$) is that the mean delay is equal to 12 minutes. The
+alternative hypothesis (\$H\_\{A\}\$) is that the mean delay is not
+equal to 12 minutes. Here are the steps to perform such a test:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{t.test}\NormalTok{(FlightDelays}\SpecialCharTok{$}\NormalTok{Delay, }\AttributeTok{mu =} \DecValTok{12}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+
+    One Sample t-test
+
+data:  FlightDelays$Delay
+t = -0.39963, df = 4028, p-value = 0.6895
+alternative hypothesis: true mean is not equal to 12
+95 percent confidence interval:
+ 10.45205 13.02375
+sample estimates:
+mean of x 
+  11.7379 
+\end{verbatim}
+
+As the p-value (0.6895) is greater than \(\alpha\) = 0.05 at a 95\%
+confidence level, we fail to reject the null \(H_{0}\), meaning that the
+mean flight delay meets the standard.
+
+\subsection{Two-sample t-tests}\label{two-sample-t-tests}
+
+A two-sample t-test tests whether the mean of one group is the same as
+the other group. The \(H_{0}\) states the two groups have the same mean,
+and the \(H_{A}\) states otherwise.
+
+For example, we want to compare the mean delay of the two carriers to
+determine whether they are the same.
+
+\emph{Solution 1:}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{AA\_delay }\OtherTok{\textless{}{-}} \FunctionTok{subset}\NormalTok{(FlightDelays, Carrier}\SpecialCharTok{==}\StringTok{"AA"}\NormalTok{)}
+\NormalTok{UA\_delay }\OtherTok{\textless{}{-}} \FunctionTok{subset}\NormalTok{(FlightDelays, Carrier}\SpecialCharTok{==}\StringTok{"UA"}\NormalTok{)}
+\FunctionTok{t.test}\NormalTok{(AA\_delay}\SpecialCharTok{$}\NormalTok{Delay, UA\_delay}\SpecialCharTok{$}\NormalTok{Delay)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+
+    Welch Two Sample t-test
+
+data:  AA_delay$Delay and UA_delay$Delay
+t = -3.8255, df = 1843.8, p-value = 0.0001349
+alternative hypothesis: true difference in means is not equal to 0
+95 percent confidence interval:
+ -8.903198 -2.868194
+sample estimates:
+mean of x mean of y 
+ 10.09738  15.98308 
+\end{verbatim}
+
+Based on the p-value (0.0001349) being less than \(\alpha\) = 0.05, the
+delays of the two carriers are different. The bottom of the test result
+shows that the mean delay of 10.09738 for AA (group x) is shorter than
+UA 15.98308.
+
+\emph{Solution 2:}
+
+This approach makes use of the categorical variable \texttt{carrier} to
+split the data set into two, avoiding the creation of two temporary data
+frames.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{t.test}\NormalTok{(Delay }\SpecialCharTok{\textasciitilde{}}\NormalTok{ Carrier, }\AttributeTok{data=}\NormalTok{FlightDelays)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+
+    Welch Two Sample t-test
+
+data:  Delay by Carrier
+t = -3.8255, df = 1843.8, p-value = 0.0001349
+alternative hypothesis: true difference in means between group AA and group UA is not equal to 0
+95 percent confidence interval:
+ -8.903198 -2.868194
+sample estimates:
+mean in group AA mean in group UA 
+        10.09738         15.98308 
+\end{verbatim}
+
+The symbol \texttt{\textasciitilde{}} means ``split by''.
+\texttt{Delay\ \textasciitilde{}\ Carrier} means to split \texttt{Delay}
+by \texttt{Carrier}.
+
+\subsection{One-way ANOVA}\label{one-way-anova}
+
+A one-way ANOVA test tests whether the means of three or more groups are
+the same or not. Two key differences from the two-sample t-test above:
+1. a two-sample t-test can handle only two groups, but ANOVA can handle
+two or more groups. 2. The \(H_{0}\) of ANOVA is rejected if any pair(s)
+of groups have unequal means.
+
+For example, test whether mean delays vary by destination.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{aov\_results }\OtherTok{\textless{}{-}} \FunctionTok{aov}\NormalTok{(Delay }\SpecialCharTok{\textasciitilde{}}\NormalTok{ Destination, }\AttributeTok{data=}\NormalTok{FlightDelays)}
+\FunctionTok{summary}\NormalTok{(aov\_results)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+              Df  Sum Sq Mean Sq F value   Pr(>F)    
+Destination    6   62891   10482   6.094 2.29e-06 ***
+Residuals   4022 6918028    1720                     
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+\end{verbatim}
+
+If you only care whether the \(H_{0}\) can be rejected, focus on the
+overall p-value (2.29e-06) under the \texttt{Pr(\textgreater{}F)} column
+on the right. It is undeniably smaller than \(\alpha\) = 0.05, so the
+\(H_{0}\) can be rejected.
+
+In some situations, you may be interested in finding out which pair(s)
+do not have the same mean. Tukey's Honest Significant Difference (HSD)
+test can answer this question.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{TukeyHSD}\NormalTok{(aov\_results)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+  Tukey multiple comparisons of means
+    95% family-wise confidence level
+
+Fit: aov(formula = Delay ~ Destination, data = FlightDelays)
+
+$Destination
+               diff         lwr        upr     p adj
+DEN-BNA   7.1454369  -4.8424432 19.1333171 0.5765602
+DFW-BNA   3.2646932  -6.8999706 13.4293570 0.9647119
+IAD-BNA  19.4461945   0.4951700 38.3972191 0.0399134
+MIA-BNA  12.9137057   2.3518660 23.4755453 0.0058064
+ORD-BNA   8.4338186  -1.3335463 18.2011835 0.1430105
+STL-BNA   0.9181137 -11.4728506 13.3090780 0.9999910
+DFW-DEN  -3.8807437 -12.4245377  4.6630503 0.8331281
+IAD-DEN  12.3007576  -5.8325642 30.4340793 0.4140643
+MIA-DEN   5.7682688  -3.2444158 14.7809533 0.4884472
+ORD-DEN   1.2883817  -6.7786774  9.3554408 0.9991892
+STL-DEN  -6.2273232 -17.3274143  4.8727678 0.6463375
+IAD-DFW  16.1815013  -0.8016809 33.1646835 0.0736782
+MIA-DFW   9.6490125   3.2584254 16.0395995 0.0001755
+ORD-DFW   5.1691254   0.2003667 10.1378841 0.0352035
+STL-DFW  -2.3465795 -11.4473015  6.7541425 0.9885164
+MIA-IAD  -6.5324888 -23.7563253 10.6913477 0.9225580
+ORD-IAD -11.0123759 -27.7607938  5.7360421 0.4540417
+STL-IAD -18.5280808 -36.9303655 -0.1257961 0.0471723
+ORD-MIA  -4.4798870 -10.2175372  1.2577631 0.2425378
+STL-MIA -11.9955920 -21.5378772 -2.4533067 0.0039784
+STL-ORD  -7.5157049 -16.1704244  1.1390145 0.1382159
+\end{verbatim}
+
+It lists all possible pairs of destinations. Since there are seven
+destinations, the total number of pairs is 21 (\texttt{choose(7,2)}).
+
+Each row shows the difference of means (\texttt{diff}), the lower
+(\texttt{lwr}) and upper (\texttt{upr}) bounds of the confidence
+interval, and the adjusted p-value (\texttt{p\ adj}). Examining the
+p-value is the quickest way to identify pairs with unequal means. E.g.,
+IAD-BNA in which the p-value is less than 0.05.
+
+To ease analysis, it is suggested to plot the HSD result as below:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{hsd\_results }\OtherTok{\textless{}{-}} \FunctionTok{TukeyHSD}\NormalTok{(aov\_results)}
+
+\CommentTok{\# las=1 causes the plot to print the pair name horizontally.}
+\FunctionTok{plot}\NormalTok{(hsd\_results, }\AttributeTok{las=}\DecValTok{1}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{04_Statistical_Tests_files/figure-pdf/unnamed-chunk-9-1.pdf}}
+
+Confidence intervals not crossing zero (the vertical line) indicate
+pairs have unequal means.
+
+\section{Tests for Categorical
+Variables}\label{tests-for-categorical-variables}
+
+\subsection{One Categorical Variable}\label{one-categorical-variable-2}
+
+\subsection{Two Categorical Variables}\label{two-categorical-variables}
+
+\section{Regression}\label{regression}
+
+\subsection{Simple Linear Regression}\label{simple-linear-regression}
+
+\subsection{Multiple Regression}\label{multiple-regression}
+
+\subsection{Paired t-tests}\label{paired-t-tests}
+
+\subsection{}\label{section}
 
 \chapter{Dive Deeper}\label{dive-deeper}
 
