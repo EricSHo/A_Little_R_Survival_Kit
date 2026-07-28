@@ -2,16 +2,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.9.38">
+<meta name="generator" content="quarto-1.8.27">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
 <title>1&nbsp; Basic R – A Little R Survival Kit</title>
 <style>
-/* Default styles provided by pandoc.
-** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
-*/
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
 div.columns{display: flex; gap: min(4vw, 1.5em);}
@@ -72,14 +69,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="./index.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-48ea65abc159e6cc4e6f4454fff85086.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-d2a895b5cbb91adc99485585edf1e91f.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -109,7 +107,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }</script>
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <script type="text/javascript">
 const typesetMath = (el) => {
@@ -303,7 +301,7 @@ window.Quarto = {
 <li><p>Handle composite objects: vectors and data frames.</p></li>
 <li><p>Define categorical variables.</p></li>
 <li><p>Calculate descriptive and summary statistics.</p></li>
-<li><p>Utilize inspection functions to figure out basic information of data.</p></li>
+<li><p>Utilize inspection functions to figure out basic information about data.</p></li>
 <li><p>Format and print the contents of variables to the console.</p></li>
 <li><p>Use <code>seq()</code> and <code>with()</code> functions.</p></li>
 </ul>
@@ -311,18 +309,18 @@ window.Quarto = {
 </section>
 <section id="r-variables" class="level2" data-number="1.1">
 <h2 data-number="1.1" class="anchored" data-anchor-id="r-variables"><span class="header-section-number">1.1</span> R Variables</h2>
-<p>An R variable is a named location in the computer’s memory that stores some values. Imagine it as a labeled (name) shoebox (memory location) keeping a pair sneakers (value).</p>
-<p>Two rules determines how an R variable be named:</p>
+<p>An R variable is a named location in the computer’s memory that stores some values. Imagine it as a labeled (name) shoebox (memory location) keeping a pair of sneakers (value).</p>
+<p>Two rules determine how an R variable can be named:</p>
 <ol type="1">
 <li><p>It must begin with a letter (A-Z or a-z), a dot “<code>.</code>”, or an underscore “<code>_</code>”, and</p></li>
-<li><p>Subsequent characters can be any combinations of letters, digits (0-9), “<code>.</code>”, or “<code>_</code>”.</p></li>
+<li><p>Subsequent characters can be any combination of letters, digits (0-9), “<code>.</code>”, or “<code>_</code>”.</p></li>
 </ol>
 <p>Note that:</p>
 <ul>
-<li><p>A variable name can be as short as one character to way longer than a normal person wishes (10,000 characters!).</p></li>
-<li><p>My suggestion is to give variables meaningful names that can help a bunch for you or someone to comprehend the the code. For instance, in a problem about heart rate, use <code>zone2</code> instead of <code>z</code> or even worse <code>x</code>.</p></li>
+<li><p>A variable name can be as short as one character or as long as a normal person wishes (10,000 characters!).</p></li>
+<li><p>My suggestion is to give variables meaningful names that help you or someone else comprehend the code. For instance, in a problem about heart rate, use <code>zone2</code> instead of <code>z</code> or even worse <code>x</code>.</p></li>
 <li><p>Be careful that variable names are case-sensitive, e.g., <code>volume</code> and <code>Volume</code> are different in the eyes of R.</p></li>
-<li><p>Avoid naming variables with names that have been reserved by R (https://rdrr.io/r/base/Reserved.html) or names already used to name R’s built-in functions, e.g., <code>c</code>, and <code>head</code>. For the latter, unfortunately, R is permissive for misnaming variables by remaining silence, costing time to identify the issue. Therefore, the rule of thumb is to exercise self-discipline not to choose R function names as variable names.</p></li>
+<li><p>Avoid naming variables with names that have been reserved by R (https://rdrr.io/r/base/Reserved.html) or names already used to name R’s built-in functions, e.g., <code>c</code>, and <code>head</code>. For the latter, unfortunately, R is permissive for misnaming variables by remaining silent, costing time to identify the issue. Therefore, the rule of thumb is to exercise self-discipline and avoid using R function names as variable names.</p></li>
 </ul>
 </section>
 <section id="r-objects" class="level2" data-number="1.2">
@@ -339,11 +337,11 @@ window.Quarto = {
 <li><p>Complex<sup><code>*</code></sup>: Complex numbers containing real and imaginary components, e.g., 5+2i</p></li>
 <li><p>Raw<sup><code>*</code></sup>: Bare bytes of data.</p></li>
 </ul>
-<p><code>*</code> We will only discuss the first four types in this book, you can ignore complex and raw types.</p>
+<p><code>*</code> We will only discuss the first four types in this book; you can ignore complex and raw types.</p>
 </section>
 <section id="sec-atomic-and-composite-variables" class="level3" data-number="1.2.2">
 <h3 data-number="1.2.2" class="anchored" data-anchor-id="sec-atomic-and-composite-variables"><span class="header-section-number">1.2.2</span> Atomic and Composite Variables</h3>
-<p>From a practical perspective, R variables can be viewed as <strong>atomic variables</strong> , and <strong>composite variables</strong>. An atomic variable contain a single value, and a composite variable consists of a collection of values. Let us begin with two atomic variables: <strong><code>numeric</code></strong>, and <strong><code>character</code></strong>.</p>
+<p>From a practical perspective, R variables can be viewed as <strong>atomic variables</strong> and <strong>composite variables</strong>. An atomic variable contains a single value, and a composite variable consists of a collection of values. Let us begin with two atomic variables: <strong><code>numeric</code></strong>, and <strong><code>character</code></strong>.</p>
 <section id="numeric-variables" class="level4" data-number="1.2.2.1">
 <h4 data-number="1.2.2.1" class="anchored" data-anchor-id="numeric-variables"><span class="header-section-number">1.2.2.1</span> Numeric Variables</h4>
 <p>An atomic numeric variable holds a decimal number (<code>double</code>) or a whole number (<code>integer</code>). Numbers can be represented in scientific notation. Here are some examples:</p>
@@ -357,11 +355,11 @@ window.Quarto = {
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Scientific notation</span></span>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>avogadro_number <span class="ot">&lt;-</span> <span class="fl">6.023e23</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p><code>&lt;-</code> is the assignment operator. It looks like a left-pointing arrow, depicting the transfer of value from the right-hand side to the left-hand side. Upon execution, the resultant value of the expression on the right-hand side, if no error, is stored in the named variable on the left-hand side. In RStudio, you can see the variable name and its associated value under the <strong>Environment</strong> tab, which usually occupies the top right quadrant of the RStudio desktop.</p>
+<p><code>&lt;-</code> is the assignment operator. It looks like a left-pointing arrow, depicting the transfer of value from the right-hand side to the left-hand side. Upon execution, the resultant value of the expression on the right-hand side, if no error occurs, is stored in the named variable on the left-hand side. In RStudio, you can see the variable name and its associated value under the <strong>Environment</strong> tab, which usually occupies the top right quadrant of the RStudio desktop.</p>
 <p>Note that R supports another assignment operator: <code>=</code>. You can use <code>&lt;-</code> and <code>=</code> interchangeably. I prefer <code>&lt;-</code> to <code>=</code>, as <code>=</code> can easily confuse with the equality checking operator <code>==</code>.</p>
-<p>A few words about the scientific notation. It comprises three parts: the coefficient, a constant literal <code>e</code>, and the exponent. The <code>e</code> refers to the base <code>10</code>. For example, the R’s scientific notation of <span class="math inline">\(6.023\times10^{23}\)</span> is <code>6.023e23</code>, where the coefficient and the exponent are <span class="math inline">\(6.023\)</span> and <span class="math inline">\(23\)</span>, respectively. Note that you must not include spaces in a scientific notation, e.g., <code>6.023e 23</code>, <code>6.023 e23</code>, or <code>6.023 e 23</code> will return errors.</p>
+<p>A few words about the scientific notation. It comprises three parts: the coefficient, a constant literal<code>e</code>, and the exponent. The <code>e</code> refers to the base <code>10</code>. For example, the R’s scientific notation of <span class="math inline">\(6.023\times10^{23}\)</span> is <code>6.023e23</code>, where the coefficient and the exponent are <span class="math inline">\(6.023\)</span> and <span class="math inline">\(23\)</span>, respectively. Note that you must not include spaces in scientific notation, e.g., <code>6.023e 23</code>, <code>6.023 e23</code>, or <code>6.023 e 23</code> will return errors.</p>
 <p><strong>Arithmetic Operators</strong></p>
-<p>You can apply arithmetic operations on numeric variables. Here are the arithmetic operators: <code>+</code> (addition), <code>-</code> (subtraction), <code>*</code> (multiplication), <code>/</code> (division), <code>**</code> (exponentiation), and <code>^</code> (exponentiation). The last two exponentiation operators perform exactly the same function. Here are some examples:</p>
+<p>You can apply arithmetic operations on numeric variables. Here are the arithmetic operators: <code>+</code> (addition), <code>-</code> (subtraction), <code>*</code> (multiplication), <code>/</code> (division), <code>**</code> (exponentiation), and <code>^</code> (exponentiation). The last two exponentiation operators perform the same function. Here are some examples:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>radius <span class="ot">&lt;-</span> <span class="fl">2.5</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>diameter <span class="ot">&lt;-</span> <span class="dv">2</span><span class="sc">*</span>pi<span class="sc">*</span>radius</span>
@@ -372,7 +370,7 @@ window.Quarto = {
 </section>
 <section id="character-variables" class="level4" data-number="1.2.2.2">
 <h4 data-number="1.2.2.2" class="anchored" data-anchor-id="character-variables"><span class="header-section-number">1.2.2.2</span> Character Variables</h4>
-<p>R also support text values, which is in <code>character</code> data type. To define a character value, you need to use a pair of quotes to embrace the text. Either a pair of single (<code>'</code>) or double quotes (<code>"</code>) works. E.g.,</p>
+<p>R also supports text values, which are in <code>character</code> data type. To define a character value, you need to use a pair of quotes to enclose the text. Either a pair of single (<code>'</code>) or double quotes (<code>"</code>) works. E.g.,</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>course <span class="ot">&lt;-</span> <span class="st">'BIOL265'</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
@@ -397,7 +395,7 @@ window.Quarto = {
 ! non-numeric argument to binary operator</code></pre>
 </div>
 </div>
-<p>You can use <code>nchar()</code> function to figure out the number of characters, including spaces and punctuations, of a character variable. E.g.,</p>
+<p>You can use <code>nchar()</code> function to figure out the number of characters, including spaces and punctuation, of a character variable. E.g.,</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nchar</span>(course)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
@@ -421,12 +419,12 @@ window.Quarto = {
 <pre><code>[1] 28</code></pre>
 </div>
 </div>
-<p>The <code>[2]</code> means the 2<sup>nd</sup> element of a vector. We will discuss more about indexing below.</p>
+<p>The <code>[2]</code> means the 2<sup>nd</sup> element of a vector. We will discuss indexing in more detail below.</p>
 <p>Here is an example of a character vector:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>nucleotides <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">'A'</span>,<span class="st">'C'</span>,<span class="st">'G'</span>,<span class="st">'T'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>Noteworthy that all items held inside a vector must have the same data type. In other words, vectors are always <strong>homogeneous</strong>. For instance, <code>days_of_month</code> contains all numeric values, and <code>nucleotides</code> contains all character values. If you try to combine objects of different data types into a vector, R will automatically convert them to character type, the lowest denominator of data types. In the example below, even the first and third values are entered as numeric, R coerces them into text <code>"1"</code> and <code>"0"</code>.</p>
+<p>Noteworthy that all items held inside a vector must have the same data type. In other words, vectors are always <strong>homogeneous</strong>. For instance, <code>days_of_month</code> contains all numeric values, and <code>nucleotides</code> contains all character values. If you try to combine objects of different data types into a vector, R will automatically convert them to character type, the lowest denominator of data types. In the example below, even though the first and third values are entered as numeric, R coerces them into text <code>"1"</code> and <code>"0"</code>.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>a_vector <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="st">"success"</span>, <span class="dv">0</span>, <span class="st">"fail"</span>)</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>a_vector</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -445,9 +443,9 @@ window.Quarto = {
 <pre><code>[1] -1.2677314  0.8451543  1.2677314 -0.4225771  0.4225771 -0.8451543</code></pre>
 </div>
 </div>
-<p><code>mean()</code> and <code>sd()</code> are built-in functions that calcuate the average and standard deviation of a sample, respectively.</p>
+<p><code>mean()</code> and <code>sd()</code> are built-in functions that calculate the average and standard deviation of a sample, respectively.</p>
 <p>The convenience is that you don’t have to specify how to subtract and divide each height individually. Instead, R recognizes the expression <code>(heights-x_bar)</code> is to subtract an atomic <code>x_bar</code> (scalar) from a vector <code>heights</code>. Under the vectorization mechanism, it will subtract <code>x_bar</code> from every height in the vector <code>heights</code>, similarly for the division by <code>s</code>.</p>
-<p><code>vector</code> is only one of the many types of objects supported by R. Data frame is another commonly used object types, which will be discussed later.</p>
+<p><code>vector</code> is only one of the many types of objects supported by R. A data frame is another commonly used object type, which will be discussed later.</p>
 </section>
 <section id="sec-factor-levels" class="level3" data-number="1.2.4">
 <h3 data-number="1.2.4" class="anchored" data-anchor-id="sec-factor-levels"><span class="header-section-number">1.2.4</span> Factors/Categorical Variables</h3>
@@ -474,11 +472,11 @@ Levels: Red Blue Green</code></pre>
 Levels: normal &lt; elevated &lt; Stage 1 &lt; Stage 2 &lt; Hyperintensive</code></pre>
 </div>
 </div>
-<p>As you can see above, the last line (<code>Levels</code>) shows the hypertension levels in ascending order and levels are connected by a less than sign (<code>&lt;</code>).</p>
+<p>As you can see above, the last line (<code>Levels</code>) shows the hypertension levels in ascending order, and levels are connected by a less than sign (<code>&lt;</code>).</p>
 </section>
 <section id="data-frames" class="level3" data-number="1.2.5">
 <h3 data-number="1.2.5" class="anchored" data-anchor-id="data-frames"><span class="header-section-number">1.2.5</span> Data Frames</h3>
-<p>Besides <code>vector</code>, another common R object is <code>data frame</code>. Almost all the datasets used for data analysis are organized in data frames. Simply speaking, a data frame is a <strong>tabular</strong> or spreadsheet-like object where values are organized in rows and columns. Each row represents a sample and each column represents a variable. Rows are expected to have equal length, i.e., the same number of columns. If not, R will either complain or pad the missing columns with a special value <code>NA</code> (it stands for not available). Let’s take a look at an R’s built-in data frame <code>iris</code>:</p>
+<p>Besides <code>vector</code>, another common R object is <code>data frame</code>. Almost all the datasets used for data analysis are organized in data frames. Simply speaking, a data frame is a <strong>tabular</strong> or spreadsheet-like object where values are organized in rows and columns. Each row represents a sample, and each column represents a variable. Rows are expected to have equal length, i.e., the same number of columns. If not, R will either complain or pad the missing columns with a special value <code>NA</code> (it stands for not available). Let’s take a look at R’s built-in data frame <code>iris</code>:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Show the first five rows</span></span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(iris)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -492,7 +490,7 @@ Levels: normal &lt; elevated &lt; Stage 1 &lt; Stage 2 &lt; Hyperintensive</code
 6          5.4         3.9          1.7         0.4  setosa</code></pre>
 </div>
 </div>
-<p>You can peek into the bottom five rows by the <code>tail()</code> function.</p>
+<p>You can peek into the bottom five rows using the <code>tail()</code> function.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tail</span>(iris)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
@@ -526,7 +524,7 @@ Levels: normal &lt; elevated &lt; Stage 1 &lt; Stage 2 &lt; Hyperintensive</code
 <p>So, we know that <code>iris</code> contains 150 rows (flower samples) and five columns.</p>
 <section id="sec-access-rows-columns" class="level4" data-number="1.2.5.1">
 <h4 data-number="1.2.5.1" class="anchored" data-anchor-id="sec-access-rows-columns"><span class="header-section-number">1.2.5.1</span> Accessing Rows and Columns of a Data Frame</h4>
-<p>Each element in a data frame can be referenced by row and column indexes like a X-Y Cartesian system. Rows are automatically indexed (numbered), where the 1st row is index 1, the 2nd row is index 2, and the index of the last row is the total number of rows, similarly for columns.</p>
+<p>Each element in a data frame can be referenced by row and column indexes like an X-Y Cartesian system. Rows are automatically indexed (numbered), where the 1st row is index 1, the 2nd row is index 2, and the index of the last row is the total number of rows; similarly for columns.</p>
 <p>The syntax of accessing individual elements by indexes is <code>&lt;data frame name&gt;[row, column]</code>. E.g., the cell at the 5<sup>th</sup> row and 3<sup>rd</sup> column of the iris is:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>iris[<span class="dv">5</span>,<span class="dv">3</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -566,7 +564,7 @@ Figure&nbsp;1.1: Accessing rows and columns of a data frame.
 Levels: setosa versicolor virginica</code></pre>
 </div>
 </div>
-<p>Note that the <code>head()</code> above is used to limit the number rows displayed by avoiding listing page after page of data rows.</p>
+<p>Note that the <code>head()</code> above is used to limit the number of rows displayed by avoiding listing page after page of data rows.</p>
 <p>You are not limited to display one row or one column using this indexing scheme. For example, show to 110^th and 34^th rows and 2<sup>nd</sup> and 5<sup>th</sup> columns,</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>iris[<span class="fu">c</span>(<span class="dv">110</span>,<span class="dv">34</span>), <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">5</span>)]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -583,7 +581,7 @@ Levels: setosa versicolor virginica</code></pre>
 <pre><code>[1] 1.4</code></pre>
 </div>
 </div>
-<p>To access more than one column and row, pack the row indexes and column names in vectors by the <code>c(...)</code> function, which <strong>c</strong>ombines or <strong>c</strong>ollates several items into a vector object (see <a href="#sec-vectors" class="quarto-xref"><span>Section 1.2.3</span></a>). For example, show the <code>Petal.Length</code> and <code>Sepal.Length</code> of the 123<sup>th</sup> and 96<sup>th</sup> rows:</p>
+<p>To access more than one column and row, pack the row indexes and column names in vectors using the <code>c(...)</code> function, which <strong>c</strong>ombines or <strong>c</strong>ollates several items into a vector object (see <a href="#sec-vectors" class="quarto-xref"><span>Section 1.2.3</span></a>). For example, show the <code>Petal.Length</code> and <code>Sepal.Length</code> of the 123<sup>th</sup> and 96<sup>th</sup> rows:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>iris[<span class="fu">c</span>(<span class="dv">123</span>,<span class="dv">96</span>),<span class="fu">c</span>(<span class="st">'Petal.Length'</span>,<span class="st">'Sepal.Length'</span>)]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
@@ -592,7 +590,7 @@ Levels: setosa versicolor virginica</code></pre>
 96           4.2          5.7</code></pre>
 </div>
 </div>
-<p>If your task is to extract a single column, R provides an alternative way to access a column by its name. The syntax is <code>&lt;data frame name&gt;$&lt;column name&gt;</code> <a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>. For example, <code>iris$Species</code>, which is equivalent of <code>iris[,5]</code>,</p>
+<p>If your task is to extract a single column, R provides an alternative way to access a column by its name. The syntax is <code>&lt;data frame name&gt;$&lt;column name&gt;</code> <a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>. For example, <code>iris$Species</code>, which is equivalent to <code>iris[,5]</code>,</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(iris<span class="sc">$</span>Species)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
@@ -604,7 +602,7 @@ Levels: setosa versicolor virginica</code></pre>
 </section>
 <section id="create-a-data-frame" class="level4" data-number="1.2.5.2">
 <h4 data-number="1.2.5.2" class="anchored" data-anchor-id="create-a-data-frame"><span class="header-section-number">1.2.5.2</span> Create a Data Frame</h4>
-<p>We can use the <code>data.frame()</code> function with the concept of vector to create a dataset in data frame format. For example, a study collected 10 fish with their sex and age. To create the data frame, vectors must be created to represent each variable (column). Here’s the R code:</p>
+<p>We can use the <code>data.frame()</code> function with the concept of vectors to create a dataset in data frame format. For example, a study collected 10 fish with their sex and age. To create the data frame, vectors must be created to represent each variable (column). Here’s the R code:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>sex <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">'F'</span>,<span class="st">'M'</span>,<span class="st">'M'</span>,<span class="st">'F'</span>,<span class="st">'F'</span>,<span class="st">'F'</span>,<span class="st">'M'</span>,<span class="st">'M'</span>,<span class="st">'M'</span>,<span class="st">'M'</span>)</span>
 <span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>age <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">3</span>,<span class="dv">1</span>,<span class="dv">1</span>)</span>
@@ -637,8 +635,8 @@ Levels: setosa versicolor virginica</code></pre>
                 Max.   :3.0  </code></pre>
 </div>
 </div>
-<p>Find out more information about <code>summary()</code> function below <a href="#sec-summary-function" class="quarto-xref"><span>Section 1.3.3</span></a>.</p>
-<p>It is almost done. There is one nuance. In the current form, <code>sex</code> is a character variable so its summary statistics are a bit strange. Most often, variable likes that should be categorical/nominal. Therefore, we need to convert <code>sex</code> into a <code>factor</code> <a href="#sec-factor-levels" class="quarto-xref"><span>Section 1.2.4</span></a>. Here’s the revised code:</p>
+<p>Find out more information about the <code>summary()</code> function below <a href="#sec-summary-function" class="quarto-xref"><span>Section 1.3.3</span></a>.</p>
+<p>It is almost done. There is one nuance. In the current form, <code>sex</code> is a character variable, so its summary statistics are a bit strange. Most often, variables like that should be categorical/nominal. Therefore, we need to convert <code>sex</code> into a <code>factor</code> <a href="#sec-factor-levels" class="quarto-xref"><span>Section 1.2.4</span></a>. Here’s the revised code:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>sex <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">'F'</span>,<span class="st">'M'</span>,<span class="st">'M'</span>,<span class="st">'F'</span>,<span class="st">'F'</span>,<span class="st">'F'</span>,<span class="st">'M'</span>,<span class="st">'M'</span>,<span class="st">'M'</span>,<span class="st">'M'</span>)</span>
 <span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>sex <span class="ot">&lt;-</span> <span class="fu">factor</span>(sex, <span class="at">levels=</span><span class="fu">c</span>(<span class="st">'F'</span>,<span class="st">'M'</span>))</span>
@@ -718,7 +716,7 @@ Levels: setosa versicolor virginica</code></pre>
 </section>
 <section id="robust-statistics" class="level3" data-number="1.3.2">
 <h3 data-number="1.3.2" class="anchored" data-anchor-id="robust-statistics"><span class="header-section-number">1.3.2</span> Robust Statistics</h3>
-<p>Median and quantile are called robust statistics, as they impede outliers’ influence.</p>
+<p>Median and quantiles are called robust statistics, as they reduce the influence of outliers.</p>
 <p><em>Median</em></p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="co"># A sample of pumpkins' weights</span></span>
@@ -739,7 +737,7 @@ Levels: setosa versicolor virginica</code></pre>
  3.520  4.895  6.590  7.375 10.140 </code></pre>
 </div>
 </div>
-<p>Instead of the default 25% interval, you can specify your preferred quantile(s) and they don’t have to be equally divided. Here are some examples:</p>
+<p>Instead of the default 25% interval, you can specify your preferred quantile(s), and they don’t have to be equally divided. Here are some examples:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb70"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a><span class="fu">quantile</span>(pumpkins, <span class="at">probs =</span> <span class="fu">c</span>(<span class="fl">0.1</span>,<span class="fl">0.9</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
@@ -771,12 +769,12 @@ Levels: setosa versicolor virginica</code></pre>
 <pre><code>[1] 2.48</code></pre>
 </div>
 </div>
-<p>IQR is used to determine the upper and lower whiskers in a boxplot. Data points below or above the lower or upper whisker are considered as outliers.</p>
+<p>IQR is used to determine the upper and lower whiskers in a boxplot. Data points below or above the lower or upper whisker are considered outliers.</p>
 <p><span class="math display">\[Lower\space whisker = Q1 - 1.5\times{IQR}\]</span> <span class="math display">\[Upper\space whisker = Q3 + 1.5\times{IQR}\]</span></p>
 </section>
 <section id="sec-summary-function" class="level3" data-number="1.3.3">
 <h3 data-number="1.3.3" class="anchored" data-anchor-id="sec-summary-function"><span class="header-section-number">1.3.3</span> <code>summary()</code> Function</h3>
-<p>A data frame may consists of many variables of different types in various ranges. Therefore, it makes a lot of sense to take a glimpse of all variables before analysis. It can be done by using the <code>summary()</code> function to reveal:</p>
+<p>A data frame may consist of many variables of different types in various ranges. Therefore, it makes a lot of sense to take a glimpse of all variables before analysis. It can be done by using the <code>summary()</code> function to reveal:</p>
 <ol type="1">
 <li><p>The variable type of each column.</p></li>
 <li><p>If the column is numeric, a summary of numeric values.</p></li>
@@ -809,8 +807,8 @@ Levels: setosa versicolor virginica</code></pre>
 <h2 data-number="1.4" class="anchored" data-anchor-id="utility-functions"><span class="header-section-number">1.4</span> Utility Functions</h2>
 <section id="inspection-functions" class="level3" data-number="1.4.1">
 <h3 data-number="1.4.1" class="anchored" data-anchor-id="inspection-functions"><span class="header-section-number">1.4.1</span> Inspection Functions</h3>
-<p>Before diving into data analysis, we often want to know some basic information about it, such as the number of samples, what is the range of a numeric variable, etc. Here we will discuss a few R functions to do that, and we coin them inspection functions.</p>
-<p>We will use a sample of pumpkin’s weights for illustration.</p>
+<p>Before diving into data analysis, we often want to know some basic information about it, such as the number of samples, what is the range of a numeric variable, etc. Here we discuss a few R functions to do that, and we call them inspection functions.</p>
+<p>We will use a sample of pumpkin weights for illustration.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb80"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb80-1"><a href="#cb80-1" aria-hidden="true" tabindex="-1"></a><span class="co"># A sample of pumpkins' weights</span></span>
 <span id="cb80-2"><a href="#cb80-2" aria-hidden="true" tabindex="-1"></a>pumpkins <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">6.85</span>,<span class="fl">6.56</span>,<span class="fl">6.23</span>,<span class="fl">7.55</span>,<span class="fl">4.45</span>,<span class="fl">10.14</span>,<span class="fl">3.52</span>,<span class="fl">6.62</span>,<span class="fl">3.76</span>,<span class="fl">7.62</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -837,7 +835,7 @@ Levels: setosa versicolor virginica</code></pre>
 <pre><code>[1] 7</code></pre>
 </div>
 </div>
-<p>The <code>range()</code> prints the minimum and maximum values of an object <a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>.</p>
+<p>The <code>range()</code> prints the minimum and maximum values of an object<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb87"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb87-1"><a href="#cb87-1" aria-hidden="true" tabindex="-1"></a><span class="fu">range</span>(pumpkins)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
@@ -886,7 +884,7 @@ Levels: setosa versicolor virginica</code></pre>
 <pre><code>[1] "The diameter of a circle with radius 2.5 cm is 15.708 ."</code></pre>
 </div>
 </div>
-<p>The above printout is almost perfect. If you’re picky, you don’t like the extra space separating the diameter and the period in the above message, you can use <code>paste()</code>’s cousin function <code>paste0()</code>. The difference between the two is that <code>paste0()</code> will not automatically add an extra space between each component given to the function. Below is the previous print statement with <code>paste0()</code>:</p>
+<p>The above printout is almost perfect. If you’re picky and don’t like the extra space separating the diameter and the period in the above message, you can use <code>paste()</code>’s cousin function <code>paste0()</code>. The difference between the two is that <code>paste0()</code> will not automatically add an extra space between each component given to the function. Below is the previous print statement with <code>paste0()</code>:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb99"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb99-1"><a href="#cb99-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">paste0</span>(<span class="st">"The diameter of a circle with radius"</span>,radius,<span class="st">"cm is"</span>,diameter,<span class="st">"."</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
@@ -920,7 +918,7 @@ Levels: setosa versicolor virginica</code></pre>
 <pre><code> [1]  1  2  3  4  5  6  7  8  9 10</code></pre>
 </div>
 </div>
-<p>Staring from and ending with.</p>
+<p>Starting from and ending with.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb105"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb105-1"><a href="#cb105-1" aria-hidden="true" tabindex="-1"></a><span class="fu">seq</span>(<span class="sc">-</span><span class="dv">10</span>,<span class="dv">10</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
@@ -965,7 +963,7 @@ Levels: setosa versicolor virginica</code></pre>
 <pre><code>y = -5 -4 -3 -2 -1 </code></pre>
 </div>
 </div>
-<p><strong>Note:</strong> What is the difference between <code>cat(...)</code> and <code>print(paste(...))</code> you saw above? The main difference is that <code>print(paste(...))</code> creates an R object (a text) and then prints it, while <code>cat(...)</code> directly writes text to the console without creating a formal R object. See example below you will understand the nuance.</p>
+<p><strong>Note:</strong> What is the difference between <code>cat(...)</code> and <code>print(paste(...))</code> you saw above? The main difference is that <code>print(paste(...))</code> creates an R object (a text) and then prints it, while <code>cat(...)</code> directly writes text to the console without creating a formal R object. See the example below, you will understand the nuance.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb117"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb117-1"><a href="#cb117-1" aria-hidden="true" tabindex="-1"></a>msg1 <span class="ot">&lt;-</span> <span class="fu">print</span>(<span class="fu">paste</span>(<span class="st">"Hello"</span>,<span class="st">"World"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
@@ -986,11 +984,11 @@ Levels: setosa versicolor virginica</code></pre>
 <pre><code>NULL</code></pre>
 </div>
 </div>
-<p>Is it really important? No, unless you’re a R developer.</p>
+<p>Is it really important? No, unless you’re an R developer.</p>
 </section>
 <section id="with" class="level3" data-number="1.4.4">
 <h3 data-number="1.4.4" class="anchored" data-anchor-id="with"><span class="header-section-number">1.4.4</span> <code>with()</code></h3>
-<p>The function set up the context of a data frame so it spares you from using the <code>$</code> to access the columns of a data frame, as it often leads to longer commands, which makes harder to comprehend and troubleshooting. It is also commonly used together with a function applied to one or more columns. E.g., the median of <code>Petal.Width</code>. It can done in two ways:</p>
+<p>The function sets up the context of a data frame so it spares you from using the <code>$</code> to access the columns of a data frame, as it often leads to longer commands, which makes it harder to comprehend and troubleshoot. It is also commonly used together with a function applied to one or more columns. E.g., the median of <code>Petal.Width</code>. It can be done in two ways:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb125"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb125-1"><a href="#cb125-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Use $</span></span>
 <span id="cb125-2"><a href="#cb125-2" aria-hidden="true" tabindex="-1"></a><span class="fu">median</span>(iris<span class="sc">$</span>Petal.Width)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -1022,7 +1020,7 @@ Levels: setosa versicolor virginica</code></pre>
 </section>
 <section id="summary" class="level2" data-number="1.5">
 <h2 data-number="1.5" class="anchored" data-anchor-id="summary"><span class="header-section-number">1.5</span> Summary</h2>
-<p>That’s a bare minimum of R scripting required for data analysis. In the next chapter, we will focus on operations applied to data frames. Before you leave, it is useful to recap the R functions discussed in this chapter:</p>
+<p>That’s the bare minimum of R scripting required for data analysis. In the next chapter, we will focus on operations applied to data frames. Before you leave, it is useful to recap the R functions discussed in this chapter:</p>
 <!--
 `<-`, `c()`, `print()`, `paste()`, `paste0()`, `cat()`, `typeof()`, `nchar()`, `factor()`, `head()`, `tail()`, `dim()`, `nrow()`, `ncol()`, `summary()`, `mean()`, `var()`, `sd()`, `range()`, `min()`, `max()`, `median()`, `quantile()`, `IQR()`, `seq()`, and `with()`.
 -->
@@ -1114,7 +1112,7 @@ A. `fiveguys` B. `5guys` C. `five.guys` D. `five-guys` E. `five_guys`
 <ol>
 <li id="fn1"><p>If rows are named, rows can be referenced by their names.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn2"><p>The <code>$</code> method only works for a single column.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn3"><p>Note that <code>range()</code> works for non-numeric vector, but we will skip such special operation.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>Note that <code>range()</code> works for a non-numeric vector, but we will skip such a special operation.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 

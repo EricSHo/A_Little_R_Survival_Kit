@@ -107,7 +107,6 @@
 \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{\textit{#1}}}
 
 \usepackage{longtable,booktabs,array}
-\newcounter{none} % for unnumbered tables
 \usepackage{calc} % for calculating minipage widths
 % Correct order of tables after \paragraph or \subparagraph
 \usepackage{etoolbox}
@@ -223,6 +222,7 @@
 
 \renewcommand*\contentsname{Table of contents}
 {
+\hypersetup{linkcolor=}
 \setcounter{tocdepth}{2}
 \tableofcontents
 }
@@ -344,7 +344,8 @@ to:
 \item
   Calculate descriptive and summary statistics.
 \item
-  Utilize inspection functions to figure out basic information of data.
+  Utilize inspection functions to figure out basic information about
+  data.
 \item
   Format and print the contents of variables to the console.
 \item
@@ -359,9 +360,9 @@ Let's get started.
 
 An R variable is a named location in the computer's memory that stores
 some values. Imagine it as a labeled (name) shoebox (memory location)
-keeping a pair sneakers (value).
+keeping a pair of sneakers (value).
 
-Two rules determines how an R variable be named:
+Two rules determine how an R variable can be named:
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -369,21 +370,21 @@ Two rules determines how an R variable be named:
   It must begin with a letter (A-Z or a-z), a dot ``\texttt{.}'', or an
   underscore ``\texttt{\_}'', and
 \item
-  Subsequent characters can be any combinations of letters, digits
-  (0-9), ``\texttt{.}'', or ``\texttt{\_}''.
+  Subsequent characters can be any combination of letters, digits (0-9),
+  ``\texttt{.}'', or ``\texttt{\_}''.
 \end{enumerate}
 
 Note that:
 
 \begin{itemize}
 \item
-  A variable name can be as short as one character to way longer than a
+  A variable name can be as short as one character or as long as a
   normal person wishes (10,000 characters!).
 \item
-  My suggestion is to give variables meaningful names that can help a
-  bunch for you or someone to comprehend the the code. For instance, in
-  a problem about heart rate, use \texttt{zone2} instead of \texttt{z}
-  or even worse \texttt{x}.
+  My suggestion is to give variables meaningful names that help you or
+  someone else comprehend the code. For instance, in a problem about
+  heart rate, use \texttt{zone2} instead of \texttt{z} or even worse
+  \texttt{x}.
 \item
   Be careful that variable names are case-sensitive, e.g.,
   \texttt{volume} and \texttt{Volume} are different in the eyes of R.
@@ -392,9 +393,9 @@ Note that:
   (https://rdrr.io/r/base/Reserved.html) or names already used to name
   R's built-in functions, e.g., \texttt{c}, and \texttt{head}. For the
   latter, unfortunately, R is permissive for misnaming variables by
-  remaining silence, costing time to identify the issue. Therefore, the
-  rule of thumb is to exercise self-discipline not to choose R function
-  names as variable names.
+  remaining silent, costing time to identify the issue. Therefore, the
+  rule of thumb is to exercise self-discipline and avoid using R
+  function names as variable names.
 \end{itemize}
 
 \section{R Objects}\label{r-objects}
@@ -424,15 +425,15 @@ R supports six data types:
   Raw\textsuperscript{\texttt{*}}: Bare bytes of data.
 \end{itemize}
 
-\texttt{*} We will only discuss the first four types in this book, you
+\texttt{*} We will only discuss the first four types in this book; you
 can ignore complex and raw types.
 
 \subsection{Atomic and Composite
 Variables}\label{sec-atomic-and-composite-variables}
 
 From a practical perspective, R variables can be viewed as
-\textbf{atomic variables} , and \textbf{composite variables}. An atomic
-variable contain a single value, and a composite variable consists of a
+\textbf{atomic variables} and \textbf{composite variables}. An atomic
+variable contains a single value, and a composite variable consists of a
 collection of values. Let us begin with two atomic variables:
 \textbf{\texttt{numeric}}, and \textbf{\texttt{character}}.
 
@@ -458,10 +459,11 @@ scientific notation. Here are some examples:
 \texttt{\textless{}-} is the assignment operator. It looks like a
 left-pointing arrow, depicting the transfer of value from the right-hand
 side to the left-hand side. Upon execution, the resultant value of the
-expression on the right-hand side, if no error, is stored in the named
-variable on the left-hand side. In RStudio, you can see the variable
-name and its associated value under the \textbf{Environment} tab, which
-usually occupies the top right quadrant of the RStudio desktop.
+expression on the right-hand side, if no error occurs, is stored in the
+named variable on the left-hand side. In RStudio, you can see the
+variable name and its associated value under the \textbf{Environment}
+tab, which usually occupies the top right quadrant of the RStudio
+desktop.
 
 Note that R supports another assignment operator: \texttt{=}. You can
 use \texttt{\textless{}-} and \texttt{=} interchangeably. I prefer
@@ -469,11 +471,11 @@ use \texttt{\textless{}-} and \texttt{=} interchangeably. I prefer
 with the equality checking operator \texttt{==}.
 
 A few words about the scientific notation. It comprises three parts: the
-coefficient, a constant literal \texttt{e}, and the exponent. The
+coefficient, a constant literal\texttt{e}, and the exponent. The
 \texttt{e} refers to the base \texttt{10}. For example, the R's
 scientific notation of \(6.023\times10^{23}\) is \texttt{6.023e23},
 where the coefficient and the exponent are \(6.023\) and \(23\),
-respectively. Note that you must not include spaces in a scientific
+respectively. Note that you must not include spaces in scientific
 notation, e.g., \texttt{6.023e\ 23}, \texttt{6.023\ e23}, or
 \texttt{6.023\ e\ 23} will return errors.
 
@@ -483,8 +485,8 @@ You can apply arithmetic operations on numeric variables. Here are the
 arithmetic operators: \texttt{+} (addition), \texttt{-} (subtraction),
 \texttt{*} (multiplication), \texttt{/} (division), \texttt{**}
 (exponentiation), and \texttt{\^{}} (exponentiation). The last two
-exponentiation operators perform exactly the same function. Here are
-some examples:
+exponentiation operators perform the same function. Here are some
+examples:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -498,8 +500,8 @@ some examples:
 
 \subsubsection{Character Variables}\label{character-variables}
 
-R also support text values, which is in \texttt{character} data type. To
-define a character value, you need to use a pair of quotes to embrace
+R also supports text values, which are in \texttt{character} data type.
+To define a character value, you need to use a pair of quotes to enclose
 the text. Either a pair of single (\texttt{\textquotesingle{}}) or
 double quotes (\texttt{"}) works. E.g.,
 
@@ -546,7 +548,7 @@ Error in `course * 4`:
 \end{verbatim}
 
 You can use \texttt{nchar()} function to figure out the number of
-characters, including spaces and punctuations, of a character variable.
+characters, including spaces and punctuation, of a character variable.
 E.g.,
 
 \begin{Shaded}
@@ -592,7 +594,7 @@ square-brackets. E.g.,
 \end{verbatim}
 
 The \texttt{{[}2{]}} means the 2\textsuperscript{nd} element of a
-vector. We will discuss more about indexing below.
+vector. We will discuss indexing in more detail below.
 
 Here is an example of a character vector:
 
@@ -608,8 +610,8 @@ instance, \texttt{days\_of\_month} contains all numeric values, and
 \texttt{nucleotides} contains all character values. If you try to
 combine objects of different data types into a vector, R will
 automatically convert them to character type, the lowest denominator of
-data types. In the example below, even the first and third values are
-entered as numeric, R coerces them into text \texttt{"1"} and
+data types. In the example below, even though the first and third values
+are entered as numeric, R coerces them into text \texttt{"1"} and
 \texttt{"0"}.
 
 \begin{Shaded}
@@ -645,7 +647,7 @@ respectively. Here's an example
 [1] -1.2677314  0.8451543  1.2677314 -0.4225771  0.4225771 -0.8451543
 \end{verbatim}
 
-\texttt{mean()} and \texttt{sd()} are built-in functions that calcuate
+\texttt{mean()} and \texttt{sd()} are built-in functions that calculate
 the average and standard deviation of a sample, respectively.
 
 The convenience is that you don't have to specify how to subtract and
@@ -656,7 +658,7 @@ mechanism, it will subtract \texttt{x\_bar} from every height in the
 vector \texttt{heights}, similarly for the division by \texttt{s}.
 
 \texttt{vector} is only one of the many types of objects supported by R.
-Data frame is another commonly used object types, which will be
+A data frame is another commonly used object type, which will be
 discussed later.
 
 \subsection{Factors/Categorical Variables}\label{sec-factor-levels}
@@ -701,7 +703,7 @@ Levels: normal < elevated < Stage 1 < Stage 2 < Hyperintensive
 \end{verbatim}
 
 As you can see above, the last line (\texttt{Levels}) shows the
-hypertension levels in ascending order and levels are connected by a
+hypertension levels in ascending order, and levels are connected by a
 less than sign (\texttt{\textless{}}).
 
 \subsection{Data Frames}\label{data-frames}
@@ -710,12 +712,11 @@ Besides \texttt{vector}, another common R object is
 \texttt{data\ frame}. Almost all the datasets used for data analysis are
 organized in data frames. Simply speaking, a data frame is a
 \textbf{tabular} or spreadsheet-like object where values are organized
-in rows and columns. Each row represents a sample and each column
+in rows and columns. Each row represents a sample, and each column
 represents a variable. Rows are expected to have equal length, i.e., the
 same number of columns. If not, R will either complain or pad the
 missing columns with a special value \texttt{NA} (it stands for not
-available). Let's take a look at an R's built-in data frame
-\texttt{iris}:
+available). Let's take a look at R's built-in data frame \texttt{iris}:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -734,7 +735,8 @@ available). Let's take a look at an R's built-in data frame
 6          5.4         3.9          1.7         0.4  setosa
 \end{verbatim}
 
-You can peek into the bottom five rows by the \texttt{tail()} function.
+You can peek into the bottom five rows using the \texttt{tail()}
+function.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -796,9 +798,9 @@ five columns.
 Frame}\label{sec-access-rows-columns}
 
 Each element in a data frame can be referenced by row and column indexes
-like a X-Y Cartesian system. Rows are automatically indexed (numbered),
+like an X-Y Cartesian system. Rows are automatically indexed (numbered),
 where the 1st row is index 1, the 2nd row is index 2, and the index of
-the last row is the total number of rows, similarly for columns.
+the last row is the total number of rows; similarly for columns.
 
 The syntax of accessing individual elements by indexes is
 \texttt{\textless{}data\ frame\ name\textgreater{}{[}row,\ column{]}}.
@@ -858,7 +860,7 @@ column(s) are returned. For example,
 Levels: setosa versicolor virginica
 \end{verbatim}
 
-Note that the \texttt{head()} above is used to limit the number rows
+Note that the \texttt{head()} above is used to limit the number of rows
 displayed by avoiding listing page after page of data rows.
 
 You are not limited to display one row or one column using this indexing
@@ -893,7 +895,7 @@ the 5\textsuperscript{th} row:
 \end{verbatim}
 
 To access more than one column and row, pack the row indexes and column
-names in vectors by the \texttt{c(...)} function, which
+names in vectors using the \texttt{c(...)} function, which
 \textbf{c}ombines or \textbf{c}ollates several items into a vector
 object (see Section~\ref{sec-vectors}). For example, show the
 \texttt{Petal.Length} and \texttt{Sepal.Length} of the
@@ -915,7 +917,7 @@ If your task is to extract a single column, R provides an alternative
 way to access a column by its name. The syntax is
 \texttt{\textless{}data\ frame\ name\textgreater{}\$\textless{}column\ name\textgreater{}}
 \footnote{The \texttt{\$} method only works for a single column.}. For
-example, \texttt{iris\$Species}, which is equivalent of
+example, \texttt{iris\$Species}, which is equivalent to
 \texttt{iris{[},5{]}},
 
 \begin{Shaded}
@@ -936,10 +938,11 @@ Chapter~\ref{sec-02-data-wrangling}.
 
 \subsubsection{Create a Data Frame}\label{create-a-data-frame}
 
-We can use the \texttt{data.frame()} function with the concept of vector
-to create a dataset in data frame format. For example, a study collected
-10 fish with their sex and age. To create the data frame, vectors must
-be created to represent each variable (column). Here's the R code:
+We can use the \texttt{data.frame()} function with the concept of
+vectors to create a dataset in data frame format. For example, a study
+collected 10 fish with their sex and age. To create the data frame,
+vectors must be created to represent each variable (column). Here's the
+R code:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -983,14 +986,15 @@ statistics of the variables.
                 Max.   :3.0  
 \end{verbatim}
 
-Find out more information about \texttt{summary()} function below
+Find out more information about the \texttt{summary()} function below
 Section~\ref{sec-summary-function}.
 
 It is almost done. There is one nuance. In the current form,
-\texttt{sex} is a character variable so its summary statistics are a bit
-strange. Most often, variable likes that should be categorical/nominal.
-Therefore, we need to convert \texttt{sex} into a \texttt{factor}
-Section~\ref{sec-factor-levels}. Here's the revised code:
+\texttt{sex} is a character variable, so its summary statistics are a
+bit strange. Most often, variables like that should be
+categorical/nominal. Therefore, we need to convert \texttt{sex} into a
+\texttt{factor} Section~\ref{sec-factor-levels}. Here's the revised
+code:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1102,8 +1106,8 @@ is the standard deviation. See below:
 
 \subsection{Robust Statistics}\label{robust-statistics}
 
-Median and quantile are called robust statistics, as they impede
-outliers' influence.
+Median and quantiles are called robust statistics, as they reduce the
+influence of outliers.
 
 \emph{Median}
 
@@ -1143,7 +1147,7 @@ interval.
 \end{verbatim}
 
 Instead of the default 25\% interval, you can specify your preferred
-quantile(s) and they don't have to be equally divided. Here are some
+quantile(s), and they don't have to be equally divided. Here are some
 examples:
 
 \begin{Shaded}
@@ -1198,7 +1202,7 @@ Here is the definition of IQR:
 \end{verbatim}
 
 IQR is used to determine the upper and lower whiskers in a boxplot. Data
-points below or above the lower or upper whisker are considered as
+points below or above the lower or upper whisker are considered
 outliers.
 
 \[Lower\space whisker = Q1 - 1.5\times{IQR}\]
@@ -1207,9 +1211,9 @@ outliers.
 \subsection{\texorpdfstring{\texttt{summary()}
 Function}{summary() Function}}\label{sec-summary-function}
 
-A data frame may consists of many variables of different types in
-various ranges. Therefore, it makes a lot of sense to take a glimpse of
-all variables before analysis. It can be done by using the
+A data frame may consist of many variables of different types in various
+ranges. Therefore, it makes a lot of sense to take a glimpse of all
+variables before analysis. It can be done by using the
 \texttt{summary()} function to reveal:
 
 \begin{enumerate}
@@ -1259,10 +1263,10 @@ levels with the number of samples (rows) found for each level, e.g.,
 
 Before diving into data analysis, we often want to know some basic
 information about it, such as the number of samples, what is the range
-of a numeric variable, etc. Here we will discuss a few R functions to do
-that, and we coin them inspection functions.
+of a numeric variable, etc. Here we discuss a few R functions to do
+that, and we call them inspection functions.
 
-We will use a sample of pumpkin's weights for illustration.
+We will use a sample of pumpkin weights for illustration.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1314,9 +1318,9 @@ To count the number of characters in a character variable, use the
 [1] 7
 \end{verbatim}
 
-The \texttt{range()} prints the minimum and maximum values of an object
-\footnote{Note that \texttt{range()} works for non-numeric vector, but
-  we will skip such special operation.}.
+The \texttt{range()} prints the minimum and maximum values of an
+object\footnote{Note that \texttt{range()} works for a non-numeric
+  vector, but we will skip such a special operation.}.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1397,13 +1401,12 @@ how to use it:
 [1] "The diameter of a circle with radius 2.5 cm is 15.708 ."
 \end{verbatim}
 
-The above printout is almost perfect. If you're picky, you don't like
-the extra space separating the diameter and the period in the above
-message, you can use \texttt{paste()}'s cousin function
-\texttt{paste0()}. The difference between the two is that
-\texttt{paste0()} will not automatically add an extra space between each
-component given to the function. Below is the previous print statement
-with \texttt{paste0()}:
+The above printout is almost perfect. If you're picky and don't like the
+extra space separating the diameter and the period in the above message,
+you can use \texttt{paste()}'s cousin function \texttt{paste0()}. The
+difference between the two is that \texttt{paste0()} will not
+automatically add an extra space between each component given to the
+function. Below is the previous print statement with \texttt{paste0()}:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1479,7 +1482,7 @@ generate 10 integers starting with 1.
  [1]  1  2  3  4  5  6  7  8  9 10
 \end{verbatim}
 
-Staring from and ending with.
+Starting from and ending with.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1560,8 +1563,8 @@ y = -5 -4 -3 -2 -1
 \texttt{print(paste(...))} you saw above? The main difference is that
 \texttt{print(paste(...))} creates an R object (a text) and then prints
 it, while \texttt{cat(...)} directly writes text to the console without
-creating a formal R object. See example below you will understand the
-nuance.
+creating a formal R object. See the example below, you will understand
+the nuance.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1603,16 +1606,16 @@ Hello World
 NULL
 \end{verbatim}
 
-Is it really important? No, unless you're a R developer.
+Is it really important? No, unless you're an R developer.
 
 \subsection{\texorpdfstring{\texttt{with()}}{with()}}\label{with}
 
-The function set up the context of a data frame so it spares you from
+The function sets up the context of a data frame so it spares you from
 using the \texttt{\$} to access the columns of a data frame, as it often
-leads to longer commands, which makes harder to comprehend and
-troubleshooting. It is also commonly used together with a function
-applied to one or more columns. E.g., the median of
-\texttt{Petal.Width}. It can done in two ways:
+leads to longer commands, which makes it harder to comprehend and
+troubleshoot. It is also commonly used together with a function applied
+to one or more columns. E.g., the median of \texttt{Petal.Width}. It can
+be done in two ways:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1671,10 +1674,10 @@ recommend using \texttt{with()} whenever possible.
 
 \section{Summary}\label{summary}
 
-That's a bare minimum of R scripting required for data analysis. In the
-next chapter, we will focus on operations applied to data frames. Before
-you leave, it is useful to recap the R functions discussed in this
-chapter:
+That's the bare minimum of R scripting required for data analysis. In
+the next chapter, we will focus on operations applied to data frames.
+Before you leave, it is useful to recap the R functions discussed in
+this chapter:
 
 \begin{longtable}[]{@{}llll@{}}
 \caption{A Summary of R Operators and Functions}\tabularnewline
