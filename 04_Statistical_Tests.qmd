@@ -1,7 +1,130 @@
 # Statistical Tests {#sec-04-statistical-tests}
 
-R was inherently designed for statistical analysis. Therefore, a chapter for statistical tests is justified. Here, we will discuss
+R was inherently designed for statistical analysis. Therefore, it is justified to devote a chapter to statistical tests. Here, we will discuss a list of classic statistical tests with an emphasis on the Null Hypothesis Significance Test (NHST). While understanding the core principles of the tests is essential, this chapter, as well as the whole book, emphasizes using R; as such, the underlying concepts of the tests are omitted. There are many excellent open introductory statistics textbooks[^04_statistical_tests-1] [^04_statistical_tests-2] [^04_statistical_tests-3]. Interested readers should consult them for further detail.
 
-This are a test sentence.
+[^04_statistical_tests-1]: Introductory Statistics for Life and Biomedical Sciences: <https://openintro.org/book/biostat/>
+
+[^04_statistical_tests-2]: Introduction to Modern Statistics: <https://openintro.org/book/ims/>
+
+[^04_statistical_tests-3]: Handbook of Biological Statistics: <https://www.biostathandbook.com/>
 
 ## Learning Objectives: {.unnumbered}
+
+- Test a quantitative variable in one, two, or more groups.
+
+- Test for one or two categorical variables.
+
+- Linear regression
+
+## Data Set
+
+We will use a new data set for this chapter. Follow the steps below to import the data set `FlightDelays` into RStudio.
+
+```{r}
+if (!require(resampledata)) {
+  install.packages('resampledata')
+}
+require(resampledata)
+data(FlightDelays)
+
+```
+
+Take a glimpse of the data set.
+
+```{r}
+summary(FlightDelays)
+```
+
+It contains 10 variables, out of which two are quantitative variables (`FlightLength`, and `Delay`), and the rest are categorical variables. Notice that there is a glitch: R mistakenly considered `FlightNo` as a quantitative variable. However, it does not affect us, as we do not use this variable here. If you want to convert it to a categorical variable (factor), here is the step:
+
+```{r}
+FlightDelays$FlightNo <- as.factor(FlightDelays$FlightNo)
+```
+
+## Tests for Quantitative Variables
+
+### One-sample t-tests
+
+The goal of a one-sample t-test is to test if the mean of a quantitative variable is equal to a certain value. For example, if the aviation regulatory agency states that acceptable flight delay is 12 minutes. We want to see if the flights meet the requirement. The null hypothesis (\$H\_{0}\$) is that the mean delay is equal to 12 minutes. The alternative hypothesis (\$H\_{A}\$) is that the mean delay is not equal to 12 minutes. Here are the steps to perform such a test:
+
+```{r}
+t.test(FlightDelays$Delay, mu = 12)
+```
+
+As the p-value (0.6895) is greater than $\alpha$ = 0.05 at a 95% confidence level, we fail to reject the null $H_{0}$, meaning that the mean flight delay meets the standard.
+
+### Two-sample t-tests
+
+A two-sample t-test tests whether the mean of one group is the same as the other group. The $H_{0}$ states the two groups have the same mean, and the $H_{A}$ states otherwise.
+
+For example, we want to compare the mean delay of the two carriers to determine whether they are the same.
+
+*Solution 1:*
+
+```{r}
+AA_delay <- subset(FlightDelays, Carrier=="AA")
+UA_delay <- subset(FlightDelays, Carrier=="UA")
+t.test(AA_delay$Delay, UA_delay$Delay)
+```
+
+Based on the p-value (0.0001349) being less than $\alpha$ = 0.05, the delays of the two carriers are different. The bottom of the test result shows that the mean delay of 10.09738 for AA (group x) is shorter than UA 15.98308.
+
+*Solution 2:*
+
+This approach makes use of the categorical variable `carrier` to split the data set into two, avoiding the creation of two temporary data frames.
+
+```{r}
+t.test(Delay ~ Carrier, data=FlightDelays)
+```
+
+The symbol `~` means "split by". `Delay ~ Carrier` means to split `Delay` by `Carrier`.
+
+### One-way ANOVA
+
+A one-way ANOVA test tests whether the means of three or more groups are the same or not. Two key differences from the two-sample t-test above: 1. a two-sample t-test can handle only two groups, but ANOVA can handle two or more groups. 2. The $H_{0}$ of ANOVA is rejected if any pair(s) of groups have unequal means.
+
+For example, test whether mean delays vary by destination.
+
+```{r}
+aov_results <- aov(Delay ~ Destination, data=FlightDelays)
+summary(aov_results)
+```
+
+If you only care whether the $H_{0}$ can be rejected, focus on the overall p-value (2.29e-06) under the `Pr(>F)` column on the right. It is undeniably smaller than $\alpha$ = 0.05, so the $H_{0}$ can be rejected.
+
+In some situations, you may be interested in finding out which pair(s) do not have the same mean. Tukey's Honest Significant Difference (HSD) test can answer this question.
+
+```{r}
+TukeyHSD(aov_results)
+```
+
+It lists all possible pairs of destinations. Since there are seven destinations, the total number of pairs is 21 (`choose(7,2)`).
+
+Each row shows the difference of means (`diff`), the lower (`lwr`) and upper (`upr`) bounds of the confidence interval, and the adjusted p-value (`p adj`). Examining the p-value is the quickest way to identify pairs with unequal means. E.g., IAD-BNA in which the p-value is less than 0.05.
+
+To ease analysis, it is suggested to plot the HSD result as below:
+
+```{r}
+hsd_results <- TukeyHSD(aov_results)
+
+# las=1 causes the plot to print the pair name horizontally.
+plot(hsd_results, las=1)
+```
+
+Confidence intervals not crossing zero (the vertical line) indicate pairs have unequal means.
+
+## Tests for Categorical Variables
+
+### One Categorical Variable
+
+### Two Categorical Variables
+
+## Regression
+
+### Simple Linear Regression
+
+### Multiple Regression
+
+### Paired t-tests
+
+### 

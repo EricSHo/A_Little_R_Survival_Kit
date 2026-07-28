@@ -254,7 +254,7 @@
     "href": "04_Statistical_Tests.html",
     "title": "4  Statistical Tests",
     "section": "",
-    "text": "Learning Objectives:\nR was inherently designed for statistical analysis. Therefore, a chapter for statistical tests is justified. Here, we will discuss\nThis are a test sentence.",
+    "text": "Learning Objectives:\nR was inherently designed for statistical analysis. Therefore, it is justified to devote a chapter to statistical tests. Here, we will discuss a list of classic statistical tests with an emphasis on the Null Hypothesis Significance Test (NHST). While understanding the core principles of the tests is essential, this chapter, as well as the whole book, emphasizes using R; as such, the underlying concepts of the tests are omitted. There are many excellent open introductory statistics textbooks1 2 3. Interested readers should consult them for further detail.",
     "crumbs": [
       "Part II",
       "<span class='chapter-number'>4</span>  <span class='chapter-title'>Statistical Tests</span>"
@@ -346,6 +346,72 @@
     "crumbs": [
       "Part II",
       "<span class='chapter-number'>5</span>  <span class='chapter-title'>Dive Deeper</span>"
+    ]
+  },
+  {
+    "objectID": "04_Statistical_Tests.html#learning-objectives",
+    "href": "04_Statistical_Tests.html#learning-objectives",
+    "title": "4  Statistical Tests",
+    "section": "",
+    "text": "Test a quantitative variable in one, two, or more groups.\nTest for one or two categorical variables.\nLinear regression",
+    "crumbs": [
+      "Part II",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Statistical Tests</span>"
+    ]
+  },
+  {
+    "objectID": "04_Statistical_Tests.html#data-set",
+    "href": "04_Statistical_Tests.html#data-set",
+    "title": "4  Statistical Tests",
+    "section": "4.1 Data Set",
+    "text": "4.1 Data Set\nWe will use a new data set for this chapter. Follow the steps below to import the data set FlightDelays into RStudio.\n\nif (!require(resampledata)) {\n  install.packages('resampledata')\n}\n\nLoading required package: resampledata\n\n\n\nAttaching package: 'resampledata'\n\n\nThe following object is masked from 'package:datasets':\n\n    Titanic\n\nrequire(resampledata)\ndata(FlightDelays)\n\nTake a glimpse of the data set.\n\nsummary(FlightDelays)\n\n       ID       Carrier      FlightNo      Destination    DepartTime  \n Min.   :   1   AA:2906   Min.   :  71.0   BNA: 172    4-8am   : 699  \n 1st Qu.:1008   UA:1123   1st Qu.: 371.0   DEN: 264    8-Noon  :1053  \n Median :2015             Median : 691.0   DFW: 918    Noon-4pm:1048  \n Mean   :2015             Mean   : 827.1   IAD:  55    4-8pm   : 972  \n 3rd Qu.:3022             3rd Qu.: 787.0   MIA: 610    8-Mid   : 257  \n Max.   :4029             Max.   :2255.0   ORD:1785                   \n                                           STL: 225                   \n  Day       Month       FlightLength       Delay        Delayed30 \n Sun:551   May :1999   Min.   : 68.0   Min.   :-19.00   No :3432  \n Mon:630   June:2030   1st Qu.:155.0   1st Qu.: -6.00   Yes: 597  \n Tue:628               Median :163.0   Median : -3.00             \n Wed:564               Mean   :185.3   Mean   : 11.74             \n Thu:566               3rd Qu.:228.0   3rd Qu.:  5.00             \n Fri:637               Max.   :295.0   Max.   :693.00             \n Sat:453                                                          \n\n\nIt contains 10 variables, out of which two are quantitative variables (FlightLength, and Delay), and the rest are categorical variables. Notice that there is a glitch: R mistakenly considered FlightNo as a quantitative variable. However, it does not affect us, as we do not use this variable here. If you want to convert it to a categorical variable (factor), here is the step:\n\nFlightDelays$FlightNo &lt;- as.factor(FlightDelays$FlightNo)",
+    "crumbs": [
+      "Part II",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Statistical Tests</span>"
+    ]
+  },
+  {
+    "objectID": "04_Statistical_Tests.html#tests-for-quantitative-variables",
+    "href": "04_Statistical_Tests.html#tests-for-quantitative-variables",
+    "title": "4  Statistical Tests",
+    "section": "4.2 Tests for Quantitative Variables",
+    "text": "4.2 Tests for Quantitative Variables\n\n4.2.1 One-sample t-tests\nThe goal of a one-sample t-test is to test if the mean of a quantitative variable is equal to a certain value. For example, if the aviation regulatory agency states that acceptable flight delay is 12 minutes. We want to see if the flights meet the requirement. The null hypothesis ($H_{0}$) is that the mean delay is equal to 12 minutes. The alternative hypothesis ($H_{A}$) is that the mean delay is not equal to 12 minutes. Here are the steps to perform such a test:\n\nt.test(FlightDelays$Delay, mu = 12)\n\n\n    One Sample t-test\n\ndata:  FlightDelays$Delay\nt = -0.39963, df = 4028, p-value = 0.6895\nalternative hypothesis: true mean is not equal to 12\n95 percent confidence interval:\n 10.45205 13.02375\nsample estimates:\nmean of x \n  11.7379 \n\n\nAs the p-value (0.6895) is greater than \\(\\alpha\\) = 0.05 at a 95% confidence level, we fail to reject the null \\(H_{0}\\), meaning that the mean flight delay meets the standard.\n\n\n4.2.2 Two-sample t-tests\nA two-sample t-test tests whether the mean of one group is the same as the other group. The \\(H_{0}\\) states the two groups have the same mean, and the \\(H_{A}\\) states otherwise.\nFor example, we want to compare the mean delay of the two carriers to determine whether they are the same.\nSolution 1:\n\nAA_delay &lt;- subset(FlightDelays, Carrier==\"AA\")\nUA_delay &lt;- subset(FlightDelays, Carrier==\"UA\")\nt.test(AA_delay$Delay, UA_delay$Delay)\n\n\n    Welch Two Sample t-test\n\ndata:  AA_delay$Delay and UA_delay$Delay\nt = -3.8255, df = 1843.8, p-value = 0.0001349\nalternative hypothesis: true difference in means is not equal to 0\n95 percent confidence interval:\n -8.903198 -2.868194\nsample estimates:\nmean of x mean of y \n 10.09738  15.98308 \n\n\nBased on the p-value (0.0001349) being less than \\(\\alpha\\) = 0.05, the delays of the two carriers are different. The bottom of the test result shows that the mean delay of 10.09738 for AA (group x) is shorter than UA 15.98308.\nSolution 2:\nThis approach makes use of the categorical variable carrier to split the data set into two, avoiding the creation of two temporary data frames.\n\nt.test(Delay ~ Carrier, data=FlightDelays)\n\n\n    Welch Two Sample t-test\n\ndata:  Delay by Carrier\nt = -3.8255, df = 1843.8, p-value = 0.0001349\nalternative hypothesis: true difference in means between group AA and group UA is not equal to 0\n95 percent confidence interval:\n -8.903198 -2.868194\nsample estimates:\nmean in group AA mean in group UA \n        10.09738         15.98308 \n\n\nThe symbol ~ means “split by”. Delay ~ Carrier means to split Delay by Carrier.\n\n\n4.2.3 One-way ANOVA\nA one-way ANOVA test tests whether the means of three or more groups are the same or not. Two key differences from the two-sample t-test above: 1. a two-sample t-test can handle only two groups, but ANOVA can handle two or more groups. 2. The \\(H_{0}\\) of ANOVA is rejected if any pair(s) of groups have unequal means.\nFor example, test whether mean delays vary by destination.",
+    "crumbs": [
+      "Part II",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Statistical Tests</span>"
+    ]
+  },
+  {
+    "objectID": "04_Statistical_Tests.html#tests-for-categorical-variables",
+    "href": "04_Statistical_Tests.html#tests-for-categorical-variables",
+    "title": "4  Statistical Tests",
+    "section": "4.3 Tests for Categorical Variables",
+    "text": "4.3 Tests for Categorical Variables\n\n4.3.1 One Categorical Variable\n\n\n4.3.2 Two Categorical Variables",
+    "crumbs": [
+      "Part II",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Statistical Tests</span>"
+    ]
+  },
+  {
+    "objectID": "04_Statistical_Tests.html#regression",
+    "href": "04_Statistical_Tests.html#regression",
+    "title": "4  Statistical Tests",
+    "section": "4.4 Regression",
+    "text": "4.4 Regression\n\n4.4.1 Simple Linear Regression\n\n\n4.4.2 Multiple Regression\n\n\n4.4.3 Paired t-tests\n\n\n4.4.4",
+    "crumbs": [
+      "Part II",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Statistical Tests</span>"
+    ]
+  },
+  {
+    "objectID": "04_Statistical_Tests.html#footnotes",
+    "href": "04_Statistical_Tests.html#footnotes",
+    "title": "4  Statistical Tests",
+    "section": "",
+    "text": "Introductory Statistics for Life and Biomedical Sciences: https://openintro.org/book/biostat/↩︎\nIntroduction to Modern Statistics: https://openintro.org/book/ims/↩︎\nHandbook of Biological Statistics: https://www.biostathandbook.com/↩︎",
+    "crumbs": [
+      "Part II",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Statistical Tests</span>"
     ]
   }
 ]
