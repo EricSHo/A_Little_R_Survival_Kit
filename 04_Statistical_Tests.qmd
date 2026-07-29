@@ -45,15 +45,25 @@ FlightDelays$FlightNo <- as.factor(FlightDelays$FlightNo)
 
 ### One-sample t-tests
 
-The goal of a one-sample t-test is to test if the mean of a quantitative variable is equal to a certain value. For example, if the aviation regulatory agency states that acceptable flight delay is 12 minutes. We want to see if the flights meet the requirement. The null hypothesis (\$H\_{0}\$) is that the mean delay is equal to 12 minutes. The alternative hypothesis (\$H\_{A}\$) is that the mean delay is not equal to 12 minutes. Here are the steps to perform such a test:
+The goal of a one-sample t-test is to test if the mean of a quantitative variable is equal to a certain value. For example, if the aviation regulatory agency states that acceptable flight delay is 12 minutes. We want to see if the flights meet the requirement. The null hypothesis ($H_{0}$) is that the mean delay is equal to 12 minutes. The alternative hypothesis ($H_{A}$) is that the mean delay is not equal to 12 minutes. Here are the steps to perform such a test:
 
 ```{r}
 t.test(FlightDelays$Delay, mu = 12)
 ```
 
-As the p-value (0.6895) is greater than $\alpha$ = 0.05 at a 95% confidence level, we fail to reject the null $H_{0}$, meaning that the mean flight delay meets the standard.
+As the p-value (0.6895) is greater than $\alpha$ = 0.05 at a 95% confidence level, we fail to reject the null hypothesis $H_{0}$, meaning that the mean flight delay meets the standard.
 
-### Two-sample t-tests
+### One-sided t-tests
+
+In the above flight delay example, the condition to reject the $H_{0}$ is that the delay time is either much longer or much shorter than 12 minutes (that is why the test is called two-sided). Indisputably, the latter case does not make much sense, as short delay times indicate the flights are punctual. Hence, the test must focus on long delay times by replacing the above two-sided test with a one-sided test in which the rejection region ($H_{A}$) lies at larger t-statistics (on the right). The parameter `alternative="greater"` suggests a one-sided test where the rejection region lies at the greater value.
+
+```{r}
+t.test(FlightDelays$Delay, mu = 12, alternative = "greater")
+```
+
+The p-value 0.6553 is larger than $\alpha$ = 0.05, fail to reject the $H_{0}$ at 95% significance level.
+
+## Two-sample t-tests
 
 A two-sample t-test tests whether the mean of one group is the same as the other group. The $H_{0}$ states the two groups have the same mean, and the $H_{A}$ states otherwise.
 

@@ -5429,9 +5429,9 @@ The goal of a one-sample t-test is to test if the mean of a quantitative
 variable is equal to a certain value. For example, if the aviation
 regulatory agency states that acceptable flight delay is 12 minutes. We
 want to see if the flights meet the requirement. The null hypothesis
-(\$H\_\{0\}\$) is that the mean delay is equal to 12 minutes. The
-alternative hypothesis (\$H\_\{A\}\$) is that the mean delay is not
-equal to 12 minutes. Here are the steps to perform such a test:
+(\(H_{0}\)) is that the mean delay is equal to 12 minutes. The
+alternative hypothesis (\(H_{A}\)) is that the mean delay is not equal
+to 12 minutes. Here are the steps to perform such a test:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -5454,10 +5454,45 @@ mean of x
 \end{verbatim}
 
 As the p-value (0.6895) is greater than \(\alpha\) = 0.05 at a 95\%
-confidence level, we fail to reject the null \(H_{0}\), meaning that the
-mean flight delay meets the standard.
+confidence level, we fail to reject the null hypothesis \(H_{0}\),
+meaning that the mean flight delay meets the standard.
 
-\subsection{Two-sample t-tests}\label{two-sample-t-tests}
+\subsection{One-sided t-tests}\label{one-sided-t-tests}
+
+In the above flight delay example, the condition to reject the \(H_{0}\)
+is that the delay time is either much longer or much shorter than 12
+minutes (that is why the test is called two-sided). Indisputably, the
+latter case does not make much sense, as short delay times indicate the
+flights are punctual. Hence, the test must focus on long delay times by
+replacing the above two-sided test with a one-sided test in which the
+rejection region (\(H_{A}\)) lies at larger t-statistics (on the right).
+The parameter \texttt{alternative="greater"} suggests a one-sided test
+where the rejection region lies at the greater value.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{t.test}\NormalTok{(FlightDelays}\SpecialCharTok{$}\NormalTok{Delay, }\AttributeTok{mu =} \DecValTok{12}\NormalTok{, }\AttributeTok{alternative =} \StringTok{"greater"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+
+    One Sample t-test
+
+data:  FlightDelays$Delay
+t = -0.39963, df = 4028, p-value = 0.6553
+alternative hypothesis: true mean is greater than 12
+95 percent confidence interval:
+ 10.65885      Inf
+sample estimates:
+mean of x 
+  11.7379 
+\end{verbatim}
+
+The p-value 0.6553 is larger than \(\alpha\) = 0.05, fail to reject the
+\(H_{0}\) at 95\% significance level.
+
+\section{Two-sample t-tests}\label{two-sample-t-tests}
 
 A two-sample t-test tests whether the mean of one group is the same as
 the other group. The \(H_{0}\) states the two groups have the same mean,
@@ -5616,7 +5651,7 @@ To ease analysis, it is suggested to plot the HSD result as below:
 \end{Highlighting}
 \end{Shaded}
 
-\pandocbounded{\includegraphics[keepaspectratio]{04_Statistical_Tests_files/figure-pdf/unnamed-chunk-9-1.pdf}}
+\pandocbounded{\includegraphics[keepaspectratio]{04_Statistical_Tests_files/figure-pdf/unnamed-chunk-10-1.pdf}}
 
 Confidence intervals not crossing zero (the vertical line) indicate
 pairs have unequal means.

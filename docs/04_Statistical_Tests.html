@@ -246,20 +246,23 @@ window.Quarto = {
   <li><a href="#tests-for-quantitative-variables" id="toc-tests-for-quantitative-variables" class="nav-link" data-scroll-target="#tests-for-quantitative-variables"><span class="header-section-number">4.2</span> Tests for Quantitative Variables</a>
   <ul class="collapse">
   <li><a href="#one-sample-t-tests" id="toc-one-sample-t-tests" class="nav-link" data-scroll-target="#one-sample-t-tests"><span class="header-section-number">4.2.1</span> One-sample t-tests</a></li>
-  <li><a href="#two-sample-t-tests" id="toc-two-sample-t-tests" class="nav-link" data-scroll-target="#two-sample-t-tests"><span class="header-section-number">4.2.2</span> Two-sample t-tests</a></li>
-  <li><a href="#one-way-anova" id="toc-one-way-anova" class="nav-link" data-scroll-target="#one-way-anova"><span class="header-section-number">4.2.3</span> One-way ANOVA</a></li>
+  <li><a href="#one-sided-t-tests" id="toc-one-sided-t-tests" class="nav-link" data-scroll-target="#one-sided-t-tests"><span class="header-section-number">4.2.2</span> One-sided t-tests</a></li>
   </ul></li>
-  <li><a href="#tests-for-categorical-variables" id="toc-tests-for-categorical-variables" class="nav-link" data-scroll-target="#tests-for-categorical-variables"><span class="header-section-number">4.3</span> Tests for Categorical Variables</a>
+  <li><a href="#two-sample-t-tests" id="toc-two-sample-t-tests" class="nav-link" data-scroll-target="#two-sample-t-tests"><span class="header-section-number">4.3</span> Two-sample t-tests</a>
   <ul class="collapse">
-  <li><a href="#one-categorical-variable" id="toc-one-categorical-variable" class="nav-link" data-scroll-target="#one-categorical-variable"><span class="header-section-number">4.3.1</span> One Categorical Variable</a></li>
-  <li><a href="#two-categorical-variables" id="toc-two-categorical-variables" class="nav-link" data-scroll-target="#two-categorical-variables"><span class="header-section-number">4.3.2</span> Two Categorical Variables</a></li>
+  <li><a href="#one-way-anova" id="toc-one-way-anova" class="nav-link" data-scroll-target="#one-way-anova"><span class="header-section-number">4.3.1</span> One-way ANOVA</a></li>
   </ul></li>
-  <li><a href="#regression" id="toc-regression" class="nav-link" data-scroll-target="#regression"><span class="header-section-number">4.4</span> Regression</a>
+  <li><a href="#tests-for-categorical-variables" id="toc-tests-for-categorical-variables" class="nav-link" data-scroll-target="#tests-for-categorical-variables"><span class="header-section-number">4.4</span> Tests for Categorical Variables</a>
   <ul class="collapse">
-  <li><a href="#simple-linear-regression" id="toc-simple-linear-regression" class="nav-link" data-scroll-target="#simple-linear-regression"><span class="header-section-number">4.4.1</span> Simple Linear Regression</a></li>
-  <li><a href="#multiple-regression" id="toc-multiple-regression" class="nav-link" data-scroll-target="#multiple-regression"><span class="header-section-number">4.4.2</span> Multiple Regression</a></li>
-  <li><a href="#paired-t-tests" id="toc-paired-t-tests" class="nav-link" data-scroll-target="#paired-t-tests"><span class="header-section-number">4.4.3</span> Paired t-tests</a></li>
-  <li><a href="#section" id="toc-section" class="nav-link" data-scroll-target="#section"><span class="header-section-number">4.4.4</span> </a></li>
+  <li><a href="#one-categorical-variable" id="toc-one-categorical-variable" class="nav-link" data-scroll-target="#one-categorical-variable"><span class="header-section-number">4.4.1</span> One Categorical Variable</a></li>
+  <li><a href="#two-categorical-variables" id="toc-two-categorical-variables" class="nav-link" data-scroll-target="#two-categorical-variables"><span class="header-section-number">4.4.2</span> Two Categorical Variables</a></li>
+  </ul></li>
+  <li><a href="#regression" id="toc-regression" class="nav-link" data-scroll-target="#regression"><span class="header-section-number">4.5</span> Regression</a>
+  <ul class="collapse">
+  <li><a href="#simple-linear-regression" id="toc-simple-linear-regression" class="nav-link" data-scroll-target="#simple-linear-regression"><span class="header-section-number">4.5.1</span> Simple Linear Regression</a></li>
+  <li><a href="#multiple-regression" id="toc-multiple-regression" class="nav-link" data-scroll-target="#multiple-regression"><span class="header-section-number">4.5.2</span> Multiple Regression</a></li>
+  <li><a href="#paired-t-tests" id="toc-paired-t-tests" class="nav-link" data-scroll-target="#paired-t-tests"><span class="header-section-number">4.5.3</span> Paired t-tests</a></li>
+  <li><a href="#section" id="toc-section" class="nav-link" data-scroll-target="#section"><span class="header-section-number">4.5.4</span> </a></li>
   </ul></li>
   </ul>
 </nav>
@@ -348,7 +351,7 @@ Attaching package: 'resampledata'</code></pre>
 <h2 data-number="4.2" class="anchored" data-anchor-id="tests-for-quantitative-variables"><span class="header-section-number">4.2</span> Tests for Quantitative Variables</h2>
 <section id="one-sample-t-tests" class="level3" data-number="4.2.1">
 <h3 data-number="4.2.1" class="anchored" data-anchor-id="one-sample-t-tests"><span class="header-section-number">4.2.1</span> One-sample t-tests</h3>
-<p>The goal of a one-sample t-test is to test if the mean of a quantitative variable is equal to a certain value. For example, if the aviation regulatory agency states that acceptable flight delay is 12 minutes. We want to see if the flights meet the requirement. The null hypothesis ($H_{0}$) is that the mean delay is equal to 12 minutes. The alternative hypothesis ($H_{A}$) is that the mean delay is not equal to 12 minutes. Here are the steps to perform such a test:</p>
+<p>The goal of a one-sample t-test is to test if the mean of a quantitative variable is equal to a certain value. For example, if the aviation regulatory agency states that acceptable flight delay is 12 minutes. We want to see if the flights meet the requirement. The null hypothesis (<span class="math inline">\(H_{0}\)</span>) is that the mean delay is equal to 12 minutes. The alternative hypothesis (<span class="math inline">\(H_{A}\)</span>) is that the mean delay is not equal to 12 minutes. Here are the steps to perform such a test:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(FlightDelays<span class="sc">$</span>Delay, <span class="at">mu =</span> <span class="dv">12</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
@@ -365,17 +368,39 @@ mean of x
   11.7379 </code></pre>
 </div>
 </div>
-<p>As the p-value (0.6895) is greater than <span class="math inline">\(\alpha\)</span> = 0.05 at a 95% confidence level, we fail to reject the null <span class="math inline">\(H_{0}\)</span>, meaning that the mean flight delay meets the standard.</p>
+<p>As the p-value (0.6895) is greater than <span class="math inline">\(\alpha\)</span> = 0.05 at a 95% confidence level, we fail to reject the null hypothesis <span class="math inline">\(H_{0}\)</span>, meaning that the mean flight delay meets the standard.</p>
 </section>
-<section id="two-sample-t-tests" class="level3" data-number="4.2.2">
-<h3 data-number="4.2.2" class="anchored" data-anchor-id="two-sample-t-tests"><span class="header-section-number">4.2.2</span> Two-sample t-tests</h3>
+<section id="one-sided-t-tests" class="level3" data-number="4.2.2">
+<h3 data-number="4.2.2" class="anchored" data-anchor-id="one-sided-t-tests"><span class="header-section-number">4.2.2</span> One-sided t-tests</h3>
+<p>In the above flight delay example, the condition to reject the <span class="math inline">\(H_{0}\)</span> is that the delay time is either much longer or much shorter than 12 minutes (that is why the test is called two-sided). Indisputably, the latter case does not make much sense, as short delay times indicate the flights are punctual. Hence, the test must focus on long delay times by replacing the above two-sided test with a one-sided test in which the rejection region (<span class="math inline">\(H_{A}\)</span>) lies at larger t-statistics (on the right). The parameter <code>alternative="greater"</code> suggests a one-sided test where the rejection region lies at the greater value.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(FlightDelays<span class="sc">$</span>Delay, <span class="at">mu =</span> <span class="dv">12</span>, <span class="at">alternative =</span> <span class="st">"greater"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    One Sample t-test
+
+data:  FlightDelays$Delay
+t = -0.39963, df = 4028, p-value = 0.6553
+alternative hypothesis: true mean is greater than 12
+95 percent confidence interval:
+ 10.65885      Inf
+sample estimates:
+mean of x 
+  11.7379 </code></pre>
+</div>
+</div>
+<p>The p-value 0.6553 is larger than <span class="math inline">\(\alpha\)</span> = 0.05, fail to reject the <span class="math inline">\(H_{0}\)</span> at 95% significance level.</p>
+</section>
+</section>
+<section id="two-sample-t-tests" class="level2" data-number="4.3">
+<h2 data-number="4.3" class="anchored" data-anchor-id="two-sample-t-tests"><span class="header-section-number">4.3</span> Two-sample t-tests</h2>
 <p>A two-sample t-test tests whether the mean of one group is the same as the other group. The <span class="math inline">\(H_{0}\)</span> states the two groups have the same mean, and the <span class="math inline">\(H_{A}\)</span> states otherwise.</p>
 <p>For example, we want to compare the mean delay of the two carriers to determine whether they are the same.</p>
 <p><em>Solution 1:</em></p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>AA_delay <span class="ot">&lt;-</span> <span class="fu">subset</span>(FlightDelays, Carrier<span class="sc">==</span><span class="st">"AA"</span>)</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>UA_delay <span class="ot">&lt;-</span> <span class="fu">subset</span>(FlightDelays, Carrier<span class="sc">==</span><span class="st">"UA"</span>)</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(AA_delay<span class="sc">$</span>Delay, UA_delay<span class="sc">$</span>Delay)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>AA_delay <span class="ot">&lt;-</span> <span class="fu">subset</span>(FlightDelays, Carrier<span class="sc">==</span><span class="st">"AA"</span>)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>UA_delay <span class="ot">&lt;-</span> <span class="fu">subset</span>(FlightDelays, Carrier<span class="sc">==</span><span class="st">"UA"</span>)</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(AA_delay<span class="sc">$</span>Delay, UA_delay<span class="sc">$</span>Delay)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Welch Two Sample t-test
@@ -394,7 +419,7 @@ mean of x mean of y
 <p><em>Solution 2:</em></p>
 <p>This approach makes use of the categorical variable <code>carrier</code> to split the data set into two, avoiding the creation of two temporary data frames.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(Delay <span class="sc">~</span> Carrier, <span class="at">data=</span>FlightDelays)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(Delay <span class="sc">~</span> Carrier, <span class="at">data=</span>FlightDelays)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Welch Two Sample t-test
@@ -410,14 +435,13 @@ mean in group AA mean in group UA
 </div>
 </div>
 <p>The symbol <code>~</code> means “split by”. <code>Delay ~ Carrier</code> means to split <code>Delay</code> by <code>Carrier</code>.</p>
-</section>
-<section id="one-way-anova" class="level3" data-number="4.2.3">
-<h3 data-number="4.2.3" class="anchored" data-anchor-id="one-way-anova"><span class="header-section-number">4.2.3</span> One-way ANOVA</h3>
+<section id="one-way-anova" class="level3" data-number="4.3.1">
+<h3 data-number="4.3.1" class="anchored" data-anchor-id="one-way-anova"><span class="header-section-number">4.3.1</span> One-way ANOVA</h3>
 <p>A one-way ANOVA test tests whether the means of three or more groups are the same or not. Two key differences from the two-sample t-test above: 1. a two-sample t-test can handle only two groups, but ANOVA can handle two or more groups. 2. The <span class="math inline">\(H_{0}\)</span> of ANOVA is rejected if any pair(s) of groups have unequal means.</p>
 <p>For example, test whether mean delays vary by destination.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>aov_results <span class="ot">&lt;-</span> <span class="fu">aov</span>(Delay <span class="sc">~</span> Destination, <span class="at">data=</span>FlightDelays)</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(aov_results)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>aov_results <span class="ot">&lt;-</span> <span class="fu">aov</span>(Delay <span class="sc">~</span> Destination, <span class="at">data=</span>FlightDelays)</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(aov_results)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>              Df  Sum Sq Mean Sq F value   Pr(&gt;F)    
 Destination    6   62891   10482   6.094 2.29e-06 ***
@@ -429,7 +453,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <p>If you only care whether the <span class="math inline">\(H_{0}\)</span> can be rejected, focus on the overall p-value (2.29e-06) under the <code>Pr(&gt;F)</code> column on the right. It is undeniably smaller than <span class="math inline">\(\alpha\)</span> = 0.05, so the <span class="math inline">\(H_{0}\)</span> can be rejected.</p>
 <p>In some situations, you may be interested in finding out which pair(s) do not have the same mean. Tukey’s Honest Significant Difference (HSD) test can answer this question.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">TukeyHSD</span>(aov_results)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">TukeyHSD</span>(aov_results)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  Tukey multiple comparisons of means
     95% family-wise confidence level
@@ -465,14 +489,14 @@ STL-ORD  -7.5157049 -16.1704244  1.1390145 0.1382159</code></pre>
 <p>Each row shows the difference of means (<code>diff</code>), the lower (<code>lwr</code>) and upper (<code>upr</code>) bounds of the confidence interval, and the adjusted p-value (<code>p adj</code>). Examining the p-value is the quickest way to identify pairs with unequal means. E.g., IAD-BNA in which the p-value is less than 0.05.</p>
 <p>To ease analysis, it is suggested to plot the HSD result as below:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>hsd_results <span class="ot">&lt;-</span> <span class="fu">TukeyHSD</span>(aov_results)</span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="co"># las=1 causes the plot to print the pair name horizontally.</span></span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(hsd_results, <span class="at">las=</span><span class="dv">1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>hsd_results <span class="ot">&lt;-</span> <span class="fu">TukeyHSD</span>(aov_results)</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="co"># las=1 causes the plot to print the pair name horizontally.</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(hsd_results, <span class="at">las=</span><span class="dv">1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="04_Statistical_Tests_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="04_Statistical_Tests_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -480,28 +504,28 @@ STL-ORD  -7.5157049 -16.1704244  1.1390145 0.1382159</code></pre>
 <p>Confidence intervals not crossing zero (the vertical line) indicate pairs have unequal means.</p>
 </section>
 </section>
-<section id="tests-for-categorical-variables" class="level2" data-number="4.3">
-<h2 data-number="4.3" class="anchored" data-anchor-id="tests-for-categorical-variables"><span class="header-section-number">4.3</span> Tests for Categorical Variables</h2>
-<section id="one-categorical-variable" class="level3" data-number="4.3.1">
-<h3 data-number="4.3.1" class="anchored" data-anchor-id="one-categorical-variable"><span class="header-section-number">4.3.1</span> One Categorical Variable</h3>
+<section id="tests-for-categorical-variables" class="level2" data-number="4.4">
+<h2 data-number="4.4" class="anchored" data-anchor-id="tests-for-categorical-variables"><span class="header-section-number">4.4</span> Tests for Categorical Variables</h2>
+<section id="one-categorical-variable" class="level3" data-number="4.4.1">
+<h3 data-number="4.4.1" class="anchored" data-anchor-id="one-categorical-variable"><span class="header-section-number">4.4.1</span> One Categorical Variable</h3>
 </section>
-<section id="two-categorical-variables" class="level3" data-number="4.3.2">
-<h3 data-number="4.3.2" class="anchored" data-anchor-id="two-categorical-variables"><span class="header-section-number">4.3.2</span> Two Categorical Variables</h3>
+<section id="two-categorical-variables" class="level3" data-number="4.4.2">
+<h3 data-number="4.4.2" class="anchored" data-anchor-id="two-categorical-variables"><span class="header-section-number">4.4.2</span> Two Categorical Variables</h3>
 </section>
 </section>
-<section id="regression" class="level2" data-number="4.4">
-<h2 data-number="4.4" class="anchored" data-anchor-id="regression"><span class="header-section-number">4.4</span> Regression</h2>
-<section id="simple-linear-regression" class="level3" data-number="4.4.1">
-<h3 data-number="4.4.1" class="anchored" data-anchor-id="simple-linear-regression"><span class="header-section-number">4.4.1</span> Simple Linear Regression</h3>
+<section id="regression" class="level2" data-number="4.5">
+<h2 data-number="4.5" class="anchored" data-anchor-id="regression"><span class="header-section-number">4.5</span> Regression</h2>
+<section id="simple-linear-regression" class="level3" data-number="4.5.1">
+<h3 data-number="4.5.1" class="anchored" data-anchor-id="simple-linear-regression"><span class="header-section-number">4.5.1</span> Simple Linear Regression</h3>
 </section>
-<section id="multiple-regression" class="level3" data-number="4.4.2">
-<h3 data-number="4.4.2" class="anchored" data-anchor-id="multiple-regression"><span class="header-section-number">4.4.2</span> Multiple Regression</h3>
+<section id="multiple-regression" class="level3" data-number="4.5.2">
+<h3 data-number="4.5.2" class="anchored" data-anchor-id="multiple-regression"><span class="header-section-number">4.5.2</span> Multiple Regression</h3>
 </section>
-<section id="paired-t-tests" class="level3" data-number="4.4.3">
-<h3 data-number="4.4.3" class="anchored" data-anchor-id="paired-t-tests"><span class="header-section-number">4.4.3</span> Paired t-tests</h3>
+<section id="paired-t-tests" class="level3" data-number="4.5.3">
+<h3 data-number="4.5.3" class="anchored" data-anchor-id="paired-t-tests"><span class="header-section-number">4.5.3</span> Paired t-tests</h3>
 </section>
-<section id="section" class="level3" data-number="4.4.4">
-<h3 data-number="4.4.4" class="anchored" data-anchor-id="section"><span class="header-section-number">4.4.4</span> </h3>
+<section id="section" class="level3" data-number="4.5.4">
+<h3 data-number="4.5.4" class="anchored" data-anchor-id="section"><span class="header-section-number">4.5.4</span> </h3>
 
 
 </section>
