@@ -1700,16 +1700,17 @@ this chapter:
 
 \chapter{Data Wrangling}\label{sec-02-data-wrangling}
 
-Data wrangling refers to the way to view, change, and reorganize rows
-and columns in a data frame. Before we dive into the operations, it is
-important to know that there are two distinct schools of data wrangling:
-base R and \texttt{tidyverse}. The base R approach means that no
-additional packages are required, but the \texttt{tidyverse} approach
-requires the installation of \texttt{tidyverse}, even though the
-installation is very straightforward. In my opinion, \texttt{tidyverse}
-has substantially refined and enhanced data wrangling. You will see it
-in this chapter. Regardless, we will discuss both approaches. Let's
-start with the base R version.
+Data wrangling refers to the process of viewing, changing, and
+reorganizing rows and columns in a data frame. Before we dive into the
+operations, it is important to know that there are two distinct schools
+of data wrangling: base R and \texttt{tidyverse}. The base R approach
+means that no additional packages are required, but the
+\texttt{tidyverse} approach requires the installation of
+\texttt{tidyverse}, even though the installation is very
+straightforward. In my opinion, \texttt{tidyverse} has substantially
+refined and enhanced data wrangling. You will see it in this chapter.
+Regardless, we will discuss both approaches. Let's start with the base R
+version.
 
 \section*{Learning Objectives:}\label{learning-objectives-1}
 \addcontentsline{toc}{section}{Learning Objectives:}
@@ -1760,9 +1761,9 @@ condition(s). Below are six relational operators:
   \texttt{!=}\footnote{No spaces between the two symbols.} not equal to.
 \end{enumerate}
 
-If the selection involves multiple conditions, they must be specified in
-conjunction with relational operators. Here are the three logical
-operators required for multi-parts conditions:
+If the selection involves multiple conditions, they must be joined by
+relational operators. Here are the three logical operators required for
+multi-part conditions:
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -1798,7 +1799,7 @@ Select pumpkins heavier than 7 lbs.
 [1]  7.55 10.14  7.62
 \end{verbatim}
 
-Select pumpkins is exactly 7 lbs.
+Select pumpkins that are exactly 7 lbs.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1860,7 +1861,7 @@ the equality check is case-sensitive.
 \end{verbatim}
 
 More than one condition. Select rows with \texttt{Sepal.Length} is
-greater than 5 or Sepal.Width` is smaller than 3.
+greater than 5 or \texttt{Sepal.Width} is smaller than 3.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1892,7 +1893,7 @@ greater than 5 or Sepal.Width` is smaller than 3.
 \end{verbatim}
 
 Select rows with \texttt{Petal.Length} is greater than 6 and
-Petal.Width` is smaller than 2.
+\texttt{Petal.Width} is smaller than 2.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1976,7 +1977,7 @@ Randomly pick 5 samples without replacement.
 \end{Shaded}
 
 \begin{verbatim}
-[1] 6.56 6.62 7.00 6.23 3.52
+[1]  6.85 10.14  7.00  6.62  3.52
 \end{verbatim}
 
 The \texttt{replace=} option can be twisted to simulate tossing a coin N
@@ -1989,14 +1990,14 @@ times. E.g.,
 \end{Shaded}
 
 \begin{verbatim}
- [1] "T" "T" "H" "H" "H" "T" "H" "H" "T" "H"
+ [1] "T" "T" "H" "H" "T" "T" "T" "H" "H" "T"
 \end{verbatim}
 
 \subsubsection{Sample Rows Randomly from a Data
 Frame}\label{sample-rows-randomly-from-a-data-frame}
 
-Let say we want to randomly pick 5 samples from \texttt{iris}. It takes
-to two steps to do that:
+Let's say we want to pick 5 samples randomly from \texttt{iris}. It
+takes two steps to do that:
 
 \textbf{Step 1:} Create a list (vector) of random row indexes by the
 \texttt{sample()} function. Specify the following parameters:
@@ -2022,7 +2023,7 @@ last row of \texttt{iris}, which can be obtained from
 \end{Shaded}
 
 \begin{verbatim}
-[1] 25 62 38 16 44
+[1]  63  12 113 128  33
 \end{verbatim}
 
 \texttt{seq(nrow(iris))} generates a vector containing 1, 2, 3, \ldots,
@@ -2040,12 +2041,12 @@ last row of \texttt{iris}, which can be obtained from
 \end{Shaded}
 
 \begin{verbatim}
-   Sepal.Length Sepal.Width Petal.Length Petal.Width    Species
-25          4.8         3.4          1.9         0.2     setosa
-62          5.9         3.0          4.2         1.5 versicolor
-38          4.9         3.6          1.4         0.1     setosa
-16          5.7         4.4          1.5         0.4     setosa
-44          5.0         3.5          1.6         0.6     setosa
+    Sepal.Length Sepal.Width Petal.Length Petal.Width    Species
+63           6.0         2.2          4.0         1.0 versicolor
+12           4.8         3.4          1.6         0.2     setosa
+113          6.8         3.0          5.5         2.1  virginica
+128          6.1         3.0          4.9         1.8  virginica
+33           5.2         4.1          1.5         0.1     setosa
 \end{verbatim}
 
 The indexing method is based on the previous chapter. Check out here:
@@ -2067,7 +2068,7 @@ It can be done using the \texttt{sort()} function.
  [1]  3.52  3.76  4.45  6.23  6.56  6.62  6.85  7.00  7.55  7.62 10.14
 \end{verbatim}
 
-Sort it descending order (large to small).
+Sort it in descending order (large to small).
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2083,10 +2084,10 @@ Sort it descending order (large to small).
 Frame}\label{sort-rows-in-a-data-frame}
 
 Unfortunately, the \texttt{sort()} function does not work for the
-two-dimensional data frame. We have to use the method similar to
-sampling rows. It takes two steps to sort rows in a certain order.
-Suppose you want to sort rows in \texttt{iris} by \texttt{Sepal.Length}
-in ascending order (small to large).
+two-dimensional data frame. We have to use a method similar to sampling
+rows. It takes two steps to sort rows in a certain order. Suppose you
+want to sort rows in \texttt{iris} by \texttt{Sepal.Length} in ascending
+order (small to large).
 
 \textbf{Step 1:} Obtain a list (vector) of row indexes that reflects the
 sorting order of the data frame.
@@ -2291,7 +2292,7 @@ this method is daunting. A much better way can be done using
 \subsection{Focus on a Subset of
 Columns}\label{focus-on-a-subset-of-columns}
 
-If a data frame contains many columns, way more than you need for
+Suppose a data frame contains many columns, way more than you need for
 analysis. It is neat to focus on those columns and leave out the rest.
 Let's suppose you want to focus only on sepal information and species.
 
@@ -2349,8 +2350,8 @@ You can see the new column \texttt{Sepal.Ratio} is added to the
 rightmost position.
 
 Suppose you want to add a new column that records the name of the
-researcher who collected the sample. If it is done by one researcher,
-you don't have to repeat the same name in a vector. Here is the code:
+researcher who collected the sample. If one researcher does it, you
+don't have to repeat the same name in a vector. Here is the code:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2432,7 +2433,7 @@ Species
 \end{verbatim}
 
 The data frame can be tallied by more than one categorical variable.
-Let's us another built-in dataset \texttt{CO2} to illustrate the point.
+Let's use another built-in dataset \texttt{CO2} to illustrate the point.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2462,26 +2463,25 @@ That's all for data wrangling using base R.
 \section{\texorpdfstring{\texttt{tidyverse}}{tidyverse}}\label{tidyverse}
 
 \texttt{tidyverse} is an alternative, and importantly, less cryptic way
-for performing data wrangling of data frames. One design goal of is to
-name functions using \textbf{verbs}, which improves code readability,
-setting its apart from using unpronounceable symbols, such as
-\texttt{\$}, \texttt{{[}}, etc. by base R as shown in the previous
-section. \textbf{However, \texttt{tidyverse} works with data frames
-only.} You still need the base R to process vectors.
+to perform data wrangling on data frames. One design goal of is to name
+functions using \textbf{verbs}, which improves code readability, setting
+it apart from using unpronounceable symbols, such as \texttt{\$},
+\texttt{{[}}, etc., as used by base R as shown in the previous section.
+\textbf{However, \texttt{tidyverse} works with data frames only.} You
+still need base R to process vectors.
 
 Before we dive into \texttt{tidyverse}, it is noteworthy to clarify that
 \texttt{tidyverse} is an integrated ecosystem of R packages designed for
-data science. The data wrangling functions discuss below are actually
-provided by two packages: \texttt{dplyr}, and \texttt{tidyr}. As this
-book is a little book, you can simply assume everything provided by the
-umbrella package \texttt{tidyverse}.
+data science. Two packages actually provide the data wrangling functions
+discussed below: \texttt{dplyr}, and \texttt{tidyr}. As this book is a
+little book, you can assume the umbrella package provides everything.
 
 As \texttt{tidyverse} is an add-on package, you have to install it
-manually. But the installation is simple. In RStudio, click the menu
-option \emph{Tools}, select the first option \emph{Install Packages}. At
-the \emph{Packages} box, type ``tidyverse'', and click the ``Install''
-button. If you only need to install it once until after a major R
-upgrade.
+manually. But the installation is simple. In RStudio, click the
+\emph{Tools} menu option, select the first option: \emph{Install
+Packages}. In the \emph{Packages} box, type ``tidyverse'', and click the
+``Install'' button. You only need to install it once, until after a
+major R upgrade.
 
 \subsection{\texorpdfstring{Activate
 \texttt{tidyverse}}{Activate tidyverse}}\label{activate-tidyverse}
@@ -2512,8 +2512,8 @@ x dplyr::lag()    masks stats::lag()
 i Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors
 \end{verbatim}
 
-The \texttt{require()} function has churned out messages telling you
-what packages (9 of them) are loaded together.
+The \texttt{require()} function prints messages telling you what
+packages (9 of them) are loaded together.
 
 Alternatively, you can use the \texttt{library()} function to activate a
 package. Putting aside technical nuances, these two functions are
@@ -2576,7 +2576,7 @@ specified condition(s). The syntax is
 6          5.7         4.4          1.5         0.4  setosa
 \end{verbatim}
 
-Specify more than one condition. Use a relational operator to join
+Specifying more than one condition. Use a relational operator to join
 conditions together.
 
 \begin{Shaded}
@@ -2649,11 +2649,11 @@ With \texttt{tidyverse}, you can do it in one step by using the
 
 \begin{verbatim}
   Sepal.Length Sepal.Width Petal.Length Petal.Width    Species
-1          4.8         3.4          1.9         0.2     setosa
-2          6.7         3.1          4.4         1.4 versicolor
-3          5.8         2.7          4.1         1.0 versicolor
-4          5.7         2.8          4.1         1.3 versicolor
-5          6.1         2.9          4.7         1.4 versicolor
+1          6.3         2.8          5.1         1.5  virginica
+2          5.9         3.0          5.1         1.8  virginica
+3          4.9         3.0          1.4         0.2     setosa
+4          5.8         2.6          4.0         1.2 versicolor
+5          5.6         2.5          3.9         1.1 versicolor
 \end{verbatim}
 
 \subsection{Sort Rows in a Data
@@ -2701,8 +2701,8 @@ changes in a new data frame. For example, sort \texttt{iris} by
 150          7.9         3.8          6.4         2.0 virginica
 \end{verbatim}
 
-To sort rows in descending order, simply mark the sorting column with a
-minus \texttt{-}. E.g.,
+To sort rows in descending order, mark the sorting column with a minus
+\texttt{-}. E.g.,
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2737,7 +2737,7 @@ minus \texttt{-}. E.g.,
 150          4.3         3.0          1.1         0.1  setosa
 \end{verbatim}
 
-Specify more than one sorting column is much easier in
+Specifying more than one sorting column is much easier in
 \texttt{tidyverse} than base R. E.g. sort \texttt{iris} in descending
 order of \texttt{Sepal.Length} and ascending order of
 \texttt{Petal.Length}.
@@ -2889,7 +2889,8 @@ So far, you have seen all the data wrangling tasks performed by base R
 using \texttt{tidyverse}. Starting from here, you are going to
 demonstrate tasks that are harder to do with base R. The first task is
 to rename a column. Suppose you want to rename \texttt{Species} to
-\texttt{Iris\_Species}. You can do it by the \texttt{rename()} function:
+\texttt{Iris\_Species}. You can do it with the \texttt{rename()}
+function:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2930,12 +2931,12 @@ Let's revert the renaming so it will not affect the following examples.
 
 \subsection{Pipe}\label{pipe}
 
-Often, a data wrangling is a multi-step process in which many
-intermediate steps are involved before producing the final result. E.g.,
-select iris where its \texttt{Petal.Length} is between 0.5 and 2, and
-sort the results in descending order of \texttt{Petal.Length}. As you
-can see, it involves filtering, followed by sorting. It can done into
-two steps via an intermediate data frame as below:
+Often, data wrangling is a multi-step process with many intermediate
+steps before producing the final result. E.g., select iris where its
+\texttt{Petal.Length} is between 0.5 and 2, and sort the results in
+descending order of \texttt{Petal.Length}. As you can see, it involves
+filtering, followed by sorting. It can be done in two steps via an
+intermediate data frame as below:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2970,11 +2971,11 @@ The final result contains 50 rows.
 \texttt{tidyverse} provides a neater way in which no intermediate data
 frames are produced. What is new is the \textbf{pipe} concept. You can
 imagine a pipe is like the assembly line of a factory, where an upstream
-work station passes (pipe) intermediate results to the next work station
+workstation passes (pipes) intermediate results to the next workstation
 for further processing.
 
 The pipe symbol is represented by \textbf{\texttt{\%\textgreater{}\%}},
-no space between them. Let's see how to apply the pipe to the above
+with no space between them. Let's see how to apply the pipe to the above
 example without creating the intermediate data frame \texttt{tmp\_iris}.
 
 \begin{Shaded}
@@ -3014,9 +3015,9 @@ Let's walk through the code above line by line.
   downstream \texttt{filter()} function.
 \item
   \texttt{filter(Petal.Length\ \textgreater{}=\ 0.5\ \&\ Petal.Length\ \textless{}=2)\ \%\textgreater{}\%}
-  receives the data, and check each row if it satisfies the specified
-  conditions. If so, send it to the downstream process; otherwise do not
-  pass down.
+  receives the data and checks each row to see if it satisfies the
+  specified conditions. If so, it sends it to the downstream process;
+  otherwise, it does not pass it down.
 \item
   \texttt{arrange(-Petal.Length)} received rows that satisfy the
   previous filtering process, and sort them in descending order of
@@ -3027,15 +3028,15 @@ Let's walk through the code above line by line.
 \end{itemize}
 
 By using pipe (\texttt{\%\textgreater{}\%}), you can avoid intermediate
-variables, making the code cleaner and easily to read.
+variables, making the code cleaner and easier to read.
 
 \subsection{Tabulation and Summarize}\label{sec-tidyverse-tabulation}
 
-Another task which is useful but difficult to get it done in base R is
-to produce summary information by group. E.g., you want to produce a
-table that shows the average sepal length for each species. Here's how
-to do it using two new functions \texttt{group\_by()} and
-\texttt{summarize()}, and pipe them together.
+Another useful but difficult task in base R is producing summary
+information by group. E.g., you want to produce a table that shows the
+average sepal length for each species. Here's how to do it using two new
+functions \texttt{group\_by()} and \texttt{summarize()}, and pipe them
+together.
 
 E.g., tally the number of samples by \texttt{Plant} and `Type' in
 \texttt{CO2}. The function that does the tallying is \texttt{n()}.
@@ -3170,8 +3171,8 @@ i Use `summarise(.by = c(Plant, Type, Treatment))` for per-operation grouping
   \texttt{group\_by()} is never used alone. It is often followed by
   \texttt{summarize()}.
 \item
-  The variables feed to \texttt{group\_by()} must be factor, i.e.,
-  categorical.
+  The type of variables fed to \texttt{group\_by()} must be factors,
+  i.e., categorical.
 \end{enumerate}
 
 \subsection{\texorpdfstring{A Summary of \texttt{tidyverse}
@@ -3179,8 +3180,7 @@ functions}{A Summary of tidyverse functions}}\label{a-summary-of-tidyverse-funct
 
 \begin{itemize}
 \item
-  \texttt{filter()}: select rows that satistify the specified
-  conditions.
+  \texttt{filter()}: select rows that satisfy the specified conditions.
 \item
   \texttt{select()}: choose or drop certain columns.
 \item

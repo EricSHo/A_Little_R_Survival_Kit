@@ -1,8 +1,8 @@
 # Data Wrangling {#sec-02-data-wrangling}
 
-Data wrangling refers to the way to view, change, and reorganize rows and columns in a data frame. Before we dive into the operations, it is important to know that there are two distinct schools of data wrangling: base R and `tidyverse`. The base R approach means that no additional packages are required, but the `tidyverse` approach requires the installation of `tidyverse`, even though the installation is very straightforward. In my opinion, `tidyverse` has substantially refined and enhanced data wrangling. You will see it in this chapter. Regardless, we will discuss both approaches. Let's start with the base R version.
+Data wrangling refers to the process of viewing, changing, and reorganizing rows and columns in a data frame. Before we dive into the operations, it is important to know that there are two distinct schools of data wrangling: base R and `tidyverse`. The base R approach means that no additional packages are required, but the `tidyverse` approach requires the installation of `tidyverse`, even though the installation is very straightforward. In my opinion, `tidyverse` has substantially refined and enhanced data wrangling. You will see it in this chapter. Regardless, we will discuss both approaches. Let's start with the base R version.
 
-## Learning Objectives: {-}
+## Learning Objectives: {.unnumbered}
 
 This chapter covers common data wrangling techniques. After finishing this chapter, you should be able to:
 
@@ -24,27 +24,33 @@ This chapter covers common data wrangling techniques. After finishing this chapt
 
 The `subset()` function selects rows if they satisfy the condition(s). Below are six relational operators:
 
-1. `>` greater than.
+1.  `>` greater than.
 
-2. `>=`[^02_part1_dw_r-1] greater than or equal to.
+2.  `>=`[^02_data_wrangling-1] greater than or equal to.
 
-3. `<` less than.
+3.  `<` less than.
 
-4. `<=`[^02_part1_dw_r-1] less than or equal to.
+4.  `<=`[^02_data_wrangling-2] less than or equal to.
 
-5. `==`[^02_part1_dw_r-1] equal to.
+5.  `==`[^02_data_wrangling-3] equal to.
 
-6. `!=`[^02_part1_dw_r-1] not equal to.
+6.  `!=`[^02_data_wrangling-4] not equal to.
 
-[^02_part1_dw_r-1]: No spaces between the two symbols.
+[^02_data_wrangling-1]: No spaces between the two symbols.
 
-If the selection involves multiple conditions, they must be specified in conjunction with relational operators. Here are the three logical operators required for multi-parts conditions:
+[^02_data_wrangling-2]: No spaces between the two symbols.
 
-1. `|` denotes the logical OR.
+[^02_data_wrangling-3]: No spaces between the two symbols.
 
-2. `&` denotes the logical AND.
+[^02_data_wrangling-4]: No spaces between the two symbols.
 
-3. `!` denotes the logical NOT.
+If the selection involves multiple conditions, they must be joined by relational operators. Here are the three logical operators required for multi-part conditions:
+
+1.  `|` denotes the logical OR.
+
+2.  `&` denotes the logical AND.
+
+3.  `!` denotes the logical NOT.
 
 #### `subset()` with Vectors
 
@@ -61,7 +67,7 @@ Select pumpkins heavier than 7 lbs.
 subset(pumpkins, pumpkins>7)
 ```
 
-Select pumpkins is exactly 7 lbs.
+Select pumpkins that are exactly 7 lbs.
 
 ```{r}
 subset(pumpkins, pumpkins==7)
@@ -89,7 +95,7 @@ print(paste("There are", nrow(setosa_iris), "rows."))
 head(setosa_iris)
 ```
 
-More than one condition. Select rows with `Sepal.Length` is greater than 5 or Sepal.Width` is smaller than 3.
+More than one condition. Select rows with `Sepal.Length` is greater than 5 or `Sepal.Width` is smaller than 3.
 
 ```{r}
 iris_or_eg <- subset(iris, Sepal.Length > 5 | Sepal.Width < 3 )
@@ -100,7 +106,7 @@ print(paste("There are", nrow(iris_or_eg), "rows."))
 head(iris_or_eg)
 ```
 
-Select rows with `Petal.Length` is greater than 6 and Petal.Width` is smaller than 2.
+Select rows with `Petal.Length` is greater than 6 and `Petal.Width` is smaller than 2.
 
 ```{r}
 # More than one condition. The relational AND operator.
@@ -149,15 +155,15 @@ sample(c('H','T'), size=10, replace=T)
 
 #### Sample Rows Randomly from a Data Frame
 
-Let say we want to randomly pick 5 samples from `iris`. It takes to two steps to do that:
+Let's say we want to pick 5 samples randomly from `iris`. It takes two steps to do that:
 
-**Step 1:** Create a list (vector) of random row indexes by the `sample()` function. Specify the following parameters: 
+**Step 1:** Create a list (vector) of random row indexes by the `sample()` function. Specify the following parameters:
 
 a.) The range of indexes. In this example, the range is from 1 to the last row of `iris`, which can be obtained from `nrow(iris)`.
 
-b) How many samples, e.g., `size = 5`.
+b)  How many samples, e.g., `size = 5`.
 
-c) Can a sample be drawn repeatedly? If not, `replace = F`.
+c)  Can a sample be drawn repeatedly? If not, `replace = F`.
 
 ```{r}
 rnd_idx <- sample(seq(nrow(iris)), size = 5, replace = F)
@@ -186,7 +192,7 @@ It can be done using the `sort()` function.
 sort(pumpkins)
 ```
 
-Sort it descending order (large to small).
+Sort it in descending order (large to small).
 
 ```{r}
 sort(pumpkins, decreasing = TRUE)
@@ -194,7 +200,7 @@ sort(pumpkins, decreasing = TRUE)
 
 #### Sort Rows in a Data Frame
 
-Unfortunately, the `sort()` function does not work for the two-dimensional data frame. We have to use the method similar to sampling rows. It takes two steps to sort rows in a certain order. Suppose you want to sort rows in `iris` by `Sepal.Length` in ascending order (small to large).
+Unfortunately, the `sort()` function does not work for the two-dimensional data frame. We have to use a method similar to sampling rows. It takes two steps to sort rows in a certain order. Suppose you want to sort rows in `iris` by `Sepal.Length` in ascending order (small to large).
 
 **Step 1:** Obtain a list (vector) of row indexes that reflects the sorting order of the data frame.
 
@@ -252,11 +258,11 @@ new_iris <- iris[,c(5,1,2,3,4)]
 head(new_iris)
 ```
 
-Note that if a data frame contains many columns, say >100, this method is daunting. A much better way can be done using `tidyverse`, so stay tuned.
+Note that if a data frame contains many columns, say \>100, this method is daunting. A much better way can be done using `tidyverse`, so stay tuned.
 
 ### Focus on a Subset of Columns
 
-If a data frame contains many columns, way more than you need for analysis. It is neat to focus on those columns and leave out the rest. Let's suppose you want to focus only on sepal information and species.
+Suppose a data frame contains many columns, way more than you need for analysis. It is neat to focus on those columns and leave out the rest. Let's suppose you want to focus only on sepal information and species.
 
 ```{r}
 sepal_iris <- iris[,c("Sepal.Length","Sepal.Width","Species")]
@@ -276,7 +282,7 @@ head(iris)
 
 You can see the new column `Sepal.Ratio` is added to the rightmost position.
 
-Suppose you want to add a new column that records the name of the researcher who collected the sample. If it is done by one researcher, you don't have to repeat the same name in a vector. Here is the code:
+Suppose you want to add a new column that records the name of the researcher who collected the sample. If one researcher does it, you don't have to repeat the same name in a vector. Here is the code:
 
 ```{r}
 iris$Researcher <- "Brian"
@@ -305,7 +311,8 @@ table(iris$Species)
 # Alternatively, use with()
 with(iris, table(Species))
 ```
-The data frame can be tallied by more than one categorical variable. Let's us another built-in dataset `CO2` to illustrate the point.
+
+The data frame can be tallied by more than one categorical variable. Let's use another built-in dataset `CO2` to illustrate the point.
 
 ```{r}
 with(CO2, table(Plant, Type))
@@ -313,13 +320,13 @@ with(CO2, table(Plant, Type))
 
 That's all for data wrangling using base R.
 
-## `tidyverse` 
+## `tidyverse`
 
-`tidyverse` is an alternative, and importantly, less cryptic way for performing data wrangling of data frames. One design goal of is to name functions using **verbs**, which improves code readability, setting its apart from using unpronounceable symbols, such as `$`, `[`, etc. by base R as shown in the previous section. **However, `tidyverse` works with data frames only.** You still need the base R to process vectors.
+`tidyverse` is an alternative, and importantly, less cryptic way to perform data wrangling on data frames. One design goal of is to name functions using **verbs**, which improves code readability, setting it apart from using unpronounceable symbols, such as `$`, `[`, etc., as used by base R as shown in the previous section. **However, `tidyverse` works with data frames only.** You still need base R to process vectors.
 
-Before we dive into `tidyverse`, it is noteworthy to clarify that `tidyverse` is an integrated ecosystem of R packages designed for data science. The data wrangling functions discuss below are actually provided by two packages: `dplyr`, and `tidyr`. As this book is a little book, you can simply assume everything provided by the umbrella package `tidyverse`.
+Before we dive into `tidyverse`, it is noteworthy to clarify that `tidyverse` is an integrated ecosystem of R packages designed for data science. Two packages actually provide the data wrangling functions discussed below: `dplyr`, and `tidyr`. As this book is a little book, you can assume the umbrella package provides everything.
 
-As `tidyverse` is an add-on package, you have to install it manually. But the installation is simple. In RStudio, click the menu option *Tools*, select the first option *Install Packages*. At the *Packages* box, type "tidyverse", and click the "Install" button. If you only need to install it once until after a major R upgrade.
+As `tidyverse` is an add-on package, you have to install it manually. But the installation is simple. In RStudio, click the *Tools* menu option, select the first option: *Install Packages*. In the *Packages* box, type "tidyverse", and click the "Install" button. You only need to install it once, until after a major R upgrade.
 
 ### Activate `tidyverse`
 
@@ -329,7 +336,7 @@ After opening a new session, you need to activate `tidyverse` using the `require
 require(tidyverse)
 ```
 
-The `require()` function has churned out messages telling you what packages (9 of them) are loaded together. 
+The `require()` function prints messages telling you what packages (9 of them) are loaded together.
 
 Alternatively, you can use the `library()` function to activate a package. Putting aside technical nuances, these two functions are largely doing the same thing. Since activation is an action, using a verb (`require()`) makes more sense than using a noun (`library()`). Note that you only need to activate a package once per R session.
 
@@ -337,7 +344,7 @@ Let's use `tidyverse` to repeat the data wrangling tasks by base R above.
 
 ### Select Rows by Condition(s)
 
-The function is `filter()`. It chooses rows that satisfy the specified condition(s). The syntax is `filter(data_frame, conditions)`. E.g., 
+The function is `filter()`. It chooses rows that satisfy the specified condition(s). The syntax is `filter(data_frame, conditions)`. E.g.,
 
 ```{r}
 # select all setosa iris
@@ -357,7 +364,7 @@ print(paste("There are", nrow(iris_or_eg), "rows."))
 head(iris_or_eg)
 ```
 
-Specify more than one condition. Use a relational operator to join conditions together.
+Specifying more than one condition. Use a relational operator to join conditions together.
 
 ```{r}
 iris_and_eg <- filter(iris, Petal.Length > 6 & Petal.Width < 2 )
@@ -402,7 +409,7 @@ head(sorted_iris)
 tail(sorted_iris)
 ```
 
-To sort rows in descending order, simply mark the sorting column with a minus `-`. E.g.,
+To sort rows in descending order, mark the sorting column with a minus `-`. E.g.,
 
 ```{r}
 decreasing_iris <- arrange(iris, -Sepal.Length)
@@ -410,7 +417,7 @@ head(decreasing_iris)
 tail(decreasing_iris)
 ```
 
-Specify more than one sorting column is much easier in `tidyverse` than base R. E.g. sort `iris` in descending order of `Sepal.Length` and ascending order of `Petal.Length`.
+Specifying more than one sorting column is much easier in `tidyverse` than base R. E.g. sort `iris` in descending order of `Sepal.Length` and ascending order of `Petal.Length`.
 
 ```{r}
 double_sorted_iris <- arrange(iris, -Sepal.Length, Petal.Length)
@@ -461,7 +468,7 @@ head(iris)
 
 ### Rename a Column
 
-So far, you have seen all the data wrangling tasks performed by base R using `tidyverse`. Starting from here, you are going to demonstrate tasks that are harder to do with base R. The first task is to rename a column. Suppose you want to rename `Species` to `Iris_Species`. You can do it by the `rename()` function:
+So far, you have seen all the data wrangling tasks performed by base R using `tidyverse`. Starting from here, you are going to demonstrate tasks that are harder to do with base R. The first task is to rename a column. Suppose you want to rename `Species` to `Iris_Species`. You can do it with the `rename()` function:
 
 ```{r}
 # new_name = existing_name
@@ -478,7 +485,7 @@ head(iris)
 
 ### Pipe
 
-Often, a data wrangling is a multi-step process in which many intermediate steps are involved before producing the final result. E.g., select iris where its `Petal.Length` is between 0.5 and 2, and sort the results in descending order of `Petal.Length`. As you can see, it involves filtering, followed by sorting. It can done into two steps via an intermediate data frame as below:
+Often, data wrangling is a multi-step process with many intermediate steps before producing the final result. E.g., select iris where its `Petal.Length` is between 0.5 and 2, and sort the results in descending order of `Petal.Length`. As you can see, it involves filtering, followed by sorting. It can be done in two steps via an intermediate data frame as below:
 
 ```{r}
 tmp_iris <- filter(iris, Petal.Length >= 0.5 & Petal.Length <=2)
@@ -489,9 +496,9 @@ head(final_iris)
 
 The final result contains 50 rows.
 
-`tidyverse` provides a neater way in which no intermediate data frames are produced. What is new is the **pipe** concept. You can imagine a pipe is like the assembly line of a factory, where an upstream work station passes (pipe) intermediate results to the next work station for further processing.
+`tidyverse` provides a neater way in which no intermediate data frames are produced. What is new is the **pipe** concept. You can imagine a pipe is like the assembly line of a factory, where an upstream workstation passes (pipes) intermediate results to the next workstation for further processing.
 
-The pipe symbol is represented by **`%>%`**, no space between them. Let's see how to apply the pipe to the above example without creating the intermediate data frame `tmp_iris`.
+The pipe symbol is represented by **`%>%`**, with no space between them. Let's see how to apply the pipe to the above example without creating the intermediate data frame `tmp_iris`.
 
 ```{r}
 final_results <- iris %>% 
@@ -503,19 +510,19 @@ head(final_iris)
 
 Let's walk through the code above line by line.
 
-+ `iris %>%` sends all rows, 150 in total, to the downstream `filter()` function.
+- `iris %>%` sends all rows, 150 in total, to the downstream `filter()` function.
 
-+ `filter(Petal.Length >= 0.5 & Petal.Length <=2) %>%` receives the data, and check each row if it satisfies the specified conditions. If so, send it to the downstream process; otherwise do not pass down.
+- `filter(Petal.Length >= 0.5 & Petal.Length <=2) %>%` receives the data and checks each row to see if it satisfies the specified conditions. If so, it sends it to the downstream process; otherwise, it does not pass it down.
 
-+ `arrange(-Petal.Length)` received rows that satisfy the previous filtering process, and sort them in descending order of `Petal.Length`.
+- `arrange(-Petal.Length)` received rows that satisfy the previous filtering process, and sort them in descending order of `Petal.Length`.
 
-+ `final_results <-` the sorted result is assigned to the variable `final_results`.
+- `final_results <-` the sorted result is assigned to the variable `final_results`.
 
-By using pipe (`%>%`), you can avoid intermediate variables, making the code cleaner and easily to read.
+By using pipe (`%>%`), you can avoid intermediate variables, making the code cleaner and easier to read.
 
 ### Tabulation and Summarize {#sec-tidyverse-tabulation}
 
-Another task which is useful but difficult to get it done in base R is to produce summary information by group. E.g., you want to produce a table that shows the average sepal length for each species. Here's how to do it using two new functions `group_by()` and `summarize()`, and pipe them together.
+Another useful but difficult task in base R is producing summary information by group. E.g., you want to produce a table that shows the average sepal length for each species. Here's how to do it using two new functions `group_by()` and `summarize()`, and pipe them together.
 
 E.g., tally the number of samples by `Plant` and 'Type' in `CO2`. The function that does the tallying is `n()`.
 
@@ -555,14 +562,13 @@ CO2 %>%
 
 **Two remarks:**
 
-1. `group_by()` is never used alone. It is often followed by `summarize()`.
+1.  `group_by()` is never used alone. It is often followed by `summarize()`.
 
-2. The variables feed to `group_by()` must be factor, i.e., categorical.
-
+2.  The type of variables fed to `group_by()` must be factors, i.e., categorical.
 
 ### A Summary of `tidyverse` functions
 
-- `filter()`: select rows that satistify the specified conditions.
+- `filter()`: select rows that satisfy the specified conditions.
 
 - `select()`: choose or drop certain columns.
 
@@ -580,9 +586,11 @@ CO2 %>%
 
 In this chapter, you have seen how to perform data wrangling with basic R and `tidyverse`. What you have seen is only a fraction of what `tidyverse` can do. Readers who want to explore the full capability of `tidyverse` should consult the most authoritative source: [**R for Data Science**](https://r4ds.had.co.nz/) by Hadley Wickham & Garrett Grolemund. In the next chapter, you will see how to plot data. A picture is worth a thousand words. Data visualization is an indispensable step for data analysis. But before the next topic, let's recall all the new R commands discussed in this chapter.
 
+```{=html}
 <!--
 `|`, `&`, `==`, `!`, `!=`, `subset()`, `sample()`, `order()`, `NULL` (a keyword), `table()`, `library()`, `require()`, `filter()`, `select()`, `arrange()`, `rename()`, `mutate()`, `group_by()`, `summarize()`, `n()`, and pip `%>%`.
 -->
+```
 
 ```{r echo=FALSE, warning=FALSE}
 cmds <- c("|", "`&`", "`==`", "`!`", "`!=`", "`subset()`", "`sample()`", "`order()`", "`NULL` (a keyword)", "`table()`", "`library()`", "`require()`", "`filter()`", "`select()`", "`arrange()`", "`rename()`", "`mutate()`", "`group_by()`", "`summarize()`", "`n()`","pipe `%>%`", "", "", "") # fill up the matrix with empty strings
