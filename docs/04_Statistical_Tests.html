@@ -245,25 +245,23 @@ window.Quarto = {
   <li><a href="#housekeeping" id="toc-housekeeping" class="nav-link" data-scroll-target="#housekeeping"><span class="header-section-number">4.1</span> Housekeeping</a></li>
   <li><a href="#tests-for-quantitative-variables" id="toc-tests-for-quantitative-variables" class="nav-link" data-scroll-target="#tests-for-quantitative-variables"><span class="header-section-number">4.2</span> Tests for Quantitative Variables</a>
   <ul class="collapse">
-  <li><a href="#one-sample-t-tests" id="toc-one-sample-t-tests" class="nav-link" data-scroll-target="#one-sample-t-tests"><span class="header-section-number">4.2.1</span> One-sample t-tests</a></li>
+  <li><a href="#sec-04-one-sample-t-test" id="toc-sec-04-one-sample-t-test" class="nav-link" data-scroll-target="#sec-04-one-sample-t-test"><span class="header-section-number">4.2.1</span> One-sample t-tests</a></li>
   <li><a href="#one-sided-t-tests" id="toc-one-sided-t-tests" class="nav-link" data-scroll-target="#one-sided-t-tests"><span class="header-section-number">4.2.2</span> One-sided t-tests</a></li>
+  <li><a href="#sec-04-two-sample-t-test" id="toc-sec-04-two-sample-t-test" class="nav-link" data-scroll-target="#sec-04-two-sample-t-test"><span class="header-section-number">4.2.3</span> Two-sample t-tests</a></li>
+  <li><a href="#sec-04-one-way-ANOVA" id="toc-sec-04-one-way-ANOVA" class="nav-link" data-scroll-target="#sec-04-one-way-ANOVA"><span class="header-section-number">4.2.4</span> One-way ANOVA</a></li>
+  <li><a href="#sec-04-paired-t-test" id="toc-sec-04-paired-t-test" class="nav-link" data-scroll-target="#sec-04-paired-t-test"><span class="header-section-number">4.2.5</span> Paired t-tests</a></li>
   </ul></li>
-  <li><a href="#two-sample-t-tests" id="toc-two-sample-t-tests" class="nav-link" data-scroll-target="#two-sample-t-tests"><span class="header-section-number">4.3</span> Two-sample t-tests</a>
+  <li><a href="#tests-for-categorical-variables" id="toc-tests-for-categorical-variables" class="nav-link" data-scroll-target="#tests-for-categorical-variables"><span class="header-section-number">4.3</span> Tests for Categorical Variables</a>
   <ul class="collapse">
-  <li><a href="#one-way-anova" id="toc-one-way-anova" class="nav-link" data-scroll-target="#one-way-anova"><span class="header-section-number">4.3.1</span> One-way ANOVA</a></li>
-  <li><a href="#paired-t-tests" id="toc-paired-t-tests" class="nav-link" data-scroll-target="#paired-t-tests"><span class="header-section-number">4.3.2</span> Paired t-tests</a></li>
+  <li><a href="#sec-04-x2-gof-test" id="toc-sec-04-x2-gof-test" class="nav-link" data-scroll-target="#sec-04-x2-gof-test"><span class="header-section-number">4.3.1</span> One Categorical Variable</a></li>
+  <li><a href="#sec-04-x2-test-independence" id="toc-sec-04-x2-test-independence" class="nav-link" data-scroll-target="#sec-04-x2-test-independence"><span class="header-section-number">4.3.2</span> Two Categorical Variables</a></li>
   </ul></li>
-  <li><a href="#tests-for-categorical-variables" id="toc-tests-for-categorical-variables" class="nav-link" data-scroll-target="#tests-for-categorical-variables"><span class="header-section-number">4.4</span> Tests for Categorical Variables</a>
+  <li><a href="#regression" id="toc-regression" class="nav-link" data-scroll-target="#regression"><span class="header-section-number">4.4</span> Regression</a>
   <ul class="collapse">
-  <li><a href="#one-categorical-variable" id="toc-one-categorical-variable" class="nav-link" data-scroll-target="#one-categorical-variable"><span class="header-section-number">4.4.1</span> One Categorical Variable</a></li>
-  <li><a href="#two-categorical-variables" id="toc-two-categorical-variables" class="nav-link" data-scroll-target="#two-categorical-variables"><span class="header-section-number">4.4.2</span> Two Categorical Variables</a></li>
+  <li><a href="#sec-04-SLR" id="toc-sec-04-SLR" class="nav-link" data-scroll-target="#sec-04-SLR"><span class="header-section-number">4.4.1</span> Simple Linear Regression</a></li>
+  <li><a href="#sec-04-MLR" id="toc-sec-04-MLR" class="nav-link" data-scroll-target="#sec-04-MLR"><span class="header-section-number">4.4.2</span> Multiple Linear Regression</a></li>
   </ul></li>
-  <li><a href="#regression" id="toc-regression" class="nav-link" data-scroll-target="#regression"><span class="header-section-number">4.5</span> Regression</a>
-  <ul class="collapse">
-  <li><a href="#simple-linear-regression" id="toc-simple-linear-regression" class="nav-link" data-scroll-target="#simple-linear-regression"><span class="header-section-number">4.5.1</span> Simple Linear Regression</a></li>
-  <li><a href="#multiple-linear-regression" id="toc-multiple-linear-regression" class="nav-link" data-scroll-target="#multiple-linear-regression"><span class="header-section-number">4.5.2</span> Multiple Linear Regression</a></li>
-  </ul></li>
-  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary"><span class="header-section-number">4.6</span> Summary</a></li>
+  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary"><span class="header-section-number">4.5</span> Summary</a></li>
   </ul>
 </nav>
     </div>
@@ -289,7 +287,8 @@ window.Quarto = {
 </header>
 
 
-<p>R was inherently designed for statistical analysis. Therefore, it is justified to devote a chapter to statistical tests. Here, we will discuss a list of classic statistical tests with an emphasis on the Null Hypothesis Significance Test (NHST). We assume that readers have a sound background in undergraduate-level statistics, i.e., they know the t statistic, <span class="math inline">\(\chi^2\)</span> statistic, confidence interval, p-value, correlation, etc. The goal of this chapter, as well as the whole book, emphasizes using R - the how. For readers who need to refresh basic statistical concepts, there are many excellent introductory statistics textbooks freely available on the Internet<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> <a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> <a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>. Interested readers are recommended to consult them for further detail.</p>
+<p>R was inherently designed for statistical analysis. Therefore, it is justified to devote a chapter to statistical tests. Here, we will discuss a list of classic statistical tests with an emphasis on the Null Hypothesis Significance Test (NHST). We assume that you have a sound background in undergraduate-level statistics, i.e., you know the t statistic, <span class="math inline">\(\chi^2\)</span> statistic, confidence interval, p-value, correlation, etc. For readers who need to refresh basic statistical concepts, there are many excellent introductory statistics textbooks freely available on the Internet<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> <a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> <a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>. Interested readers are recommended to consult them for further detail.</p>
+<p>The goal of this chapter, as well as the whole book, emphasizes using R - the how. Additionally, the tests assume the availability of raw data, i.e., data sets contain individual samples. If only summary statistics (sample size, mean, standard deviation, etc.) are available, you have to use formulas to calculate the corresponding statistics, standard errors, critical values, and confidence intervals. These calculations are basically arithmetic operations and will not be discussed in this chapter.</p>
 <section id="learning-objectives" class="level2 unnumbered">
 <h2 class="unnumbered anchored" data-anchor-id="learning-objectives">Learning Objectives:</h2>
 <ul>
@@ -376,8 +375,8 @@ Attaching package: 'resampledata'</code></pre>
 </section>
 <section id="tests-for-quantitative-variables" class="level2" data-number="4.2">
 <h2 data-number="4.2" class="anchored" data-anchor-id="tests-for-quantitative-variables"><span class="header-section-number">4.2</span> Tests for Quantitative Variables</h2>
-<section id="one-sample-t-tests" class="level3" data-number="4.2.1">
-<h3 data-number="4.2.1" class="anchored" data-anchor-id="one-sample-t-tests"><span class="header-section-number">4.2.1</span> One-sample t-tests</h3>
+<section id="sec-04-one-sample-t-test" class="level3" data-number="4.2.1">
+<h3 data-number="4.2.1" class="anchored" data-anchor-id="sec-04-one-sample-t-test"><span class="header-section-number">4.2.1</span> One-sample t-tests</h3>
 <p>The goal of a one-sample t-test is to test if the mean of a quantitative variable is equal to a certain value. For example, if the aviation regulatory agency states that acceptable flight delay is 12 minutes. We want to see if the flights meet the requirement. The null hypothesis (<span class="math inline">\(H_{0}\)</span>) is that the mean delay is equal to 12 minutes. The alternative hypothesis (<span class="math inline">\(H_{A}\)</span>) is that the mean delay is not equal to 12 minutes. Here are the steps to perform such a test:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(FlightDelays<span class="sc">$</span>Delay, <span class="at">mu =</span> <span class="dv">12</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -418,9 +417,8 @@ mean of x
 </div>
 <p>The p-value 0.6553 is larger than <span class="math inline">\(\alpha\)</span> = 0.05, fail to reject the <span class="math inline">\(H_{0}\)</span> at a 95% significance level.</p>
 </section>
-</section>
-<section id="two-sample-t-tests" class="level2" data-number="4.3">
-<h2 data-number="4.3" class="anchored" data-anchor-id="two-sample-t-tests"><span class="header-section-number">4.3</span> Two-sample t-tests</h2>
+<section id="sec-04-two-sample-t-test" class="level3" data-number="4.2.3">
+<h3 data-number="4.2.3" class="anchored" data-anchor-id="sec-04-two-sample-t-test"><span class="header-section-number">4.2.3</span> Two-sample t-tests</h3>
 <p>A two-sample t-test tests whether the mean of one group is the same as the other group. The <span class="math inline">\(H_{0}\)</span> states the two groups have the same mean, and the <span class="math inline">\(H_{A}\)</span> states otherwise.</p>
 <p>For example, we want to compare the mean delays of the two carriers to determine whether they are the same.</p>
 <p><em>Solution 1:</em></p>
@@ -462,8 +460,9 @@ mean in group AA mean in group UA
 </div>
 </div>
 <p>The symbol <code>~</code> means “split by”. <code>Delay ~ Carrier</code> means to split <code>Delay</code> by <code>Carrier</code>.</p>
-<section id="one-way-anova" class="level3" data-number="4.3.1">
-<h3 data-number="4.3.1" class="anchored" data-anchor-id="one-way-anova"><span class="header-section-number">4.3.1</span> One-way ANOVA</h3>
+</section>
+<section id="sec-04-one-way-ANOVA" class="level3" data-number="4.2.4">
+<h3 data-number="4.2.4" class="anchored" data-anchor-id="sec-04-one-way-ANOVA"><span class="header-section-number">4.2.4</span> One-way ANOVA</h3>
 <p>A one-way ANOVA test tests whether the means of three or more groups are the same or not. Two key differences from the two-sample t-test above: 1. a two-sample t-test can handle only two groups, but ANOVA can handle two or more groups. 2. The <span class="math inline">\(H_{0}\)</span> of ANOVA is rejected if any pair(s) of groups have unequal means.</p>
 <p>For example, test whether mean delays vary by destination.</p>
 <div class="cell">
@@ -530,10 +529,10 @@ STL-ORD  -7.5157049 -16.1704244  1.1390145 0.1382159</code></pre>
 </div>
 <p>Confidence intervals not crossing zero (the vertical line) indicate pairs have unequal means.</p>
 </section>
-<section id="paired-t-tests" class="level3" data-number="4.3.2">
-<h3 data-number="4.3.2" class="anchored" data-anchor-id="paired-t-tests"><span class="header-section-number">4.3.2</span> Paired t-tests</h3>
-<p>A paired t-test detects whether two mean measurements of a sample differ. For example, in a drug trial, a subject’s blood pressure is measured before and after taking the tested drug. Each sample is a subject. The measurements are blood pressure. The <span class="math inline">\(H_{0}\)</span> is the mean difference between the two measurements from all samples is zero.</p>
-<p>Here we will examine whether the product prices between Target and Walmart are different. The sample is a product. The two measurements are the prices from Target and Walmart.</p>
+<section id="sec-04-paired-t-test" class="level3" data-number="4.2.5">
+<h3 data-number="4.2.5" class="anchored" data-anchor-id="sec-04-paired-t-test"><span class="header-section-number">4.2.5</span> Paired t-tests</h3>
+<p>A paired t-test evaluates whether the mean difference between two measurements taken on the same subject significantly differs from zero. For a drug trial example, a subject’s blood pressure is measured before and after taking the tested drug. Each sample is a subject. The measurements are blood pressure. The <span class="math inline">\(H_{0}\)</span> is the mean difference between the two measurements from all samples is zero.</p>
+<p>Here we will examine whether the product prices between Target and Walmart are different. The subject is a product. The two measurements are the prices of the same product from Target and Walmart.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(Groceries, <span class="fu">t.test</span>(Target, Walmart, <span class="at">paired=</span>T))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
@@ -553,11 +552,11 @@ mean difference
 <p>The p-value of 0.6415 &gt; <span class="math inline">\(\alpha\)</span> = 0.05 suggests that there is no statistical difference between the two stores at the 95% confidence level. The mean price difference of all the products in the sample is 0.057, which is not considered a significant difference from zero.</p>
 </section>
 </section>
-<section id="tests-for-categorical-variables" class="level2" data-number="4.4">
-<h2 data-number="4.4" class="anchored" data-anchor-id="tests-for-categorical-variables"><span class="header-section-number">4.4</span> Tests for Categorical Variables</h2>
-<section id="one-categorical-variable" class="level3" data-number="4.4.1">
-<h3 data-number="4.4.1" class="anchored" data-anchor-id="one-categorical-variable"><span class="header-section-number">4.4.1</span> One Categorical Variable</h3>
-<p>Here, we want to check whether the proportions of categories match a specified expected ratio. In standard textbooks, this test is called the Chi-square (<span class="math inline">\(\chi^{2}\)</span>) goodness-of-fit test. For example, <code>Delayed30</code> indicates whether the flight was delayed by more than 30 minutes; it is either Yes or No.&nbsp;Suppose the regulatory standard recommends not more than 10% of a random sample of flights. First, figure out how many Yes and No in the sample.</p>
+<section id="tests-for-categorical-variables" class="level2" data-number="4.3">
+<h2 data-number="4.3" class="anchored" data-anchor-id="tests-for-categorical-variables"><span class="header-section-number">4.3</span> Tests for Categorical Variables</h2>
+<section id="sec-04-x2-gof-test" class="level3" data-number="4.3.1">
+<h3 data-number="4.3.1" class="anchored" data-anchor-id="sec-04-x2-gof-test"><span class="header-section-number">4.3.1</span> One Categorical Variable</h3>
+<p>Here, we want to check whether the proportions of categories match a specified expected ratio. In standard textbooks, this test is called the <strong>Chi-square (</strong><span class="math inline">\(\chi^{2}\)</span><strong>) goodness-of-fit</strong> test. For example, <code>Delayed30</code> indicates whether the flight was delayed by more than 30 minutes; it is either Yes or No.&nbsp;Suppose the regulatory standard recommends not more than 10% of a random sample of flights. First, figure out how many Yes and No in the sample.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(FlightDelays<span class="sc">$</span>Delayed30)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
@@ -580,9 +579,9 @@ X-squared = 103.9, df = 1, p-value &lt; 2.2e-16</code></pre>
 <p>The <span class="math inline">\(H_{0}\)</span> assumes the proportions agree with the expected ratio. The p-value shown above is literally zero, indicating that the proportions of Yes and No do not conform to the expected 9:1 ratio at the 95% confidence level.</p>
 <p>One remark about setting up the proportion parameter <code>p=c(0.9,0.1)</code>. Make sure that the order of the proportions matches the sequence of the categories produced by the <code>table()</code> function. Additionally, the proportions must sum to 1.</p>
 </section>
-<section id="two-categorical-variables" class="level3" data-number="4.4.2">
-<h3 data-number="4.4.2" class="anchored" data-anchor-id="two-categorical-variables"><span class="header-section-number">4.4.2</span> Two Categorical Variables</h3>
-<p>Here we examine the dependency between two categorical variables. The test is colloquially called <span class="math inline">\(\chi^{2}\)</span> Test for Independence. For example, we want to know whether a delay of more than 30 minutes depends on the carrier, that is to say whether <code>Delayed30</code> is independent of <code>Carrier</code>. The <span class="math inline">\(H_{0}\)</span> assumes that they are independent.</p>
+<section id="sec-04-x2-test-independence" class="level3" data-number="4.3.2">
+<h3 data-number="4.3.2" class="anchored" data-anchor-id="sec-04-x2-test-independence"><span class="header-section-number">4.3.2</span> Two Categorical Variables</h3>
+<p>Here we examine the independence between two categorical variables. The test is colloquially called <span class="math inline">\(\chi^{2}\)</span> <strong>Test for Independence</strong>. For example, we want to know whether a delay of more than 30 minutes depends on the carrier, that is to say whether <code>Delayed30</code> is independent of <code>Carrier</code>. The <span class="math inline">\(H_{0}\)</span> assumes that they are independent.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(FlightDelays, <span class="fu">chisq.test</span>(Carrier, Delayed30, <span class="at">correct=</span><span class="cn">TRUE</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
@@ -607,16 +606,17 @@ Carrier        No       Yes
 <p>We feed the contingency table of <code>Carrier</code> by <code>Delayed30</code> to the <code>prop.table()</code> function with <code>margin=1</code>, meaning that values are divided by the row totals or the sum of the proportions for each row is 1. As you can see, both carriers have an issue under the 10% rule, but the issue with UA is more severe than AA.</p>
 </section>
 </section>
-<section id="regression" class="level2" data-number="4.5">
-<h2 data-number="4.5" class="anchored" data-anchor-id="regression"><span class="header-section-number">4.5</span> Regression</h2>
-<section id="simple-linear-regression" class="level3" data-number="4.5.1">
-<h3 data-number="4.5.1" class="anchored" data-anchor-id="simple-linear-regression"><span class="header-section-number">4.5.1</span> Simple Linear Regression</h3>
+<section id="regression" class="level2" data-number="4.4">
+<h2 data-number="4.4" class="anchored" data-anchor-id="regression"><span class="header-section-number">4.4</span> Regression</h2>
+<section id="sec-04-SLR" class="level3" data-number="4.4.1">
+<h3 data-number="4.4.1" class="anchored" data-anchor-id="sec-04-SLR"><span class="header-section-number">4.4.1</span> Simple Linear Regression</h3>
 <p>A simple linear regression (SLR) model involves a predictor X (independent variable) and a response Y (dependent variable), where both of them are quantitative, but they have different roles.</p>
 <p><span class="math display">\[Y = \beta_{0} + \beta_{1}X\]</span></p>
 <p>where <span class="math inline">\(\beta_{0}\)</span> is the intercept, and <span class="math inline">\(\beta_{1}\)</span> is the slope.</p>
 <p>The relationship between them in an SLR is linear and directional. Firstly, the predictor is believed to influence the response, and not the reverse; therefore, it is directional. For example, temperature (predictor) is supposed to influence ice cream sales (response), and not the other way.</p>
 <p>Secondly, the relationship is linear, meaning that a unit increment of X will cause Y to increase or decrease by <span class="math inline">\(\beta_{1}\)</span> units for every X within the range of X in the data.</p>
-<p>Finally, an SLR can only establish a correlation between X and Y, but not causation.</p>
+<p>Thirdly, an SLR can only establish a correlation between X and Y, but not causation.</p>
+<p>Finally, in the context of NHST, the <span class="math inline">\(H_{0}\)</span> is <span class="math inline">\(\beta_{1}\)</span> = 0.</p>
 <p>Here we will switch to the familiar built-in <code>iris</code> data set to demonstrate how to build an SLR. Suppose we are interested in whether <code>Sep.Length</code> (predictor) affects <code>Sep.Width</code> (response) for <code>setosa</code> species. The first step for building an SLR is to visualize the relationship between the two variables using a scatter plot (<a href="03_Data_Visualization.html#sec-baseR-scatter-plot" class="quarto-xref"><span>Section 3.2.5</span></a> or <a href="03_Data_Visualization.html#sec-ggplot-scatter-plot" class="quarto-xref"><span>Section 3.3.6</span></a>). Do not downplay the intuition of visual inspection. In the absence of an upward or downward trend, the attempt to build an SLR is deemed fruitless. On a positive note, the plot may still reveal an intriguing trend not as expected, requiring a different kind of model or variable transformation. Anyway, let’s plot the two variables.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>setosa_iris <span class="ot">&lt;-</span> <span class="fu">subset</span>(iris, Species<span class="sc">==</span><span class="st">'setosa'</span>)</span>
@@ -675,8 +675,8 @@ F-statistic: 58.99 on 1 and 48 DF,  p-value: 6.71e-10</code></pre>
 </div>
 </div>
 </section>
-<section id="multiple-linear-regression" class="level3" data-number="4.5.2">
-<h3 data-number="4.5.2" class="anchored" data-anchor-id="multiple-linear-regression"><span class="header-section-number">4.5.2</span> Multiple Linear Regression</h3>
+<section id="sec-04-MLR" class="level3" data-number="4.4.2">
+<h3 data-number="4.4.2" class="anchored" data-anchor-id="sec-04-MLR"><span class="header-section-number">4.4.2</span> Multiple Linear Regression</h3>
 <p>A multiple linear regression (MLR) model involves one response and two or more predictors. The equation for MLR is</p>
 <p><span class="math display">\[Y = \beta_{0} + \beta_{1} \times X_{1} + ... + \beta_{n} \times X_{n}\]</span></p>
 <p>Suppose we are keen to predict <code>Sepal.Width</code> by <code>Sepal.Length</code> and <code>Petal.Length</code> for setosa iris. Similar to SLR, we visualize the data but using a multipanel scatter plot <a href="03_Data_Visualization.html#sec-baseR-multipanel-scatter-plot" class="quarto-xref"><span>Section 3.2.6</span></a>, <a href="03_Data_Visualization.html#sec-ggplot-multipanel-scatter-plot" class="quarto-xref"><span>Section 3.3.7</span></a>).</p>
@@ -690,39 +690,123 @@ F-statistic: 58.99 on 1 and 48 DF,  p-value: 6.71e-10</code></pre>
 </div>
 </div>
 </div>
-<p>Here we visualize the trend between <code>Sepal.Width</code> and <code>Sepal.Length</code> (2<sup>nd</sup> row and 1<sup>st</sup> column), and <code>Sepal.Width</code> and <code>Petal.Length</code> (2<sup>nd</sup> row and 3<sup>rd</sup> column). Despite the trend not being clear between <code>Sepal.Width</code> and <code>Petal.Length</code> , let’s proceed to build an MLR model.</p>
+<p>Here we visualize the trend between <code>Sepal.Width</code> and <code>Sepal.Length</code> (2<sup>nd</sup> row and 1<sup>st</sup> column), <code>Sepal.Width</code> and <code>Petal.Length</code> (2<sup>nd</sup> row and 3<sup>rd</sup> column), and <code>Sepal.Width</code> and <code>Petal.Width</code> (2<sup>nd</sup> row and 4<sup>th</sup> column). Despite the trend not being clear between <code>Sepal.Width</code> and <code>Petal.Length</code>, and <code>Sepal.Width</code> and <code>Petal.Width</code>, let’s proceed to build an MLR model.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>mlr_model <span class="ot">&lt;-</span> <span class="fu">lm</span>(Sepal.Width <span class="sc">~</span> Sepal.Length <span class="sc">+</span> Petal.Length, <span class="at">data=</span>setosa_iris)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>mlr_model <span class="ot">&lt;-</span> <span class="fu">lm</span>(Sepal.Width <span class="sc">~</span> Sepal.Length <span class="sc">+</span> Petal.Length <span class="sc">+</span> Petal.Width, <span class="at">data=</span>setosa_iris)</span>
 <span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mlr_model)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
-lm(formula = Sepal.Width ~ Sepal.Length + Petal.Length, data = setosa_iris)
+lm(formula = Sepal.Width ~ Sepal.Length + Petal.Length + Petal.Width, 
+    data = setosa_iris)
 
 Residuals:
      Min       1Q   Median       3Q      Max 
--0.72858 -0.18414 -0.00301  0.16460  0.51769 
+-0.74373 -0.17838  0.00164  0.16876  0.53988 
 
 Coefficients:
              Estimate Std. Error t value Pr(&gt;|t|)    
-(Intercept)  -0.53038    0.55609  -0.954    0.345    
-Sepal.Length  0.80493    0.10897   7.387 2.13e-09 ***
-Petal.Length -0.04863    0.22118  -0.220    0.827    
+(Intercept)  -0.48913    0.57348  -0.853    0.398    
+Sepal.Length  0.79669    0.11247   7.083 6.83e-09 ***
+Petal.Length -0.07136    0.23244  -0.307    0.760    
+Petal.Width   0.13513    0.38427   0.352    0.727    
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
-Residual standard error: 0.2591 on 47 degrees of freedom
-Multiple R-squared:  0.5518,    Adjusted R-squared:  0.5328 
-F-statistic: 28.94 on 2 and 47 DF,  p-value: 6.438e-09</code></pre>
+Residual standard error: 0.2616 on 46 degrees of freedom
+Multiple R-squared:  0.553, Adjusted R-squared:  0.5239 
+F-statistic: 18.97 on 3 and 46 DF,  p-value: 3.759e-08</code></pre>
 </div>
 </div>
-<p>Based on the p-values, only <code>Sepal.Length</code> is a stable predictor of <code>Sepal.Width</code>.</p>
+<p>Based on the p-values, only <code>Sepal.Length</code> is a stable predictor of <code>Sepal.Width</code>; <code>Petal.Length</code> and <code>Petal.Width</code> do not make a statistically significant contribution to the model. This example is simple, as there are not many predictors to be considered. When the number of predictors rises, the number of choices explodes exponentially. For a four-predictor example, the number of combinations is:</p>
+<p><span class="math display">\[\sum_{i=1}^{n=4} \binom{n}{i}\ = \binom{4}{1}\ + \binom{4}{2}\ + \binom{4}{3}\ + \binom{4}{4}\ = 1 + 6 + 6 + 1 = 14\]</span> R has a function to assist in finding a “not too bad” MLR model, meaning it does not guarantee to return the best model. Here is how it works. It begins with a one-predictor model; start with any predictor. Then it tries to build an intermediate model by incorporating an additional predictor from the pool that returns the least error. This step will continue until all predictors are chosen.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>baseline_mlr <span class="ot">&lt;-</span> <span class="fu">lm</span>(Sepal.Width <span class="sc">~</span> Sepal.Length, <span class="at">data=</span>setosa_iris)</span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a><span class="fu">add1</span>(baseline_mlr, <span class="at">scope =</span> <span class="sc">~</span> Sepal.Length <span class="sc">+</span> Petal.Length <span class="sc">+</span> Petal.Width, <span class="at">test =</span> <span class="st">"F"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Single term additions
+
+Model:
+Sepal.Width ~ Sepal.Length
+             Df Sum of Sq    RSS     AIC F value Pr(&gt;F)
+&lt;none&gt;                    3.1587 -134.09               
+Petal.Length  1 0.0032458 3.1554 -132.15  0.0483 0.8269
+Petal.Width   1 0.0052586 3.1534 -132.18  0.0784 0.7807</code></pre>
+</div>
+</div>
+<p>The model error is reflected in the Akaike Information Criterion (AIC) values. The intuition is that more predictors will naturally fit the data better. However, the model inevitably fits the noise as well. As a result, although the model looks great in development, it eventually fails to handle unseen data, i.e., overfitting. AIC serves as a canary. As a rule of thumb, if the difference in AIC between consecutive intermediate models is less than 2, there is no significant difference.</p>
 </section>
 </section>
-<section id="summary" class="level2" data-number="4.6">
-<h2 data-number="4.6" class="anchored" data-anchor-id="summary"><span class="header-section-number">4.6</span> Summary</h2>
-<p>In this chapter, we have discussed classical statistical tests that …</p>
-<p>Put a table of tests here.</p>
+<section id="summary" class="level2" data-number="4.5">
+<h2 data-number="4.5" class="anchored" data-anchor-id="summary"><span class="header-section-number">4.5</span> Summary</h2>
+<p>In this chapter, we have discussed classical statistical tests in the framework of Null Hypothesis Significance Test (NHST). A simple guideline for choosing the most appropriate test is to identify the main variable(s), how many there are, and their type(s). The table below summarizes the tests discussed in this chapter:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Description</th>
+<th>Example</th>
+<th>Reference</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>One-sample t-test</td>
+<td>Test whether the mean of a quantitative variable equals a specified value.</td>
+<td>t.test(FlightDelays$Delay, mu = 12)</td>
+<td><a href="#sec-04-one-sample-t-test" class="quarto-xref"><span>Section 4.2.1</span></a></td>
+</tr>
+<tr class="even">
+<td>Two-sample t-test</td>
+<td>Test whether or not the means of two groups are equal.</td>
+<td>t.test(Delay ~ Carrier, data=FlightDelays)</td>
+<td><a href="#sec-04-two-sample-t-test" class="quarto-xref"><span>Section 4.2.3</span></a></td>
+</tr>
+<tr class="odd">
+<td>One-way ANOVA</td>
+<td>Test whether or not the means of three or more groups are equal.</td>
+<td>aov_results &lt;- aov(Delay ~ Destination, data=FlightDelays)</td>
+<td><a href="#sec-04-one-way-ANOVA" class="quarto-xref"><span>Section 4.2.4</span></a></td>
+</tr>
+<tr class="even">
+<td>Paired t-test</td>
+<td>Test whether the mean difference between two measurements taken on the same subject significantly differs from zero</td>
+<td>with(Groceries, t.test(Target, Walmart, paired=T))</td>
+<td><a href="#sec-04-paired-t-test" class="quarto-xref"><span>Section 4.2.5</span></a></td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(\chi^2\)</span> goodness-of-fit</td>
+<td>Test whether the proportions of categories match a specified expected ratio.</td>
+<td>chisq.test(table(FlightDelays$Delayed30), p=c(0.9,0.1))</td>
+<td><a href="#sec-04-x2-gof-test" class="quarto-xref"><span>Section 4.3.1</span></a></td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(\chi^2\)</span> test for independence</td>
+<td>Test the independence between two categorical variables</td>
+<td>with(FlightDelays, chisq.test(Carrier, Delayed30, correct=TRUE))</td>
+<td><a href="#sec-04-x2-test-independence" class="quarto-xref"><span>Section 4.3.2</span></a></td>
+</tr>
+<tr class="odd">
+<td>Simple Linear Regression</td>
+<td>It examines the linear relationship between the predictor and the response.</td>
+<td>lm(Sepal.Width ~ Sepal.Length, data=setosa_iris)</td>
+<td><a href="#sec-04-SLR" class="quarto-xref"><span>Section 4.4.1</span></a></td>
+</tr>
+<tr class="even">
+<td>Multiple Linear Regression</td>
+<td>It examines the linear relationship between multiple predictors and the response.</td>
+<td>lm(Sepal.Width ~ Sepal.Length + Petal.Length, data=setosa_iris)</td>
+<td><a href="#sec-04-MLR" class="quarto-xref"><span>Section 4.4.2</span></a></td>
+</tr>
+</tbody>
+</table>
+<p>.</p>
 
 
 </section>

@@ -302,7 +302,7 @@ window.Quarto = {
 <li><p>Define categorical variables.</p></li>
 <li><p>Calculate descriptive and summary statistics.</p></li>
 <li><p>Utilize inspection functions to figure out basic information about data.</p></li>
-<li><p>Format and print the contents of variables to the console.</p></li>
+<li><p>Format and print variable contents to the console.</p></li>
 <li><p>Use <code>seq()</code> and <code>with()</code> functions.</p></li>
 </ul>
 <p>As R scripting is a hands-on topic, I encourage you to open RStudio alongside this book and try out the code to maximize understanding. Let’s get started.</p>
@@ -325,7 +325,7 @@ window.Quarto = {
 </section>
 <section id="r-objects" class="level2" data-number="1.2">
 <h2 data-number="1.2" class="anchored" data-anchor-id="r-objects"><span class="header-section-number">1.2</span> R Objects</h2>
-<p>Every variable is an R object. In scripting, it is important to know the type(s) of value(s) being stored in a variable, as the types dictate the legitimate operations that act on the variable. Let’s begin with data types.</p>
+<p>Every variable is an R object. In scripting, it is important to know the type(s) of value(s) being stored in a variable, as the types dictate the legitimate operations that can be performed on the variable. Let’s begin with data types.</p>
 <section id="sec-data-types" class="level3" data-number="1.2.1">
 <h3 data-number="1.2.1" class="anchored" data-anchor-id="sec-data-types"><span class="header-section-number">1.2.1</span> Data Types</h3>
 <p>R supports six data types:</p>
@@ -602,7 +602,7 @@ Levels: setosa versicolor virginica</code></pre>
 </section>
 <section id="create-a-data-frame" class="level4" data-number="1.2.5.2">
 <h4 data-number="1.2.5.2" class="anchored" data-anchor-id="create-a-data-frame"><span class="header-section-number">1.2.5.2</span> Create a Data Frame</h4>
-<p>We can use the <code>data.frame()</code> function with the concept of vectors to create a dataset in data frame format. For example, a study collected 10 fish with their sex and age. To create the data frame, vectors must be created to represent each variable (column). Here’s the R code:</p>
+<p>We can use the <code>data.frame()</code> function, using vectors, to create a dataset in data frame format. For example, a study collected 10 fish with their sex and age. To create the data frame, vectors must be created to represent each variable (column). Here’s the R code:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>sex <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">'F'</span>,<span class="st">'M'</span>,<span class="st">'M'</span>,<span class="st">'F'</span>,<span class="st">'F'</span>,<span class="st">'F'</span>,<span class="st">'M'</span>,<span class="st">'M'</span>,<span class="st">'M'</span>,<span class="st">'M'</span>)</span>
 <span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>age <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">3</span>,<span class="dv">1</span>,<span class="dv">1</span>)</span>
@@ -901,7 +901,7 @@ Levels: setosa versicolor virginica</code></pre>
 </section>
 <section id="sec-seq-function" class="level3" data-number="1.4.3">
 <h3 data-number="1.4.3" class="anchored" data-anchor-id="sec-seq-function"><span class="header-section-number">1.4.3</span> <code>seq()</code> - create a series of numbers</h3>
-<p>There are situations where we need a series of equal-interval numbers. For example, override the default breaks - x-ticks - of a histogram, a vector containing all possible outcomes of tossing two dice, i.e, from 2 to 12.</p>
+<p>There are situations where we need a series of equal-interval numbers. For example, override the default breaks - x-ticks - of a histogram, or a vector containing all possible outcomes of tossing two dice, i.e, from 2 to 12.</p>
 <p>In R, the <code>seq()</code> function generates a list of equal-interval numbers, whole and decimal. <code>seq()</code> takes the following parameters:</p>
 <ol type="1">
 <li><p><code>from = 1</code>, the default is 1.</p></li>

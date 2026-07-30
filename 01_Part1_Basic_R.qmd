@@ -20,7 +20,7 @@ The journey of R scripting starts with a basic understanding of R objects and co
 
 - Utilize inspection functions to figure out basic information about data.
 
-- Format and print the contents of variables to the console.
+- Format and print variable contents to the console.
 
 - Use `seq()` and `with()` functions.
 
@@ -48,7 +48,7 @@ Note that:
 
 ## R Objects
 
-Every variable is an R object. In scripting, it is important to know the type(s) of value(s) being stored in a variable, as the types dictate the legitimate operations that act on the variable. Let's begin with data types.
+Every variable is an R object. In scripting, it is important to know the type(s) of value(s) being stored in a variable, as the types dictate the legitimate operations that can be performed on the variable. Let's begin with data types.
 
 ### Data Types {#sec-data-types}
 
@@ -297,7 +297,7 @@ We have covered several ways to access rows, columns, or both using indexes and 
 
 #### Create a Data Frame
 
-We can use the `data.frame()` function with the concept of vectors to create a dataset in data frame format. For example, a study collected 10 fish with their sex and age. To create the data frame, vectors must be created to represent each variable (column). Here's the R code:
+We can use the `data.frame()` function, using vectors, to create a dataset in data frame format. For example, a study collected 10 fish with their sex and age. To create the data frame, vectors must be created to represent each variable (column). Here's the R code:
 
 ```{r}
 sex <- c('F','M','M','F','F','F','M','M','M','M')
@@ -527,7 +527,7 @@ print(paste0("The diameter of a circle with radius ",radius," cm is ",diameter,"
 
 ### `seq()` - create a series of numbers {#sec-seq-function}
 
-There are situations where we need a series of equal-interval numbers. For example, override the default breaks - x-ticks - of a histogram, a vector containing all possible outcomes of tossing two dice, i.e, from 2 to 12.
+There are situations where we need a series of equal-interval numbers. For example, override the default breaks - x-ticks - of a histogram, or a vector containing all possible outcomes of tossing two dice, i.e, from 2 to 12.
 
 In R, the `seq()` function generates a list of equal-interval numbers, whole and decimal. `seq()` takes the following parameters:
 
