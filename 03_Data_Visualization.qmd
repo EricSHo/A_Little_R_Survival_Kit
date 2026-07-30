@@ -1,6 +1,6 @@
 # Data Visualization {#sec-03-data-visualization}
 
-Now you have cleaned, organized, and analyzed the data, the next step is to share the findings and insights with the audience, raising their attention to the study. Row and columns of numbers may not be palatable to most people. To assist the audience to unpack the message embedded in the data, a graph is recommended. In this chapter, we will discuss various types of graphs, what they are good at and not so good at, and how to make them in R using two different graphical systems.
+Now that you have cleaned, organized, and analyzed the data, the next step is to share the findings and insights with the audience, raising their attention to the study. Rows and columns of numbers may not be palatable to most people. To help the audience unpack the message embedded in the data, a graph is recommended. In this chapter, we will discuss various types of graphs, what they are good at and not so good at, and how to make them in R using two different graphical systems.
 
 ## Learning Objectives: {.unnumbered}
 
@@ -16,13 +16,13 @@ After finishing this chapter, you should be able to:
 
 ## Types of Graphs
 
-The best way to choose the most appropriate graph depends on the data. Specifically, the types of variables (numeric or categorical) and how many of them. Here, you will plot graphs that entail:
+The best way to choose the most appropriate graph depends on the data. Specifically, the types of variables (numeric or categorical) and how many of them there are. Here, you will plot graphs that entail:
 
 1.  One numeric variable.
 
 2.  One categorical variable.
 
-3.  One categorical and one numeric variables.
+3.  One categorical variable and one numeric variable.
 
 4.  Two or more numeric variables.
 
@@ -32,7 +32,7 @@ The best way to choose the most appropriate graph depends on the data. Specifica
 
 ## Base R Graphics
 
-This graphical system is built into the base R; no additional package is required. It is simple, ideal for creating graphs promptly for prototyping purposes and get the job done. The flip side is that the graphs may be bare-bones and unrefined. Some features are hard to be implemented. There is no one graphical system for all data visualization tasks. It is highly recommended to master both systems. Let's dive into each graph one by one.
+This graphical system is built into base R; no additional package is required. It is simple, ideal for creating graphs promptly for prototyping purposes and getting the job done. The flip side is that the graphs may be bare-bones and unrefined. Some features are hard to implement. There is no one graphical system for all data visualization tasks. It is highly recommended to master both systems. Let's dive into each graph one by one.
 
 ### One Numeric Variable
 
@@ -99,13 +99,13 @@ barplot(proportions,
 -->
 ```
 
-For the bottom-right graph, check out this line: `breaks = seq(2,4.5,by=0.1)`. The aim is to customize the width of the bars. The `seq()` function (@sec-seq-function) generates a list of numbers (`2.0, 2.1 ... 4.4, 4.5`) that represents the x-ticks.
+For the bottom-right graph, check out this line: `breaks = seq(2,4.5,by=0.1)`. The aim is to customize the bar widths. The `seq()` function (@sec-seq-function) generates a list of numbers (`2.0, 2.1 ... 4.4, 4.5`) that represents the x-ticks.
 
-Note: `par(mfrow=c(2,2))` splits the plotting area into a 2x2 grid such that multiple graphs can be displayed together. If you plot contains only one graph, it can be ignored.
+Note: `par(mfrow=c(2,2))` splits the plotting area into a 2x2 grid such that multiple graphs can be displayed together. If your plot contains only one graph, it can be ignored.
 
 #### Box Plot
 
-If robust statistics of the data is the message, the most appropriate graph is a box plot. In a box plot, the y-axis represents the numeric variable, and the x-axis has no meaning.
+If robust statistics of the data are the key message, the most appropriate graph is a box plot. In a box plot, the y-axis represents the numeric variable, and the x-axis has no meaning.
 
 ```{r}
 #| label: fig-3-2
@@ -153,7 +153,7 @@ $$Upper\ Whisker = Q3 + 1.5 \times IQR$$ $$Lower\ Whisker = Q1 - 1.5 \times IQR$
 
 As a practice, data points above the upper whisker or below the lower whiskers are labeled as outliers.
 
-While a box plot summarizes data into quartiles, a histogram portrays the underlying distribution—such as peaks and symmetry—that is otherwise difficult to spot. Is it a great idea to combine the best of both plots in a single graph? To ensure that the combined plot makes sense, we need to ensure that the axes of the two plots are in the same range. Here's an example below:
+While a box plot summarizes data into quartiles, a histogram portrays the underlying distribution—such as peaks and symmetry—that is otherwise difficult to spot. Is it a great idea to combine the best of both plots in a single graph? To ensure the combined plot makes sense, we need to make sure the axes of the two plots are in the same range. Here's an example below:
 
 ```{r}
 #| label: fig-3-4
@@ -180,17 +180,17 @@ boxplot(iris$Sepal.Width,
 
 ```
 
-The `ylim` of the histogram and the `xlim=` of the box plot are the specific parameters used to align the two graphs in the same scale.
+The `ylim` of the histogram and the `xlim=` of the box plot are the specific parameters used to align the two graphs on the same scale.
 
-Figure 3.4 illustrates the added advantage of combining graphs. It is clear that the peak in the histogram is almost perfectly aligned with the median shown in the box plot, suggesting the data distribution is nearly symmetric. Additionally, the outliers, hardly visible in the histogram, can easily be spotted in the box plot. This example demonstrates the synergy offered by combining different types of graphs, and the technique used to implement it.
+Figure 3.4 illustrates the added advantage of combining graphs. The peak in the histogram is almost perfectly aligned with the median shown in the box plot, suggesting the data distribution is nearly symmetric. Additionally, the outliers, hardly visible in the histogram, can easily be spotted in the box plot. This example demonstrates the 1+1\>2 offered by combining different types of graphs, and the technique used to implement it.
 
 ### One Categorical Variable
 
-When it comes to categorical variables, we are usually interested in the number of samples fall in each category of a categorical variable. As discussed in @sec-02-data-wrangling, the tallying can be done using the `table()` function (@sec-base-tabulation) or `group_by()` followed by `summarize(n=n())` (@sec-tidyverse-tabulation).
+When it comes to categorical variables, we are usually interested in the number of samples that fall in each category. As discussed in @sec-02-data-wrangling, the tallying can be done using the `table()` function (@sec-base-tabulation) or `group_by()` followed by `summarize(n=n())` (@sec-tidyverse-tabulation).
 
 #### Bar Plot
 
-Bar plot is the standard choice for visualizing tallied data. The only input to the R's `barplot()` graph function is a tabulated count of the categorical variable. Here's an example:
+Bar plot is the standard choice for visualizing tallied data. The only input to R's `barplot()` graph function is a tabulated count of the categorical variable. Here's an example:
 
 ```{r}
 #| label: fig-3-5
@@ -227,13 +227,13 @@ barplot(with(iris, table(Species)),
 
 ```
 
-Sometime you might want to reorder the categories along the x- or y-axis. By default, `barplot()` places the bars from left to right according to the order of the levels. E.g., show the levels of `iris$Species` by:
+Sometimes you might want to reorder the categories along the x- or y-axis. By default, `barplot()` places the bars from left to right according to the order of the levels. E.g., show the levels of `iris$Species` by:
 
 ```{r}
 levels(iris$Species)
 ```
 
-You can change the order of the levels by updating the factor variable using the `factor()` function (@sec-factor-levels). Suppose, the desired order is `virginica`, `setosa`, and `veriscolor`. Here's the code:
+You can change the order of the levels by updating the factor variable using the `factor()` function (@sec-factor-levels). Suppose the desired order is `virginica`, `setosa`, and `veriscolor`. Here's the code:
 
 ```{r}
 iris$Species <- factor(iris$Species, 
@@ -296,9 +296,9 @@ pie(counts,
 
 ```
 
-### One Categorical and One Numeric Variables
+### One Categorical Variable and One Numeric Variable
 
-The categorical variable in this situation is usually served as a group identifier that splits the data into groups so the numerical variable can be compared between groups. This kind of graph is generally named **side-by-side plot**. You can choose a side-by-side box plot or a side-by-side bar plot. For example, a side-by-side box plot that visually compares the robust statistics of `Sepal.Length` between different species of iris.
+The categorical variable in this situation usually serves as a group identifier that splits the data into groups so the numerical variable can be compared between groups. This kind of graph is generally named a **side-by-side plot**. You can choose a side-by-side box plot or a side-by-side bar plot. For example, a side-by-side box plot that visually compares the robust statistics of `Sepal.Length` between different species of iris.
 
 #### Side-by-side box plot
 
@@ -323,13 +323,13 @@ boxplot(Sepal.Length ~ Species,
 
 `Sepal.Length ~ Species` is read as "Sepal length **by** species", the tilde symbol "`~`" means "by".
 
-However, there is glitch in the horizontal box plot (bottom): the y-labels collide. It can be fixed by:
+However, there is a glitch in the horizontal box plot (bottom): the y-labels collide. It can be fixed by:
 
 1.  Expand the left margin of the plotting area.
 
-2.  Add the `las=2` parameter to the `boxplot()` function, and disable the default `ylab=`.
+2.  Add the `las=2` parameter to the `boxplot()` function, and turn off the default `ylab=`.
 
-3.  Mannually add the y-label.
+3.  Manually add the y-label.
 
 ```{r}
 #| label: fig-3-9
@@ -356,7 +356,7 @@ title(ylab = "Species", line = 5)
 
 #### Side-by-side Bar Plot
 
-Suppose you want to visually compare the average sepal length among different iris species. You will begin to feel the cumbersome of base R, and appreciate the power of `tidyverse`. Anyway, you will see how to make such a graph with a new function, `tapply()`, in two steps.
+Suppose you want to compare the average sepal length among different iris species visually. You will begin to feel the cumbersome nature of base R, and appreciate the power of `tidyverse`. Anyway, you will see how to make such a graph with a new function, `tapply()`, in two steps.
 
 First, make a table of average sepal length by species. Apparently, the `table()` function may help. But it does not work for this case, as it only tallies the number of samples by species. Hence, you need to use a new function `tapply()`. Here's an example:
 
@@ -365,7 +365,7 @@ mean_data <- tapply(iris$Sepal.Length, iris$Species, FUN = mean)
 mean_data
 ```
 
-How does `tapply()` work? The "`t`" represents table. The function applies the `mean` function to the input data `iris$Sepal.Length` grouped by `iris$Species`. In other words, the `mean()` is applied to the sepal lengths for each species separately.
+How does `tapply()` work? The "`t`" represents a table. The function applies the `mean` function to the input data `iris$Sepal.Length` grouped by `iris$Species`. In other words, the `mean()` is applied to the sepal lengths for each species separately.
 
 And then, pass the `mean_data` object to `barplot()`.
 
@@ -387,7 +387,7 @@ The error bar represents the standard error of the mean (SEM). Here is the formu
 
 $$\huge{\bar{x}\pm\frac{s}{\sqrt{n}}}$$ , where $s$ and $n$ are the standard deviation and sample size, respectively. In the bar plot you are going to plot, the height of the bar is $\bar{x}$, and the error bars span above and below the bar's top by $\frac{s}{\sqrt{n}}$ units.
 
-First, calculate the mean and standard of errors using the `tapply()` function.
+First, calculate the mean and standard error using the `tapply()` function.
 
 ```{r}
 mean_data <- tapply(iris$Sepal.Length, iris$Species, FUN = mean)
@@ -444,7 +444,7 @@ plot(mean_data,
 
 - To join the dots together in a line plot, specify `type='b'`, the `b` means **both** dots and line are plotted. More options of `type` can be found using the help function: `help(plot)` documentation.
 
-But, there is a glitch in the x-tick.The x-tick should show the actual species names instead of number. It can be fixed in two steps: 1. Suppress the default x-tick labeling feature of the `plot()` function by setting the parameter `xaxt="n"`. And then, paste the customized x-tick back by the `axis()` function. The species names can be obtained by `names(mean_data)`.
+But there is a glitch in the x-tick. The x-tick should show the actual species names instead of numbers. It can be fixed in two steps: 1. Suppress the default x-tick labeling feature of the `plot()` function by setting the parameter `xaxt="n"`. And then, paste the customized x-tick back with the `axis()` function. The species names can be obtained by `names(mean_data)`.
 
 ```{r}
 #| label: fig-3-13
@@ -495,7 +495,7 @@ Suppose you are interested in visualizing and comparing the distribution of sepa
 
 1.  Split the data by individual species.
 
-2.  Calculate the range for the x- and y-axis so as to ensure the histograms are in the same scale.
+2.  Calculate the range for the x- and y-axis to ensure the histograms are on the same scale.
 
 3.  Create a histogram in certain color for a species from step 1, and use it as a template.
 
@@ -518,7 +518,7 @@ x_range <- range(iris$Sepal.Length)
 y_range <- c(0, 25) # 25 is arbitrary.
 ```
 
-Below is the code for plotting the template histogram, and how additional histograms are added to it. To distinguish species, different color is attributed to different species. It is done by `col = rgb(...)`. The `rgb()` function stands for **r**ed, **g**reen, and **b**lue. It takes four parameters: the intensity of red, green, blue, and transparency. All are in the range of 0 and 1. E.g., `rgb(1, 0, 0, 0.5)` means 100% red, no green and blue at all, and transparency is 50%.
+Below is the code for plotting the template histogram and adding histograms to it. To distinguish species, different colors are attributed to different species. It is done by `col = rgb(...)`. The `rgb()` function stands for **r**ed, **g**reen, and **b**lue. It takes four parameters: the intensity of red, green, blue, and transparency. All are in the range of 0 and 1. E.g., `rgb(1, 0, 0, 0.5)` means 100% red, no green and blue at all, and transparency is 50%.
 
 ```{r}
 #| label: fig-3-15
@@ -550,9 +550,9 @@ The distribution of the counts can reveal whether or not the two categorical var
 summary(penguins)
 ```
 
-Suppose you are interested to explore whether or not different species has shown preference in habitat or geographical location (`island`).
+Suppose you are interested in exploring whether or not different species have shown preference in habitat or geographical location (`island`).
 
-Let's begin with creating a 2D table as below:
+Let's begin by creating a 2D table as below:
 
 ```{r}
 mytab <- with(penguins, table(species, island))
@@ -593,9 +593,9 @@ mosaicplot(mytab, main = "Mosaic Plot of Two Dependent Variables")
 mosaicplot(indep_tab, main = "Mosaic Plot of Two Independent Variables")
 ```
 
-### Two Numeric Variables
+### Two Numeric Variables {#sec-baseR-scatter-plot}
 
-A scatter plot is the default choice to visualize the relationship between two numeric variables. The relationship can be manifold, ranging from linear to cyclical. So, visualizing how the data points are distributed in a 2D plan is an intuitive way to learn about there relationship. Importantly, visualization should be done before performing any statistical analysis, e.g., linear regression. Here is how to create a scatter plot that shows the relationship between sepal width and sepal length. Note that each point $(x_{i},y_{i})$ is a pair of values from one sample.
+A scatter plot is the default choice to visualize the relationship between two numeric variables. The relationship can be manifold, ranging from linear to cyclical. So, visualizing how the data points are distributed in a 2D plane is an intuitive way to learn about their relationship. Importantly, visualization should be done before performing any statistical analysis, e.g., linear regression. Here is how to create a scatter plot that shows the relationship between sepal width and sepal length. Note that each point $(x_{i},y_{i})$ is a pair of values from one sample.
 
 ```{r}
 #| label: fig-3-17
@@ -638,7 +638,7 @@ legend("topright",
        title = "Species")
 ```
 
-If your aim is to explore linear relationship between the two variables, it can be emphasized by addingg a regression line for the two variables on top of the data points. Here is an example, regress `Sepal.Length` (response) on `Sepal.Width` (independent).
+If you aim to explore the linear relationship between the two variables, you can emphasize it by adding a regression line for the two variables on top of the data points. Here is an example: regress `Sepal.Length` (response) on `Sepal.Width` (independent).
 
 ```{r}
 lm_model <- lm(Sepal.Length ~ Sepal.Width, data=iris)
@@ -676,9 +676,9 @@ abline(a=intercept, b=slope, col='red')
 
 <!-- https://www.r-bloggers.com/2021/06/r-plot-pch-symbols-different-point-shapes-in-r/ -->
 
-### Multipanel Scatter Plot
+### Multipanel Scatter Plot {#sec-baseR-multipanel-scatter-plot}
 
-A multipanel scatter plot offers a glimpse of the relationship between all possible pairs of numeric variables. Suppose, you are interested in the pairwise relationship between all numeric variables in `iris`. It can easily be done using the `pairs()` plot function.
+A multipanel scatter plot offers a glimpse of the relationship between all possible pairs of numeric variables. Suppose you are interested in the pairwise relationship between all numeric variables in `iris`. It can easily be done using the `pairs()` plot function.
 
 ```{r}
 #| label: fig-3-20
@@ -687,7 +687,7 @@ A multipanel scatter plot offers a glimpse of the relationship between all possi
 pairs(iris[,1:4], main="A Multi-Panel Scatter Plot")
 ```
 
-Here it concludes our journey of data visualization using base R functions. As you can see, some plots can be made easily using base R (e.g., multipanel scatter plot), while others are less direct (e.g., bar plot with error bars). There is no one system you should use, choose whatever fits your requirements.
+Here concludes our journey of data visualization using base R functions. As you can see, some plots can be made easily using base R (e.g., multipanel scatter plot), while others are less direct (e.g., bar plot with error bars). There is no one system you should use; choose whatever fits your requirements.
 
 ## `ggplot2`
 
@@ -701,7 +701,7 @@ require(tidyverse)
 
 ### Grammar of `ggplot2`
 
-The two '`g`'s of `ggplot2` stand for **Grammar of Graphics**. In `ggplot2`, the graphical widgets are arranged in layers. That idea gives developers the flexibility to decorate a graph by adding layers to an existing graph. The **data** layer forms the foundation of a graph. The **Aesthetics** defines the association between data variable(s) and the axes. **Geometries** are the types of graphs, e.g., line plot, histogram, etc. **Facets** split a graph into multi-panels. **Statistics** defines how to aggregate data, e.g., in proportion or take the face value in a barplot. **Coordinates** supports an X-Y Cartesian coordinate system, and a polar coordinate system. (See the Pie Chart section below) **Themes** offers different color schemes, font type, font size, etc.
+The two '`g`'s of `ggplot2` stand for **Grammar of Graphics**. In `ggplot2`, the graphical widgets are arranged in layers. That idea gives developers the flexibility to decorate a graph by adding layers to an existing graph. The **data** layer forms the foundation of a graph. The **Aesthetics** layer defines the association between data variable(s) and the axes. **Geometries** are the types of graphs, e.g., line plot, histogram, etc. **Facets** split a graph into multiple panels. **Statistics** defines how to aggregate data, e.g., in proportion or take the face value in a barplot. **Coordinates** support an X-Y Cartesian coordinate system and a polar coordinate system. (See the Pie Chart section below) **Themes** offer different color schemes, font type, font size, etc.
 
 ```{r echo=FALSE}
 #| label: fig-3-21
@@ -730,7 +730,7 @@ ggplot(data=iris, aes(x=Sepal.Width)) +
 
 *If you see this message: "`stat_bin()` using `bins = 30`. Pick better value `binwidth`", R just informs you that 30 bins was used by default. You can ignore it or specify a new `binwidth` value.*
 
-It is always a good idea to give the graph a title at the top so people know what the key message is. Equally important is the x- and y-labels. This task can be done by the `labs()` function. By default, the title is left-justified. To center it, see the last line and the comment above it.
+It is always a good idea to give the graph a title at the top so people know what the key message is. Equally important are the x- and y-labels. The function `labs()` can do the job. By default, the title is left-justified. To center it, see the last line and the comment above it.
 
 ```{r}
 #| label: fig-3-23
@@ -775,9 +775,9 @@ ggplot(data=iris, aes(x=Sepal.Width)) +
 
 **Optional topic**
 
-As you might notice that each of the four histograms occupies the entire plotting area instead of displaying in a 2x2 grid as @fig-3-1. It is because `ggolot2` does not work with `par(mfrow(2,2))`. To divide the plotting area into a grid that is compatible with `ggplot2`, use the `patchwork` package. Use the menu option **Tools** $\rightarrow$ Install Packages to install it.
+As you might notice, each of the four histograms occupies the entire plotting area instead of displaying in a 2x2 grid as in @fig-3-1. It is because `ggolot2` does not work with `par(mfrow(2,2))`. To divide the plotting area into a grid that is compatible with `ggplot2`, use the `patchwork` package. Use the menu option **Tools** $\rightarrow$ Install Packages to install it.
 
-Another new concept is that a graph can be stored in a variable so it can be displayed later in the grid. In the example below, the four histograms above are initially stored in variables `p1`, `p2`, `p3`, and `p4`. See the example below:
+Another new concept is that a graph can be stored in a variable so it can be displayed later in the grid. In the example below, the four histograms above are initially stored in variables, `p1`, `p2`, `p3`, and `p4`. See the example below:
 
 ```{r warning=FALSE, message=FALSE}
 #| label: fig-3-26
@@ -818,7 +818,7 @@ p4 <- ggplot(data=iris, aes(x=Sepal.Width)) +
 
 #### Box plot
 
-The anatomy of a box plot can be found in @fig-3-3. The geometry function of a box plot is `geom_boxplot()`. Unlike a histogram, the numeric variable is mapped to the y-axis for a vertical box plot. If you want a horizontal box plot, map the numeric variable to the x-axis, and don't forget to specify the label for the x-axis.
+The anatomy of a box plot can be found in @fig-3-3. The geometry function of a box plot is `geom_boxplot()`. Unlike a histogram, the numeric variable is mapped to the y-axis for a vertical box plot. If you want a horizontal box plot, map the numeric variable to the x-axis, and don't forget to specify an x-axis label.
 
 ```{r warning=FALSE}
 #| label: fig-3-27
@@ -893,7 +893,7 @@ p4 <- ggplot(data=iris, aes(y=Species)) +
 
 Here's a curve ball. You may give an impression that `ggplots` is an upgrade. Plotting a pie chart should be a piece of cake. The fact is NO.
 
-Despite the the disappointment, it is worth to see how a pie chart can be plotted using the foundational building-block functions. To give you a heads-up, `ggplot2` views a pie chart as a twisted bar plot. There is an internal logic to justify such a view but we will not discuss it in detail.
+Despite the disappointment, it is worth seeing how a pie chart can be plotted using the foundational building-block functions. To give you a heads-up, `ggplot2` view a pie chart as a twisted bar plot. There is an internal logic to justify such a view, but we will not discuss it in detail.
 
 Suppose we want to create a pie chart like the one below:
 
@@ -914,7 +914,7 @@ ggplot(iris, aes(x = 2, fill = Species)) +
 
 Here we will walk through each of the intermediate steps until getting the final pie chart.
 
-Let's begin with a stacked barplot, where the bars are stacked up into a single column, and the fill-color is an attribute to distinguish different iris species (`fill=Species`). The stacked bar is placed at the position 2 units on the right from the origin (`aes(x=2)`), but the exact position does not matter.
+Let's begin with a stacked barplot, where the bars are stacked up into a single column, and the fill color is an attribute to distinguish different iris species (`fill=Species`). The stacked bar is placed at the position 2 units on the right from the origin (`aes(x=2)`), but the exact position does not matter.
 
 ```{r warning=FALSE}
 #| label: fig-3-30
@@ -924,7 +924,7 @@ ggplot(data=iris, aes(x=2, fill=Species)) +
   geom_bar()
 ```
 
-Now, use your imagination to picture that the stacked bar is bent into a ring. Does it look like the pie chart in @fig-3-30? To way to "bend" it in `ggplot2` is to change the x-y Cartesian coordinate system to the polar (circular) coordinate system in which a point is characterized by two parameters: the distance from the origin ($r$), and the angle ($\theta$) from the horizontal **polar axis** in an counter-clockwise direction.
+Now, use your imagination to picture that the stacked bar is bent into a ring. Does it look like the pie chart in @fig-3-30? One way to "bend" it in `ggplot2` is to change the x-y Cartesian coordinate system to the polar (circular) coordinate system in which a point is characterized by two parameters: the distance from the origin ($r$), and the angle ($\theta$) from the horizontal **polar axis** in a counter-clockwise direction.
 
 ```{r echo=FALSE}
 #| label: fig-3-31
@@ -975,7 +975,7 @@ ggplot(iris, aes(x = 2, fill = Species)) +
   labs(title = "Donut Chart of Iris Species")
 ```
 
-### One Categorical and One Numeric Variables
+### One Categorical Variable and One Numeric Variable
 
 #### Side-by-side Box Plot
 
@@ -1002,7 +1002,7 @@ p1/p2
 
 #### Side-by-side Bar Plot
 
-Here, you want to compare the average `Sepal.Length` among iris species. As discussed above, you calculate the averages and store them in a separate table. It makes use of pipe, group by, and summarize concepts discussed in @sec-tidyverse-tabulation.
+Here, you want to compare the average `Sepal.Length` among iris species. As discussed above, you calculate the averages and store them in a separate table. It uses pipe, group_by, and summarize concepts discussed in @sec-tidyverse-tabulation.
 
 ```{r}
 iris_summary1 <- iris %>%
@@ -1081,7 +1081,7 @@ ggplot(iris_summary3, aes(x=Species, y=mean_sepal_length, group = 1)) +
 
 #### Overlapping Histogram {#sec-ggplot-overlapping-histogram}
 
-Like the base R side-by-side histogram, you will set the transparency to 0.5 and bin width to 0.25. Note that there is no need to care about the x- and y-limit in `ggplot2`.
+Like the base R side-by-side histogram, you will set the transparency to 0.5 and bin width to 0.25. Note that there is no need to care about the x- and y-limits of `ggplot2`.
 
 ```{r}
 #| label: fig-3-39
@@ -1113,7 +1113,7 @@ colnames(mydf) <- c("species","island","Count")
 mydf
 ```
 
-<!-- During the conversion process, the R function will pair up each species with an island and create a new column that stores the count. It means that the resultant data frame will consists of RxC rows, where R and C are the number of rows and columns, respectively. A 3x3 contingency table like yours, will be converted to a data frame consisting of 9 rows as shown below: -->
+<!-- During the conversion process, the R function will pair up each species with an island and create a new column that stores the count. It means that the resultant data frame will consist of RxC rows, where R and C are the number of rows and columns, respectively. A 3x3 contingency table like yours will be converted to a data frame consisting of 9 rows as shown below: -->
 
 Now we can plot `mydf`.
 
@@ -1129,7 +1129,7 @@ ggplot(data=mydf, aes(x=island, y=Count, fill=species)) +
 
 <!-- package ‘ggmosaic’ is not available for this version of R -->
 
-<!-- `ggplot2` does not have a geometry function for mosaic plot. To create a mosaic within the `ggplot2` framework, you need to install the package `ggmosaic` in which the installation is straightforward. -->
+<!-- `ggplot2` does not have a geometry function for mosaic plot. To create a mosaic within the `ggplot2` framework, you need to install the package `ggmosaic`, whose installation is straightforward. -->
 
 <!-- ```{r Fig3-41, fig.cap="Mosaic Barplot", warning=FALSE} -->
 
@@ -1141,9 +1141,9 @@ ggplot(data=mydf, aes(x=island, y=Count, fill=species)) +
 
 <!-- ``` -->
 
-### Two Numeric Variables
+### Two Numeric Variables {#sec-ggplot-scatter-plot}
 
-Use a scatter plot to visualize the relationship between two numeric variables. As said above, the revealed relationship can be linear and non-linear.
+Use a scatter plot to visualize the relationship between two numeric variables. As mentioned above, the relationship can be linear or non-linear.
 
 ```{r}
 #| label: fig-3-42
@@ -1155,7 +1155,7 @@ ggplot(iris, aes(x=Sepal.Width, y=Sepal.Length)) +
   theme(plot.title = element_text(hjust = 0.5))
 ```
 
-If you wanted to emphasize their linear relationship, it can be done convincingly by adding a regression line on top of the scatter plot. `ggplot2` spares you the effort to create a linear model like base R. Instead, it can be done by adding the `geom_smooth()`. You tell `geom_smooth(method = "lm", se = FALSE, color = "red")` to use a linear method (`lm`) for smoothing the data points. See the code below:
+If you want to emphasize their linear relationship, you can do this convincingly by adding a regression line on top of the scatter plot. `ggplot2` spares you the effort of creating a linear model in base R. Instead, it can be done by adding the `geom_smooth()`. You tell `geom_smooth(method = "lm", se = FALSE, color = "red")` to use a linear method (`lm`) for smoothing the data points. See the code below:
 
 ```{r warning=FALSE}
 #| label: fig-3-43
@@ -1168,15 +1168,15 @@ ggplot(iris, aes(x=Sepal.Width, y=Sepal.Length)) +
   theme(plot.title = element_text(hjust = 0.5))
 ```
 
-If you see this message "`geom_smooth()` using formula = 'y \~ x'", it is harmless, and informational. `ggplot2` is just to let you know what the response and predictor are used by `geom_smooth()` in creating the regression line.
+If you see this message "`geom_smooth()` using formula = 'y \~ x'", it is harmless and informational. `ggplot2` is just to let you know what the response and predictor are used by `geom_smooth()` in creating the regression line.
 
-### Multipanel Scatter Plot
+### Multipanel Scatter Plot {#sec-ggplot-multipanel-scatter-plot}
 
-Often times before multiple linear regression, it is recommended to visualize the relationship between the response variable and the independent variables pairwisely, or the linear relationship between independent variables. The latter is important, as it may cause the **collinearity** issue if independent variables are linearly correlated.
+Oftentimes before multiple linear regression, it is recommended to visualize the relationship between the response variable and the independent variables pairwisely, or the linear relationship between independent variables. The latter is important, as it may cause the **collinearity** issue if independent variables are linearly correlated.
 
-A multipanel scatter plot can do this. However, `ggplot2` does not have a geometry function for it. The simplest way is to use the `ggpairs()` function provided by the `GGally` package, which requires installation, if you have not done so.
+A multipanel scatter plot can do this. However, `ggplot2` does not have a geometry function for it. The simplest way is to use the `ggpairs()` function provided by the `GGally` package, which requires installation if you have not done so.
 
-Suppose, you are interested in the pairwise relationship between all numeric variables in `iris`. It can easily be done using the `ggpairs()` plot function. Color is the attribute used to distinguish species. `progress = FALSE` is to suppress the printing of the progress bar.
+Suppose you are interested in the pairwise relationship between all numeric variables in `iris`. It can easily be done using the `ggpairs()` plot function. Color is the attribute used to distinguish species. `progress = FALSE` is to suppress the printing of the progress bar.
 
 ```{r warning=FALSE, message=FALSE}
 #| label: fig-3-44
@@ -1188,7 +1188,7 @@ ggpairs(iris, aes(color = Species), title = "A Multi-panel Scatter Plot", progre
 
 ## Summary
 
-This is big chapter that has discussed an array of plot functions both from base R and `ggplot2`. It is more like a cookbook of various visualization recipes. So, instead of listing all the functions here, it is helpful to list several useful resources that you can fine-tune the graphs yourselves.
+This is a big chapter that has discussed an array of plot functions both from base R and `ggplot2`. It is more like a cookbook of various visualization recipes. So, instead of listing all the functions here, it is helpful to list several useful resources that you can fine-tune the graphs yourselves.
 
 **pch**
 
@@ -1205,4 +1205,4 @@ knitr::include_graphics(rep("images/pch_symbols.png"))
 
 **Color**
 
-R supports a large number of colors and palettes. [R Graph Gallery](https://r-graph-gallery.com/colors.html) is a great resource to see what choices are available and their names .
+R supports a large number of colors and palettes. [R Graph Gallery](https://r-graph-gallery.com/colors.html) is a great resource to see what choices are available and their names.

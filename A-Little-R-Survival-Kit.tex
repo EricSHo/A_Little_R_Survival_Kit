@@ -3229,13 +3229,13 @@ chapter.
 
 \chapter{Data Visualization}\label{sec-03-data-visualization}
 
-Now you have cleaned, organized, and analyzed the data, the next step is
-to share the findings and insights with the audience, raising their
-attention to the study. Row and columns of numbers may not be palatable
-to most people. To assist the audience to unpack the message embedded in
-the data, a graph is recommended. In this chapter, we will discuss
-various types of graphs, what they are good at and not so good at, and
-how to make them in R using two different graphical systems.
+Now that you have cleaned, organized, and analyzed the data, the next
+step is to share the findings and insights with the audience, raising
+their attention to the study. Rows and columns of numbers may not be
+palatable to most people. To help the audience unpack the message
+embedded in the data, a graph is recommended. In this chapter, we will
+discuss various types of graphs, what they are good at and not so good
+at, and how to make them in R using two different graphical systems.
 
 \section*{Learning Objectives:}\label{learning-objectives-2}
 \addcontentsline{toc}{section}{Learning Objectives:}
@@ -3262,7 +3262,7 @@ After finishing this chapter, you should be able to:
 
 The best way to choose the most appropriate graph depends on the data.
 Specifically, the types of variables (numeric or categorical) and how
-many of them. Here, you will plot graphs that entail:
+many of them there are. Here, you will plot graphs that entail:
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -3271,7 +3271,7 @@ many of them. Here, you will plot graphs that entail:
 \item
   One categorical variable.
 \item
-  One categorical and one numeric variables.
+  One categorical variable and one numeric variable.
 \item
   Two or more numeric variables.
 \item
@@ -3280,11 +3280,11 @@ many of them. Here, you will plot graphs that entail:
 
 \section{Base R Graphics}\label{base-r-graphics}
 
-This graphical system is built into the base R; no additional package is
+This graphical system is built into base R; no additional package is
 required. It is simple, ideal for creating graphs promptly for
-prototyping purposes and get the job done. The flip side is that the
-graphs may be bare-bones and unrefined. Some features are hard to be
-implemented. There is no one graphical system for all data visualization
+prototyping purposes and getting the job done. The flip side is that the
+graphs may be bare-bones and unrefined. Some features are hard to
+implement. There is no one graphical system for all data visualization
 tasks. It is highly recommended to master both systems. Let's dive into
 each graph one by one.
 
@@ -3350,20 +3350,20 @@ bars and border. Bottom right: change the bin width (\texttt{breaks=})}
 \end{figure}%
 
 For the bottom-right graph, check out this line:
-\texttt{breaks\ =\ seq(2,4.5,by=0.1)}. The aim is to customize the width
-of the bars. The \texttt{seq()} function
-(Section~\ref{sec-seq-function}) generates a list of numbers
-(\texttt{2.0,\ 2.1\ ...\ 4.4,\ 4.5}) that represents the x-ticks.
+\texttt{breaks\ =\ seq(2,4.5,by=0.1)}. The aim is to customize the bar
+widths. The \texttt{seq()} function (Section~\ref{sec-seq-function})
+generates a list of numbers (\texttt{2.0,\ 2.1\ ...\ 4.4,\ 4.5}) that
+represents the x-ticks.
 
 Note: \texttt{par(mfrow=c(2,2))} splits the plotting area into a 2x2
-grid such that multiple graphs can be displayed together. If you plot
+grid such that multiple graphs can be displayed together. If your plot
 contains only one graph, it can be ignored.
 
 \subsubsection{Box Plot}\label{box-plot}
 
-If robust statistics of the data is the message, the most appropriate
-graph is a box plot. In a box plot, the y-axis represents the numeric
-variable, and the x-axis has no meaning.
+If robust statistics of the data are the key message, the most
+appropriate graph is a box plot. In a box plot, the y-axis represents
+the numeric variable, and the x-axis has no meaning.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -3430,9 +3430,9 @@ whiskers are labeled as outliers.
 While a box plot summarizes data into quartiles, a histogram portrays
 the underlying distribution---such as peaks and symmetry---that is
 otherwise difficult to spot. Is it a great idea to combine the best of
-both plots in a single graph? To ensure that the combined plot makes
-sense, we need to ensure that the axes of the two plots are in the same
-range. Here's an example below:
+both plots in a single graph? To ensure the combined plot makes sense,
+we need to make sure the axes of the two plots are in the same range.
+Here's an example below:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -3468,31 +3468,31 @@ range. Here's an example below:
 \end{figure}%
 
 The \texttt{ylim} of the histogram and the \texttt{xlim=} of the box
-plot are the specific parameters used to align the two graphs in the
+plot are the specific parameters used to align the two graphs on the
 same scale.
 
-Figure 3.4 illustrates the added advantage of combining graphs. It is
-clear that the peak in the histogram is almost perfectly aligned with
-the median shown in the box plot, suggesting the data distribution is
-nearly symmetric. Additionally, the outliers, hardly visible in the
-histogram, can easily be spotted in the box plot. This example
-demonstrates the synergy offered by combining different types of graphs,
-and the technique used to implement it.
+Figure 3.4 illustrates the added advantage of combining graphs. The peak
+in the histogram is almost perfectly aligned with the median shown in
+the box plot, suggesting the data distribution is nearly symmetric.
+Additionally, the outliers, hardly visible in the histogram, can easily
+be spotted in the box plot. This example demonstrates the
+1+1\textgreater2 offered by combining different types of graphs, and the
+technique used to implement it.
 
 \subsection{One Categorical Variable}\label{one-categorical-variable}
 
 When it comes to categorical variables, we are usually interested in the
-number of samples fall in each category of a categorical variable. As
-discussed in Chapter~\ref{sec-02-data-wrangling}, the tallying can be
-done using the \texttt{table()} function
-(Section~\ref{sec-base-tabulation}) or \texttt{group\_by()} followed by
-\texttt{summarize(n=n())} (Section~\ref{sec-tidyverse-tabulation}).
+number of samples that fall in each category. As discussed in
+Chapter~\ref{sec-02-data-wrangling}, the tallying can be done using the
+\texttt{table()} function (Section~\ref{sec-base-tabulation}) or
+\texttt{group\_by()} followed by \texttt{summarize(n=n())}
+(Section~\ref{sec-tidyverse-tabulation}).
 
 \subsubsection{Bar Plot}\label{bar-plot}
 
 Bar plot is the standard choice for visualizing tallied data. The only
-input to the R's \texttt{barplot()} graph function is a tabulated count
-of the categorical variable. Here's an example:
+input to R's \texttt{barplot()} graph function is a tabulated count of
+the categorical variable. Here's an example:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -3539,7 +3539,7 @@ with tables}
 
 \end{figure}%
 
-Sometime you might want to reorder the categories along the x- or
+Sometimes you might want to reorder the categories along the x- or
 y-axis. By default, \texttt{barplot()} places the bars from left to
 right according to the order of the levels. E.g., show the levels of
 \texttt{iris\$Species} by:
@@ -3556,7 +3556,7 @@ right according to the order of the levels. E.g., show the levels of
 
 You can change the order of the levels by updating the factor variable
 using the \texttt{factor()} function (Section~\ref{sec-factor-levels}).
-Suppose, the desired order is \texttt{virginica}, \texttt{setosa}, and
+Suppose the desired order is \texttt{virginica}, \texttt{setosa}, and
 \texttt{veriscolor}. Here's the code:
 
 \begin{Shaded}
@@ -3647,12 +3647,12 @@ category. Bottom right: Add a fraction or proportion for each category.}
 
 \end{figure}%
 
-\subsection{One Categorical and One Numeric
-Variables}\label{one-categorical-and-one-numeric-variables}
+\subsection{One Categorical Variable and One Numeric
+Variable}\label{one-categorical-variable-and-one-numeric-variable}
 
-The categorical variable in this situation is usually served as a group
+The categorical variable in this situation usually serves as a group
 identifier that splits the data into groups so the numerical variable
-can be compared between groups. This kind of graph is generally named
+can be compared between groups. This kind of graph is generally named a
 \textbf{side-by-side plot}. You can choose a side-by-side box plot or a
 side-by-side bar plot. For example, a side-by-side box plot that
 visually compares the robust statistics of \texttt{Sepal.Length} between
@@ -3691,7 +3691,7 @@ different species of iris.
 length \textbf{by} species'', the tilde symbol
 ``\texttt{\textasciitilde{}}'' means ``by''.
 
-However, there is glitch in the horizontal box plot (bottom): the
+However, there is a glitch in the horizontal box plot (bottom): the
 y-labels collide. It can be fixed by:
 
 \begin{enumerate}
@@ -3700,9 +3700,9 @@ y-labels collide. It can be fixed by:
   Expand the left margin of the plotting area.
 \item
   Add the \texttt{las=2} parameter to the \texttt{boxplot()} function,
-  and disable the default \texttt{ylab=}.
+  and turn off the default \texttt{ylab=}.
 \item
-  Mannually add the y-label.
+  Manually add the y-label.
 \end{enumerate}
 
 \begin{Shaded}
@@ -3741,11 +3741,11 @@ Y-Labels}
 
 \subsubsection{Side-by-side Bar Plot}\label{side-by-side-bar-plot}
 
-Suppose you want to visually compare the average sepal length among
-different iris species. You will begin to feel the cumbersome of base R,
-and appreciate the power of \texttt{tidyverse}. Anyway, you will see how
-to make such a graph with a new function, \texttt{tapply()}, in two
-steps.
+Suppose you want to compare the average sepal length among different
+iris species visually. You will begin to feel the cumbersome nature of
+base R, and appreciate the power of \texttt{tidyverse}. Anyway, you will
+see how to make such a graph with a new function, \texttt{tapply()}, in
+two steps.
 
 First, make a table of average sepal length by species. Apparently, the
 \texttt{table()} function may help. But it does not work for this case,
@@ -3764,7 +3764,7 @@ use a new function \texttt{tapply()}. Here's an example:
      6.588      5.006      5.936 
 \end{verbatim}
 
-How does \texttt{tapply()} work? The ``\texttt{t}'' represents table.
+How does \texttt{tapply()} work? The ``\texttt{t}'' represents a table.
 The function applies the \texttt{mean} function to the input data
 \texttt{iris\$Sepal.Length} grouped by \texttt{iris\$Species}. In other
 words, the \texttt{mean()} is applied to the sepal lengths for each
@@ -3808,8 +3808,8 @@ standard deviation and sample size, respectively. In the bar plot you
 are going to plot, the height of the bar is \(\bar{x}\), and the error
 bars span above and below the bar's top by \(\frac{s}{\sqrt{n}}\) units.
 
-First, calculate the mean and standard of errors using the
-\texttt{tapply()} function.
+First, calculate the mean and standard error using the \texttt{tapply()}
+function.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -3918,11 +3918,11 @@ dots.
   \texttt{help(plot)} documentation.
 \end{itemize}
 
-But, there is a glitch in the x-tick.The x-tick should show the actual
-species names instead of number. It can be fixed in two steps: 1.
+But there is a glitch in the x-tick. The x-tick should show the actual
+species names instead of numbers. It can be fixed in two steps: 1.
 Suppress the default x-tick labeling feature of the \texttt{plot()}
 function by setting the parameter \texttt{xaxt="n"}. And then, paste the
-customized x-tick back by the \texttt{axis()} function. The species
+customized x-tick back with the \texttt{axis()} function. The species
 names can be obtained by \texttt{names(mean\_data)}.
 
 \begin{Shaded}
@@ -4004,8 +4004,8 @@ it:
 \item
   Split the data by individual species.
 \item
-  Calculate the range for the x- and y-axis so as to ensure the
-  histograms are in the same scale.
+  Calculate the range for the x- and y-axis to ensure the histograms are
+  on the same scale.
 \item
   Create a histogram in certain color for a species from step 1, and use
   it as a template.
@@ -4034,9 +4034,9 @@ Let's do it step by step below:
 \end{Highlighting}
 \end{Shaded}
 
-Below is the code for plotting the template histogram, and how
-additional histograms are added to it. To distinguish species, different
-color is attributed to different species. It is done by
+Below is the code for plotting the template histogram and adding
+histograms to it. To distinguish species, different colors are
+attributed to different species. It is done by
 \texttt{col\ =\ rgb(...)}. The \texttt{rgb()} function stands for
 \textbf{r}ed, \textbf{g}reen, and \textbf{b}lue. It takes four
 parameters: the intensity of red, green, blue, and transparency. All are
@@ -4112,11 +4112,11 @@ The data set contains two categorical variables: \texttt{species} and
  NAs    :2       NAs    :2                                 
 \end{verbatim}
 
-Suppose you are interested to explore whether or not different species
-has shown preference in habitat or geographical location
+Suppose you are interested in exploring whether or not different species
+have shown preference in habitat or geographical location
 (\texttt{island}).
 
-Let's begin with creating a 2D table as below:
+Let's begin by creating a 2D table as below:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -4187,12 +4187,12 @@ independent categorical variables}
 
 \end{figure}%
 
-\subsection{Two Numeric Variables}\label{two-numeric-variables}
+\subsection{Two Numeric Variables}\label{sec-baseR-scatter-plot}
 
 A scatter plot is the default choice to visualize the relationship
 between two numeric variables. The relationship can be manifold, ranging
 from linear to cyclical. So, visualizing how the data points are
-distributed in a 2D plan is an intuitive way to learn about there
+distributed in a 2D plane is an intuitive way to learn about their
 relationship. Importantly, visualization should be done before
 performing any statistical analysis, e.g., linear regression. Here is
 how to create a scatter plot that shows the relationship between sepal
@@ -4263,9 +4263,9 @@ numeric variables.}
 
 \end{figure}%
 
-If your aim is to explore linear relationship between the two variables,
-it can be emphasized by addingg a regression line for the two variables
-on top of the data points. Here is an example, regress
+If you aim to explore the linear relationship between the two variables,
+you can emphasize it by adding a regression line for the two variables
+on top of the data points. Here is an example: regress
 \texttt{Sepal.Length} (response) on \texttt{Sepal.Width} (independent).
 
 \begin{Shaded}
@@ -4319,10 +4319,11 @@ on top of the data points. Here is an example, regress
 
 \end{figure}%
 
-\subsection{Multipanel Scatter Plot}\label{multipanel-scatter-plot}
+\subsection{Multipanel Scatter
+Plot}\label{sec-baseR-multipanel-scatter-plot}
 
 A multipanel scatter plot offers a glimpse of the relationship between
-all possible pairs of numeric variables. Suppose, you are interested in
+all possible pairs of numeric variables. Suppose you are interested in
 the pairwise relationship between all numeric variables in
 \texttt{iris}. It can easily be done using the \texttt{pairs()} plot
 function.
@@ -4345,11 +4346,11 @@ function.
 
 \end{figure}%
 
-Here it concludes our journey of data visualization using base R
-functions. As you can see, some plots can be made easily using base R
-(e.g., multipanel scatter plot), while others are less direct (e.g., bar
-plot with error bars). There is no one system you should use, choose
-whatever fits your requirements.
+Here concludes our journey of data visualization using base R functions.
+As you can see, some plots can be made easily using base R (e.g.,
+multipanel scatter plot), while others are less direct (e.g., bar plot
+with error bars). There is no one system you should use; choose whatever
+fits your requirements.
 
 \section{\texorpdfstring{\texttt{ggplot2}}{ggplot2}}\label{ggplot2}
 
@@ -4394,15 +4395,15 @@ The two '\texttt{g}'s of \texttt{ggplot2} stand for \textbf{Grammar of
 Graphics}. In \texttt{ggplot2}, the graphical widgets are arranged in
 layers. That idea gives developers the flexibility to decorate a graph
 by adding layers to an existing graph. The \textbf{data} layer forms the
-foundation of a graph. The \textbf{Aesthetics} defines the association
-between data variable(s) and the axes. \textbf{Geometries} are the types
-of graphs, e.g., line plot, histogram, etc. \textbf{Facets} split a
-graph into multi-panels. \textbf{Statistics} defines how to aggregate
-data, e.g., in proportion or take the face value in a barplot.
-\textbf{Coordinates} supports an X-Y Cartesian coordinate system, and a
-polar coordinate system. (See the Pie Chart section below)
-\textbf{Themes} offers different color schemes, font type, font size,
-etc.
+foundation of a graph. The \textbf{Aesthetics} layer defines the
+association between data variable(s) and the axes. \textbf{Geometries}
+are the types of graphs, e.g., line plot, histogram, etc.
+\textbf{Facets} split a graph into multiple panels. \textbf{Statistics}
+defines how to aggregate data, e.g., in proportion or take the face
+value in a barplot. \textbf{Coordinates} support an X-Y Cartesian
+coordinate system and a polar coordinate system. (See the Pie Chart
+section below) \textbf{Themes} offer different color schemes, font type,
+font size, etc.
 
 \begin{figure}
 
@@ -4462,10 +4463,10 @@ informs you that 30 bins was used by default. You can ignore it or
 specify a new \texttt{binwidth} value.}
 
 It is always a good idea to give the graph a title at the top so people
-know what the key message is. Equally important is the x- and y-labels.
-This task can be done by the \texttt{labs()} function. By default, the
-title is left-justified. To center it, see the last line and the comment
-above it.
+know what the key message is. Equally important are the x- and y-labels.
+The function \texttt{labs()} can do the job. By default, the title is
+left-justified. To center it, see the last line and the comment above
+it.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -4557,8 +4558,8 @@ bin width.}
 
 \textbf{Optional topic}
 
-As you might notice that each of the four histograms occupies the entire
-plotting area instead of displaying in a 2x2 grid as
+As you might notice, each of the four histograms occupies the entire
+plotting area instead of displaying in a 2x2 grid as in
 Figure~\ref{fig-3-1}. It is because \texttt{ggolot2} does not work with
 \texttt{par(mfrow(2,2))}. To divide the plotting area into a grid that
 is compatible with \texttt{ggplot2}, use the \texttt{patchwork} package.
@@ -4567,7 +4568,7 @@ install it.
 
 Another new concept is that a graph can be stored in a variable so it
 can be displayed later in the grid. In the example below, the four
-histograms above are initially stored in variables \texttt{p1},
+histograms above are initially stored in variables, \texttt{p1},
 \texttt{p2}, \texttt{p3}, and \texttt{p4}. See the example below:
 
 \begin{Shaded}
@@ -4627,7 +4628,7 @@ The anatomy of a box plot can be found in Figure~\ref{fig-3-3}. The
 geometry function of a box plot is \texttt{geom\_boxplot()}. Unlike a
 histogram, the numeric variable is mapped to the y-axis for a vertical
 box plot. If you want a horizontal box plot, map the numeric variable to
-the x-axis, and don't forget to specify the label for the x-axis.
+the x-axis, and don't forget to specify an x-axis label.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -4729,11 +4730,11 @@ Here's a curve ball. You may give an impression that \texttt{ggplots} is
 an upgrade. Plotting a pie chart should be a piece of cake. The fact is
 NO.
 
-Despite the the disappointment, it is worth to see how a pie chart can
-be plotted using the foundational building-block functions. To give you
-a heads-up, \texttt{ggplot2} views a pie chart as a twisted bar plot.
-There is an internal logic to justify such a view but we will not
-discuss it in detail.
+Despite the disappointment, it is worth seeing how a pie chart can be
+plotted using the foundational building-block functions. To give you a
+heads-up, \texttt{ggplot2} view a pie chart as a twisted bar plot. There
+is an internal logic to justify such a view, but we will not discuss it
+in detail.
 
 Suppose we want to create a pie chart like the one below:
 
@@ -4753,7 +4754,7 @@ Here we will walk through each of the intermediate steps until getting
 the final pie chart.
 
 Let's begin with a stacked barplot, where the bars are stacked up into a
-single column, and the fill-color is an attribute to distinguish
+single column, and the fill color is an attribute to distinguish
 different iris species (\texttt{fill=Species}). The stacked bar is
 placed at the position 2 units on the right from the origin
 (\texttt{aes(x=2)}), but the exact position does not matter.
@@ -4778,12 +4779,12 @@ placed at the position 2 units on the right from the origin
 \end{figure}%
 
 Now, use your imagination to picture that the stacked bar is bent into a
-ring. Does it look like the pie chart in Figure~\ref{fig-3-30}? To way
+ring. Does it look like the pie chart in Figure~\ref{fig-3-30}? One way
 to ``bend'' it in \texttt{ggplot2} is to change the x-y Cartesian
 coordinate system to the polar (circular) coordinate system in which a
 point is characterized by two parameters: the distance from the origin
 (\(r\)), and the angle (\(\theta\)) from the horizontal \textbf{polar
-axis} in an counter-clockwise direction.
+axis} in a counter-clockwise direction.
 
 \begin{figure}
 
@@ -4881,8 +4882,8 @@ background.}
 
 \end{figure}%
 
-\subsection{One Categorical and One Numeric
-Variables}\label{one-categorical-and-one-numeric-variables-1}
+\subsection{One Categorical Variable and One Numeric
+Variable}\label{one-categorical-variable-and-one-numeric-variable-1}
 
 \subsubsection{Side-by-side Box Plot}\label{side-by-side-box-plot-1}
 
@@ -4922,8 +4923,8 @@ Here you want to compare the robust statistics among different species.
 
 Here, you want to compare the average \texttt{Sepal.Length} among iris
 species. As discussed above, you calculate the averages and store them
-in a separate table. It makes use of pipe, group by, and summarize
-concepts discussed in Section~\ref{sec-tidyverse-tabulation}.
+in a separate table. It uses pipe, group\_by, and summarize concepts
+discussed in Section~\ref{sec-tidyverse-tabulation}.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -5080,7 +5081,7 @@ Histogram}\label{sec-ggplot-overlapping-histogram}
 
 Like the base R side-by-side histogram, you will set the transparency to
 0.5 and bin width to 0.25. Note that there is no need to care about the
-x- and y-limit in \texttt{ggplot2}.
+x- and y-limits of \texttt{ggplot2}.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -5173,10 +5174,10 @@ side-by-side bar plot.}
 
 \end{figure}%
 
-\subsection{Two Numeric Variables}\label{two-numeric-variables-1}
+\subsection{Two Numeric Variables}\label{sec-ggplot-scatter-plot}
 
 Use a scatter plot to visualize the relationship between two numeric
-variables. As said above, the revealed relationship can be linear and
+variables. As mentioned above, the relationship can be linear or
 non-linear.
 
 \begin{Shaded}
@@ -5201,9 +5202,9 @@ numeric variables using a scatter plot.}
 
 \end{figure}%
 
-If you wanted to emphasize their linear relationship, it can be done
+If you want to emphasize their linear relationship, you can do this
 convincingly by adding a regression line on top of the scatter plot.
-\texttt{ggplot2} spares you the effort to create a linear model like
+\texttt{ggplot2} spares you the effort of creating a linear model in
 base R. Instead, it can be done by adding the \texttt{geom\_smooth()}.
 You tell
 \texttt{geom\_smooth(method\ =\ "lm",\ se\ =\ FALSE,\ color\ =\ "red")}
@@ -5238,13 +5239,14 @@ line.}
 \end{figure}%
 
 If you see this message ``\texttt{geom\_smooth()} using formula = `y
-\textasciitilde{} x'\,'', it is harmless, and informational.
+\textasciitilde{} x'\,'', it is harmless and informational.
 \texttt{ggplot2} is just to let you know what the response and predictor
 are used by \texttt{geom\_smooth()} in creating the regression line.
 
-\subsection{Multipanel Scatter Plot}\label{multipanel-scatter-plot-1}
+\subsection{Multipanel Scatter
+Plot}\label{sec-ggplot-multipanel-scatter-plot}
 
-Often times before multiple linear regression, it is recommended to
+Oftentimes before multiple linear regression, it is recommended to
 visualize the relationship between the response variable and the
 independent variables pairwisely, or the linear relationship between
 independent variables. The latter is important, as it may cause the
@@ -5254,9 +5256,9 @@ correlated.
 A multipanel scatter plot can do this. However, \texttt{ggplot2} does
 not have a geometry function for it. The simplest way is to use the
 \texttt{ggpairs()} function provided by the \texttt{GGally} package,
-which requires installation, if you have not done so.
+which requires installation if you have not done so.
 
-Suppose, you are interested in the pairwise relationship between all
+Suppose you are interested in the pairwise relationship between all
 numeric variables in \texttt{iris}. It can easily be done using the
 \texttt{ggpairs()} plot function. Color is the attribute used to
 distinguish species. \texttt{progress\ =\ FALSE} is to suppress the
@@ -5283,7 +5285,7 @@ printing of the progress bar.
 
 \section{Summary}\label{summary-2}
 
-This is big chapter that has discussed an array of plot functions both
+This is a big chapter that has discussed an array of plot functions both
 from base R and \texttt{ggplot2}. It is more like a cookbook of various
 visualization recipes. So, instead of listing all the functions here, it
 is helpful to list several useful resources that you can fine-tune the
@@ -5311,7 +5313,7 @@ section of the help page for \texttt{points}. Below is a snapshot of
 
 R supports a large number of colors and palettes.
 \href{https://r-graph-gallery.com/colors.html}{R Graph Gallery} is a
-great resource to see what choices are available and their names .
+great resource to see what choices are available and their names.
 
 \part{Part II}
 
@@ -5320,16 +5322,18 @@ great resource to see what choices are available and their names .
 R was inherently designed for statistical analysis. Therefore, it is
 justified to devote a chapter to statistical tests. Here, we will
 discuss a list of classic statistical tests with an emphasis on the Null
-Hypothesis Significance Test (NHST). While understanding the core
-principles of the tests is essential, this chapter, as well as the whole
-book, emphasizes using R; as such, the underlying concepts of the tests
-are omitted. There are many excellent open introductory statistics
-textbooks\footnote{Introductory Statistics for Life and Biomedical
-  Sciences: \url{https://openintro.org/book/biostat/}} \footnote{Introduction
-  to Modern Statistics: \url{https://openintro.org/book/ims/}}
-\footnote{Handbook of Biological Statistics:
-  \url{https://www.biostathandbook.com/}}. Interested readers should
-consult them for further detail.
+Hypothesis Significance Test (NHST). We assume that readers have a sound
+background in undergraduate-level statistics, i.e., they know the t
+statistic, \(\chi^2\) statistic, confidence interval, p-value,
+correlation, etc. The goal of this chapter, as well as the whole book,
+emphasizes using R - the how. For readers who need to refresh basic
+statistical concepts, there are many excellent introductory statistics
+textbooks freely available on the Internet\footnote{Introductory
+  Statistics for Life and Biomedical Sciences:
+  \url{https://openintro.org/book/biostat/}} \footnote{Introduction to
+  Modern Statistics: \url{https://openintro.org/book/ims/}} \footnote{Handbook
+  of Biological Statistics: \url{https://www.biostathandbook.com/}}.
+Interested readers are recommended to consult them for further detail.
 
 \section*{Learning Objectives:}\label{learning-objectives-3}
 \addcontentsline{toc}{section}{Learning Objectives:}
@@ -5345,10 +5349,10 @@ consult them for further detail.
   Linear regression
 \end{itemize}
 
-\section{Data Set}\label{data-set}
+\section{Housekeeping}\label{housekeeping}
 
-We will use a new data set for this chapter. Follow the steps below to
-import the data set \texttt{FlightDelays} into RStudio.
+We use two new data sets in this chapter: \texttt{FlightDelays}, and
+\texttt{Groceries} . Follow the steps below to import them into RStudio.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -5376,11 +5380,12 @@ The following object is masked from 'package:datasets':
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{require}\NormalTok{(resampledata)}
-\FunctionTok{data}\NormalTok{(FlightDelays)}
+\FunctionTok{data}\NormalTok{(}\StringTok{"FlightDelays"}\NormalTok{)}
+\FunctionTok{data}\NormalTok{(}\StringTok{"Groceries"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
-Take a glimpse of the data set.
+Take a glimpse of the data sets.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -5417,6 +5422,42 @@ convert it to a categorical variable (factor), here is the step:
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{FlightDelays}\SpecialCharTok{$}\NormalTok{FlightNo }\OtherTok{\textless{}{-}} \FunctionTok{as.factor}\NormalTok{(FlightDelays}\SpecialCharTok{$}\NormalTok{FlightNo)}
+\end{Highlighting}
+\end{Shaded}
+
+The \texttt{Groceries} data set contains the product prices from Target
+and Walmart.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{summary}\NormalTok{(Groceries)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+                                               Product          Size   
+ Annie's Macaroni & Cheese                         : 1   Length   :30  
+ Barilla Angel Hair Pasta                          : 1   N.unique :24  
+ Betty Crocker Super Moist Chocolate Fudge Cake Mix: 1   N.blank  : 0  
+ Campbell's Chicken Noodle Soup                    : 1   Min.nchar: 3  
+ Cheez-it Original Baked                           : 1   Max.nchar: 8  
+ Dinty Moore Hearty Meals Beef Stew                : 1                 
+ (Other)                                           :24                 
+     Target         Walmart            Units         UnitType 
+ Min.   :0.990   Min.   :1.000   Length   :30   Length   :30  
+ 1st Qu.:1.827   1st Qu.:1.760   N.unique :16   N.unique : 3  
+ Median :2.545   Median :2.340   N.blank  : 0   N.blank  : 0  
+ Mean   :2.762   Mean   :2.706   Min.nchar: 1   Min.nchar: 2  
+ 3rd Qu.:3.140   3rd Qu.:2.955   Max.nchar: 2   Max.nchar: 5  
+ Max.   :7.990   Max.   :6.980                                
+                                                              
+\end{verbatim}
+
+Lastly, we need to activate \texttt{tidyverse}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{suppressMessages}\NormalTok{(}\FunctionTok{require}\NormalTok{(tidyverse))}
 \end{Highlighting}
 \end{Shaded}
 
@@ -5490,7 +5531,7 @@ mean of x
 \end{verbatim}
 
 The p-value 0.6553 is larger than \(\alpha\) = 0.05, fail to reject the
-\(H_{0}\) at 95\% significance level.
+\(H_{0}\) at a 95\% significance level.
 
 \section{Two-sample t-tests}\label{two-sample-t-tests}
 
@@ -5498,7 +5539,7 @@ A two-sample t-test tests whether the mean of one group is the same as
 the other group. The \(H_{0}\) states the two groups have the same mean,
 and the \(H_{A}\) states otherwise.
 
-For example, we want to compare the mean delay of the two carriers to
+For example, we want to compare the mean delays of the two carriers to
 determine whether they are the same.
 
 \emph{Solution 1:}
@@ -5526,9 +5567,9 @@ mean of x mean of y
 \end{verbatim}
 
 Based on the p-value (0.0001349) being less than \(\alpha\) = 0.05, the
-delays of the two carriers are different. The bottom of the test result
-shows that the mean delay of 10.09738 for AA (group x) is shorter than
-UA 15.98308.
+delays of the two carriers are different. The bottom of the test results
+shows that the mean delay for AA (group x) is 10.09738, shorter than
+UA's 15.98308.
 
 \emph{Solution 2:}
 
@@ -5651,27 +5692,356 @@ To ease analysis, it is suggested to plot the HSD result as below:
 \end{Highlighting}
 \end{Shaded}
 
-\pandocbounded{\includegraphics[keepaspectratio]{04_Statistical_Tests_files/figure-pdf/unnamed-chunk-10-1.pdf}}
+\pandocbounded{\includegraphics[keepaspectratio]{04_Statistical_Tests_files/figure-pdf/unnamed-chunk-12-1.pdf}}
 
 Confidence intervals not crossing zero (the vertical line) indicate
 pairs have unequal means.
+
+\subsection{Paired t-tests}\label{paired-t-tests}
+
+A paired t-test detects whether two mean measurements of a sample
+differ. For example, in a drug trial, a subject's blood pressure is
+measured before and after taking the tested drug. Each sample is a
+subject. The measurements are blood pressure. The \(H_{0}\) is the mean
+difference between the two measurements from all samples is zero.
+
+Here we will examine whether the product prices between Target and
+Walmart are different. The sample is a product. The two measurements are
+the prices from Target and Walmart.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{with}\NormalTok{(Groceries, }\FunctionTok{t.test}\NormalTok{(Target, Walmart, }\AttributeTok{paired=}\NormalTok{T))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+
+    Paired t-test
+
+data:  Target and Walmart
+t = 0.47046, df = 29, p-value = 0.6415
+alternative hypothesis: true mean difference is not equal to 0
+95 percent confidence interval:
+ -0.1896825  0.3030159
+sample estimates:
+mean difference 
+     0.05666667 
+\end{verbatim}
+
+The p-value of 0.6415 \textgreater{} \(\alpha\) = 0.05 suggests that
+there is no statistical difference between the two stores at the 95\%
+confidence level. The mean price difference of all the products in the
+sample is 0.057, which is not considered a significant difference from
+zero.
 
 \section{Tests for Categorical
 Variables}\label{tests-for-categorical-variables}
 
 \subsection{One Categorical Variable}\label{one-categorical-variable-2}
 
+Here, we want to check whether the proportions of categories match a
+specified expected ratio. In standard textbooks, this test is called the
+Chi-square (\(\chi^{2}\)) goodness-of-fit test. For example,
+\texttt{Delayed30} indicates whether the flight was delayed by more than
+30 minutes; it is either Yes or No.~Suppose the regulatory standard
+recommends not more than 10\% of a random sample of flights. First,
+figure out how many Yes and No in the sample.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{table}\NormalTok{(FlightDelays}\SpecialCharTok{$}\NormalTok{Delayed30)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+
+  No  Yes 
+3432  597 
+\end{verbatim}
+
+The data set contains 4,029 flights; 3,432 were punctual, and 587 were
+delayed. According to the standard, the number of delayed flights should
+be no more than 10\% of the total, or 402. Due to random variation in
+sampling, we cannot conclude an issue is present simply because 587 is
+greater than 402. Here's where the \(\chi^2\)-test comes in.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{chisq.test}\NormalTok{(}\FunctionTok{table}\NormalTok{(FlightDelays}\SpecialCharTok{$}\NormalTok{Delayed30), }\AttributeTok{p=}\FunctionTok{c}\NormalTok{(}\FloatTok{0.9}\NormalTok{,}\FloatTok{0.1}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+
+    Chi-squared test for given probabilities
+
+data:  table(FlightDelays$Delayed30)
+X-squared = 103.9, df = 1, p-value < 2.2e-16
+\end{verbatim}
+
+The \(H_{0}\) assumes the proportions agree with the expected ratio. The
+p-value shown above is literally zero, indicating that the proportions
+of Yes and No do not conform to the expected 9:1 ratio at the 95\%
+confidence level.
+
+One remark about setting up the proportion parameter
+\texttt{p=c(0.9,0.1)}. Make sure that the order of the proportions
+matches the sequence of the categories produced by the \texttt{table()}
+function. Additionally, the proportions must sum to 1.
+
 \subsection{Two Categorical Variables}\label{two-categorical-variables}
+
+Here we examine the dependency between two categorical variables. The
+test is colloquially called \(\chi^{2}\) Test for Independence. For
+example, we want to know whether a delay of more than 30 minutes depends
+on the carrier, that is to say whether \texttt{Delayed30} is independent
+of \texttt{Carrier}. The \(H_{0}\) assumes that they are independent.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{with}\NormalTok{(FlightDelays, }\FunctionTok{chisq.test}\NormalTok{(Carrier, Delayed30, }\AttributeTok{correct=}\ConstantTok{TRUE}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+
+    Pearson's Chi-squared test with Yates' continuity correction
+
+data:  Carrier and Delayed30
+X-squared = 13.462, df = 1, p-value = 0.0002434
+\end{verbatim}
+
+Note that \texttt{correct=TRUE} instructs the test function to make
+adjustments in calculating the \(\chi^2\) statistic. The correction is
+only applicable for a 2x2 contingency table with small counts. However,
+it does little harm if you turn it on for tables with a different
+dimension or large counts\footnote{\url{https://en.wikipedia.org/wiki/Yates\%27s_correction_for_continuity}}.
+My suggestion is to turn it on all the time.
+
+As the p-value of 0.0002434 is less than 0.05, reject the \(H_{0}\) at
+the 95\% confidence level, meaning that \texttt{Delay30} and
+\texttt{Carrier} are not independent. This conclusion suggests that the
+proportion of delayed flights differs between the two carriers. To be
+clear, their dependency says nothing about the carriers' delay issue. To
+figure that out exactly, we should examine the proportion of delayed
+flights for each carrier using a new function \texttt{prop.table()} as
+below:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{with}\NormalTok{(FlightDelays, }\FunctionTok{prop.table}\NormalTok{(}\FunctionTok{table}\NormalTok{(Carrier, Delayed30), }\AttributeTok{margin=}\DecValTok{1}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+       Delayed30
+Carrier        No       Yes
+     AA 0.8647626 0.1352374
+     UA 0.8183437 0.1816563
+\end{verbatim}
+
+We feed the contingency table of \texttt{Carrier} by \texttt{Delayed30}
+to the \texttt{prop.table()} function with \texttt{margin=1}, meaning
+that values are divided by the row totals or the sum of the proportions
+for each row is 1. As you can see, both carriers have an issue under the
+10\% rule, but the issue with UA is more severe than AA.
 
 \section{Regression}\label{regression}
 
 \subsection{Simple Linear Regression}\label{simple-linear-regression}
 
-\subsection{Multiple Regression}\label{multiple-regression}
+A simple linear regression (SLR) model involves a predictor X
+(independent variable) and a response Y (dependent variable), where both
+of them are quantitative, but they have different roles.
 
-\subsection{Paired t-tests}\label{paired-t-tests}
+\[Y = \beta_{0} + \beta_{1}X\]
 
-\subsection{}\label{section}
+where \(\beta_{0}\) is the intercept, and \(\beta_{1}\) is the slope.
+
+The relationship between them in an SLR is linear and directional.
+Firstly, the predictor is believed to influence the response, and not
+the reverse; therefore, it is directional. For example, temperature
+(predictor) is supposed to influence ice cream sales (response), and not
+the other way.
+
+Secondly, the relationship is linear, meaning that a unit increment of X
+will cause Y to increase or decrease by \(\beta_{1}\) units for every X
+within the range of X in the data.
+
+Finally, an SLR can only establish a correlation between X and Y, but
+not causation.
+
+Here we will switch to the familiar built-in \texttt{iris} data set to
+demonstrate how to build an SLR. Suppose we are interested in whether
+\texttt{Sep.Length} (predictor) affects \texttt{Sep.Width} (response)
+for \texttt{setosa} species. The first step for building an SLR is to
+visualize the relationship between the two variables using a scatter
+plot (Section~\ref{sec-baseR-scatter-plot} or
+Section~\ref{sec-ggplot-scatter-plot}). Do not downplay the intuition of
+visual inspection. In the absence of an upward or downward trend, the
+attempt to build an SLR is deemed fruitless. On a positive note, the
+plot may still reveal an intriguing trend not as expected, requiring a
+different kind of model or variable transformation. Anyway, let's plot
+the two variables.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{setosa\_iris }\OtherTok{\textless{}{-}} \FunctionTok{subset}\NormalTok{(iris, Species}\SpecialCharTok{==}\StringTok{\textquotesingle{}setosa\textquotesingle{}}\NormalTok{)}
+\FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data=}\NormalTok{setosa\_iris, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Sepal.Length, }\AttributeTok{y=}\NormalTok{Sepal.Width)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{04_Statistical_Tests_files/figure-pdf/unnamed-chunk-18-1.pdf}}
+
+As shown above, there is an upward trend even though it is not
+definitive for everyone. Subjectively, we will proceed to build an SLR
+model.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{slr\_model }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(Sepal.Width }\SpecialCharTok{\textasciitilde{}}\NormalTok{ Sepal.Length, }\AttributeTok{data=}\NormalTok{setosa\_iris)}
+\FunctionTok{summary}\NormalTok{(slr\_model)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+
+Call:
+lm(formula = Sepal.Width ~ Sepal.Length, data = setosa_iris)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.72394 -0.18273 -0.00306  0.15738  0.51709 
+
+Coefficients:
+             Estimate Std. Error t value Pr(>|t|)    
+(Intercept)   -0.5694     0.5217  -1.091    0.281    
+Sepal.Length   0.7985     0.1040   7.681 6.71e-10 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.2565 on 48 degrees of freedom
+Multiple R-squared:  0.5514,    Adjusted R-squared:  0.542 
+F-statistic: 58.99 on 1 and 48 DF,  p-value: 6.71e-10
+\end{verbatim}
+
+The slope and the intercept can be found under the \texttt{Estimate}
+column of \texttt{Coefficients} subsection. In this example, the
+intercept \(\beta_{0}\) is -0.5694, and the slope \(\beta_{1}\)
+(\texttt{Sepal.Length}) is 0.7985. So the SLR model is:
+
+\[Sepal.Width = -0.5694 + 0.7985 \times Sepal.Length   \]
+
+The SLR model says that a unit increase in \texttt{Sepal.Length},
+\texttt{Sepal.Width} will increase by 0.7985 units.
+
+To judge whether they are statistically significant, examine the
+p-values under the column
+\texttt{Pr(\textgreater{}\textbar{}t\textbar{})}. The p-value of the
+slope is close to zero, suggesting that it is statistically significant;
+unfortunately, the intercept is not. It means that the linear
+correlation between \texttt{Sepal.Width} and \texttt{Sepal.Length} is
+strong. However, it is completely accurate to predict
+\texttt{Sepal.Width} using \texttt{Sepal.Length}.
+
+Since we mentioned correlation, the \texttt{Multiple\ R-squared} is the
+square of Pearson's correlation between the two variables. Let's verify
+this.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Pearson\textquotesingle{}s correlation}
+\NormalTok{r }\OtherTok{\textless{}{-}} \FunctionTok{with}\NormalTok{(setosa\_iris, }\FunctionTok{cor}\NormalTok{(Sepal.Length, Sepal.Width))}
+
+\FunctionTok{print}\NormalTok{(}\FunctionTok{paste}\NormalTok{(}\StringTok{"Pearson\textquotesingle{}s correlation ="}\NormalTok{,r))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] "Pearson's correlation = 0.74254668566516"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Square of Pearson\textquotesingle{}s correlation is Multiple R{-}squared}
+\FunctionTok{print}\NormalTok{(}\FunctionTok{paste}\NormalTok{(}\StringTok{"The square of r ="}\NormalTok{,r}\SpecialCharTok{**}\DecValTok{2}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] "The square of r = 0.551375580392314"
+\end{verbatim}
+
+\subsection{Multiple Linear
+Regression}\label{multiple-linear-regression}
+
+A multiple linear regression (MLR) model involves one response and two
+or more predictors. The equation for MLR is
+
+\[Y = \beta_{0} + \beta_{1} \times X_{1} + ... + \beta_{n} \times X_{n}\]
+
+Suppose we are keen to predict \texttt{Sepal.Width} by
+\texttt{Sepal.Length} and \texttt{Petal.Length} for setosa iris. Similar
+to SLR, we visualize the data but using a multipanel scatter plot
+Section~\ref{sec-baseR-multipanel-scatter-plot},
+Section~\ref{sec-ggplot-multipanel-scatter-plot}).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{pairs}\NormalTok{(setosa\_iris[,}\DecValTok{1}\SpecialCharTok{:}\DecValTok{4}\NormalTok{], }\AttributeTok{main=}\StringTok{"A Multi{-}Panel Scatter Plot"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{04_Statistical_Tests_files/figure-pdf/unnamed-chunk-21-1.pdf}}
+
+Here we visualize the trend between \texttt{Sepal.Width} and
+\texttt{Sepal.Length} (2\textsuperscript{nd} row and
+1\textsuperscript{st} column), and \texttt{Sepal.Width} and
+\texttt{Petal.Length} (2\textsuperscript{nd} row and
+3\textsuperscript{rd} column). Despite the trend not being clear between
+\texttt{Sepal.Width} and \texttt{Petal.Length} , let's proceed to build
+an MLR model.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mlr\_model }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(Sepal.Width }\SpecialCharTok{\textasciitilde{}}\NormalTok{ Sepal.Length }\SpecialCharTok{+}\NormalTok{ Petal.Length, }\AttributeTok{data=}\NormalTok{setosa\_iris)}
+\FunctionTok{summary}\NormalTok{(mlr\_model)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+
+Call:
+lm(formula = Sepal.Width ~ Sepal.Length + Petal.Length, data = setosa_iris)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.72858 -0.18414 -0.00301  0.16460  0.51769 
+
+Coefficients:
+             Estimate Std. Error t value Pr(>|t|)    
+(Intercept)  -0.53038    0.55609  -0.954    0.345    
+Sepal.Length  0.80493    0.10897   7.387 2.13e-09 ***
+Petal.Length -0.04863    0.22118  -0.220    0.827    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.2591 on 47 degrees of freedom
+Multiple R-squared:  0.5518,    Adjusted R-squared:  0.5328 
+F-statistic: 28.94 on 2 and 47 DF,  p-value: 6.438e-09
+\end{verbatim}
+
+Based on the p-values, only \texttt{Sepal.Length} is a stable predictor
+of \texttt{Sepal.Width}.
+
+\section{Summary}\label{summary-3}
+
+In this chapter, we have discussed classical statistical tests that
+\ldots{}
+
+Put a table of tests here.
 
 \chapter{Dive Deeper}\label{dive-deeper}
 

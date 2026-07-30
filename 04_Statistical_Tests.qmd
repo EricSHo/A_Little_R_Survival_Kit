@@ -1,6 +1,6 @@
 # Statistical Tests {#sec-04-statistical-tests}
 
-R was inherently designed for statistical analysis. Therefore, it is justified to devote a chapter to statistical tests. Here, we will discuss a list of classic statistical tests with an emphasis on the Null Hypothesis Significance Test (NHST). While understanding the core principles of the tests is essential, this chapter, as well as the whole book, emphasizes using R; as such, the underlying concepts of the tests are omitted. There are many excellent open introductory statistics textbooks[^04_statistical_tests-1] [^04_statistical_tests-2] [^04_statistical_tests-3]. Interested readers should consult them for further detail.
+R was inherently designed for statistical analysis. Therefore, it is justified to devote a chapter to statistical tests. Here, we will discuss a list of classic statistical tests with an emphasis on the Null Hypothesis Significance Test (NHST). We assume that readers have a sound background in undergraduate-level statistics, i.e., they know the t statistic, $\chi^2$ statistic, confidence interval, p-value, correlation, etc. The goal of this chapter, as well as the whole book, emphasizes using R - the how. For readers who need to refresh basic statistical concepts, there are many excellent introductory statistics textbooks freely available on the Internet[^04_statistical_tests-1] [^04_statistical_tests-2] [^04_statistical_tests-3]. Interested readers are recommended to consult them for further detail.
 
 [^04_statistical_tests-1]: Introductory Statistics for Life and Biomedical Sciences: <https://openintro.org/book/biostat/>
 
@@ -16,20 +16,21 @@ R was inherently designed for statistical analysis. Therefore, it is justified t
 
 - Linear regression
 
-## Data Set
+## Housekeeping
 
-We will use a new data set for this chapter. Follow the steps below to import the data set `FlightDelays` into RStudio.
+We use two new data sets in this chapter: `FlightDelays`, and `Groceries` . Follow the steps below to import them into RStudio.
 
 ```{r}
 if (!require(resampledata)) {
   install.packages('resampledata')
 }
 require(resampledata)
-data(FlightDelays)
+data("FlightDelays")
+data("Groceries")
 
 ```
 
-Take a glimpse of the data set.
+Take a glimpse of the data sets.
 
 ```{r}
 summary(FlightDelays)
@@ -39,6 +40,18 @@ It contains 10 variables, out of which two are quantitative variables (`FlightLe
 
 ```{r}
 FlightDelays$FlightNo <- as.factor(FlightDelays$FlightNo)
+```
+
+The `Groceries` data set contains the product prices from Target and Walmart.
+
+```{r}
+summary(Groceries)
+```
+
+Lastly, we need to activate `tidyverse`.
+
+```{r}
+suppressMessages(require(tidyverse))
 ```
 
 ## Tests for Quantitative Variables
@@ -61,13 +74,13 @@ In the above flight delay example, the condition to reject the $H_{0}$ is that t
 t.test(FlightDelays$Delay, mu = 12, alternative = "greater")
 ```
 
-The p-value 0.6553 is larger than $\alpha$ = 0.05, fail to reject the $H_{0}$ at 95% significance level.
+The p-value 0.6553 is larger than $\alpha$ = 0.05, fail to reject the $H_{0}$ at a 95% significance level.
 
 ## Two-sample t-tests
 
 A two-sample t-test tests whether the mean of one group is the same as the other group. The $H_{0}$ states the two groups have the same mean, and the $H_{A}$ states otherwise.
 
-For example, we want to compare the mean delay of the two carriers to determine whether they are the same.
+For example, we want to compare the mean delays of the two carriers to determine whether they are the same.
 
 *Solution 1:*
 
@@ -77,7 +90,7 @@ UA_delay <- subset(FlightDelays, Carrier=="UA")
 t.test(AA_delay$Delay, UA_delay$Delay)
 ```
 
-Based on the p-value (0.0001349) being less than $\alpha$ = 0.05, the delays of the two carriers are different. The bottom of the test result shows that the mean delay of 10.09738 for AA (group x) is shorter than UA 15.98308.
+Based on the p-value (0.0001349) being less than $\alpha$ = 0.05, the delays of the two carriers are different. The bottom of the test results shows that the mean delay for AA (group x) is 10.09738, shorter than UA's 15.98308.
 
 *Solution 2:*
 
@@ -123,18 +136,132 @@ plot(hsd_results, las=1)
 
 Confidence intervals not crossing zero (the vertical line) indicate pairs have unequal means.
 
+### Paired t-tests
+
+A paired t-test detects whether two mean measurements of a sample differ. For example, in a drug trial, a subject's blood pressure is measured before and after taking the tested drug. Each sample is a subject. The measurements are blood pressure. The $H_{0}$ is the mean difference between the two measurements from all samples is zero.
+
+Here we will examine whether the product prices between Target and Walmart are different. The sample is a product. The two measurements are the prices from Target and Walmart.
+
+```{r}
+with(Groceries, t.test(Target, Walmart, paired=T))
+```
+
+The p-value of 0.6415 \> $\alpha$ = 0.05 suggests that there is no statistical difference between the two stores at the 95% confidence level. The mean price difference of all the products in the sample is 0.057, which is not considered a significant difference from zero.
+
 ## Tests for Categorical Variables
 
 ### One Categorical Variable
 
+Here, we want to check whether the proportions of categories match a specified expected ratio. In standard textbooks, this test is called the Chi-square ($\chi^{2}$) goodness-of-fit test. For example, `Delayed30` indicates whether the flight was delayed by more than 30 minutes; it is either Yes or No. Suppose the regulatory standard recommends not more than 10% of a random sample of flights. First, figure out how many Yes and No in the sample.
+
+```{r}
+table(FlightDelays$Delayed30)
+```
+
+The data set contains 4,029 flights; 3,432 were punctual, and 587 were delayed. According to the standard, the number of delayed flights should be no more than 10% of the total, or 402. Due to random variation in sampling, we cannot conclude an issue is present simply because 587 is greater than 402. Here's where the $\chi^2$-test comes in.
+
+```{r}
+chisq.test(table(FlightDelays$Delayed30), p=c(0.9,0.1))
+```
+
+The $H_{0}$ assumes the proportions agree with the expected ratio. The p-value shown above is literally zero, indicating that the proportions of Yes and No do not conform to the expected 9:1 ratio at the 95% confidence level.
+
+One remark about setting up the proportion parameter `p=c(0.9,0.1)`. Make sure that the order of the proportions matches the sequence of the categories produced by the `table()` function. Additionally, the proportions must sum to 1.
+
 ### Two Categorical Variables
+
+Here we examine the dependency between two categorical variables. The test is colloquially called $\chi^{2}$ Test for Independence. For example, we want to know whether a delay of more than 30 minutes depends on the carrier, that is to say whether `Delayed30` is independent of `Carrier`. The $H_{0}$ assumes that they are independent.
+
+```{r}
+with(FlightDelays, chisq.test(Carrier, Delayed30, correct=TRUE))
+```
+
+Note that `correct=TRUE` instructs the test function to make adjustments in calculating the $\chi^2$ statistic. The correction is only applicable for a 2x2 contingency table with small counts. However, it does little harm if you turn it on for tables with a different dimension or large counts[^04_statistical_tests-4]. My suggestion is to turn it on all the time.
+
+[^04_statistical_tests-4]: <https://en.wikipedia.org/wiki/Yates%27s_correction_for_continuity>
+
+As the p-value of 0.0002434 is less than 0.05, reject the $H_{0}$ at the 95% confidence level, meaning that `Delay30` and `Carrier` are not independent. This conclusion suggests that the proportion of delayed flights differs between the two carriers. To be clear, their dependency says nothing about the carriers' delay issue. To figure that out exactly, we should examine the proportion of delayed flights for each carrier using a new function `prop.table()` as below:
+
+```{r}
+with(FlightDelays, prop.table(table(Carrier, Delayed30), margin=1))
+```
+
+We feed the contingency table of `Carrier` by `Delayed30` to the `prop.table()` function with `margin=1`, meaning that values are divided by the row totals or the sum of the proportions for each row is 1. As you can see, both carriers have an issue under the 10% rule, but the issue with UA is more severe than AA.
 
 ## Regression
 
 ### Simple Linear Regression
 
-### Multiple Regression
+A simple linear regression (SLR) model involves a predictor X (independent variable) and a response Y (dependent variable), where both of them are quantitative, but they have different roles.
 
-### Paired t-tests
+$$Y = \beta_{0} + \beta_{1}X$$
 
-### 
+where $\beta_{0}$ is the intercept, and $\beta_{1}$ is the slope.
+
+The relationship between them in an SLR is linear and directional. Firstly, the predictor is believed to influence the response, and not the reverse; therefore, it is directional. For example, temperature (predictor) is supposed to influence ice cream sales (response), and not the other way.
+
+Secondly, the relationship is linear, meaning that a unit increment of X will cause Y to increase or decrease by $\beta_{1}$ units for every X within the range of X in the data.
+
+Finally, an SLR can only establish a correlation between X and Y, but not causation.
+
+Here we will switch to the familiar built-in `iris` data set to demonstrate how to build an SLR. Suppose we are interested in whether `Sep.Length` (predictor) affects `Sep.Width` (response) for `setosa` species. The first step for building an SLR is to visualize the relationship between the two variables using a scatter plot (@sec-baseR-scatter-plot or @sec-ggplot-scatter-plot). Do not downplay the intuition of visual inspection. In the absence of an upward or downward trend, the attempt to build an SLR is deemed fruitless. On a positive note, the plot may still reveal an intriguing trend not as expected, requiring a different kind of model or variable transformation. Anyway, let's plot the two variables.
+
+```{r}
+setosa_iris <- subset(iris, Species=='setosa')
+ggplot(data=setosa_iris, aes(x=Sepal.Length, y=Sepal.Width)) +
+  geom_point()
+```
+
+As shown above, there is an upward trend even though it is not definitive for everyone. Subjectively, we will proceed to build an SLR model.
+
+```{r}
+slr_model <- lm(Sepal.Width ~ Sepal.Length, data=setosa_iris)
+summary(slr_model)
+```
+
+The slope and the intercept can be found under the `Estimate` column of `Coefficients` subsection. In this example, the intercept $\beta_{0}$ is -0.5694, and the slope $\beta_{1}$ (`Sepal.Length`) is 0.7985. So the SLR model is:
+
+$$Sepal.Width = -0.5694 + 0.7985 \times Sepal.Length   $$
+
+The SLR model says that a unit increase in `Sepal.Length`, `Sepal.Width` will increase by 0.7985 units.
+
+To judge whether they are statistically significant, examine the p-values under the column `Pr(>|t|)`. The p-value of the slope is close to zero, suggesting that it is statistically significant; unfortunately, the intercept is not. It means that the linear correlation between `Sepal.Width` and `Sepal.Length` is strong. However, it is completely accurate to predict `Sepal.Width` using `Sepal.Length`.
+
+Since we mentioned correlation, the `Multiple R-squared` is the square of Pearson's correlation between the two variables. Let's verify this.
+
+```{r}
+# Pearson's correlation
+r <- with(setosa_iris, cor(Sepal.Length, Sepal.Width))
+
+print(paste("Pearson's correlation =",r))
+
+# Square of Pearson's correlation is Multiple R-squared
+print(paste("The square of r =",r**2))
+```
+
+### Multiple Linear Regression
+
+A multiple linear regression (MLR) model involves one response and two or more predictors. The equation for MLR is
+
+$$Y = \beta_{0} + \beta_{1} \times X_{1} + ... + \beta_{n} \times X_{n}$$
+
+Suppose we are keen to predict `Sepal.Width` by `Sepal.Length` and `Petal.Length` for setosa iris. Similar to SLR, we visualize the data but using a multipanel scatter plot @sec-baseR-multipanel-scatter-plot, @sec-ggplot-multipanel-scatter-plot).
+
+```{r}
+pairs(setosa_iris[,1:4], main="A Multi-Panel Scatter Plot")
+```
+
+Here we visualize the trend between `Sepal.Width` and `Sepal.Length` (2^nd^ row and 1^st^ column), and `Sepal.Width` and `Petal.Length` (2^nd^ row and 3^rd^ column). Despite the trend not being clear between `Sepal.Width` and `Petal.Length` , let's proceed to build an MLR model.
+
+```{r}
+mlr_model <- lm(Sepal.Width ~ Sepal.Length + Petal.Length, data=setosa_iris)
+summary(mlr_model)
+```
+
+Based on the p-values, only `Sepal.Length` is a stable predictor of `Sepal.Width`.
+
+## Summary
+
+In this chapter, we have discussed classical statistical tests that ...
+
+Put a table of tests here.
