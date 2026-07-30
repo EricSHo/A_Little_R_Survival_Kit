@@ -278,14 +278,14 @@ The model error is reflected in the Akaike Information Criterion (AIC) values. T
 In this chapter, we have discussed classical statistical tests in the framework of Null Hypothesis Significance Test (NHST). A simple guideline for choosing the most appropriate test is to identify the main variable(s), how many there are, and their type(s). The table below summarizes the tests discussed in this chapter:
 
 | Name | Description | Example | Reference |
-|------------------|------------------|------------------|------------------|
-| One-sample t-test | Test whether the mean of a quantitative variable equals a specified value. | t.test(FlightDelays\$Delay, mu = 12) | @sec-04-one-sample-t-test |
-| Two-sample t-test | Test whether or not the means of two groups are equal. | t.test(Delay \~ Carrier, data=FlightDelays) | @sec-04-two-sample-t-test |
-| One-way ANOVA | Test whether or not the means of three or more groups are equal. | aov_results \<- aov(Delay \~ Destination, data=FlightDelays) | @sec-04-one-way-ANOVA |
-| Paired t-test | Test whether the mean difference between two measurements taken on the same subject significantly differs from zero | with(Groceries, t.test(Target, Walmart, paired=T)) | @sec-04-paired-t-test |
-| $\chi^2$ goodness-of-fit | Test whether the proportions of categories match a specified expected ratio. | chisq.test(table(FlightDelays\$Delayed30), p=c(0.9,0.1)) | @sec-04-x2-gof-test |
-| $\chi^2$ test for independence | Test the independence between two categorical variables | with(FlightDelays, chisq.test(Carrier, Delayed30, correct=TRUE)) | @sec-04-x2-test-independence |
-| Simple Linear Regression | It examines the linear relationship between the predictor and the response. | lm(Sepal.Width \~ Sepal.Length, data=setosa_iris) | @sec-04-SLR |
-| Multiple Linear Regression | It examines the linear relationship between multiple predictors and the response. | lm(Sepal.Width \~ Sepal.Length + Petal.Length, data=setosa_iris) | @sec-04-MLR |
+|----|----|----|----|
+| One-sample t-test | Test whether the mean of a quantitative variable equals a specified value. | `t.test(FlightDelays$Delay, mu = 12)` | @sec-04-one-sample-t-test |
+| Two-sample t-test | Test whether or not the means of two groups are equal. | `t.test(Delay ~ Carrier, data=FlightDelays)` | @sec-04-two-sample-t-test |
+| One-way ANOVA | Test whether or not the means of three or more groups are equal. | `aov_results <- aov(Delay ~ Destination, data=FlightDelays)` | @sec-04-one-way-ANOVA |
+| Paired t-test | Test whether the mean difference between two measurements taken on the same subject significantly differs from zero | `with(Groceries, t.test(Target, Walmart, paired=T))` | @sec-04-paired-t-test |
+| $\chi^2$ goodness-of-fit | Test whether the proportions of categories match a specified expected ratio. | `chisq.test(table(FlightDelays$Delayed30), p=c(0.9,0.1))` | @sec-04-x2-gof-test |
+| $\chi^2$ test for independence | Test the independence between two categorical variables | `with(FlightDelays, chisq.test(Carrier, Delayed30, correct=TRUE))` | @sec-04-x2-test-independence |
+| Simple Linear Regression | It examines the linear relationship between the predictor and the response. | `lm(Sepal.Width ~ Sepal.Length, data=setosa_iris)` | @sec-04-SLR |
+| Multiple Linear Regression | It examines the linear relationship between multiple predictors and the response. | `lm(Sepal.Width ~ Sepal.Length + Petal.Length, data=setosa_iris)` | @sec-04-MLR |
 
 .

@@ -144,7 +144,7 @@ One common composite variable in R is **`vectors`**. It is an ordered sequence o
 days_of_month <- c(31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31)
 ```
 
-`days_of_month` is a `vector` object in R. **`c()`** is the function that **combines or collates** several objects into a vector object. Items are indexed or numbered from 1 to the total number of items in the vector. You can extract a particular item by specifying the index within a pair of square-brackets. E.g.,
+`days_of_month` is a `vector` object in R. **`c()`** is the function that **combines or collates** several objects into a vector object. Items are indexed or numbered from 1 to the total number of items in the vector. You can extract a particular item by specifying the index within a pair of square brackets. E.g.,
 
 ```{r}
 # Days in February
@@ -582,7 +582,7 @@ y <- seq(-5, along.with=x)
 cat("y =",y,"\n")
 ```
 
-**Note:** What is the difference between `cat(...)` and `print(paste(...))` you saw above? The main difference is that `print(paste(...))` creates an R object (a text) and then prints it, while `cat(...)` directly writes text to the console without creating a formal R object. See the example below, you will understand the nuance.
+**Note:** What is the difference between `cat(...)` and `print(paste(...))` you saw above? The main difference is that `print(paste(...))` creates an R object (a text) and then prints it, while `cat(...)` directly writes text to the console without creating a formal R object. The example below shows the nuance.
 
 ```{r}
 msg1 <- print(paste("Hello","World"))
@@ -642,20 +642,197 @@ knitr::kable(
 )
 ```
 
-````{=html}
-<!--
-## Exercises {-}
+## Exercises {#sec-01-exercises}
 
-**Q1. Identify illegal variable names.**
+Q1. Identify illegal variable names.
 
-A. `fiveguys` B. `5guys` C. `five.guys` D. `five-guys` E. `five_guys`
+A. `fiveguys` B. `5guys` C. `five.guys` D. `five-guys` E. `five_guys` F. `_5guys` G. `don't care`
 
 ```{r echo=F}
-# B, D
+# B, D, F, G
 ```
 
-**Q2. **
+Q2. Identify bad variable name choices and why.
 
+A. `head` B. `super` C. `okay` D. `c` E. `type` F. `pi` G. `end`
 
--->
-````
+```{r echo=F}
+# A, D, E, G - R functions
+# F - builtin variable
+```
+
+Q3. Identify data types not supported by R.
+
+A. `numeric` B. `integer` C. `decimal` D. `text` E. `character` F. `logical` G. `file` H. `complex` I. `data`
+
+```{r echo=F}
+# C, D, G, & I
+```
+
+Q4.
+
+a\) Create three variables: `a` , `b` , and `c` with values `3` , `2` , and `-8` , respectively.
+
+b\) Based on the following formula, determine the two values of `r`.
+
+$$r = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}$$
+
+```{r echo=F}
+a <- 3
+b <- 2
+c <- -8
+
+r1 <- (-b + sqrt(b**2-4*a*c))/(2*a)
+print(r1)
+
+r2 <- (-b - sqrt(b**2-4*a*c))/(2*a)
+print(r2)
+
+```
+
+Q5.
+
+a\) Create a vector containing the heights of your five best friends in inches.
+
+b\) Use the approach of **vectorization** to calculate the sample mean, sample variance, and sample standard deviation of your friends' heights, but you are **not allowed** to use R's built-in `mean()` , `var()` , and `sd()` functions. Here is the formula for sample variance:
+
+$$s^2 = \frac{\sum_{i=1}^{n} (x_i - \bar{x})^2}{n - 1}$$
+
+```{r echo=F}
+dude_heights <- c(60, 62, 70, 68, 65)
+
+u <- sum(dude_heights)/length(dude_heights)
+print(paste("Sample mean of height =", u))
+
+v <- sum((dude_heights - u)**2)/(length(dude_heights)-1)
+print(paste("Sample variance of height =", v))
+
+s <- sqrt(v)
+print(paste("Sample SD of height =", round(s,2)))
+```
+
+Q6. Use the `seq()` function to answer the following parts.
+
+a\) Create a vector that stores consecutive odd integers between -10 and 10.
+
+b\) Create a vector that stores consecutive odd integers between -10 and 10 in descending order.
+
+c\) Create a vector that stores 20 numbers between -10 and 10.
+
+```{r echo=F}
+q6a <- seq(-9,9,by=2)
+print(q6a)
+
+q6b <- seq(9,-9,by=-2)
+print(q6b)
+
+q6c <- seq(-10,10,length.out=20)
+print(q6c)
+```
+
+Q7.
+
+a\) Create a nominal categorical variable to represent the four properties of amino acids: `acidic` , `basic` , `hydrophilic` , and `hydrophobic` .
+
+b\) Create an ordinal categorical variable to represent the classification of blood pressure: `Hypotension` , `Normal`, `Elevated`, `Hypertension Stage 1`, and `Hypertension Stage 2`.
+
+```{r echo=F}
+# watch out the c() inside the factor()
+q7a <- factor(c('acidic','basic','hydrophilic','hydrophobic'))
+print(q7a)
+print(levels(q7a))
+
+q7b <- factor(c('Hypotension' , 'Normal', 'Elevated', 'Hypertension Stage 1', 'Hypertension Stage 2'), ordered = T)
+print(q7b)
+print(levels(q7b))
+```
+
+Q8. Use the built-in data set `mtcars` to answer this question.
+
+a\) List the first 10 rows of `mtcars`.
+
+b\) List the last 8 rows of `mtcars`.
+
+c\) Use an R function to show the number of rows and columns of `mtcars`.
+
+d\) Print the 13^th^ row.
+
+e\) Print the horsepower of the vehicle in the 7^th^ row.
+
+f\) Print the `mpg` and `hp` of all vehicles together in two columns.
+
+g\) Based on the previous part, show the minimum, maximum, and quantiles of `mpg` and `hp`.
+
+```{r echo=F}
+#a
+head(mtcars, n=10)
+
+#b
+tail(mtcars, n=8)
+
+#c
+dim(mtcars)
+
+#d
+print(mtcars[13,])
+
+#e
+print(mtcars[7,'hp'])
+
+#f
+print(mtcars[,c('mpg','hp')])
+
+#g
+summary(mtcars[,c('mpg','hp')])
+```
+
+Q9. Create a data frame of your friends that stores their name, phone number, and height.
+
+```{r echo=F}
+name <- c('Caleb','Jeshua','Flora')
+ph <- c('12345','23456','34567')
+height <- c(69, 66, 60)
+
+friends <- data.frame(name, ph, height)
+head(friends)
+```
+
+Q10. Use the data set `mtcars` and the `with()` function, as much as possible, to answer this question.
+
+a\) Calculate the difference between the maximum and minimum horsepower `hp`.
+
+b\) Determine the median `hp`.
+
+c\) Calculate the IQR of `hp`.
+
+d\) Calculate the upper and lower whiskers of `hp.`
+
+e\) `vs` denotes engine type: 0 = V-shaped, 1 = straight. Use R to determine the number of cars with a V-shaped engine and a straight engine (don't count it manually).
+
+```{r echo=F}
+#a
+hp_diff <- with(mtcars, max(hp)-min(hp))
+print(hp_diff)
+
+#b
+with(mtcars, median(hp))
+
+#c
+q3 <- with(mtcars, quantile(hp, probs=c(0.75)))
+q1 <- with(mtcars, quantile(hp, probs=c(0.25)))
+
+IQR <- q3-q1
+print(IQR)
+
+#d
+upp <- q3 + 1.5*IQR
+lwr <- q1 - 1.5*IQR
+print(paste("Lower =",lwr, "Upper =",upp))
+
+#e
+straight_engine <- with(mtcars, sum(vs))
+print(paste("Straight engine =",straight_engine))
+
+v_engine <- nrow(mtcars) - straight_engine
+print(paste("V engine =",v_engine))
+```

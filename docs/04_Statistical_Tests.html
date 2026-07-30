@@ -759,49 +759,49 @@ Petal.Width   1 0.0052586 3.1534 -132.18  0.0784 0.7807</code></pre>
 <tr class="odd">
 <td>One-sample t-test</td>
 <td>Test whether the mean of a quantitative variable equals a specified value.</td>
-<td>t.test(FlightDelays$Delay, mu = 12)</td>
+<td><code>t.test(FlightDelays$Delay, mu = 12)</code></td>
 <td><a href="#sec-04-one-sample-t-test" class="quarto-xref"><span>Section 4.2.1</span></a></td>
 </tr>
 <tr class="even">
 <td>Two-sample t-test</td>
 <td>Test whether or not the means of two groups are equal.</td>
-<td>t.test(Delay ~ Carrier, data=FlightDelays)</td>
+<td><code>t.test(Delay ~ Carrier, data=FlightDelays)</code></td>
 <td><a href="#sec-04-two-sample-t-test" class="quarto-xref"><span>Section 4.2.3</span></a></td>
 </tr>
 <tr class="odd">
 <td>One-way ANOVA</td>
 <td>Test whether or not the means of three or more groups are equal.</td>
-<td>aov_results &lt;- aov(Delay ~ Destination, data=FlightDelays)</td>
+<td><code>aov_results &lt;- aov(Delay ~ Destination, data=FlightDelays)</code></td>
 <td><a href="#sec-04-one-way-ANOVA" class="quarto-xref"><span>Section 4.2.4</span></a></td>
 </tr>
 <tr class="even">
 <td>Paired t-test</td>
 <td>Test whether the mean difference between two measurements taken on the same subject significantly differs from zero</td>
-<td>with(Groceries, t.test(Target, Walmart, paired=T))</td>
+<td><code>with(Groceries, t.test(Target, Walmart, paired=T))</code></td>
 <td><a href="#sec-04-paired-t-test" class="quarto-xref"><span>Section 4.2.5</span></a></td>
 </tr>
 <tr class="odd">
 <td><span class="math inline">\(\chi^2\)</span> goodness-of-fit</td>
 <td>Test whether the proportions of categories match a specified expected ratio.</td>
-<td>chisq.test(table(FlightDelays$Delayed30), p=c(0.9,0.1))</td>
+<td><code>chisq.test(table(FlightDelays$Delayed30), p=c(0.9,0.1))</code></td>
 <td><a href="#sec-04-x2-gof-test" class="quarto-xref"><span>Section 4.3.1</span></a></td>
 </tr>
 <tr class="even">
 <td><span class="math inline">\(\chi^2\)</span> test for independence</td>
 <td>Test the independence between two categorical variables</td>
-<td>with(FlightDelays, chisq.test(Carrier, Delayed30, correct=TRUE))</td>
+<td><code>with(FlightDelays, chisq.test(Carrier, Delayed30, correct=TRUE))</code></td>
 <td><a href="#sec-04-x2-test-independence" class="quarto-xref"><span>Section 4.3.2</span></a></td>
 </tr>
 <tr class="odd">
 <td>Simple Linear Regression</td>
 <td>It examines the linear relationship between the predictor and the response.</td>
-<td>lm(Sepal.Width ~ Sepal.Length, data=setosa_iris)</td>
+<td><code>lm(Sepal.Width ~ Sepal.Length, data=setosa_iris)</code></td>
 <td><a href="#sec-04-SLR" class="quarto-xref"><span>Section 4.4.1</span></a></td>
 </tr>
 <tr class="even">
 <td>Multiple Linear Regression</td>
 <td>It examines the linear relationship between multiple predictors and the response.</td>
-<td>lm(Sepal.Width ~ Sepal.Length + Petal.Length, data=setosa_iris)</td>
+<td><code>lm(Sepal.Width ~ Sepal.Length + Petal.Length, data=setosa_iris)</code></td>
 <td><a href="#sec-04-MLR" class="quarto-xref"><span>Section 4.4.2</span></a></td>
 </tr>
 </tbody>

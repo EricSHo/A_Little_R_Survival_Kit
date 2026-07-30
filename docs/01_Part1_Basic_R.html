@@ -265,6 +265,7 @@ window.Quarto = {
   <li><a href="#with" id="toc-with" class="nav-link" data-scroll-target="#with"><span class="header-section-number">1.4.4</span> <code>with()</code></a></li>
   </ul></li>
   <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary"><span class="header-section-number">1.5</span> Summary</a></li>
+  <li><a href="#sec-01-exercises" id="toc-sec-01-exercises" class="nav-link" data-scroll-target="#sec-01-exercises"><span class="header-section-number">1.6</span> Exercises</a></li>
   </ul>
 </nav>
     </div>
@@ -411,7 +412,7 @@ window.Quarto = {
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># A simple numeric vector for the days in each month</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>days_of_month <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">31</span>, <span class="dv">28</span>, <span class="dv">31</span>, <span class="dv">30</span>, <span class="dv">31</span>, <span class="dv">30</span>, <span class="dv">31</span>, <span class="dv">31</span>, <span class="dv">30</span>, <span class="dv">31</span>, <span class="dv">30</span>, <span class="dv">31</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p><code>days_of_month</code> is a <code>vector</code> object in R. <strong><code>c()</code></strong> is the function that <strong>combines or collates</strong> several objects into a vector object. Items are indexed or numbered from 1 to the total number of items in the vector. You can extract a particular item by specifying the index within a pair of square-brackets. E.g.,</p>
+<p><code>days_of_month</code> is a <code>vector</code> object in R. <strong><code>c()</code></strong> is the function that <strong>combines or collates</strong> several objects into a vector object. Items are indexed or numbered from 1 to the total number of items in the vector. You can extract a particular item by specifying the index within a pair of square brackets. E.g.,</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Days in February</span></span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(days_of_month[<span class="dv">2</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -963,7 +964,7 @@ Levels: setosa versicolor virginica</code></pre>
 <pre><code>y = -5 -4 -3 -2 -1 </code></pre>
 </div>
 </div>
-<p><strong>Note:</strong> What is the difference between <code>cat(...)</code> and <code>print(paste(...))</code> you saw above? The main difference is that <code>print(paste(...))</code> creates an R object (a text) and then prints it, while <code>cat(...)</code> directly writes text to the console without creating a formal R object. See the example below, you will understand the nuance.</p>
+<p><strong>Note:</strong> What is the difference between <code>cat(...)</code> and <code>print(paste(...))</code> you saw above? The main difference is that <code>print(paste(...))</code> creates an R object (a text) and then prints it, while <code>cat(...)</code> directly writes text to the console without creating a formal R object. The example below shows the nuance.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb117"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb117-1"><a href="#cb117-1" aria-hidden="true" tabindex="-1"></a>msg1 <span class="ot">&lt;-</span> <span class="fu">print</span>(<span class="fu">paste</span>(<span class="st">"Hello"</span>,<span class="st">"World"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
@@ -1087,23 +1088,205 @@ Levels: setosa versicolor virginica</code></pre>
 </table>
 </div>
 </div>
-<!--
-## Exercises {-}
-
-**Q1. Identify illegal variable names.**
-
-A. `fiveguys` B. `5guys` C. `five.guys` D. `five-guys` E. `five_guys`
-
-
-::: {.cell}
-
-:::
-
-
-**Q2. **
-
-
--->
+</section>
+<section id="sec-01-exercises" class="level2" data-number="1.6">
+<h2 data-number="1.6" class="anchored" data-anchor-id="sec-01-exercises"><span class="header-section-number">1.6</span> Exercises</h2>
+<p>Q1. Identify illegal variable names.</p>
+<p>A. <code>fiveguys</code> B. <code>5guys</code> C. <code>five.guys</code> D. <code>five-guys</code> E. <code>five_guys</code> F. <code>_5guys</code> G. <code>don't care</code></p>
+<p>Q2. Identify bad variable name choices and why.</p>
+<p>A. <code>head</code> B. <code>super</code> C. <code>okay</code> D. <code>c</code> E. <code>type</code> F. <code>pi</code> G. <code>end</code></p>
+<p>Q3. Identify data types not supported by R.</p>
+<p>A. <code>numeric</code> B. <code>integer</code> C. <code>decimal</code> D. <code>text</code> E. <code>character</code> F. <code>logical</code> G. <code>file</code> H. <code>complex</code> I. <code>data</code></p>
+<p>Q4.</p>
+<p>a) Create three variables: <code>a</code> , <code>b</code> , and <code>c</code> with values <code>3</code> , <code>2</code> , and <code>-8</code> , respectively.</p>
+<p>b) Based on the following formula, determine the two values of <code>r</code>.</p>
+<p><span class="math display">\[r = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}\]</span></p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1.333333</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] -2</code></pre>
+</div>
+</div>
+<p>Q5.</p>
+<p>a) Create a vector containing the heights of your five best friends in inches.</p>
+<p>b) Use the approach of <strong>vectorization</strong> to calculate the sample mean, sample variance, and sample standard deviation of your friends’ heights, but you are <strong>not allowed</strong> to use R’s built-in <code>mean()</code> , <code>var()</code> , and <code>sd()</code> functions. Here is the formula for sample variance:</p>
+<p><span class="math display">\[s^2 = \frac{\sum_{i=1}^{n} (x_i - \bar{x})^2}{n - 1}\]</span></p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Sample mean of height = 65"</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Sample variance of height = 17"</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Sample SD of height = 4.12"</code></pre>
+</div>
+</div>
+<p>Q6. Use the <code>seq()</code> function to answer the following parts.</p>
+<p>a) Create a vector that stores consecutive odd integers between -10 and 10.</p>
+<p>b) Create a vector that stores consecutive odd integers between -10 and 10 in descending order.</p>
+<p>c) Create a vector that stores 20 numbers between -10 and 10.</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] -9 -7 -5 -3 -1  1  3  5  7  9</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1]  9  7  5  3  1 -1 -3 -5 -7 -9</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] -10.0000000  -8.9473684  -7.8947368  -6.8421053  -5.7894737  -4.7368421
+ [7]  -3.6842105  -2.6315789  -1.5789474  -0.5263158   0.5263158   1.5789474
+[13]   2.6315789   3.6842105   4.7368421   5.7894737   6.8421053   7.8947368
+[19]   8.9473684  10.0000000</code></pre>
+</div>
+</div>
+<p>Q7.</p>
+<p>a) Create a nominal categorical variable to represent the four properties of amino acids: <code>acidic</code> , <code>basic</code> , <code>hydrophilic</code> , and <code>hydrophobic</code> .</p>
+<p>b) Create an ordinal categorical variable to represent the classification of blood pressure: <code>Hypotension</code> , <code>Normal</code>, <code>Elevated</code>, <code>Hypertension Stage 1</code>, and <code>Hypertension Stage 2</code>.</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] acidic      basic       hydrophilic hydrophobic
+Levels: acidic basic hydrophilic hydrophobic</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "acidic"      "basic"       "hydrophilic" "hydrophobic"</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] Hypotension          Normal               Elevated            
+[4] Hypertension Stage 1 Hypertension Stage 2
+5 Levels: Elevated &lt; Hypertension Stage 1 &lt; ... &lt; Normal</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Elevated"             "Hypertension Stage 1" "Hypertension Stage 2"
+[4] "Hypotension"          "Normal"              </code></pre>
+</div>
+</div>
+<p>Q8. Use the built-in data set <code>mtcars</code> to answer this question.</p>
+<p>a) List the first 10 rows of <code>mtcars</code>.</p>
+<p>b) List the last 8 rows of <code>mtcars</code>.</p>
+<p>c) Use an R function to show the number of rows and columns of <code>mtcars</code>.</p>
+<p>d) Print the 13<sup>th</sup> row.</p>
+<p>e) Print the horsepower of the vehicle in the 7<sup>th</sup> row.</p>
+<p>f) Print the <code>mpg</code> and <code>hp</code> of all vehicles together in two columns.</p>
+<p>g) Based on the previous part, show the minimum, maximum, and quantiles of <code>mpg</code> and <code>hp</code>.</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>                   mpg cyl  disp  hp drat    wt  qsec vs am gear carb
+Mazda RX4         21.0   6 160.0 110 3.90 2.620 16.46  0  1    4    4
+Mazda RX4 Wag     21.0   6 160.0 110 3.90 2.875 17.02  0  1    4    4
+Datsun 710        22.8   4 108.0  93 3.85 2.320 18.61  1  1    4    1
+Hornet 4 Drive    21.4   6 258.0 110 3.08 3.215 19.44  1  0    3    1
+Hornet Sportabout 18.7   8 360.0 175 3.15 3.440 17.02  0  0    3    2
+Valiant           18.1   6 225.0 105 2.76 3.460 20.22  1  0    3    1
+Duster 360        14.3   8 360.0 245 3.21 3.570 15.84  0  0    3    4
+Merc 240D         24.4   4 146.7  62 3.69 3.190 20.00  1  0    4    2
+Merc 230          22.8   4 140.8  95 3.92 3.150 22.90  1  0    4    2
+Merc 280          19.2   6 167.6 123 3.92 3.440 18.30  1  0    4    4</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                  mpg cyl  disp  hp drat    wt  qsec vs am gear carb
+Pontiac Firebird 19.2   8 400.0 175 3.08 3.845 17.05  0  0    3    2
+Fiat X1-9        27.3   4  79.0  66 4.08 1.935 18.90  1  1    4    1
+Porsche 914-2    26.0   4 120.3  91 4.43 2.140 16.70  0  1    5    2
+Lotus Europa     30.4   4  95.1 113 3.77 1.513 16.90  1  1    5    2
+Ford Pantera L   15.8   8 351.0 264 4.22 3.170 14.50  0  1    5    4
+Ferrari Dino     19.7   6 145.0 175 3.62 2.770 15.50  0  1    5    6
+Maserati Bora    15.0   8 301.0 335 3.54 3.570 14.60  0  1    5    8
+Volvo 142E       21.4   4 121.0 109 4.11 2.780 18.60  1  1    4    2</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 32 11</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>            mpg cyl  disp  hp drat   wt qsec vs am gear carb
+Merc 450SL 17.3   8 275.8 180 3.07 3.73 17.6  0  0    3    3</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 245</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                     mpg  hp
+Mazda RX4           21.0 110
+Mazda RX4 Wag       21.0 110
+Datsun 710          22.8  93
+Hornet 4 Drive      21.4 110
+Hornet Sportabout   18.7 175
+Valiant             18.1 105
+Duster 360          14.3 245
+Merc 240D           24.4  62
+Merc 230            22.8  95
+Merc 280            19.2 123
+Merc 280C           17.8 123
+Merc 450SE          16.4 180
+Merc 450SL          17.3 180
+Merc 450SLC         15.2 180
+Cadillac Fleetwood  10.4 205
+Lincoln Continental 10.4 215
+Chrysler Imperial   14.7 230
+Fiat 128            32.4  66
+Honda Civic         30.4  52
+Toyota Corolla      33.9  65
+Toyota Corona       21.5  97
+Dodge Challenger    15.5 150
+AMC Javelin         15.2 150
+Camaro Z28          13.3 245
+Pontiac Firebird    19.2 175
+Fiat X1-9           27.3  66
+Porsche 914-2       26.0  91
+Lotus Europa        30.4 113
+Ford Pantera L      15.8 264
+Ferrari Dino        19.7 175
+Maserati Bora       15.0 335
+Volvo 142E          21.4 109</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      mpg              hp       
+ Min.   :10.40   Min.   : 52.0  
+ 1st Qu.:15.43   1st Qu.: 96.5  
+ Median :19.20   Median :123.0  
+ Mean   :20.09   Mean   :146.7  
+ 3rd Qu.:22.80   3rd Qu.:180.0  
+ Max.   :33.90   Max.   :335.0  </code></pre>
+</div>
+</div>
+<p>Q9. Create a data frame of your friends that stores their name, phone number, and height.</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>    name    ph height
+1  Caleb 12345     69
+2 Jeshua 23456     66
+3  Flora 34567     60</code></pre>
+</div>
+</div>
+<p>Q10. Use the data set <code>mtcars</code> and the <code>with()</code> function, as much as possible, to answer this question.</p>
+<p>a) Calculate the difference between the maximum and minimum horsepower <code>hp</code>.</p>
+<p>b) Determine the median <code>hp</code>.</p>
+<p>c) Calculate the IQR of <code>hp</code>.</p>
+<p>d) Calculate the upper and lower whiskers of <code>hp.</code></p>
+<p>e) <code>vs</code> denotes engine type: 0 = V-shaped, 1 = straight. Use R to determine the number of cars with a V-shaped engine and a straight engine (don’t count it manually).</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 283</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 123</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code> 75% 
+83.5 </code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Lower = -28.75 Upper = 305.25"</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Straight engine = 14"</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "V engine = 18"</code></pre>
+</div>
+</div>
 
 
 </section>
