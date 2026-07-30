@@ -648,7 +648,7 @@ Q1. Identify illegal variable names.
 
 A. `fiveguys` B. `5guys` C. `five.guys` D. `five-guys` E. `five_guys` F. `_5guys` G. `don't care`
 
-```{r echo=F}
+```{r echo=F, eval=F}
 # B, D, F, G
 ```
 
@@ -656,7 +656,7 @@ Q2. Identify bad variable name choices and why.
 
 A. `head` B. `super` C. `okay` D. `c` E. `type` F. `pi` G. `end`
 
-```{r echo=F}
+```{r echo=F, eval=F}
 # A, D, E, G - R functions
 # F - builtin variable
 ```
@@ -665,7 +665,7 @@ Q3. Identify data types not supported by R.
 
 A. `numeric` B. `integer` C. `decimal` D. `text` E. `character` F. `logical` G. `file` H. `complex` I. `data`
 
-```{r echo=F}
+```{r echo=F, eval=F}
 # C, D, G, & I
 ```
 
@@ -677,7 +677,7 @@ b\) Based on the following formula, determine the two values of `r`.
 
 $$r = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}$$
 
-```{r echo=F}
+```{r echo=F, eval=F}
 a <- 3
 b <- 2
 c <- -8
@@ -698,7 +698,7 @@ b\) Use the approach of **vectorization** to calculate the sample mean, sample v
 
 $$s^2 = \frac{\sum_{i=1}^{n} (x_i - \bar{x})^2}{n - 1}$$
 
-```{r echo=F}
+```{r echo=F, eval=F}
 dude_heights <- c(60, 62, 70, 68, 65)
 
 u <- sum(dude_heights)/length(dude_heights)
@@ -719,7 +719,7 @@ b\) Create a vector that stores consecutive odd integers between -10 and 10 in d
 
 c\) Create a vector that stores 20 numbers between -10 and 10.
 
-```{r echo=F}
+```{r echo=F, eval=F}
 q6a <- seq(-9,9,by=2)
 print(q6a)
 
@@ -736,7 +736,7 @@ a\) Create a nominal categorical variable to represent the four properties of am
 
 b\) Create an ordinal categorical variable to represent the classification of blood pressure: `Hypotension` , `Normal`, `Elevated`, `Hypertension Stage 1`, and `Hypertension Stage 2`.
 
-```{r echo=F}
+```{r echo=F, eval=F}
 # watch out the c() inside the factor()
 q7a <- factor(c('acidic','basic','hydrophilic','hydrophobic'))
 print(q7a)
@@ -763,7 +763,7 @@ f\) Print the `mpg` and `hp` of all vehicles together in two columns.
 
 g\) Based on the previous part, show the minimum, maximum, and quantiles of `mpg` and `hp`.
 
-```{r echo=F}
+```{r echo=F, eval=F}
 #a
 head(mtcars, n=10)
 
@@ -788,7 +788,7 @@ summary(mtcars[,c('mpg','hp')])
 
 Q9. Create a data frame of your friends that stores their name, phone number, and height.
 
-```{r echo=F}
+```{r echo=F, eval=F}
 name <- c('Caleb','Jeshua','Flora')
 ph <- c('12345','23456','34567')
 height <- c(69, 66, 60)
@@ -809,7 +809,7 @@ d\) Calculate the upper and lower whiskers of `hp.`
 
 e\) `vs` denotes engine type: 0 = V-shaped, 1 = straight. Use R to determine the number of cars with a V-shaped engine and a straight engine (don't count it manually).
 
-```{r echo=F}
+```{r echo=F, eval=F}
 #a
 hp_diff <- with(mtcars, max(hp)-min(hp))
 print(hp_diff)
