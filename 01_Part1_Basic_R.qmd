@@ -671,9 +671,9 @@ A. `numeric` B. `integer` C. `decimal` D. `text` E. `character` F. `logical` G. 
 
 Q4.
 
-a\) Create three variables: `a` , `b` , and `c` with values `3` , `2` , and `-8` , respectively.
+a) Create three variables: `a` , `b` , and `c` with values `3` , `2` , and `-8` , respectively.
 
-b\) Based on the following formula, determine the two values of `r`.
+b) Based on the following formula, determine the two values of `r`.
 
 $$r = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}$$
 
@@ -692,9 +692,9 @@ print(r2)
 
 Q5.
 
-a\) Create a vector containing the heights of your five best friends in inches.
+a) Create a vector containing the heights of your five best friends in inches.
 
-b\) Use the approach of **vectorization** to calculate the sample mean, sample variance, and sample standard deviation of your friends' heights, but you are **not allowed** to use R's built-in `mean()` , `var()` , and `sd()` functions. Here is the formula for sample variance:
+b) Use the approach of **vectorization** to calculate the sample mean, sample variance, and sample standard deviation of your friends' heights, but you are **not allowed** to use R's built-in `mean()` , `var()` , and `sd()` functions. Here is the formula for sample variance:
 
 $$s^2 = \frac{\sum_{i=1}^{n} (x_i - \bar{x})^2}{n - 1}$$
 
@@ -713,11 +713,11 @@ print(paste("Sample SD of height =", round(s,2)))
 
 Q6. Use the `seq()` function to answer the following parts.
 
-a\) Create a vector that stores consecutive odd integers between -10 and 10.
+a) Create a vector that stores consecutive odd integers between -10 and 10.
 
-b\) Create a vector that stores consecutive odd integers between -10 and 10 in descending order.
+b) Create a vector that stores consecutive odd integers between -10 and 10 in descending order.
 
-c\) Create a vector that stores 20 numbers between -10 and 10.
+c) Create a vector that stores 20 numbers between -10 and 10.
 
 ```{r echo=F, eval=F}
 q6a <- seq(-9,9,by=2)
@@ -732,9 +732,9 @@ print(q6c)
 
 Q7.
 
-a\) Create a nominal categorical variable to represent the four properties of amino acids: `acidic` , `basic` , `hydrophilic` , and `hydrophobic` .
+a) Create a nominal categorical variable to represent the four properties of amino acids: `acidic` , `basic` , `hydrophilic` , and `hydrophobic` .
 
-b\) Create an ordinal categorical variable to represent the classification of blood pressure: `Hypotension` , `Normal`, `Elevated`, `Hypertension Stage 1`, and `Hypertension Stage 2`.
+b) Create an ordinal categorical variable to represent the classification of blood pressure: `Hypotension` , `Normal`, `Elevated`, `Hypertension Stage 1`, and `Hypertension Stage 2`.
 
 ```{r echo=F, eval=F}
 # watch out the c() inside the factor()
@@ -749,19 +749,19 @@ print(levels(q7b))
 
 Q8. Use the built-in data set `mtcars` to answer this question.
 
-a\) List the first 10 rows of `mtcars`.
+a) List the first 10 rows of `mtcars`.
 
-b\) List the last 8 rows of `mtcars`.
+b) List the last 8 rows of `mtcars`.
 
-c\) Use an R function to show the number of rows and columns of `mtcars`.
+c) Use an R function to show the number of rows and columns of `mtcars`.
 
-d\) Print the 13^th^ row.
+d) Print the 13^th^ row.
 
-e\) Print the horsepower of the vehicle in the 7^th^ row.
+e) Print the horsepower of the vehicle in the 7^th^ row.
 
-f\) Print the `mpg` and `hp` of all vehicles together in two columns.
+f) Print the `mpg` and `hp` of all vehicles together in two columns.
 
-g\) Based on the previous part, show the minimum, maximum, and quantiles of `mpg` and `hp`.
+g) Based on the previous part, show the minimum, maximum, and quantiles of `mpg` and `hp`.
 
 ```{r echo=F, eval=F}
 #a
@@ -799,15 +799,15 @@ head(friends)
 
 Q10. Use the data set `mtcars` and the `with()` function, as much as possible, to answer this question.
 
-a\) Calculate the difference between the maximum and minimum horsepower `hp`.
+a) Calculate the difference between the maximum and minimum horsepower `hp`.
 
-b\) Determine the median `hp`.
+b) Determine the median `hp`.
 
-c\) Calculate the IQR of `hp`.
+c) Calculate the IQR of `hp`.
 
-d\) Calculate the upper and lower whiskers of `hp.`
+d) Calculate the upper and lower whiskers of `hp.`
 
-e\) `vs` denotes engine type: 0 = V-shaped, 1 = straight. Use R to determine the number of cars with a V-shaped engine and a straight engine (don't count it manually).
+e) `vs` denotes engine type: 0 = V-shaped, 1 = straight. Use R to determine the number of cars with a V-shaped engine and a straight engine (don't count it manually).
 
 ```{r echo=F, eval=F}
 #a

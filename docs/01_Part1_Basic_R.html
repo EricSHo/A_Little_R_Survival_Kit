@@ -1098,35 +1098,47 @@ Levels: setosa versicolor virginica</code></pre>
 <p>Q3. Identify data types not supported by R.</p>
 <p>A. <code>numeric</code> B. <code>integer</code> C. <code>decimal</code> D. <code>text</code> E. <code>character</code> F. <code>logical</code> G. <code>file</code> H. <code>complex</code> I. <code>data</code></p>
 <p>Q4.</p>
-<p>a) Create three variables: <code>a</code> , <code>b</code> , and <code>c</code> with values <code>3</code> , <code>2</code> , and <code>-8</code> , respectively.</p>
-<p>b) Based on the following formula, determine the two values of <code>r</code>.</p>
+<ol type="a">
+<li><p>Create three variables: <code>a</code> , <code>b</code> , and <code>c</code> with values <code>3</code> , <code>2</code> , and <code>-8</code> , respectively.</p></li>
+<li><p>Based on the following formula, determine the two values of <code>r</code>.</p></li>
+</ol>
 <p><span class="math display">\[r = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}\]</span></p>
 <p>Q5.</p>
-<p>a) Create a vector containing the heights of your five best friends in inches.</p>
-<p>b) Use the approach of <strong>vectorization</strong> to calculate the sample mean, sample variance, and sample standard deviation of your friends’ heights, but you are <strong>not allowed</strong> to use R’s built-in <code>mean()</code> , <code>var()</code> , and <code>sd()</code> functions. Here is the formula for sample variance:</p>
+<ol type="a">
+<li><p>Create a vector containing the heights of your five best friends in inches.</p></li>
+<li><p>Use the approach of <strong>vectorization</strong> to calculate the sample mean, sample variance, and sample standard deviation of your friends’ heights, but you are <strong>not allowed</strong> to use R’s built-in <code>mean()</code> , <code>var()</code> , and <code>sd()</code> functions. Here is the formula for sample variance:</p></li>
+</ol>
 <p><span class="math display">\[s^2 = \frac{\sum_{i=1}^{n} (x_i - \bar{x})^2}{n - 1}\]</span></p>
 <p>Q6. Use the <code>seq()</code> function to answer the following parts.</p>
-<p>a) Create a vector that stores consecutive odd integers between -10 and 10.</p>
-<p>b) Create a vector that stores consecutive odd integers between -10 and 10 in descending order.</p>
-<p>c) Create a vector that stores 20 numbers between -10 and 10.</p>
+<ol type="a">
+<li><p>Create a vector that stores consecutive odd integers between -10 and 10.</p></li>
+<li><p>Create a vector that stores consecutive odd integers between -10 and 10 in descending order.</p></li>
+<li><p>Create a vector that stores 20 numbers between -10 and 10.</p></li>
+</ol>
 <p>Q7.</p>
-<p>a) Create a nominal categorical variable to represent the four properties of amino acids: <code>acidic</code> , <code>basic</code> , <code>hydrophilic</code> , and <code>hydrophobic</code> .</p>
-<p>b) Create an ordinal categorical variable to represent the classification of blood pressure: <code>Hypotension</code> , <code>Normal</code>, <code>Elevated</code>, <code>Hypertension Stage 1</code>, and <code>Hypertension Stage 2</code>.</p>
+<ol type="a">
+<li><p>Create a nominal categorical variable to represent the four properties of amino acids: <code>acidic</code> , <code>basic</code> , <code>hydrophilic</code> , and <code>hydrophobic</code> .</p></li>
+<li><p>Create an ordinal categorical variable to represent the classification of blood pressure: <code>Hypotension</code> , <code>Normal</code>, <code>Elevated</code>, <code>Hypertension Stage 1</code>, and <code>Hypertension Stage 2</code>.</p></li>
+</ol>
 <p>Q8. Use the built-in data set <code>mtcars</code> to answer this question.</p>
-<p>a) List the first 10 rows of <code>mtcars</code>.</p>
-<p>b) List the last 8 rows of <code>mtcars</code>.</p>
-<p>c) Use an R function to show the number of rows and columns of <code>mtcars</code>.</p>
-<p>d) Print the 13<sup>th</sup> row.</p>
-<p>e) Print the horsepower of the vehicle in the 7<sup>th</sup> row.</p>
-<p>f) Print the <code>mpg</code> and <code>hp</code> of all vehicles together in two columns.</p>
-<p>g) Based on the previous part, show the minimum, maximum, and quantiles of <code>mpg</code> and <code>hp</code>.</p>
+<ol type="a">
+<li><p>List the first 10 rows of <code>mtcars</code>.</p></li>
+<li><p>List the last 8 rows of <code>mtcars</code>.</p></li>
+<li><p>Use an R function to show the number of rows and columns of <code>mtcars</code>.</p></li>
+<li><p>Print the 13<sup>th</sup> row.</p></li>
+<li><p>Print the horsepower of the vehicle in the 7<sup>th</sup> row.</p></li>
+<li><p>Print the <code>mpg</code> and <code>hp</code> of all vehicles together in two columns.</p></li>
+<li><p>Based on the previous part, show the minimum, maximum, and quantiles of <code>mpg</code> and <code>hp</code>.</p></li>
+</ol>
 <p>Q9. Create a data frame of your friends that stores their name, phone number, and height.</p>
 <p>Q10. Use the data set <code>mtcars</code> and the <code>with()</code> function, as much as possible, to answer this question.</p>
-<p>a) Calculate the difference between the maximum and minimum horsepower <code>hp</code>.</p>
-<p>b) Determine the median <code>hp</code>.</p>
-<p>c) Calculate the IQR of <code>hp</code>.</p>
-<p>d) Calculate the upper and lower whiskers of <code>hp.</code></p>
-<p>e) <code>vs</code> denotes engine type: 0 = V-shaped, 1 = straight. Use R to determine the number of cars with a V-shaped engine and a straight engine (don’t count it manually).</p>
+<ol type="a">
+<li><p>Calculate the difference between the maximum and minimum horsepower <code>hp</code>.</p></li>
+<li><p>Determine the median <code>hp</code>.</p></li>
+<li><p>Calculate the IQR of <code>hp</code>.</p></li>
+<li><p>Calculate the upper and lower whiskers of <code>hp.</code></p></li>
+<li><p><code>vs</code> denotes engine type: 0 = V-shaped, 1 = straight. Use R to determine the number of cars with a V-shaped engine and a straight engine (don’t count it manually).</p></li>
+</ol>
 
 
 </section>
