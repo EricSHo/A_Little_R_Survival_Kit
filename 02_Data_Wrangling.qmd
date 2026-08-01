@@ -635,7 +635,7 @@ head(final_iris)
 
 The final result contains 50 rows.
 
-`tidyverse` provides a neater way with no intermediate data frames produced. What is new is the **pipe** concept. You can imagine a pipe is like the assembly line of a factory, where an upstream workstation passes (pipes) intermediate results to the next workstation for further processing.
+`tidyverse` provides a neater way with no intermediate data frames produced. What is new is the **pipe** concept. You can imagine a pipe is like a factory assembly line, where an upstream workstation passes (pipes) intermediate results to the next workstation for further processing.
 
 The pipe symbol is represented by **`%>%`**, with no space between them. Let's see how to apply the pipe to the above example without creating the intermediate data frame `tmp_iris`.
 
@@ -729,7 +729,58 @@ Q5. Repeat the exercises in Q2 using `tidyverse`.
 
 Q6. Repeat the exercises in Q3 using `tidyverse`.
 
-Q7.
+Q7. Use the built-in data set `esoph` to answer this question about pipe `%>%`, `group_by()`, and `summarise()`. It is an epidemiological data set from a case-control study of esophageal cancer in Ille-et-Vilaine, France. Here is a description of the fields:
+
+- agegp: age group.
+
+- alcgp: alcohol consumption group (grams/day).
+
+- tobgp: tobacco consumption group (grams/day).
+
+- ncases: Number of cancer cases.
+
+- ncontrols: Number of healthy controls.
+
+a. List the number of subjects for each age group.
+
+b. List the number of subjects for each alcohol consumption group.
+
+c. List the number of subjects for each age group and tobacco consumption group. Based on the results, how many subjects are 35-44 years old and consumed 10-19 grams per day?
+
+d. List the number of cases and controls for each age group and alcohol consumption group. Based on the results, which combination of age group and alcohol consumption group has the smallest number of controls?
+
+```{r echo=F, eval=F}
+#a
+esoph %>%
+  group_by(agegp) %>%
+  summarise(n=sum(ncases)+sum(ncontrols))
+# The answer below is a common mistake:
+#esoph %>%
+#  group_by(agegp) %>%
+#  summarise(n=n())
+#
+# This answer will return the number of rows for each age group and they will
+# not add up to the total number of subjects 975.
+
+#b
+esoph %>%
+  group_by(alcgp) %>%
+  summarise(n=sum(ncases)+sum(ncontrols))
+
+#c
+esoph %>%
+  group_by(agegp, tobgp) %>%
+  summarise(n=sum(ncases)+sum(ncontrols))
+
+#35-44	10-19	46
+
+#d
+esoph %>%
+  group_by(agegp, alcgp) %>%
+  summarise(case=sum(ncases),
+            control=sum(ncontrols))
+# 25-34	120+	1	4	
+```
 
 ## Summary
 

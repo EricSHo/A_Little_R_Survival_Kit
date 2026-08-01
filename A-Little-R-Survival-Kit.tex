@@ -2100,7 +2100,7 @@ Randomly pick 5 samples without replacement.
 \end{Shaded}
 
 \begin{verbatim}
-[1] 6.62 3.76 6.85 6.23 7.62
+[1] 6.56 6.62 6.85 3.76 7.00
 \end{verbatim}
 
 The \texttt{replace=} option can be twisted to simulate tossing a coin N
@@ -2113,7 +2113,7 @@ times. E.g.,
 \end{Shaded}
 
 \begin{verbatim}
- [1] "T" "T" "T" "H" "T" "T" "H" "T" "H" "H"
+ [1] "T" "H" "T" "H" "H" "T" "T" "T" "H" "T"
 \end{verbatim}
 
 \subsubsection{Sample Rows Randomly from a Data
@@ -2146,7 +2146,7 @@ last row of \texttt{iris}, which can be obtained from
 \end{Shaded}
 
 \begin{verbatim}
-[1] 97 18 39 47 92
+[1]  38 131 140  66  39
 \end{verbatim}
 
 \texttt{seq(nrow(iris))} generates a vector containing 1, 2, 3, \ldots,
@@ -2164,12 +2164,12 @@ last row of \texttt{iris}, which can be obtained from
 \end{Shaded}
 
 \begin{verbatim}
-   Sepal.Length Sepal.Width Petal.Length Petal.Width    Species
-97          5.7         2.9          4.2         1.3 versicolor
-18          5.1         3.5          1.4         0.3     setosa
-39          4.4         3.0          1.3         0.2     setosa
-47          5.1         3.8          1.6         0.2     setosa
-92          6.1         3.0          4.6         1.4 versicolor
+    Sepal.Length Sepal.Width Petal.Length Petal.Width    Species
+38           4.9         3.6          1.4         0.1     setosa
+131          7.4         2.8          6.1         1.9  virginica
+140          6.9         3.1          5.4         2.1  virginica
+66           6.7         3.1          4.4         1.4 versicolor
+39           4.4         3.0          1.3         0.2     setosa
 \end{verbatim}
 
 The indexing method is based on the previous chapter. Check out here:
@@ -2843,12 +2843,12 @@ With \texttt{tidyverse}, you can do it in one step by using the
 \end{Shaded}
 
 \begin{verbatim}
-  Sepal.Length Sepal.Width Petal.Length Petal.Width   Species
-1          6.7         3.3          5.7         2.5 virginica
-2          6.2         3.4          5.4         2.3 virginica
-3          5.4         3.9          1.3         0.4    setosa
-4          5.0         3.4          1.6         0.4    setosa
-5          6.4         2.8          5.6         2.2 virginica
+  Sepal.Length Sepal.Width Petal.Length Petal.Width    Species
+1          6.6         3.0          4.4         1.4 versicolor
+2          5.5         2.3          4.0         1.3 versicolor
+3          7.2         3.2          6.0         1.8  virginica
+4          4.6         3.6          1.0         0.2     setosa
+5          5.7         3.8          1.7         0.3     setosa
 \end{verbatim}
 
 \subsection{Sort Rows in a Data
@@ -3165,7 +3165,7 @@ The final result contains 50 rows.
 
 \texttt{tidyverse} provides a neater way with no intermediate data
 frames produced. What is new is the \textbf{pipe} concept. You can
-imagine a pipe is like the assembly line of a factory, where an upstream
+imagine a pipe is like a factory assembly line, where an upstream
 workstation passes (pipes) intermediate results to the next workstation
 for further processing.
 
@@ -3401,7 +3401,41 @@ Q5. Repeat the exercises in Q2 using \texttt{tidyverse}.
 
 Q6. Repeat the exercises in Q3 using \texttt{tidyverse}.
 
-Q7.
+Q7. Use the built-in data set \texttt{esoph} to answer this question
+about pipe \texttt{\%\textgreater{}\%}, \texttt{group\_by()}, and
+\texttt{summarise()}. It is an epidemiological data set from a
+case-control study of esophageal cancer in Ille-et-Vilaine, France. Here
+is a description of the fields:
+
+\begin{itemize}
+\item
+  agegp: age group.
+\item
+  alcgp: alcohol consumption group (grams/day).
+\item
+  tobgp: tobacco consumption group (grams/day).
+\item
+  ncases: Number of cancer cases.
+\item
+  ncontrols: Number of healthy controls.
+\end{itemize}
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi}.}
+\item
+  List the number of subjects for each age group.
+\item
+  List the number of subjects for each alcohol consumption group.
+\item
+  List the number of subjects for each age group and tobacco consumption
+  group. Based on the results, how many subjects are 35-44 years old and
+  consumed 10-19 grams per day?
+\item
+  List the number of cases and controls for each age group and alcohol
+  consumption group. Based on the results, which combination of age
+  group and alcohol consumption group has the smallest number of
+  controls?
+\end{enumerate}
 
 \section{Summary}\label{summary-1}
 
