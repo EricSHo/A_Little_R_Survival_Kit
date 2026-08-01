@@ -320,6 +320,145 @@ with(CO2, table(Plant, Type))
 
 That's all for data wrangling using base R.
 
+## Exercises for Base R
+
+Q1. Use the built-in data set `islands` to answer this question. `islands` is a named vector containing the landmass areas of the world's major continents and islands, where the unit of landmass is in thousands of square miles.
+
+a)  Show places with landmass less than 50.
+
+b)  Show places with landmass between 100 and 200, inclusive.
+
+c)  Show places with landmass either greater than 1000 or smaller than 100, inclusive.
+
+d)  Show places with landmass 30.
+
+e)  Randomly sample 10 places with no replacement.
+
+f)  Show the five largest places.
+
+g)  Show the five smallest places.
+
+```{r echo=F, eval=F}
+#a
+print("Q1a")
+subset(islands, islands < 50)
+
+#b
+print("Q1b")
+subset(islands, islands >= 100 & islands <= 200)
+
+#c
+print("Q1c")
+subset(islands, islands >= 5000 | islands <= 50)
+
+#d
+print("Q1d")
+subset(islands, islands == 30)
+
+#e
+print("Q1e")
+sample(islands, size = 10, replace = F)
+
+#f
+print("Q1f")
+idx <- order(islands, decreasing = T)
+islands[idx][1:5]
+
+#g
+print("Q1g")
+idx <- order(islands)
+islands[idx][1:5]
+```
+
+Q2. Use the built-in data set `mtcar` to answer this question.
+
+a.  Show cars with more than 4 gears `gear`.
+
+b.  Show cars with `mpg` between 15 and 25, inclusive.
+
+c.  Show cars with horsepower `hp` greater than 100 and the number of cylinders `cyl` less than 6.
+
+d.  Show cars that do not have 6 cylinders.
+
+e.  `qsec` stands for quarter-mile time in seconds. It measures acceleration; the shorter the time, the faster the acceleration. Show three cars that have the highest acceleration.
+
+f.  Show three cars that have the lowest acceleration.
+
+g.  Show two cars whose accelerations are closest to the median.
+
+```{r echo=F, eval=F}
+#a
+subset(mtcars, gear>4)
+
+#b
+subset(mtcars, mpg>=15 & mpg<=25)
+
+#c
+subset(mtcars, hp>100 & cyl<6)
+
+#d
+subset(mtcars, cyl != 6)
+
+#e
+idx <- order(mtcars$qsec)
+mtcars[idx,][1:3,]
+
+#f
+idx <- order(mtcars$qsec)
+mtcars[idx,][1:3,]
+
+#g
+median_qsec <- median(mtcars$qsec)
+idx <- order(mtcars$qsec)
+# 32 cars, 16th and 17th cars are ranked in the middle
+mtcars[idx,][16:17,]
+```
+
+Q3. Rearranging columns.
+
+a.  Create a new data frame called `mtcars_small` that contains only three columns: `mpg`, `cyl`, and `wt`. FYI, `wt` is weight in 1,000 lbs.
+
+b.  Create a new column in `mtcars_small` called `mpg_by_wt`, which is defined as `mpg` divided by `wt`.
+
+c.  Show the top three cars with the highest `mpg` by `wt`.
+
+d.  Remove `mpg_by_wt` from `mtcars_small`.
+
+e.  Create a new variable in `mtcars_small` called `efficiency`. If the `mpg` of a car is greater than 20, set `efficiency` to `"gas guzzler"`; otherwise, set it to `"economy"`. Tabulate `efficiency`.
+
+```{r echo=F, eval=F}
+#a
+mtcars_small <- mtcars[,c('mpg','cyl','wt')]
+head(mtcars_small)
+
+#b
+mtcars_small$mpg_by_wt <- mtcars_small$mpg/mtcars_small$wt
+head(mtcars_small)
+# Below is a common mistake. 
+# mpg_by_wt <- mtcars_small$mpg/mtcars_small$wt
+#
+# It is wrong because the variable mpg_by_wt was created out of
+# mtcars_small. When you look at mtcars_small, mpg_by_wt is not there.
+
+#c
+indx <- order(mtcars_small$mpg_by_wt, decreasing = T)
+mtcars_small[idx,][1:3,]
+
+#d
+mtcars_small$mpg_by_wt <- NULL
+head(mtcars_small)
+
+#e
+mtcars$efficiency <- ifelse(mtcars$mpg > 20, "economy", "gas guzzler")
+
+# 2. Convert the new character column into a factor
+mtcars$efficiency <- factor(mtcars$efficiency)
+
+# View the result
+table(mtcars$efficiency)
+
+```
+
 ## `tidyverse`
 
 `tidyverse` is an alternative, and importantly, less cryptic way to perform data wrangling on data frames. One design goal of is to name functions using **verbs**, which improves code readability, setting it apart from using unpronounceable symbols, such as `$`, `[`, etc., as used by base R as shown in the previous section. **However, `tidyverse` works with data frames only.** You still need base R to process vectors.
@@ -340,7 +479,7 @@ The `require()` function prints messages telling you what packages (9 of them) a
 
 Alternatively, you can use the `library()` function to activate a package. Putting aside technical nuances, these two functions are largely doing the same thing. Since activation is an action, using a verb (`require()`) makes more sense than using a noun (`library()`). Note that you only need to activate a package once per R session.
 
-Let's use `tidyverse` to repeat the data wrangling tasks by base R above.
+Let's use `tidyverse` to repeat the data wrangling tasks in base R above.
 
 ### Select Rows by Condition(s)
 
@@ -496,7 +635,7 @@ head(final_iris)
 
 The final result contains 50 rows.
 
-`tidyverse` provides a neater way in which no intermediate data frames are produced. What is new is the **pipe** concept. You can imagine a pipe is like the assembly line of a factory, where an upstream workstation passes (pipes) intermediate results to the next workstation for further processing.
+`tidyverse` provides a neater way with no intermediate data frames produced. What is new is the **pipe** concept. You can imagine a pipe is like the assembly line of a factory, where an upstream workstation passes (pipes) intermediate results to the next workstation for further processing.
 
 The pipe symbol is represented by **`%>%`**, with no space between them. Let's see how to apply the pipe to the above example without creating the intermediate data frame `tmp_iris`.
 
@@ -581,6 +720,16 @@ CO2 %>%
 - `group_by()`, followed by `summarize()`
 
 - pipe `%>%`: funnel intermediate result from an upstream process to the input of an immediate downstream process.
+
+## Exercises for `tidyverse`
+
+Q4. Do the exercises in Q1 using `tidyverse`.
+
+Q5. Do the exercises in Q2 using `tidyverse`.
+
+Q6. Do the exercises in Q3 using `tidyverse`.
+
+Q7.
 
 ## Summary
 

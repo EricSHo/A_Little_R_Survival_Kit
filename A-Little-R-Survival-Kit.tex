@@ -1715,7 +1715,7 @@ A. \texttt{numeric} B. \texttt{integer} C. \texttt{decimal} D.
 \texttt{text} E. \texttt{character} F. \texttt{logical} G. \texttt{file}
 H. \texttt{complex} I. \texttt{data}
 
-Q4.
+Q4. Variables and arithmetic.
 
 \begin{enumerate}
 \def\labelenumi{\alph{enumi})}
@@ -1729,7 +1729,7 @@ Q4.
 
 \[r = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}\]
 
-Q5.
+Q5. Vectors and vectorization.
 
 \begin{enumerate}
 \def\labelenumi{\alph{enumi})}
@@ -1760,7 +1760,7 @@ Q6. Use the \texttt{seq()} function to answer the following parts.
   Create a vector that stores 20 numbers between -10 and 10.
 \end{enumerate}
 
-Q7.
+Q7. Factors.
 
 \begin{enumerate}
 \def\labelenumi{\alph{enumi})}
@@ -2100,7 +2100,7 @@ Randomly pick 5 samples without replacement.
 \end{Shaded}
 
 \begin{verbatim}
-[1]  6.85 10.14  7.00  6.62  3.52
+[1] 4.45 3.76 3.52 6.85 6.23
 \end{verbatim}
 
 The \texttt{replace=} option can be twisted to simulate tossing a coin N
@@ -2113,7 +2113,7 @@ times. E.g.,
 \end{Shaded}
 
 \begin{verbatim}
- [1] "T" "T" "H" "H" "T" "T" "T" "H" "H" "T"
+ [1] "T" "T" "T" "T" "T" "H" "H" "H" "T" "T"
 \end{verbatim}
 
 \subsubsection{Sample Rows Randomly from a Data
@@ -2146,7 +2146,7 @@ last row of \texttt{iris}, which can be obtained from
 \end{Shaded}
 
 \begin{verbatim}
-[1]  63  12 113 128  33
+[1]  66 131 128 107  99
 \end{verbatim}
 
 \texttt{seq(nrow(iris))} generates a vector containing 1, 2, 3, \ldots,
@@ -2165,11 +2165,11 @@ last row of \texttt{iris}, which can be obtained from
 
 \begin{verbatim}
     Sepal.Length Sepal.Width Petal.Length Petal.Width    Species
-63           6.0         2.2          4.0         1.0 versicolor
-12           4.8         3.4          1.6         0.2     setosa
-113          6.8         3.0          5.5         2.1  virginica
+66           6.7         3.1          4.4         1.4 versicolor
+131          7.4         2.8          6.1         1.9  virginica
 128          6.1         3.0          4.9         1.8  virginica
-33           5.2         4.1          1.5         0.1     setosa
+107          4.9         2.5          4.5         1.7  virginica
+99           5.1         2.5          3.0         1.1 versicolor
 \end{verbatim}
 
 The indexing method is based on the previous chapter. Check out here:
@@ -2583,6 +2583,78 @@ Plant Quebec Mississippi
 
 That's all for data wrangling using base R.
 
+\section{Exercises for Base R}\label{exercises-for-base-r}
+
+Q1. Use the built-in data set \texttt{islands} to answer this question.
+\texttt{islands} is a named vector containing the landmass areas of the
+world's major continents and islands, where the unit of landmass is in
+thousands of square miles.
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi})}
+\item
+  Show places with landmass less than 50.
+\item
+  Show places with landmass between 100 and 200, inclusive.
+\item
+  Show places with landmass either greater than 1000 or smaller than
+  100, inclusive.
+\item
+  Show places with landmass 30.
+\item
+  Randomly sample 10 places with no replacement.
+\item
+  Show the five largest places.
+\item
+  Show the five smallest places.
+\end{enumerate}
+
+Q2. Use the built-in data set \texttt{mtcar} to answer this question.
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi}.}
+\item
+  Show cars with more than 4 gears \texttt{gear}.
+\item
+  Show cars with \texttt{mpg} between 15 and 25, inclusive.
+\item
+  Show cars with horsepower \texttt{hp} greater than 100 and the number
+  of cylinders \texttt{cyl} less than 6.
+\item
+  Show cars that do not have 6 cylinders.
+\item
+  \texttt{qsec} stands for quarter-mile time in seconds. It measures
+  acceleration; the shorter the time, the faster the acceleration. Show
+  three cars that have the highest acceleration.
+\item
+  Show three cars that have the lowest acceleration.
+\item
+  Show two cars whose accelerations are closest to the median.
+\end{enumerate}
+
+Q3. Rearranging columns.
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi}.}
+\item
+  Create a new data frame called \texttt{mtcars\_small} that contains
+  only three columns: \texttt{mpg}, \texttt{cyl}, and \texttt{wt}. FYI,
+  \texttt{wt} is weight in 1,000 lbs.
+\item
+  Create a new column in \texttt{mtcars\_small} called
+  \texttt{mpg\_by\_wt}, which is defined as \texttt{mpg} divided by
+  \texttt{wt}.
+\item
+  Show the top three cars with the highest \texttt{mpg} by \texttt{wt}.
+\item
+  Remove \texttt{mpg\_by\_wt} from \texttt{mtcars\_small}.
+\item
+  Create a new variable in \texttt{mtcars\_small} called
+  \texttt{efficiency}. If the \texttt{mpg} of a car is greater than 20,
+  set \texttt{efficiency} to \texttt{"gas\ guzzler"}; otherwise, set it
+  to \texttt{"economy"}. Tabulate \texttt{efficiency}.
+\end{enumerate}
+
 \section{\texorpdfstring{\texttt{tidyverse}}{tidyverse}}\label{tidyverse}
 
 \texttt{tidyverse} is an alternative, and importantly, less cryptic way
@@ -2645,7 +2717,7 @@ verb (\texttt{require()}) makes more sense than using a noun
 (\texttt{library()}). Note that you only need to activate a package once
 per R session.
 
-Let's use \texttt{tidyverse} to repeat the data wrangling tasks by base
+Let's use \texttt{tidyverse} to repeat the data wrangling tasks in base
 R above.
 
 \subsection{Select Rows by
@@ -2772,11 +2844,11 @@ With \texttt{tidyverse}, you can do it in one step by using the
 
 \begin{verbatim}
   Sepal.Length Sepal.Width Petal.Length Petal.Width    Species
-1          6.3         2.8          5.1         1.5  virginica
-2          5.9         3.0          5.1         1.8  virginica
-3          4.9         3.0          1.4         0.2     setosa
-4          5.8         2.6          4.0         1.2 versicolor
-5          5.6         2.5          3.9         1.1 versicolor
+1          6.1         2.9          4.7         1.4 versicolor
+2          6.4         2.9          4.3         1.3 versicolor
+3          6.1         2.8          4.7         1.2 versicolor
+4          5.0         3.3          1.4         0.2     setosa
+5          4.5         2.3          1.3         0.3     setosa
 \end{verbatim}
 
 \subsection{Sort Rows in a Data
@@ -3091,8 +3163,8 @@ intermediate data frame as below:
 
 The final result contains 50 rows.
 
-\texttt{tidyverse} provides a neater way in which no intermediate data
-frames are produced. What is new is the \textbf{pipe} concept. You can
+\texttt{tidyverse} provides a neater way with no intermediate data
+frames produced. What is new is the \textbf{pipe} concept. You can
 imagine a pipe is like the assembly line of a factory, where an upstream
 workstation passes (pipes) intermediate results to the next workstation
 for further processing.
@@ -3319,6 +3391,17 @@ functions}{A Summary of tidyverse functions}}\label{a-summary-of-tidyverse-funct
   pipe \texttt{\%\textgreater{}\%}: funnel intermediate result from an
   upstream process to the input of an immediate downstream process.
 \end{itemize}
+
+\section{\texorpdfstring{Exercises for
+\texttt{tidyverse}}{Exercises for tidyverse}}\label{exercises-for-tidyverse}
+
+Q4. Do the exercises in Q1 using \texttt{tidyverse}.
+
+Q5. Do the exercises in Q2 using \texttt{tidyverse}.
+
+Q6. Do the exercises in Q3 using \texttt{tidyverse}.
+
+Q7.
 
 \section{Summary}\label{summary-1}
 

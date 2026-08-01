@@ -477,7 +477,7 @@ Figure&nbsp;3.4: Stacking up a histogram and a box plot.
 </section>
 <section id="one-categorical-variable" class="level3" data-number="3.2.2">
 <h3 data-number="3.2.2" class="anchored" data-anchor-id="one-categorical-variable"><span class="header-section-number">3.2.2</span> One Categorical Variable</h3>
-<p>When it comes to categorical variables, we are usually interested in the number of samples that fall in each category. As discussed in <a href="02_Data_Wrangling.html" class="quarto-xref"><span>Chapter 2</span></a>, the tallying can be done using the <code>table()</code> function (<a href="02_Data_Wrangling.html#sec-base-tabulation" class="quarto-xref"><span>Section 2.1.8</span></a>) or <code>group_by()</code> followed by <code>summarize(n=n())</code> (<a href="02_Data_Wrangling.html#sec-tidyverse-tabulation" class="quarto-xref"><span>Section 2.2.11</span></a>).</p>
+<p>When it comes to categorical variables, we are usually interested in the number of samples that fall in each category. As discussed in <a href="02_Data_Wrangling.html" class="quarto-xref"><span>Chapter 2</span></a>, the tallying can be done using the <code>table()</code> function (<a href="02_Data_Wrangling.html#sec-base-tabulation" class="quarto-xref"><span>Section 2.1.8</span></a>) or <code>group_by()</code> followed by <code>summarize(n=n())</code> (<a href="02_Data_Wrangling.html#sec-tidyverse-tabulation" class="quarto-xref"><span>Section 2.3.11</span></a>).</p>
 <section id="bar-plot" class="level4" data-number="3.2.2.1">
 <h4 data-number="3.2.2.1" class="anchored" data-anchor-id="bar-plot"><span class="header-section-number">3.2.2.1</span> Bar Plot</h4>
 <p>Bar plot is the standard choice for visualizing tallied data. The only input to R’s <code>barplot()</code> graph function is a tabulated count of the categorical variable. Here’s an example:</p>
@@ -1530,7 +1530,7 @@ Figure&nbsp;3.35: A side-by-side box plot
 </section>
 <section id="side-by-side-bar-plot-1" class="level4" data-number="3.3.4.2">
 <h4 data-number="3.3.4.2" class="anchored" data-anchor-id="side-by-side-bar-plot-1"><span class="header-section-number">3.3.4.2</span> Side-by-side Bar Plot</h4>
-<p>Here, you want to compare the average <code>Sepal.Length</code> among iris species. As discussed above, you calculate the averages and store them in a separate table. It uses pipe, group_by, and summarize concepts discussed in <a href="02_Data_Wrangling.html#sec-tidyverse-tabulation" class="quarto-xref"><span>Section 2.2.11</span></a>.</p>
+<p>Here, you want to compare the average <code>Sepal.Length</code> among iris species. As discussed above, you calculate the averages and store them in a separate table. It uses pipe, group_by, and summarize concepts discussed in <a href="02_Data_Wrangling.html#sec-tidyverse-tabulation" class="quarto-xref"><span>Section 2.3.11</span></a>.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a>iris_summary1 <span class="ot">&lt;-</span> iris <span class="sc">%&gt;%</span></span>
 <span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a>                  <span class="fu">group_by</span>(Species) <span class="sc">%&gt;%</span></span>
