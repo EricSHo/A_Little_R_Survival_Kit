@@ -308,6 +308,18 @@ window.Quarto = {
 <pre><code>Loading required package: resampledata</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
+<pre><code>Warning in library(package, lib.loc = lib.loc, character.only = TRUE,
+logical.return = TRUE, : there is no package called 'resampledata'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Installing package into '/cloud/lib/x86_64-pc-linux-gnu-library/4.6'
+(as 'lib' is unspecified)</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(resampledata)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading required package: resampledata</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
 <pre><code>
 Attaching package: 'resampledata'</code></pre>
 </div>
@@ -316,13 +328,12 @@ Attaching package: 'resampledata'</code></pre>
 
     Titanic</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(resampledata)</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">"FlightDelays"</span>)</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">"Groceries"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">"FlightDelays"</span>)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">"Groceries"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Take a glimpse of the data sets.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(FlightDelays)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(FlightDelays)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>       ID       Carrier      FlightNo      Destination    DepartTime  
  Min.   :   1   AA:2906   Min.   :  71.0   BNA: 172    4-8am   : 699  
@@ -344,11 +355,11 @@ Attaching package: 'resampledata'</code></pre>
 </div>
 <p>It contains 10 variables, out of which two are quantitative variables (<code>FlightLength</code>, and <code>Delay</code>), and the rest are categorical variables. Notice that there is a glitch: R mistakenly considered <code>FlightNo</code> as a quantitative variable. However, it does not affect us, as we do not use this variable here. If you want to convert it to a categorical variable (factor), here is the step:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>FlightDelays<span class="sc">$</span>FlightNo <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(FlightDelays<span class="sc">$</span>FlightNo)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>FlightDelays<span class="sc">$</span>FlightNo <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(FlightDelays<span class="sc">$</span>FlightNo)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>The <code>Groceries</code> data set contains the product prices from Target and Walmart.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(Groceries)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(Groceries)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                                               Product          Size   
  Annie's Macaroni &amp; Cheese                         : 1   Length   :30  
@@ -370,7 +381,7 @@ Attaching package: 'resampledata'</code></pre>
 </div>
 <p>Lastly, we need to activate <code>tidyverse</code>.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">suppressMessages</span>(<span class="fu">require</span>(tidyverse))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">suppressMessages</span>(<span class="fu">require</span>(tidyverse))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="tests-for-quantitative-variables" class="level2" data-number="4.2">
@@ -379,7 +390,7 @@ Attaching package: 'resampledata'</code></pre>
 <h3 data-number="4.2.1" class="anchored" data-anchor-id="sec-04-one-sample-t-test"><span class="header-section-number">4.2.1</span> One-sample t-tests</h3>
 <p>The goal of a one-sample t-test is to test if the mean of a quantitative variable is equal to a certain value. For example, if the aviation regulatory agency states that acceptable flight delay is 12 minutes. We want to see if the flights meet the requirement. The null hypothesis (<span class="math inline">\(H_{0}\)</span>) is that the mean delay is equal to 12 minutes. The alternative hypothesis (<span class="math inline">\(H_{A}\)</span>) is that the mean delay is not equal to 12 minutes. Here are the steps to perform such a test:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(FlightDelays<span class="sc">$</span>Delay, <span class="at">mu =</span> <span class="dv">12</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(FlightDelays<span class="sc">$</span>Delay, <span class="at">mu =</span> <span class="dv">12</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     One Sample t-test
@@ -400,7 +411,7 @@ mean of x
 <h3 data-number="4.2.2" class="anchored" data-anchor-id="one-sided-t-tests"><span class="header-section-number">4.2.2</span> One-sided t-tests</h3>
 <p>In the above flight delay example, the condition to reject the <span class="math inline">\(H_{0}\)</span> is that the delay time is either much longer or much shorter than 12 minutes (that is why the test is called two-sided). Indisputably, the latter case does not make much sense, as short delay times indicate the flights are punctual. Hence, the test must focus on long delay times by replacing the above two-sided test with a one-sided test in which the rejection region (<span class="math inline">\(H_{A}\)</span>) lies at larger t-statistics (on the right). The parameter <code>alternative="greater"</code> suggests a one-sided test where the rejection region lies at the greater value.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(FlightDelays<span class="sc">$</span>Delay, <span class="at">mu =</span> <span class="dv">12</span>, <span class="at">alternative =</span> <span class="st">"greater"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(FlightDelays<span class="sc">$</span>Delay, <span class="at">mu =</span> <span class="dv">12</span>, <span class="at">alternative =</span> <span class="st">"greater"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     One Sample t-test
@@ -423,9 +434,9 @@ mean of x
 <p>For example, we want to compare the mean delays of the two carriers to determine whether they are the same.</p>
 <p><em>Solution 1:</em></p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>AA_delay <span class="ot">&lt;-</span> <span class="fu">subset</span>(FlightDelays, Carrier<span class="sc">==</span><span class="st">"AA"</span>)</span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>UA_delay <span class="ot">&lt;-</span> <span class="fu">subset</span>(FlightDelays, Carrier<span class="sc">==</span><span class="st">"UA"</span>)</span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(AA_delay<span class="sc">$</span>Delay, UA_delay<span class="sc">$</span>Delay)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>AA_delay <span class="ot">&lt;-</span> <span class="fu">subset</span>(FlightDelays, Carrier<span class="sc">==</span><span class="st">"AA"</span>)</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>UA_delay <span class="ot">&lt;-</span> <span class="fu">subset</span>(FlightDelays, Carrier<span class="sc">==</span><span class="st">"UA"</span>)</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(AA_delay<span class="sc">$</span>Delay, UA_delay<span class="sc">$</span>Delay)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Welch Two Sample t-test
@@ -444,7 +455,7 @@ mean of x mean of y
 <p><em>Solution 2:</em></p>
 <p>This approach makes use of the categorical variable <code>carrier</code> to split the data set into two, avoiding the creation of two temporary data frames.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(Delay <span class="sc">~</span> Carrier, <span class="at">data=</span>FlightDelays)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(Delay <span class="sc">~</span> Carrier, <span class="at">data=</span>FlightDelays)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Welch Two Sample t-test
@@ -466,8 +477,8 @@ mean in group AA mean in group UA
 <p>A one-way ANOVA test tests whether the means of three or more groups are the same or not. Two key differences from the two-sample t-test above: 1. a two-sample t-test can handle only two groups, but ANOVA can handle two or more groups. 2. The <span class="math inline">\(H_{0}\)</span> of ANOVA is rejected if any pair(s) of groups have unequal means.</p>
 <p>For example, test whether mean delays vary by destination.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>aov_results <span class="ot">&lt;-</span> <span class="fu">aov</span>(Delay <span class="sc">~</span> Destination, <span class="at">data=</span>FlightDelays)</span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(aov_results)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>aov_results <span class="ot">&lt;-</span> <span class="fu">aov</span>(Delay <span class="sc">~</span> Destination, <span class="at">data=</span>FlightDelays)</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(aov_results)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>              Df  Sum Sq Mean Sq F value   Pr(&gt;F)    
 Destination    6   62891   10482   6.094 2.29e-06 ***
@@ -479,7 +490,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <p>If you only care whether the <span class="math inline">\(H_{0}\)</span> can be rejected, focus on the overall p-value (2.29e-06) under the <code>Pr(&gt;F)</code> column on the right. It is undeniably smaller than <span class="math inline">\(\alpha\)</span> = 0.05, so the <span class="math inline">\(H_{0}\)</span> can be rejected.</p>
 <p>In some situations, you may be interested in finding out which pair(s) do not have the same mean. Tukey’s Honest Significant Difference (HSD) test can answer this question.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">TukeyHSD</span>(aov_results)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">TukeyHSD</span>(aov_results)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  Tukey multiple comparisons of means
     95% family-wise confidence level
@@ -515,10 +526,10 @@ STL-ORD  -7.5157049 -16.1704244  1.1390145 0.1382159</code></pre>
 <p>Each row shows the difference of means (<code>diff</code>), the lower (<code>lwr</code>) and upper (<code>upr</code>) bounds of the confidence interval, and the adjusted p-value (<code>p adj</code>). Examining the p-value is the quickest way to identify pairs with unequal means. E.g., IAD-BNA in which the p-value is less than 0.05.</p>
 <p>To ease analysis, it is suggested to plot the HSD result as below:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>hsd_results <span class="ot">&lt;-</span> <span class="fu">TukeyHSD</span>(aov_results)</span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="co"># las=1 causes the plot to print the pair name horizontally.</span></span>
-<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(hsd_results, <span class="at">las=</span><span class="dv">1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>hsd_results <span class="ot">&lt;-</span> <span class="fu">TukeyHSD</span>(aov_results)</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="co"># las=1 causes the plot to print the pair name horizontally.</span></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(hsd_results, <span class="at">las=</span><span class="dv">1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -534,7 +545,7 @@ STL-ORD  -7.5157049 -16.1704244  1.1390145 0.1382159</code></pre>
 <p>A paired t-test evaluates whether the mean difference between two measurements taken on the same subject significantly differs from zero. For a drug trial example, a subject’s blood pressure is measured before and after taking the tested drug. Each sample is a subject. The measurements are blood pressure. The <span class="math inline">\(H_{0}\)</span> is the mean difference between the two measurements from all samples is zero.</p>
 <p>Here we will examine whether the product prices between Target and Walmart are different. The subject is a product. The two measurements are the prices of the same product from Target and Walmart.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(Groceries, <span class="fu">t.test</span>(Target, Walmart, <span class="at">paired=</span>T))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(Groceries, <span class="fu">t.test</span>(Target, Walmart, <span class="at">paired=</span>T))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Paired t-test
@@ -558,7 +569,7 @@ mean difference
 <h3 data-number="4.3.1" class="anchored" data-anchor-id="sec-04-x2-gof-test"><span class="header-section-number">4.3.1</span> One Categorical Variable</h3>
 <p>Here, we want to check whether the proportions of categories match a specified expected ratio. In standard textbooks, this test is called the <strong>Chi-square (</strong><span class="math inline">\(\chi^{2}\)</span><strong>) goodness-of-fit</strong> test. For example, <code>Delayed30</code> indicates whether the flight was delayed by more than 30 minutes; it is either Yes or No.&nbsp;Suppose the regulatory standard recommends not more than 10% of a random sample of flights. First, figure out how many Yes and No in the sample.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(FlightDelays<span class="sc">$</span>Delayed30)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(FlightDelays<span class="sc">$</span>Delayed30)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
   No  Yes 
@@ -567,7 +578,7 @@ mean difference
 </div>
 <p>The data set contains 4,029 flights; 3,432 were punctual, and 587 were delayed. According to the standard, the number of delayed flights should be no more than 10% of the total, or 402. Due to random variation in sampling, we cannot conclude an issue is present simply because 587 is greater than 402. Here’s where the <span class="math inline">\(\chi^2\)</span>-test comes in.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">chisq.test</span>(<span class="fu">table</span>(FlightDelays<span class="sc">$</span>Delayed30), <span class="at">p=</span><span class="fu">c</span>(<span class="fl">0.9</span>,<span class="fl">0.1</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">chisq.test</span>(<span class="fu">table</span>(FlightDelays<span class="sc">$</span>Delayed30), <span class="at">p=</span><span class="fu">c</span>(<span class="fl">0.9</span>,<span class="fl">0.1</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Chi-squared test for given probabilities
@@ -583,7 +594,7 @@ X-squared = 103.9, df = 1, p-value &lt; 2.2e-16</code></pre>
 <h3 data-number="4.3.2" class="anchored" data-anchor-id="sec-04-x2-test-independence"><span class="header-section-number">4.3.2</span> Two Categorical Variables</h3>
 <p>Here we examine the independence between two categorical variables. The test is colloquially called <span class="math inline">\(\chi^{2}\)</span> <strong>Test for Independence</strong>. For example, we want to know whether a delay of more than 30 minutes depends on the carrier, that is to say whether <code>Delayed30</code> is independent of <code>Carrier</code>. The <span class="math inline">\(H_{0}\)</span> assumes that they are independent.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(FlightDelays, <span class="fu">chisq.test</span>(Carrier, Delayed30, <span class="at">correct=</span><span class="cn">TRUE</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(FlightDelays, <span class="fu">chisq.test</span>(Carrier, Delayed30, <span class="at">correct=</span><span class="cn">TRUE</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Pearson's Chi-squared test with Yates' continuity correction
@@ -595,7 +606,7 @@ X-squared = 13.462, df = 1, p-value = 0.0002434</code></pre>
 <p>Note that <code>correct=TRUE</code> instructs the test function to make adjustments in calculating the <span class="math inline">\(\chi^2\)</span> statistic. The correction is only applicable for a 2x2 contingency table with small counts. However, it does little harm if you turn it on for tables with a different dimension or large counts<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>. My suggestion is to turn it on all the time.</p>
 <p>As the p-value of 0.0002434 is less than 0.05, reject the <span class="math inline">\(H_{0}\)</span> at the 95% confidence level, meaning that <code>Delay30</code> and <code>Carrier</code> are not independent. This conclusion suggests that the proportion of delayed flights differs between the two carriers. To be clear, their dependency says nothing about the carriers’ delay issue. To figure that out exactly, we should examine the proportion of delayed flights for each carrier using a new function <code>prop.table()</code> as below:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(FlightDelays, <span class="fu">prop.table</span>(<span class="fu">table</span>(Carrier, Delayed30), <span class="at">margin=</span><span class="dv">1</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(FlightDelays, <span class="fu">prop.table</span>(<span class="fu">table</span>(Carrier, Delayed30), <span class="at">margin=</span><span class="dv">1</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>       Delayed30
 Carrier        No       Yes
@@ -619,9 +630,9 @@ Carrier        No       Yes
 <p>Finally, in the context of NHST, the <span class="math inline">\(H_{0}\)</span> is <span class="math inline">\(\beta_{1}\)</span> = 0.</p>
 <p>Here we will switch to the familiar built-in <code>iris</code> data set to demonstrate how to build an SLR. Suppose we are interested in whether <code>Sep.Length</code> (predictor) affects <code>Sep.Width</code> (response) for <code>setosa</code> species. The first step for building an SLR is to visualize the relationship between the two variables using a scatter plot (<a href="03_Data_Visualization.html#sec-baseR-scatter-plot" class="quarto-xref"><span>Section 3.2.5</span></a> or <a href="03_Data_Visualization.html#sec-ggplot-scatter-plot" class="quarto-xref"><span>Section 3.3.6</span></a>). Do not downplay the intuition of visual inspection. In the absence of an upward or downward trend, the attempt to build an SLR is deemed fruitless. On a positive note, the plot may still reveal an intriguing trend not as expected, requiring a different kind of model or variable transformation. Anyway, let’s plot the two variables.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>setosa_iris <span class="ot">&lt;-</span> <span class="fu">subset</span>(iris, Species<span class="sc">==</span><span class="st">'setosa'</span>)</span>
-<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>setosa_iris, <span class="fu">aes</span>(<span class="at">x=</span>Sepal.Length, <span class="at">y=</span>Sepal.Width)) <span class="sc">+</span></span>
-<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>setosa_iris <span class="ot">&lt;-</span> <span class="fu">subset</span>(iris, Species<span class="sc">==</span><span class="st">'setosa'</span>)</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>setosa_iris, <span class="fu">aes</span>(<span class="at">x=</span>Sepal.Length, <span class="at">y=</span>Sepal.Width)) <span class="sc">+</span></span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -632,8 +643,8 @@ Carrier        No       Yes
 </div>
 <p>As shown above, there is an upward trend even though it is not definitive for everyone. Subjectively, we will proceed to build an SLR model.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>slr_model <span class="ot">&lt;-</span> <span class="fu">lm</span>(Sepal.Width <span class="sc">~</span> Sepal.Length, <span class="at">data=</span>setosa_iris)</span>
-<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(slr_model)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>slr_model <span class="ot">&lt;-</span> <span class="fu">lm</span>(Sepal.Width <span class="sc">~</span> Sepal.Length, <span class="at">data=</span>setosa_iris)</span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(slr_model)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -661,15 +672,15 @@ F-statistic: 58.99 on 1 and 48 DF,  p-value: 6.71e-10</code></pre>
 <p>To judge whether they are statistically significant, examine the p-values under the column <code>Pr(&gt;|t|)</code>. The p-value of the slope is close to zero, suggesting that it is statistically significant; unfortunately, the intercept is not. It means that the linear correlation between <code>Sepal.Width</code> and <code>Sepal.Length</code> is strong. However, it is completely accurate to predict <code>Sepal.Width</code> using <code>Sepal.Length</code>.</p>
 <p>Since we mentioned correlation, the <code>Multiple R-squared</code> is the square of Pearson’s correlation between the two variables. Let’s verify this.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Pearson's correlation</span></span>
-<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>r <span class="ot">&lt;-</span> <span class="fu">with</span>(setosa_iris, <span class="fu">cor</span>(Sepal.Length, Sepal.Width))</span>
-<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">paste</span>(<span class="st">"Pearson's correlation ="</span>,r))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Pearson's correlation</span></span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>r <span class="ot">&lt;-</span> <span class="fu">with</span>(setosa_iris, <span class="fu">cor</span>(Sepal.Length, Sepal.Width))</span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">paste</span>(<span class="st">"Pearson's correlation ="</span>,r))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "Pearson's correlation = 0.74254668566516"</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Square of Pearson's correlation is Multiple R-squared</span></span>
-<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">paste</span>(<span class="st">"The square of r ="</span>,r<span class="sc">**</span><span class="dv">2</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Square of Pearson's correlation is Multiple R-squared</span></span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">paste</span>(<span class="st">"The square of r ="</span>,r<span class="sc">**</span><span class="dv">2</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "The square of r = 0.551375580392314"</code></pre>
 </div>
@@ -681,7 +692,7 @@ F-statistic: 58.99 on 1 and 48 DF,  p-value: 6.71e-10</code></pre>
 <p><span class="math display">\[Y = \beta_{0} + \beta_{1} \times X_{1} + ... + \beta_{n} \times X_{n}\]</span></p>
 <p>Suppose we are keen to predict <code>Sepal.Width</code> by <code>Sepal.Length</code> and <code>Petal.Length</code> for setosa iris. Similar to SLR, we visualize the data but using a multipanel scatter plot <a href="03_Data_Visualization.html#sec-baseR-multipanel-scatter-plot" class="quarto-xref"><span>Section 3.2.6</span></a>, <a href="03_Data_Visualization.html#sec-ggplot-multipanel-scatter-plot" class="quarto-xref"><span>Section 3.3.7</span></a>).</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pairs</span>(setosa_iris[,<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>], <span class="at">main=</span><span class="st">"A Multi-Panel Scatter Plot"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pairs</span>(setosa_iris[,<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>], <span class="at">main=</span><span class="st">"A Multi-Panel Scatter Plot"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -692,8 +703,8 @@ F-statistic: 58.99 on 1 and 48 DF,  p-value: 6.71e-10</code></pre>
 </div>
 <p>Here we visualize the trend between <code>Sepal.Width</code> and <code>Sepal.Length</code> (2<sup>nd</sup> row and 1<sup>st</sup> column), <code>Sepal.Width</code> and <code>Petal.Length</code> (2<sup>nd</sup> row and 3<sup>rd</sup> column), and <code>Sepal.Width</code> and <code>Petal.Width</code> (2<sup>nd</sup> row and 4<sup>th</sup> column). Despite the trend not being clear between <code>Sepal.Width</code> and <code>Petal.Length</code>, and <code>Sepal.Width</code> and <code>Petal.Width</code>, let’s proceed to build an MLR model.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>mlr_model <span class="ot">&lt;-</span> <span class="fu">lm</span>(Sepal.Width <span class="sc">~</span> Sepal.Length <span class="sc">+</span> Petal.Length <span class="sc">+</span> Petal.Width, <span class="at">data=</span>setosa_iris)</span>
-<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mlr_model)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>mlr_model <span class="ot">&lt;-</span> <span class="fu">lm</span>(Sepal.Width <span class="sc">~</span> Sepal.Length <span class="sc">+</span> Petal.Length <span class="sc">+</span> Petal.Width, <span class="at">data=</span>setosa_iris)</span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mlr_model)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -721,8 +732,8 @@ F-statistic: 18.97 on 3 and 46 DF,  p-value: 3.759e-08</code></pre>
 <p>Based on the p-values, only <code>Sepal.Length</code> is a stable predictor of <code>Sepal.Width</code>; <code>Petal.Length</code> and <code>Petal.Width</code> do not make a statistically significant contribution to the model. This example is simple, as there are not many predictors to be considered. When the number of predictors rises, the number of choices explodes exponentially. For a four-predictor example, the number of combinations is:</p>
 <p><span class="math display">\[\sum_{i=1}^{n=4} \binom{n}{i}\ = \binom{4}{1}\ + \binom{4}{2}\ + \binom{4}{3}\ + \binom{4}{4}\ = 1 + 6 + 6 + 1 = 14\]</span> R has a function to assist in finding a “not too bad” MLR model, meaning it does not guarantee to return the best model. Here is how it works. It begins with a one-predictor model; start with any predictor. Then it tries to build an intermediate model by incorporating an additional predictor from the pool that returns the least error. This step will continue until all predictors are chosen.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>baseline_mlr <span class="ot">&lt;-</span> <span class="fu">lm</span>(Sepal.Width <span class="sc">~</span> Sepal.Length, <span class="at">data=</span>setosa_iris)</span>
-<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a><span class="fu">add1</span>(baseline_mlr, <span class="at">scope =</span> <span class="sc">~</span> Sepal.Length <span class="sc">+</span> Petal.Length <span class="sc">+</span> Petal.Width, <span class="at">test =</span> <span class="st">"F"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>baseline_mlr <span class="ot">&lt;-</span> <span class="fu">lm</span>(Sepal.Width <span class="sc">~</span> Sepal.Length, <span class="at">data=</span>setosa_iris)</span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a><span class="fu">add1</span>(baseline_mlr, <span class="at">scope =</span> <span class="sc">~</span> Sepal.Length <span class="sc">+</span> Petal.Length <span class="sc">+</span> Petal.Width, <span class="at">test =</span> <span class="st">"F"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Single term additions
 

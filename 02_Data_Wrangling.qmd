@@ -723,11 +723,11 @@ CO2 %>%
 
 ## Exercises for `tidyverse`
 
-Q4. Do the exercises in Q1 using `tidyverse`.
+Q4. Repeat the exercises in Q1 using `tidyverse`.
 
-Q5. Do the exercises in Q2 using `tidyverse`.
+Q5. Repeat the exercises in Q2 using `tidyverse`.
 
-Q6. Do the exercises in Q3 using `tidyverse`.
+Q6. Repeat the exercises in Q3 using `tidyverse`.
 
 Q7.
 

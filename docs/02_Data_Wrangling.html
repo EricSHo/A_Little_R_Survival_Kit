@@ -426,14 +426,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sample</span>(pumpkins, <span class="at">size=</span><span class="dv">5</span>, <span class="at">replace=</span>F)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1]  6.62 10.14  7.00  7.62  4.45</code></pre>
+<pre><code>[1] 10.14  6.85  7.00  3.52  4.45</code></pre>
 </div>
 </div>
 <p>The <code>replace=</code> option can be twisted to simulate tossing a coin N times. E.g.,</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sample</span>(<span class="fu">c</span>(<span class="st">'H'</span>,<span class="st">'T'</span>), <span class="at">size=</span><span class="dv">10</span>, <span class="at">replace=</span>T)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> [1] "T" "H" "T" "H" "T" "H" "H" "T" "H" "T"</code></pre>
+<pre><code> [1] "H" "H" "T" "T" "H" "T" "T" "H" "T" "H"</code></pre>
 </div>
 </div>
 </section>
@@ -450,7 +450,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>rnd_idx <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">seq</span>(<span class="fu">nrow</span>(iris)), <span class="at">size =</span> <span class="dv">5</span>, <span class="at">replace =</span> F)</span>
 <span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>rnd_idx</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 148 139 110  31  60</code></pre>
+<pre><code>[1]   4 136  13  64 148</code></pre>
 </div>
 </div>
 <p><code>seq(nrow(iris))</code> generates a vector containing 1, 2, 3, …, 150.</p>
@@ -461,11 +461,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>a_random_sample</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>    Sepal.Length Sepal.Width Petal.Length Petal.Width    Species
-148          6.5         3.0          5.2         2.0  virginica
-139          6.0         3.0          4.8         1.8  virginica
-110          7.2         3.6          6.1         2.5  virginica
-31           4.8         3.1          1.6         0.2     setosa
-60           5.2         2.7          3.9         1.4 versicolor</code></pre>
+4            4.6         3.1          1.5         0.2     setosa
+136          7.7         3.0          6.1         2.3  virginica
+13           4.8         3.0          1.4         0.1     setosa
+64           6.1         2.9          4.7         1.4 versicolor
+148          6.5         3.0          5.2         2.0  virginica</code></pre>
 </div>
 </div>
 <p>The indexing method is based on the previous chapter. Check out here: <a href="01_Part1_Basic_R.html#sec-access-rows-columns" class="quarto-xref"><span>Section 1.2.5.1</span></a>.</p>
@@ -894,11 +894,11 @@ Plant Quebec Mississippi
 <span id="cb90-3"><a href="#cb90-3" aria-hidden="true" tabindex="-1"></a>a_random_sample</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  Sepal.Length Sepal.Width Petal.Length Petal.Width    Species
-1          4.9         3.1          1.5         0.2     setosa
-2          6.3         2.5          5.0         1.9  virginica
-3          7.4         2.8          6.1         1.9  virginica
-4          6.8         3.0          5.5         2.1  virginica
-5          7.0         3.2          4.7         1.4 versicolor</code></pre>
+1          5.5         2.6          4.4         1.2 versicolor
+2          6.5         3.2          5.1         2.0  virginica
+3          6.3         2.7          4.9         1.8  virginica
+4          7.2         3.2          6.0         1.8  virginica
+5          7.2         3.0          5.8         1.6  virginica</code></pre>
 </div>
 </div>
 </section>
@@ -1258,9 +1258,9 @@ Plant Quebec Mississippi
 </section>
 <section id="exercises-for-tidyverse" class="level2" data-number="2.4">
 <h2 data-number="2.4" class="anchored" data-anchor-id="exercises-for-tidyverse"><span class="header-section-number">2.4</span> Exercises for <code>tidyverse</code></h2>
-<p>Q4. Do the exercises in Q1 using <code>tidyverse</code>.</p>
-<p>Q5. Do the exercises in Q2 using <code>tidyverse</code>.</p>
-<p>Q6. Do the exercises in Q3 using <code>tidyverse</code>.</p>
+<p>Q4. Repeat the exercises in Q1 using <code>tidyverse</code>.</p>
+<p>Q5. Repeat the exercises in Q2 using <code>tidyverse</code>.</p>
+<p>Q6. Repeat the exercises in Q3 using <code>tidyverse</code>.</p>
 <p>Q7.</p>
 </section>
 <section id="summary" class="level2" data-number="2.5">
