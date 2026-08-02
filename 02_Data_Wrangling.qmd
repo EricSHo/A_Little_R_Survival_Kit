@@ -741,13 +741,13 @@ Q7. Use the built-in data set `esoph` to answer this question about pipe `%>%`, 
 
 - ncontrols: Number of healthy controls.
 
-a. List the number of subjects for each age group.
+a.  List the number of subjects for each age group.
 
-b. List the number of subjects for each alcohol consumption group.
+b.  List the number of subjects for each alcohol consumption group.
 
-c. List the number of subjects for each age group and tobacco consumption group. Based on the results, how many subjects are 35-44 years old and consumed 10-19 grams per day?
+c.  List the number of subjects for each age group and tobacco consumption group. Based on the results, how many subjects are 35-44 years old and consumed 10-19 grams per day?
 
-d. List the number of cases and controls for each age group and alcohol consumption group. Based on the results, which combination of age group and alcohol consumption group has the smallest number of controls?
+d.  List the number of cases and controls for each age group and alcohol consumption group. Based on the results, which combination of age group and alcohol consumption group has the smallest number of controls?
 
 ```{r echo=F, eval=F}
 #a

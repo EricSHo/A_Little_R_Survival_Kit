@@ -2100,7 +2100,7 @@ Randomly pick 5 samples without replacement.
 \end{Shaded}
 
 \begin{verbatim}
-[1] 6.56 6.62 6.85 3.76 7.00
+[1] 7.00 3.52 6.56 4.45 6.62
 \end{verbatim}
 
 The \texttt{replace=} option can be twisted to simulate tossing a coin N
@@ -2113,7 +2113,7 @@ times. E.g.,
 \end{Shaded}
 
 \begin{verbatim}
- [1] "T" "H" "T" "H" "H" "T" "T" "T" "H" "T"
+ [1] "H" "H" "H" "T" "H" "H" "T" "H" "T" "T"
 \end{verbatim}
 
 \subsubsection{Sample Rows Randomly from a Data
@@ -2146,7 +2146,7 @@ last row of \texttt{iris}, which can be obtained from
 \end{Shaded}
 
 \begin{verbatim}
-[1]  38 131 140  66  39
+[1]  4 58 11 84 47
 \end{verbatim}
 
 \texttt{seq(nrow(iris))} generates a vector containing 1, 2, 3, \ldots,
@@ -2164,12 +2164,12 @@ last row of \texttt{iris}, which can be obtained from
 \end{Shaded}
 
 \begin{verbatim}
-    Sepal.Length Sepal.Width Petal.Length Petal.Width    Species
-38           4.9         3.6          1.4         0.1     setosa
-131          7.4         2.8          6.1         1.9  virginica
-140          6.9         3.1          5.4         2.1  virginica
-66           6.7         3.1          4.4         1.4 versicolor
-39           4.4         3.0          1.3         0.2     setosa
+   Sepal.Length Sepal.Width Petal.Length Petal.Width    Species
+4           4.6         3.1          1.5         0.2     setosa
+58          4.9         2.4          3.3         1.0 versicolor
+11          5.4         3.7          1.5         0.2     setosa
+84          6.0         2.7          5.1         1.6 versicolor
+47          5.1         3.8          1.6         0.2     setosa
 \end{verbatim}
 
 The indexing method is based on the previous chapter. Check out here:
@@ -2844,11 +2844,11 @@ With \texttt{tidyverse}, you can do it in one step by using the
 
 \begin{verbatim}
   Sepal.Length Sepal.Width Petal.Length Petal.Width    Species
-1          6.6         3.0          4.4         1.4 versicolor
-2          5.5         2.3          4.0         1.3 versicolor
-3          7.2         3.2          6.0         1.8  virginica
-4          4.6         3.6          1.0         0.2     setosa
-5          5.7         3.8          1.7         0.3     setosa
+1          4.8         3.1          1.6         0.2     setosa
+2          6.8         3.0          5.5         2.1  virginica
+3          6.8         3.2          5.9         2.3  virginica
+4          5.2         2.7          3.9         1.4 versicolor
+5          7.9         3.8          6.4         2.0  virginica
 \end{verbatim}
 
 \subsection{Sort Rows in a Data
@@ -3848,12 +3848,12 @@ An alternative to bar plots is pie charts.
 \CommentTok{\# Top left}
 \FunctionTok{pie}\NormalTok{(}\FunctionTok{with}\NormalTok{(iris, }\FunctionTok{table}\NormalTok{(Species)))}
 
-\CommentTok{\# Top left}
+\CommentTok{\# Top right}
 \FunctionTok{pie}\NormalTok{(}\FunctionTok{with}\NormalTok{(iris, }\FunctionTok{table}\NormalTok{(Species)), }
     \AttributeTok{col =} \FunctionTok{c}\NormalTok{(}\StringTok{\textquotesingle{}skyblue\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}orange\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}white\textquotesingle{}}\NormalTok{), }
     \AttributeTok{main=}\StringTok{"Species"}\NormalTok{)}
 
-\CommentTok{\# Bottom right}
+\CommentTok{\# Bottom left}
 \NormalTok{counts }\OtherTok{\textless{}{-}} \FunctionTok{with}\NormalTok{(iris, }\FunctionTok{table}\NormalTok{(Species))}
 \NormalTok{my\_labs }\OtherTok{\textless{}{-}} \FunctionTok{paste0}\NormalTok{(}\FunctionTok{names}\NormalTok{(counts),}\StringTok{"("}\NormalTok{,counts,}\StringTok{")"}\NormalTok{)}
 \FunctionTok{pie}\NormalTok{(counts, }
@@ -4591,6 +4591,39 @@ As you can see, some plots can be made easily using base R (e.g.,
 multipanel scatter plot), while others are less direct (e.g., bar plot
 with error bars). There is no one system you should use; choose whatever
 fits your requirements.
+
+\section{Exercises for base R}\label{exercises-for-base-r-1}
+
+Q1. Use the built-in data \texttt{mtcars} to answer this question.
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi}.}
+\item
+  Make a histogram of \texttt{mpg}. Give meaningful labels to the axes.
+  Create a title for the plot. Fill the histogram with your favorite
+  color.
+\item
+  Create a box plot of horsepower by the number of cylinders. As above,
+  modify the axis labels and main title. Color outliers in red.
+\item
+  Create a bar plot showing the number of cars by the number of gears
+  \texttt{gear}. Label the x and y axes.
+\item
+  Create a pie chart of the number of cylinders with labels like
+  Figure~\ref{fig-3-7}.
+\item
+  Use a mosaic plot to illustrate whether the number of cylinders and
+  gears are independent.
+\item
+  Use a side-by-side bar for part e).
+\item
+  Create a scatter plot of \texttt{mpg} (x) by horsepower \texttt{hp}
+  (y) with proper axis labels.
+\item
+  Create a multipanel plot of \texttt{mpg}, \texttt{hp}, \texttt{cyl},
+  \texttt{wt}, and \texttt{qsec} . Identify pairs of variables with a
+  linear relationship.
+\end{enumerate}
 
 \section{\texorpdfstring{\texttt{ggplot2}}{ggplot2}}\label{ggplot2}
 
@@ -5523,7 +5556,7 @@ printing of the progress bar.
 
 \end{figure}%
 
-\section{Summary}\label{summary-2}
+\section{Summary}\label{sec-03-summary}
 
 This is a big chapter that has discussed an array of plot functions both
 from base R and \texttt{ggplot2}. It is more like a cookbook of various
@@ -5554,6 +5587,9 @@ section of the help page for \texttt{points}. Below is a snapshot of
 R supports a large number of colors and palettes.
 \href{https://r-graph-gallery.com/colors.html}{R Graph Gallery} is a
 great resource to see what choices are available and their names.
+
+\section{\texorpdfstring{Exercises for
+\texttt{ggplot2}}{Exercises for ggplot2}}\label{exercises-for-ggplot2}
 
 \part{Part II}
 
@@ -6331,7 +6367,7 @@ fails to handle unseen data, i.e., overfitting. AIC serves as a canary.
 As a rule of thumb, if the difference in AIC between consecutive
 intermediate models is less than 2, there is no significant difference.
 
-\section{Summary}\label{summary-3}
+\section{Summary}\label{summary-2}
 
 In this chapter, we have discussed classical statistical tests in the
 framework of Null Hypothesis Significance Test (NHST). A simple

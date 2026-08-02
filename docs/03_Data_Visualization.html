@@ -252,17 +252,19 @@ window.Quarto = {
   <li><a href="#sec-baseR-scatter-plot" id="toc-sec-baseR-scatter-plot" class="nav-link" data-scroll-target="#sec-baseR-scatter-plot"><span class="header-section-number">3.2.5</span> Two Numeric Variables</a></li>
   <li><a href="#sec-baseR-multipanel-scatter-plot" id="toc-sec-baseR-multipanel-scatter-plot" class="nav-link" data-scroll-target="#sec-baseR-multipanel-scatter-plot"><span class="header-section-number">3.2.6</span> Multipanel Scatter Plot</a></li>
   </ul></li>
-  <li><a href="#ggplot2" id="toc-ggplot2" class="nav-link" data-scroll-target="#ggplot2"><span class="header-section-number">3.3</span> <code>ggplot2</code></a>
+  <li><a href="#exercises-for-base-r" id="toc-exercises-for-base-r" class="nav-link" data-scroll-target="#exercises-for-base-r"><span class="header-section-number">3.3</span> Exercises for base R</a></li>
+  <li><a href="#ggplot2" id="toc-ggplot2" class="nav-link" data-scroll-target="#ggplot2"><span class="header-section-number">3.4</span> <code>ggplot2</code></a>
   <ul class="collapse">
-  <li><a href="#grammar-of-ggplot2" id="toc-grammar-of-ggplot2" class="nav-link" data-scroll-target="#grammar-of-ggplot2"><span class="header-section-number">3.3.1</span> Grammar of <code>ggplot2</code></a></li>
-  <li><a href="#one-numeric-variable-1" id="toc-one-numeric-variable-1" class="nav-link" data-scroll-target="#one-numeric-variable-1"><span class="header-section-number">3.3.2</span> One Numeric Variable</a></li>
-  <li><a href="#one-categorical-variable-1" id="toc-one-categorical-variable-1" class="nav-link" data-scroll-target="#one-categorical-variable-1"><span class="header-section-number">3.3.3</span> One Categorical Variable</a></li>
-  <li><a href="#one-categorical-variable-and-one-numeric-variable-1" id="toc-one-categorical-variable-and-one-numeric-variable-1" class="nav-link" data-scroll-target="#one-categorical-variable-and-one-numeric-variable-1"><span class="header-section-number">3.3.4</span> One Categorical Variable and One Numeric Variable</a></li>
-  <li><a href="#contingency-table-1" id="toc-contingency-table-1" class="nav-link" data-scroll-target="#contingency-table-1"><span class="header-section-number">3.3.5</span> Contingency Table</a></li>
-  <li><a href="#sec-ggplot-scatter-plot" id="toc-sec-ggplot-scatter-plot" class="nav-link" data-scroll-target="#sec-ggplot-scatter-plot"><span class="header-section-number">3.3.6</span> Two Numeric Variables</a></li>
-  <li><a href="#sec-ggplot-multipanel-scatter-plot" id="toc-sec-ggplot-multipanel-scatter-plot" class="nav-link" data-scroll-target="#sec-ggplot-multipanel-scatter-plot"><span class="header-section-number">3.3.7</span> Multipanel Scatter Plot</a></li>
+  <li><a href="#grammar-of-ggplot2" id="toc-grammar-of-ggplot2" class="nav-link" data-scroll-target="#grammar-of-ggplot2"><span class="header-section-number">3.4.1</span> Grammar of <code>ggplot2</code></a></li>
+  <li><a href="#one-numeric-variable-1" id="toc-one-numeric-variable-1" class="nav-link" data-scroll-target="#one-numeric-variable-1"><span class="header-section-number">3.4.2</span> One Numeric Variable</a></li>
+  <li><a href="#one-categorical-variable-1" id="toc-one-categorical-variable-1" class="nav-link" data-scroll-target="#one-categorical-variable-1"><span class="header-section-number">3.4.3</span> One Categorical Variable</a></li>
+  <li><a href="#one-categorical-variable-and-one-numeric-variable-1" id="toc-one-categorical-variable-and-one-numeric-variable-1" class="nav-link" data-scroll-target="#one-categorical-variable-and-one-numeric-variable-1"><span class="header-section-number">3.4.4</span> One Categorical Variable and One Numeric Variable</a></li>
+  <li><a href="#contingency-table-1" id="toc-contingency-table-1" class="nav-link" data-scroll-target="#contingency-table-1"><span class="header-section-number">3.4.5</span> Contingency Table</a></li>
+  <li><a href="#sec-ggplot-scatter-plot" id="toc-sec-ggplot-scatter-plot" class="nav-link" data-scroll-target="#sec-ggplot-scatter-plot"><span class="header-section-number">3.4.6</span> Two Numeric Variables</a></li>
+  <li><a href="#sec-ggplot-multipanel-scatter-plot" id="toc-sec-ggplot-multipanel-scatter-plot" class="nav-link" data-scroll-target="#sec-ggplot-multipanel-scatter-plot"><span class="header-section-number">3.4.7</span> Multipanel Scatter Plot</a></li>
   </ul></li>
-  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary"><span class="header-section-number">3.4</span> Summary</a></li>
+  <li><a href="#sec-03-summary" id="toc-sec-03-summary" class="nav-link" data-scroll-target="#sec-03-summary"><span class="header-section-number">3.5</span> Summary</a></li>
+  <li><a href="#exercises-for-ggplot2" id="toc-exercises-for-ggplot2" class="nav-link" data-scroll-target="#exercises-for-ggplot2"><span class="header-section-number">3.6</span> Exercises for <code>ggplot2</code></a></li>
   </ul>
 </nav>
     </div>
@@ -570,12 +572,12 @@ Figure&nbsp;3.6: Reorder the Bars of a Barplot
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Top left</span></span>
 <span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="fu">pie</span>(<span class="fu">with</span>(iris, <span class="fu">table</span>(Species)))</span>
 <span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Top left</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Top right</span></span>
 <span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="fu">pie</span>(<span class="fu">with</span>(iris, <span class="fu">table</span>(Species)), </span>
 <span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">col =</span> <span class="fu">c</span>(<span class="st">'skyblue'</span>, <span class="st">'orange'</span>, <span class="st">'white'</span>), </span>
 <span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">main=</span><span class="st">"Species"</span>)</span>
 <span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Bottom right</span></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Bottom left</span></span>
 <span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>counts <span class="ot">&lt;-</span> <span class="fu">with</span>(iris, <span class="fu">table</span>(Species))</span>
 <span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>my_labs <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="fu">names</span>(counts),<span class="st">"("</span>,counts,<span class="st">")"</span>)</span>
 <span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a><span class="fu">pie</span>(counts, </span>
@@ -709,7 +711,7 @@ Figure&nbsp;3.10: A Side-by-Side Bar Plot
 </section>
 <section id="side-by-side-bar-plot-with-error-bar" class="level4" data-number="3.2.3.3">
 <h4 data-number="3.2.3.3" class="anchored" data-anchor-id="side-by-side-bar-plot-with-error-bar"><span class="header-section-number">3.2.3.3</span> Side-by-side Bar Plot with Error Bar^*</h4>
-<p><em>This topic is slightly advanced. It is much easier to use <code>ggplot2</code>. So, feel free to skip this or jump to <a href="#sec-ggplot-error-bar" class="quarto-xref"><span>Section 3.3.4.3</span></a>.</em></p>
+<p><em>This topic is slightly advanced. It is much easier to use <code>ggplot2</code>. So, feel free to skip this or jump to <a href="#sec-ggplot-error-bar" class="quarto-xref"><span>Section 3.4.4.3</span></a>.</em></p>
 <p>The error bar represents the standard error of the mean (SEM). Here is the formula:</p>
 <p><span class="math display">\[\huge{\bar{x}\pm\frac{s}{\sqrt{n}}}\]</span> , where <span class="math inline">\(s\)</span> and <span class="math inline">\(n\)</span> are the standard deviation and sample size, respectively. In the bar plot you are going to plot, the height of the bar is <span class="math inline">\(\bar{x}\)</span>, and the error bars span above and below the bar’s top by <span class="math inline">\(\frac{s}{\sqrt{n}}\)</span> units.</p>
 <p>First, calculate the mean and standard error using the <code>tapply()</code> function.</p>
@@ -757,7 +759,7 @@ Figure&nbsp;3.11: A Side-by-side Bar Plot with Error Bars
 </div>
 </div>
 </div>
-<p>Once again, if you found this confusing, see the <code>ggplot</code> version of error bars (<a href="#sec-ggplot-error-bar" class="quarto-xref"><span>Section 3.3.4.3</span></a>).</p>
+<p>Once again, if you found this confusing, see the <code>ggplot</code> version of error bars (<a href="#sec-ggplot-error-bar" class="quarto-xref"><span>Section 3.4.4.3</span></a>).</p>
 </section>
 <section id="line-graph-with-error-bar" class="level4" data-number="3.2.3.4">
 <h4 data-number="3.2.3.4" class="anchored" data-anchor-id="line-graph-with-error-bar"><span class="header-section-number">3.2.3.4</span> Line Graph with Error Bar</h4>
@@ -846,7 +848,7 @@ Figure&nbsp;3.14: A Line plot with Error Bars
 </section>
 <section id="overlapping-histogram" class="level4" data-number="3.2.3.5">
 <h4 data-number="3.2.3.5" class="anchored" data-anchor-id="overlapping-histogram"><span class="header-section-number">3.2.3.5</span> Overlapping Histogram</h4>
-<p><em>The code for creating this plot can be convoluted. It is easier to make it using <code>ggplot2</code>. Feel free to skip to <a href="#sec-ggplot-overlapping-histogram" class="quarto-xref"><span>Section 3.3.4.5</span></a>.</em></p>
+<p><em>The code for creating this plot can be convoluted. It is easier to make it using <code>ggplot2</code>. Feel free to skip to <a href="#sec-ggplot-overlapping-histogram" class="quarto-xref"><span>Section 3.4.4.5</span></a>.</em></p>
 <p>Suppose you are interested in visualizing and comparing the distribution of sepal lengths among the three iris species. Here are the steps to do it:</p>
 <ol type="1">
 <li><p>Split the data by individual species.</p></li>
@@ -1105,8 +1107,22 @@ Figure&nbsp;3.20: A Multipanel Scatter Plot
 <p>Here concludes our journey of data visualization using base R functions. As you can see, some plots can be made easily using base R (e.g., multipanel scatter plot), while others are less direct (e.g., bar plot with error bars). There is no one system you should use; choose whatever fits your requirements.</p>
 </section>
 </section>
-<section id="ggplot2" class="level2" data-number="3.3">
-<h2 data-number="3.3" class="anchored" data-anchor-id="ggplot2"><span class="header-section-number">3.3</span> <code>ggplot2</code></h2>
+<section id="exercises-for-base-r" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="exercises-for-base-r"><span class="header-section-number">3.3</span> Exercises for base R</h2>
+<p>Q1. Use the built-in data <code>mtcars</code> to answer this question.</p>
+<ol type="a">
+<li><p>Make a histogram of <code>mpg</code>. Give meaningful labels to the axes. Create a title for the plot. Fill the histogram with your favorite color.</p></li>
+<li><p>Create a box plot of horsepower by the number of cylinders. As above, modify the axis labels and main title. Color outliers in red.</p></li>
+<li><p>Create a bar plot showing the number of cars by the number of gears <code>gear</code>. Label the x and y axes.</p></li>
+<li><p>Create a pie chart of the number of cylinders with labels like <a href="#fig-3-7" class="quarto-xref">Figure&nbsp;<span>3.7</span></a>.</p></li>
+<li><p>Use a mosaic plot to illustrate whether the number of cylinders and gears are independent.</p></li>
+<li><p>Use a side-by-side bar for part e).</p></li>
+<li><p>Create a scatter plot of <code>mpg</code> (x) by horsepower <code>hp</code> (y) with proper axis labels.</p></li>
+<li><p>Create a multipanel plot of <code>mpg</code>, <code>hp</code>, <code>cyl</code>, <code>wt</code>, and <code>qsec</code> . Identify pairs of variables with a linear relationship.</p></li>
+</ol>
+</section>
+<section id="ggplot2" class="level2" data-number="3.4">
+<h2 data-number="3.4" class="anchored" data-anchor-id="ggplot2"><span class="header-section-number">3.4</span> <code>ggplot2</code></h2>
 <p><code>ggplot2</code> is bundled in <code>tidyverse</code>. Once you have activated <code>tidyverse</code>, <code>ggplot2</code> is available. Here, the focus is on using <code>ggplot2</code> to plot the graphs that were created using base R above. We will not repeat the discussion of strengths and weaknesses of each graph in this section. Readers should refer to the corresponding section above for the characteristics and functions of the graphs.</p>
 <p>If <code>tidyverse</code> has not been activated, load it into R before using <code>ggplot2</code>.</p>
 <div class="cell">
@@ -1127,8 +1143,8 @@ Figure&nbsp;3.20: A Multipanel Scatter Plot
 ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
 </div>
 </div>
-<section id="grammar-of-ggplot2" class="level3" data-number="3.3.1">
-<h3 data-number="3.3.1" class="anchored" data-anchor-id="grammar-of-ggplot2"><span class="header-section-number">3.3.1</span> Grammar of <code>ggplot2</code></h3>
+<section id="grammar-of-ggplot2" class="level3" data-number="3.4.1">
+<h3 data-number="3.4.1" class="anchored" data-anchor-id="grammar-of-ggplot2"><span class="header-section-number">3.4.1</span> Grammar of <code>ggplot2</code></h3>
 <p>The two ’<code>g</code>’s of <code>ggplot2</code> stand for <strong>Grammar of Graphics</strong>. In <code>ggplot2</code>, the graphical widgets are arranged in layers. That idea gives developers the flexibility to decorate a graph by adding layers to an existing graph. The <strong>data</strong> layer forms the foundation of a graph. The <strong>Aesthetics</strong> layer defines the association between data variable(s) and the axes. <strong>Geometries</strong> are the types of graphs, e.g., line plot, histogram, etc. <strong>Facets</strong> split a graph into multiple panels. <strong>Statistics</strong> defines how to aggregate data, e.g., in proportion or take the face value in a barplot. <strong>Coordinates</strong> support an X-Y Cartesian coordinate system and a polar coordinate system. (See the Pie Chart section below) <strong>Themes</strong> offer different color schemes, font type, font size, etc.</p>
 <div class="cell">
 <div class="cell-output-display">
@@ -1145,11 +1161,11 @@ Figure&nbsp;3.21: Anatomy of <code>ggplot2</code>
 </div>
 </div>
 </section>
-<section id="one-numeric-variable-1" class="level3" data-number="3.3.2">
-<h3 data-number="3.3.2" class="anchored" data-anchor-id="one-numeric-variable-1"><span class="header-section-number">3.3.2</span> One Numeric Variable</h3>
+<section id="one-numeric-variable-1" class="level3" data-number="3.4.2">
+<h3 data-number="3.4.2" class="anchored" data-anchor-id="one-numeric-variable-1"><span class="header-section-number">3.4.2</span> One Numeric Variable</h3>
 <p>You can plot a histogram of the numeric variable to see its distribution, such as the spread, the peak, symmetry, and flatness. If your concern is robust statistics, make a box plot instead.</p>
-<section id="histogram-1" class="level4" data-number="3.3.2.1">
-<h4 data-number="3.3.2.1" class="anchored" data-anchor-id="histogram-1"><span class="header-section-number">3.3.2.1</span> Histogram</h4>
+<section id="histogram-1" class="level4" data-number="3.4.2.1">
+<h4 data-number="3.4.2.1" class="anchored" data-anchor-id="histogram-1"><span class="header-section-number">3.4.2.1</span> Histogram</h4>
 <p>Let’s redraw the histogram in <a href="#fig-3-1" class="quarto-xref">Figure&nbsp;<span>3.1</span></a> using <code>ggplot2</code>. The first line is the <em>data layer</em> that specifies the data source, and it must be a data frame (or tibble), e.g., <code>iris</code>. The <em>aesthetic</em> option designates the x-axis for <code>Sepal.Width</code>. The second line is the <em>geometry</em> of the graph. For a histogram, the function name is <code>geom_histogram()</code>. Here is the bare minimum of a <code>ggplot2</code> histogram:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Default</span></span>
@@ -1291,8 +1307,8 @@ Figure&nbsp;3.26: <code>ggplot2</code> Grid System by <code>patchwork</code>. To
 </div>
 </div>
 </section>
-<section id="box-plot-1" class="level4" data-number="3.3.2.2">
-<h4 data-number="3.3.2.2" class="anchored" data-anchor-id="box-plot-1"><span class="header-section-number">3.3.2.2</span> Box plot</h4>
+<section id="box-plot-1" class="level4" data-number="3.4.2.2">
+<h4 data-number="3.4.2.2" class="anchored" data-anchor-id="box-plot-1"><span class="header-section-number">3.4.2.2</span> Box plot</h4>
 <p>The anatomy of a box plot can be found in <a href="#fig-3-3" class="quarto-xref">Figure&nbsp;<span>3.3</span></a>. The geometry function of a box plot is <code>geom_boxplot()</code>. Unlike a histogram, the numeric variable is mapped to the y-axis for a vertical box plot. If you want a horizontal box plot, map the numeric variable to the x-axis, and don’t forget to specify an x-axis label.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(patchwork)</span>
@@ -1335,10 +1351,10 @@ Figure&nbsp;3.27: box plot using <code>ggplot2</code>. Top left: default (bare m
 </div>
 </section>
 </section>
-<section id="one-categorical-variable-1" class="level3" data-number="3.3.3">
-<h3 data-number="3.3.3" class="anchored" data-anchor-id="one-categorical-variable-1"><span class="header-section-number">3.3.3</span> One Categorical Variable</h3>
-<section id="bar-plot-1" class="level4" data-number="3.3.3.1">
-<h4 data-number="3.3.3.1" class="anchored" data-anchor-id="bar-plot-1"><span class="header-section-number">3.3.3.1</span> Bar Plot</h4>
+<section id="one-categorical-variable-1" class="level3" data-number="3.4.3">
+<h3 data-number="3.4.3" class="anchored" data-anchor-id="one-categorical-variable-1"><span class="header-section-number">3.4.3</span> One Categorical Variable</h3>
+<section id="bar-plot-1" class="level4" data-number="3.4.3.1">
+<h4 data-number="3.4.3.1" class="anchored" data-anchor-id="bar-plot-1"><span class="header-section-number">3.4.3.1</span> Bar Plot</h4>
 <p>Here we will show how to make a bar plot and a pie chart using <code>ggplot2</code>.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(patchwork)</span>
@@ -1380,8 +1396,8 @@ Figure&nbsp;3.28: Barplot using <code>ggplot2</code>. Top left: default (bare mi
 </div>
 </div>
 </section>
-<section id="pie-chart-1" class="level4" data-number="3.3.3.2">
-<h4 data-number="3.3.3.2" class="anchored" data-anchor-id="pie-chart-1"><span class="header-section-number">3.3.3.2</span> Pie Chart</h4>
+<section id="pie-chart-1" class="level4" data-number="3.4.3.2">
+<h4 data-number="3.4.3.2" class="anchored" data-anchor-id="pie-chart-1"><span class="header-section-number">3.4.3.2</span> Pie Chart</h4>
 <p>Here’s a curve ball. You may give an impression that <code>ggplots</code> is an upgrade. Plotting a pie chart should be a piece of cake. The fact is NO.</p>
 <p>Despite the disappointment, it is worth seeing how a pie chart can be plotted using the foundational building-block functions. To give you a heads-up, <code>ggplot2</code> view a pie chart as a twisted bar plot. There is an internal logic to justify such a view, but we will not discuss it in detail.</p>
 <p>Suppose we want to create a pie chart like the one below:</p>
@@ -1495,10 +1511,10 @@ Figure&nbsp;3.34: Piechart using <code>ggplot2</code> without no background.
 </div>
 </section>
 </section>
-<section id="one-categorical-variable-and-one-numeric-variable-1" class="level3" data-number="3.3.4">
-<h3 data-number="3.3.4" class="anchored" data-anchor-id="one-categorical-variable-and-one-numeric-variable-1"><span class="header-section-number">3.3.4</span> One Categorical Variable and One Numeric Variable</h3>
-<section id="side-by-side-box-plot-1" class="level4" data-number="3.3.4.1">
-<h4 data-number="3.3.4.1" class="anchored" data-anchor-id="side-by-side-box-plot-1"><span class="header-section-number">3.3.4.1</span> Side-by-side Box Plot</h4>
+<section id="one-categorical-variable-and-one-numeric-variable-1" class="level3" data-number="3.4.4">
+<h3 data-number="3.4.4" class="anchored" data-anchor-id="one-categorical-variable-and-one-numeric-variable-1"><span class="header-section-number">3.4.4</span> One Categorical Variable and One Numeric Variable</h3>
+<section id="side-by-side-box-plot-1" class="level4" data-number="3.4.4.1">
+<h4 data-number="3.4.4.1" class="anchored" data-anchor-id="side-by-side-box-plot-1"><span class="header-section-number">3.4.4.1</span> Side-by-side Box Plot</h4>
 <p>Here you want to compare the robust statistics among different species.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(patchwork)</span>
@@ -1528,8 +1544,8 @@ Figure&nbsp;3.35: A side-by-side box plot
 </div>
 </div>
 </section>
-<section id="side-by-side-bar-plot-1" class="level4" data-number="3.3.4.2">
-<h4 data-number="3.3.4.2" class="anchored" data-anchor-id="side-by-side-bar-plot-1"><span class="header-section-number">3.3.4.2</span> Side-by-side Bar Plot</h4>
+<section id="side-by-side-bar-plot-1" class="level4" data-number="3.4.4.2">
+<h4 data-number="3.4.4.2" class="anchored" data-anchor-id="side-by-side-bar-plot-1"><span class="header-section-number">3.4.4.2</span> Side-by-side Bar Plot</h4>
 <p>Here, you want to compare the average <code>Sepal.Length</code> among iris species. As discussed above, you calculate the averages and store them in a separate table. It uses pipe, group_by, and summarize concepts discussed in <a href="02_Data_Wrangling.html#sec-tidyverse-tabulation" class="quarto-xref"><span>Section 2.3.11</span></a>.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a>iris_summary1 <span class="ot">&lt;-</span> iris <span class="sc">%&gt;%</span></span>
@@ -1565,8 +1581,8 @@ Figure&nbsp;3.36: A side-by-side bar plot
 </div>
 </div>
 </section>
-<section id="sec-ggplot-error-bar" class="level4" data-number="3.3.4.3">
-<h4 data-number="3.3.4.3" class="anchored" data-anchor-id="sec-ggplot-error-bar"><span class="header-section-number">3.3.4.3</span> Side-by-side Bar Plot with Error Bar</h4>
+<section id="sec-ggplot-error-bar" class="level4" data-number="3.4.4.3">
+<h4 data-number="3.4.4.3" class="anchored" data-anchor-id="sec-ggplot-error-bar"><span class="header-section-number">3.4.4.3</span> Side-by-side Bar Plot with Error Bar</h4>
 <p>The calculation of the error bar (i.e., the standard error <code>se</code>) requires standard deviation and sample size. Once <code>se</code> is calculated, it can be used to calculate the minimum (lower) and maximum (upper) of the error bar.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a>iris_summary2 <span class="ot">&lt;-</span> iris <span class="sc">%&gt;%</span></span>
@@ -1607,8 +1623,8 @@ Figure&nbsp;3.37: A side-by-side bar plot with error bar.
 </div>
 </div>
 </section>
-<section id="line-graph-with-error-bar-1" class="level4" data-number="3.3.4.4">
-<h4 data-number="3.3.4.4" class="anchored" data-anchor-id="line-graph-with-error-bar-1"><span class="header-section-number">3.3.4.4</span> Line Graph with Error Bar</h4>
+<section id="line-graph-with-error-bar-1" class="level4" data-number="3.4.4.4">
+<h4 data-number="3.4.4.4" class="anchored" data-anchor-id="line-graph-with-error-bar-1"><span class="header-section-number">3.4.4.4</span> Line Graph with Error Bar</h4>
 <p>Calculate the SE as above:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a>iris_summary3 <span class="ot">&lt;-</span> iris <span class="sc">%&gt;%</span></span>
@@ -1650,8 +1666,8 @@ Figure&nbsp;3.38: A line plot with error bar.
 </div>
 </div>
 </section>
-<section id="sec-ggplot-overlapping-histogram" class="level4" data-number="3.3.4.5">
-<h4 data-number="3.3.4.5" class="anchored" data-anchor-id="sec-ggplot-overlapping-histogram"><span class="header-section-number">3.3.4.5</span> Overlapping Histogram</h4>
+<section id="sec-ggplot-overlapping-histogram" class="level4" data-number="3.4.4.5">
+<h4 data-number="3.4.4.5" class="anchored" data-anchor-id="sec-ggplot-overlapping-histogram"><span class="header-section-number">3.4.4.5</span> Overlapping Histogram</h4>
 <p>Like the base R side-by-side histogram, you will set the transparency to 0.5 and bin width to 0.25. Note that there is no need to care about the x- and y-limits of <code>ggplot2</code>.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb67"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>iris, <span class="fu">aes</span>(<span class="at">x=</span>Sepal.Length, <span class="at">fill=</span>Species)) <span class="sc">+</span></span>
@@ -1673,8 +1689,8 @@ Figure&nbsp;3.39: A side-by-side histogram.
 </div>
 </section>
 </section>
-<section id="contingency-table-1" class="level3" data-number="3.3.5">
-<h3 data-number="3.3.5" class="anchored" data-anchor-id="contingency-table-1"><span class="header-section-number">3.3.5</span> Contingency Table</h3>
+<section id="contingency-table-1" class="level3" data-number="3.4.5">
+<h3 data-number="3.4.5" class="anchored" data-anchor-id="contingency-table-1"><span class="header-section-number">3.4.5</span> Contingency Table</h3>
 <p>The <code>penguins</code> data set is used to illustrate how to create a side-by-side bar plot or a mosaic plot for displaying count data.</p>
 <p>First, let’s create a contingency table as below:</p>
 <div class="cell">
@@ -1733,8 +1749,8 @@ Figure&nbsp;3.40: Plotting a contingency table using a side-by-side bar plot.
 <!--   geom_mosaic(aes(x=product(species,island), fill=species)) -->
 <!-- ``` -->
 </section>
-<section id="sec-ggplot-scatter-plot" class="level3" data-number="3.3.6">
-<h3 data-number="3.3.6" class="anchored" data-anchor-id="sec-ggplot-scatter-plot"><span class="header-section-number">3.3.6</span> Two Numeric Variables</h3>
+<section id="sec-ggplot-scatter-plot" class="level3" data-number="3.4.6">
+<h3 data-number="3.4.6" class="anchored" data-anchor-id="sec-ggplot-scatter-plot"><span class="header-section-number">3.4.6</span> Two Numeric Variables</h3>
 <p>Use a scatter plot to visualize the relationship between two numeric variables. As mentioned above, the relationship can be linear or non-linear.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb73"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(iris, <span class="fu">aes</span>(<span class="at">x=</span>Sepal.Width, <span class="at">y=</span>Sepal.Length)) <span class="sc">+</span></span>
@@ -1779,8 +1795,8 @@ Figure&nbsp;3.42: A scatter plot overlaid with a regression line.
 </div>
 <p>If you see this message “<code>geom_smooth()</code> using formula = ‘y ~ x’”, it is harmless and informational. <code>ggplot2</code> is just to let you know what the response and predictor are used by <code>geom_smooth()</code> in creating the regression line.</p>
 </section>
-<section id="sec-ggplot-multipanel-scatter-plot" class="level3" data-number="3.3.7">
-<h3 data-number="3.3.7" class="anchored" data-anchor-id="sec-ggplot-multipanel-scatter-plot"><span class="header-section-number">3.3.7</span> Multipanel Scatter Plot</h3>
+<section id="sec-ggplot-multipanel-scatter-plot" class="level3" data-number="3.4.7">
+<h3 data-number="3.4.7" class="anchored" data-anchor-id="sec-ggplot-multipanel-scatter-plot"><span class="header-section-number">3.4.7</span> Multipanel Scatter Plot</h3>
 <p>Oftentimes before multiple linear regression, it is recommended to visualize the relationship between the response variable and the independent variables pairwisely, or the linear relationship between independent variables. The latter is important, as it may cause the <strong>collinearity</strong> issue if independent variables are linearly correlated.</p>
 <p>A multipanel scatter plot can do this. However, <code>ggplot2</code> does not have a geometry function for it. The simplest way is to use the <code>ggpairs()</code> function provided by the <code>GGally</code> package, which requires installation if you have not done so.</p>
 <p>Suppose you are interested in the pairwise relationship between all numeric variables in <code>iris</code>. It can easily be done using the <code>ggpairs()</code> plot function. Color is the attribute used to distinguish species. <code>progress = FALSE</code> is to suppress the printing of the progress bar.</p>
@@ -1802,8 +1818,8 @@ Figure&nbsp;3.43: A Multipanel Scatter Plot
 </div>
 </section>
 </section>
-<section id="summary" class="level2" data-number="3.4">
-<h2 data-number="3.4" class="anchored" data-anchor-id="summary"><span class="header-section-number">3.4</span> Summary</h2>
+<section id="sec-03-summary" class="level2" data-number="3.5">
+<h2 data-number="3.5" class="anchored" data-anchor-id="sec-03-summary"><span class="header-section-number">3.5</span> Summary</h2>
 <p>This is a big chapter that has discussed an array of plot functions both from base R and <code>ggplot2</code>. It is more like a cookbook of various visualization recipes. So, instead of listing all the functions here, it is helpful to list several useful resources that you can fine-tune the graphs yourselves.</p>
 <p><strong>pch</strong></p>
 <p>If you type <code>help(pch)</code> at the console, R shows the <code>pch</code> section of the help page for <code>points</code>. Below is a snapshot of <code>pch</code> values and the corresponding plotting characters:</p>
@@ -1823,6 +1839,9 @@ Figure&nbsp;3.44: <code>pch</code> values
 </div>
 <p><strong>Color</strong></p>
 <p>R supports a large number of colors and palettes. <a href="https://r-graph-gallery.com/colors.html">R Graph Gallery</a> is a great resource to see what choices are available and their names.</p>
+</section>
+<section id="exercises-for-ggplot2" class="level2" data-number="3.6">
+<h2 data-number="3.6" class="anchored" data-anchor-id="exercises-for-ggplot2"><span class="header-section-number">3.6</span> Exercises for <code>ggplot2</code></h2>
 
 
 </section>

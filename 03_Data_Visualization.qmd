@@ -271,12 +271,12 @@ par(mfrow=c(2,2))
 # Top left
 pie(with(iris, table(Species)))
 
-# Top left
+# Top right
 pie(with(iris, table(Species)), 
     col = c('skyblue', 'orange', 'white'), 
     main="Species")
 
-# Bottom right
+# Bottom left
 counts <- with(iris, table(Species))
 my_labs <- paste0(names(counts),"(",counts,")")
 pie(counts, 
@@ -688,6 +688,72 @@ pairs(iris[,1:4], main="A Multi-Panel Scatter Plot")
 ```
 
 Here concludes our journey of data visualization using base R functions. As you can see, some plots can be made easily using base R (e.g., multipanel scatter plot), while others are less direct (e.g., bar plot with error bars). There is no one system you should use; choose whatever fits your requirements.
+
+## Exercises for base R
+
+Q1. Use the built-in data `mtcars` to answer this question.
+
+a.  Make a histogram of `mpg`. Give meaningful labels to the axes. Create a title for the plot. Fill the histogram with your favorite color.
+
+b.  Create a box plot of horsepower by the number of cylinders. As above, modify the axis labels and main title. Color outliers in red.
+
+c.  Create a bar plot showing the number of cars by the number of gears `gear`. Label the x and y axes.
+
+d.  Create a pie chart of the number of cylinders with labels like @fig-3-7.
+
+e.  Use a mosaic plot to illustrate whether the number of cylinders and gears are independent.
+
+f.  Use a side-by-side bar for part e).
+
+g.  Create a scatter plot of `mpg` (x) by horsepower `hp` (y) with proper axis labels.
+
+h.  Create a multipanel plot of `mpg`, `hp`, `cyl`, `wt`, and `qsec` . Identify pairs of variables with a linear relationship.
+
+```{r echo=F, eval=F}
+#a
+hist(mtcars$mpg, xlab="MPG", ylab="Cars", main="MPG` of 32 Cars", col = 'blue', border = 'white')
+
+#b
+boxplot(hp ~ cyl, data=mtcars, xlab="Cylinders", ylab = "Horsepower", main = "Horsepower by Cylinders", outcol = 'red',
+        outpch = 19)
+
+#c
+with(mtcars, barplot(table(gear), xlab="Number of Gears", ylab="Cars", col = 'blue', border = 'black'))
+
+#d
+counts <- with(mtcars, table(cyl))
+my_labs <- paste0(names(counts),"(",counts,")")
+pie(counts, 
+    labels = my_labs, 
+    col = c('skyblue', 'orange', 'white'), 
+    main = "Number of Cylinders")
+
+#e
+mytab <- with(mtcars, table(cyl, gear))
+
+mosaicplot(mytab, xlab = "Number of Cylinders", ylab = "Number of Gears", main = "Mosaic Plot of Two Dependent Variables")
+
+#f
+mytab <- with(mtcars, table(cyl, gear))
+
+barplot(mytab,
+        beside=T,
+        xlab = "Number of Gears",
+        ylab = "Cars",
+        main = "Gears and Cylinders",
+        col = c("skyblue", "lightgreen", "lightcoral"),
+        legend.text = paste(rownames(mytab),"cyl"))
+
+#g
+plot(mtcars$hp, mtcars$mpg, xlab = "Horsepower", ylab = "MPG")
+
+#old h
+# Revise the previous scatter plot by distinguishing cars with different numbers of cylinders by color and  point shape (see @sec-03-summary).
+
+#h
+pairs(mtcars[,c('mpg','hp','cyl','wt','qsec')])
+# mpg-wt, mpg-hp, hp-wt, hp-qsec
+```
 
 ## `ggplot2`
 
@@ -1186,7 +1252,7 @@ library(GGally)
 ggpairs(iris, aes(color = Species), title = "A Multi-panel Scatter Plot", progress = FALSE)
 ```
 
-## Summary
+## Summary {#sec-03-summary}
 
 This is a big chapter that has discussed an array of plot functions both from base R and `ggplot2`. It is more like a cookbook of various visualization recipes. So, instead of listing all the functions here, it is helpful to list several useful resources that you can fine-tune the graphs yourselves.
 
@@ -1206,3 +1272,5 @@ knitr::include_graphics(rep("images/pch_symbols.png"))
 **Color**
 
 R supports a large number of colors and palettes. [R Graph Gallery](https://r-graph-gallery.com/colors.html) is a great resource to see what choices are available and their names.
+
+## Exercises for `ggplot2`
