@@ -56,7 +56,7 @@
     "href": "01_Part1_Basic_R.html#r-variables",
     "title": "1  Basic R",
     "section": "1.1 R Variables",
-    "text": "1.1 R Variables\nAn R variable is a named location in the computer’s memory that stores some values. Imagine it as a labeled (name) shoebox (memory location) keeping a pair of sneakers (value).\nTwo rules determine how an R variable can be named:\n\nIt must begin with a letter (A-Z or a-z), a dot “.”, or an underscore “_”, and\nSubsequent characters can be any combination of letters, digits (0-9), “.”, or “_”.\n\nNote that:\n\nA variable name can be as short as one character or as long as a normal person wishes (10,000 characters!).\nMy suggestion is to give variables meaningful names that help you or someone else comprehend the code. For instance, in a problem about heart rate, use zone2 instead of z or even worse x.\nBe careful that variable names are case-sensitive, e.g., volume and Volume are different in the eyes of R.\nAvoid naming variables with names that have been reserved by R (https://rdrr.io/r/base/Reserved.html) or names already used to name R’s built-in functions, e.g., c, and head. For the latter, unfortunately, R is permissive for misnaming variables by remaining silent, costing time to identify the issue. Therefore, the rule of thumb is to exercise self-discipline and avoid using R function names as variable names.",
+    "text": "1.1 R Variables\nAn R variable is a named location in the computer’s memory that stores some values. Imagine it as a labeled (name) shoebox (memory location) keeping a pair of sneakers (value).\n\n\n\nIllustration 1.1 R variables and shoeboxes.\n\n\nTwo rules determine how an R variable can be named:\n\nIt must begin with a letter (A-Z or a-z), a dot “.”, or an underscore “_”, and\nSubsequent characters can be any combination of letters, digits (0-9), “.”, or “_”.\n\nNote that:\n\nA variable name can be as short as one character or as long as a normal person wishes (10,000 characters!).\nMy suggestion is to give variables meaningful names that help you or someone else comprehend the code. For instance, in a problem about heart rate, use zone2 instead of z or even worse x.\nBe careful that variable names are case-sensitive, e.g., volume and Volume are different in the eyes of R.\nAvoid naming variables with names that have been reserved by R (https://rdrr.io/r/base/Reserved.html) or names already used to name R’s built-in functions, e.g., c, and head. For the latter, unfortunately, R is permissive for misnaming variables by remaining silent, costing time to identify the issue. Therefore, the rule of thumb is to exercise self-discipline and avoid using R function names as variable names.",
     "crumbs": [
       "Part I",
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Basic R</span>"
@@ -299,17 +299,6 @@
     "title": "3  Data Visualization",
     "section": "3.6 Summary",
     "text": "3.6 Summary\nThis is a big chapter that has discussed an array of plot functions both from base R and ggplot2. It is more like a cookbook of various visualization recipes. So, instead of listing all the functions here, it is helpful to list several useful resources that you can fine-tune the graphs yourselves.\npch\nIf you type help(pch) at the console, R shows the pch section of the help page for points. Below is a snapshot of pch values and the corresponding plotting characters:\n\n\n\n\n\n\n\n\nFigure 3.44: pch values\n\n\n\n\n\nColor\nR supports a large number of colors and palettes. R Graph Gallery is a great resource to see what choices are available and their names.",
-    "crumbs": [
-      "Part I",
-      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Data Visualization</span>"
-    ]
-  },
-  {
-    "objectID": "03_Data_Visualization.html#section",
-    "href": "03_Data_Visualization.html#section",
-    "title": "3  Data Visualization",
-    "section": "3.7 ",
-    "text": "3.7",
     "crumbs": [
       "Part I",
       "<span class='chapter-number'>3</span>  <span class='chapter-title'>Data Visualization</span>"

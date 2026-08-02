@@ -30,6 +30,8 @@ As R scripting is a hands-on topic, I encourage you to open RStudio alongside th
 
 An R variable is a named location in the computer's memory that stores some values. Imagine it as a labeled (name) shoebox (memory location) keeping a pair of sneakers (value).
 
+![Illustration 1.1 R variables and shoeboxes.](images/Illustrate_1-1.png)
+
 Two rules determine how an R variable can be named:
 
 1.  It must begin with a letter (A-Z or a-z), a dot "`.`", or an underscore "`_`", and

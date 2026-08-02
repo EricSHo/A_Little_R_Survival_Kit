@@ -1306,5 +1306,3 @@ knitr::include_graphics(rep("images/pch_symbols.png"))
 **Color**
 
 R supports a large number of colors and palettes. [R Graph Gallery](https://r-graph-gallery.com/colors.html) is a great resource to see what choices are available and their names.
-
-## 
