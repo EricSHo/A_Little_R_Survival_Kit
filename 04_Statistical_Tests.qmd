@@ -106,7 +106,7 @@ The symbol `~` means "split by". `Delay ~ Carrier` means to split `Delay` by `Ca
 
 ### One-way ANOVA {#sec-04-one-way-ANOVA}
 
-A one-way ANOVA test tests whether the means of three or more groups are the same or not. Two key differences from the two-sample t-test above: 1. a two-sample t-test can handle only two groups, but ANOVA can handle two or more groups. 2. The $H_{0}$ of ANOVA is rejected if any pair(s) of groups have unequal means.
+A one-way ANOVA tests whether the means of three or more groups are the same. Two key differences from the two-sample t-test above: 1. a two-sample t-test can handle only two groups, but ANOVA can handle two or more groups. 2. The $H_{0}$ of ANOVA is rejected if any pair(s) of groups have unequal means.
 
 For example, test whether mean delays vary by destination.
 
@@ -140,7 +140,7 @@ Confidence intervals not crossing zero (the vertical line) indicate pairs have u
 
 ### Paired t-tests {#sec-04-paired-t-test}
 
-A paired t-test evaluates whether the mean difference between two measurements taken on the same subject significantly differs from zero. For a drug trial example, a subject's blood pressure is measured before and after taking the tested drug. Each sample is a subject. The measurements are blood pressure. The $H_{0}$ is the mean difference between the two measurements from all samples is zero.
+A paired t-test evaluates whether the mean difference between two measurements taken on the same subject significantly differs from zero. For a drug trial example, a subject's blood pressure is measured before and after taking the tested drug. Each sample is a subject. The measurements are blood pressure. The $H_{0}$ is that the mean difference between the two measurements is zero.
 
 Here we will examine whether the product prices between Target and Walmart are different. The subject is a product. The two measurements are the prices of the same product from Target and Walmart.
 
@@ -278,7 +278,7 @@ The model error is reflected in the Akaike Information Criterion (AIC) values. T
 In this chapter, we have discussed classical statistical tests in the framework of Null Hypothesis Significance Test (NHST). A simple guideline for choosing the most appropriate test is to identify the main variable(s), how many there are, and their type(s). The table below summarizes the tests discussed in this chapter:
 
 | Name | Description | Example | Reference |
-|----|----|----|----|
+|------------------|------------------|------------------|------------------|
 | One-sample t-test | Test whether the mean of a quantitative variable equals a specified value. | `t.test(FlightDelays$Delay, mu = 12)` | @sec-04-one-sample-t-test |
 | Two-sample t-test | Test whether or not the means of two groups are equal. | `t.test(Delay ~ Carrier, data=FlightDelays)` | @sec-04-two-sample-t-test |
 | One-way ANOVA | Test whether or not the means of three or more groups are equal. | `aov_results <- aov(Delay ~ Destination, data=FlightDelays)` | @sec-04-one-way-ANOVA |
@@ -288,4 +288,105 @@ In this chapter, we have discussed classical statistical tests in the framework 
 | Simple Linear Regression | It examines the linear relationship between the predictor and the response. | `lm(Sepal.Width ~ Sepal.Length, data=setosa_iris)` | @sec-04-SLR |
 | Multiple Linear Regression | It examines the linear relationship between multiple predictors and the response. | `lm(Sepal.Width ~ Sepal.Length + Petal.Length, data=setosa_iris)` | @sec-04-MLR |
 
-.
+## Exercises
+
+Use the built-in data set `mtcars` to answer these questions. Before tackling the questions below, you need to convert the categorical variables in `mtcars` to a factor. Here is the code:
+
+```{r}
+mtcars$cyl <- factor(mtcars$cyl)
+mtcars$vs <- factor(mtcars$vs, levels = c(0,1))
+mtcars$am <- factor(mtcars$am, levels = c(0,1))
+```
+
+Q1. Test whether the mean `mpg` is 20 at the 95% confidence level.
+
+```{r echo=F, eval=F}
+t.test(mtcars$mpg, mu = 20)
+# p-value = 0.93, fail to reject the null at 95%
+```
+
+Q2. `am` stands for automatic transmission. A 0 means not automatic and 1 means automatic. Test whether the mean acceleration `qsec` is the same between automatic and manual transmissions.
+
+```{r echo=F, eval=F}
+t.test(qsec ~ am, data=mtcars)
+
+# p-value=0.2093, fail to reject the null at 95% C.L., meaning that the acceleration is the same between the two types of transmission.
+```
+
+Q3. Test whether the mean acceleration `qsec` is the same for different numbers of cylinders `cyl`. If it is not true, identify the pair(s) that have different mean acceleration. Note that `cyl` must be converted to a factor before performing any tests.
+
+```{r echo=F, eval=F}
+qsec_aov <- aov(qsec ~ cyl, data=mtcars)
+summary(qsec_aov)
+
+# the p-value is 0.00196<0.05, reject the null at 95% C.L.
+```
+
+```{r echo=F, eval=F}
+qsec_hsd <- TukeyHSD(qsec_aov)
+
+plot(qsec_hsd, las=1)
+# 8 cylinders vs 4 cylinders is the pair that is tested to have unequal mean acceleration, as it did cross the line = 0. 
+```
+
+Q4. Test whether cars with different numbers of cylinders are equally sampled in the data set.
+
+```{r echo=F, eval=F}
+chisq.test(table(mtcars$cyl), p = c(1/3,1/3,1/3))
+
+# the p-value is 0.3147 < 0.05, fail to reject the null at 95% C.L. It means that the numbers of cars for each cylinder are not exactly equal, but they are probably due to random sampling.
+```
+
+Q5. Test whether the type of transmission `am` and the number of cylinders are independent. Note: If you encounter a warning message, it is due to small-count data. You can ignore it.
+
+```{r echo=F, eval=F}
+chisq.test(with(mtcars, table(cyl, am)), correct=T)
+
+# p-value = 0.01265 < 0.05, reject the null at 95% C.L., meaning that the mode of transmission and the number of cylinders are not independent.
+```
+
+Q6. Use a linear model to test the relationship between horsepower `hp` and acceleration `qsec`.
+
+```{r echo=F, eval=F}
+# hp: predictor
+# qsec : response
+
+# Take a look at the data
+plot(x=mtcars$hp, y=mtcars$qsec, xlab="Horsepower", ylab="Acceleration in seconds")
+
+# There is an inverse relationship.
+```
+
+```{r echo=F, eval=F}
+hp_qsec_lm <- lm( qsec ~ hp, data=mtcars)
+summary(hp_qsec_lm)
+
+# small pvalues for both the intercept and slope.
+# cor = sqrt(0.5) ~ -0.7 bc the slope is negative.
+```
+
+```{r echo=F, eval=F}
+
+plot(x=mtcars$hp, y=mtcars$qsec, xlab="Horsepower", ylab="Acceleration in seconds")
+intercept <- hp_qsec_lm$coefficients[1]
+slope <- hp_qsec_lm$coefficients[2]
+abline(a=intercept, b=slope, col='red')
+```
+
+Q7. Use a multiple linear model to study the relationship between acceleration, horsepower, weight, and MPG.
+
+```{r echo=F, eval=F}
+
+# Take a peek of the data
+pairs(mtcars[,c('qsec','hp','wt','mpg')])
+
+# it seems qsec is linear correlated with hp and mpg, but not much with wt.
+```
+
+```{r echo=F, eval=F}
+
+mlr_model <- lm(qsec ~ hp + wt + mpg, data=mtcars)
+summary(mlr_model)
+
+# p-values of hp < wt < mpg. So, hp is the best predictor, followed by wt, and mpg.
+```

@@ -5897,11 +5897,11 @@ by \texttt{Carrier}.
 
 \subsection{One-way ANOVA}\label{sec-04-one-way-ANOVA}
 
-A one-way ANOVA test tests whether the means of three or more groups are
-the same or not. Two key differences from the two-sample t-test above:
-1. a two-sample t-test can handle only two groups, but ANOVA can handle
-two or more groups. 2. The \(H_{0}\) of ANOVA is rejected if any pair(s)
-of groups have unequal means.
+A one-way ANOVA tests whether the means of three or more groups are the
+same. Two key differences from the two-sample t-test above: 1. a
+two-sample t-test can handle only two groups, but ANOVA can handle two
+or more groups. 2. The \(H_{0}\) of ANOVA is rejected if any pair(s) of
+groups have unequal means.
 
 For example, test whether mean delays vary by destination.
 
@@ -5997,8 +5997,8 @@ A paired t-test evaluates whether the mean difference between two
 measurements taken on the same subject significantly differs from zero.
 For a drug trial example, a subject's blood pressure is measured before
 and after taking the tested drug. Each sample is a subject. The
-measurements are blood pressure. The \(H_{0}\) is the mean difference
-between the two measurements from all samples is zero.
+measurements are blood pressure. The \(H_{0}\) is that the mean
+difference between the two measurements is zero.
 
 Here we will examine whether the product prices between Target and
 Walmart are different. The subject is a product. The two measurements
@@ -6438,7 +6438,44 @@ multiple predictors and the response. &
 & Section~\ref{sec-04-MLR} \\
 \end{longtable}
 
-.
+\section{Exercises}\label{exercises}
+
+Use the built-in data set \texttt{mtcars} to answer these questions.
+Before tackling the questions below, you need to convert the categorical
+variables in \texttt{mtcars} to a factor. Here is the code:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mtcars}\SpecialCharTok{$}\NormalTok{cyl }\OtherTok{\textless{}{-}} \FunctionTok{factor}\NormalTok{(mtcars}\SpecialCharTok{$}\NormalTok{cyl)}
+\NormalTok{mtcars}\SpecialCharTok{$}\NormalTok{vs }\OtherTok{\textless{}{-}} \FunctionTok{factor}\NormalTok{(mtcars}\SpecialCharTok{$}\NormalTok{vs, }\AttributeTok{levels =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{1}\NormalTok{))}
+\NormalTok{mtcars}\SpecialCharTok{$}\NormalTok{am }\OtherTok{\textless{}{-}} \FunctionTok{factor}\NormalTok{(mtcars}\SpecialCharTok{$}\NormalTok{am, }\AttributeTok{levels =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{1}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+Q1. Test whether the mean \texttt{mpg} is 20 at the 95\% confidence
+level.
+
+Q2. \texttt{am} stands for automatic transmission. A 0 means not
+automatic and 1 means automatic. Test whether the mean acceleration
+\texttt{qsec} is the same between automatic and manual transmissions.
+
+Q3. Test whether the mean acceleration \texttt{qsec} is the same for
+different numbers of cylinders \texttt{cyl}. If it is not true, identify
+the pair(s) that have different mean acceleration. Note that
+\texttt{cyl} must be converted to a factor before performing any tests.
+
+Q4. Test whether cars with different numbers of cylinders are equally
+sampled in the data set.
+
+Q5. Test whether the type of transmission \texttt{am} and the number of
+cylinders are independent. Note: If you encounter a warning message, it
+is due to small-count data. You can ignore it.
+
+Q6. Use a linear model to test the relationship between horsepower
+\texttt{hp} and acceleration \texttt{qsec}.
+
+Q7. Use a multiple linear model to study the relationship between
+acceleration, horsepower, weight, and MPG.
 
 \chapter{Dive Deeper}\label{dive-deeper}
 
