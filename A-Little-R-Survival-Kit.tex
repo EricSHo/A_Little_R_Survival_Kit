@@ -4034,7 +4034,7 @@ And then, pass the \texttt{mean\_data} object to \texttt{barplot()}.
 \end{figure}%
 
 \subsubsection{Side-by-side Bar Plot with Error
-Bar\^{}*}\label{side-by-side-bar-plot-with-error-bar}
+Bar}\label{sec-04-error-bar}
 
 \emph{This topic is slightly advanced. It is much easier to use
 \texttt{ggplot2}. So, feel free to skip this or jump to
@@ -4617,13 +4617,17 @@ Q1. Use the built-in data \texttt{mtcars} to answer this question.
 \item
   Use a side-by-side bar for part e).
 \item
-  Create a scatter plot of \texttt{mpg} (x) by horsepower \texttt{hp}
-  (y) with proper axis labels.
+  Create a scatter plot of acceleration \texttt{qsec} (x) by horsepower
+  \texttt{hp} (y) with proper axis labels.
 \item
   Create a multipanel plot of \texttt{mpg}, \texttt{hp}, \texttt{cyl},
   \texttt{wt}, and \texttt{qsec} . Identify pairs of variables with a
   linear relationship.
 \end{enumerate}
+
+Q2. Create a line plot of the number of cylinders (x) vs.~acceleration
+\texttt{qsec} (y) with error bars. See Section~\ref{sec-04-error-bar}
+and Figure~\ref{fig-3-14} for reference.
 
 \section{\texorpdfstring{\texttt{ggplot2}}{ggplot2}}\label{ggplot2}
 
@@ -5556,6 +5560,13 @@ printing of the progress bar.
 
 \end{figure}%
 
+\section{\texorpdfstring{Exercises for
+\texttt{ggplot2}}{Exercises for ggplot2}}\label{exercises-for-ggplot2}
+
+Q3. Repeat Q1 using \texttt{ggplot2}.
+
+Q4. Repeat Q2 using \texttt{ggplot2}.
+
 \section{Summary}\label{sec-03-summary}
 
 This is a big chapter that has discussed an array of plot functions both
@@ -5588,8 +5599,7 @@ R supports a large number of colors and palettes.
 \href{https://r-graph-gallery.com/colors.html}{R Graph Gallery} is a
 great resource to see what choices are available and their names.
 
-\section{\texorpdfstring{Exercises for
-\texttt{ggplot2}}{Exercises for ggplot2}}\label{exercises-for-ggplot2}
+\section{}\label{section}
 
 \part{Part II}
 

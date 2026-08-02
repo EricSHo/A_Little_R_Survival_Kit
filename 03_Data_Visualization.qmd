@@ -379,7 +379,7 @@ barplot(mean_data,
         main="Side-by-side Barplot")
 ```
 
-#### Side-by-side Bar Plot with Error Bar\^\*
+#### Side-by-side Bar Plot with Error Bar {#sec-04-error-bar}
 
 *This topic is slightly advanced. It is much easier to use `ggplot2`. So, feel free to skip this or jump to @sec-ggplot-error-bar.*
 
@@ -705,7 +705,7 @@ e.  Use a mosaic plot to illustrate whether the number of cylinders and gears ar
 
 f.  Use a side-by-side bar for part e).
 
-g.  Create a scatter plot of `mpg` (x) by horsepower `hp` (y) with proper axis labels.
+g.  Create a scatter plot of acceleration `qsec` (x) by horsepower `hp` (y) with proper axis labels.
 
 h.  Create a multipanel plot of `mpg`, `hp`, `cyl`, `wt`, and `qsec` . Identify pairs of variables with a linear relationship.
 
@@ -745,7 +745,7 @@ barplot(mytab,
         legend.text = paste(rownames(mytab),"cyl"))
 
 #g
-plot(mtcars$hp, mtcars$mpg, xlab = "Horsepower", ylab = "MPG")
+plot(mtcars$qsec, mtcars$hp, xlab = "Acceleration in seconds", ylab = "Horsepower")
 
 #old h
 # Revise the previous scatter plot by distinguishing cars with different numbers of cylinders by color and  point shape (see @sec-03-summary).
@@ -753,6 +753,34 @@ plot(mtcars$hp, mtcars$mpg, xlab = "Horsepower", ylab = "MPG")
 #h
 pairs(mtcars[,c('mpg','hp','cyl','wt','qsec')])
 # mpg-wt, mpg-hp, hp-wt, hp-qsec
+```
+
+Q2. Create a line plot of the number of cylinders (x) vs. acceleration `qsec` (y) with error bars. See @sec-04-error-bar and @fig-3-14 for reference.
+
+```{r echo=F, eval=F}
+mean_data <- tapply(mtcars$qsec, mtcars$cyl, FUN = mean)
+
+sem <- function(x) {sd(x)/sqrt(length(x))}
+sem_data <- tapply(mtcars$qsec, mtcars$cyl, FUN = sem)
+
+# Add Error Bar
+plot(mean_data,
+     type='b',
+     pch=19,
+     xlab="Cylinders", 
+     ylab="Average Acceleration in seconds", 
+     main="Acceleration by Cylinders",
+     xaxt="n",
+     ylim=c(16,20))
+axis(side=1, at=1:length(mean_data), labels=names(mean_data))
+
+arrows(x0 = seq(length(mean_data)),
+       y0 = mean_data - sem_data, # Start of the bar
+       x1 = seq(length(mean_data)),
+       y1 = mean_data + sem_data, # End of the bar
+       angle = 90,                # Makes the ends of the bars flat
+       code = 3,                  # Draws ticks at both ends
+       length = 0.05, col='red')   # Sets the length of the ticks
 ```
 
 ## `ggplot2`
@@ -1252,6 +1280,12 @@ library(GGally)
 ggpairs(iris, aes(color = Species), title = "A Multi-panel Scatter Plot", progress = FALSE)
 ```
 
+## Exercises for `ggplot2`
+
+Q3. Repeat Q1 using `ggplot2`.
+
+Q4. Repeat Q2 using `ggplot2`.
+
 ## Summary {#sec-03-summary}
 
 This is a big chapter that has discussed an array of plot functions both from base R and `ggplot2`. It is more like a cookbook of various visualization recipes. So, instead of listing all the functions here, it is helpful to list several useful resources that you can fine-tune the graphs yourselves.
@@ -1273,4 +1307,4 @@ knitr::include_graphics(rep("images/pch_symbols.png"))
 
 R supports a large number of colors and palettes. [R Graph Gallery](https://r-graph-gallery.com/colors.html) is a great resource to see what choices are available and their names.
 
-## Exercises for `ggplot2`
+## 

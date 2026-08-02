@@ -263,8 +263,9 @@ window.Quarto = {
   <li><a href="#sec-ggplot-scatter-plot" id="toc-sec-ggplot-scatter-plot" class="nav-link" data-scroll-target="#sec-ggplot-scatter-plot"><span class="header-section-number">3.4.6</span> Two Numeric Variables</a></li>
   <li><a href="#sec-ggplot-multipanel-scatter-plot" id="toc-sec-ggplot-multipanel-scatter-plot" class="nav-link" data-scroll-target="#sec-ggplot-multipanel-scatter-plot"><span class="header-section-number">3.4.7</span> Multipanel Scatter Plot</a></li>
   </ul></li>
-  <li><a href="#sec-03-summary" id="toc-sec-03-summary" class="nav-link" data-scroll-target="#sec-03-summary"><span class="header-section-number">3.5</span> Summary</a></li>
-  <li><a href="#exercises-for-ggplot2" id="toc-exercises-for-ggplot2" class="nav-link" data-scroll-target="#exercises-for-ggplot2"><span class="header-section-number">3.6</span> Exercises for <code>ggplot2</code></a></li>
+  <li><a href="#exercises-for-ggplot2" id="toc-exercises-for-ggplot2" class="nav-link" data-scroll-target="#exercises-for-ggplot2"><span class="header-section-number">3.5</span> Exercises for <code>ggplot2</code></a></li>
+  <li><a href="#sec-03-summary" id="toc-sec-03-summary" class="nav-link" data-scroll-target="#sec-03-summary"><span class="header-section-number">3.6</span> Summary</a></li>
+  <li><a href="#section" id="toc-section" class="nav-link" data-scroll-target="#section"><span class="header-section-number">3.7</span> </a></li>
   </ul>
 </nav>
     </div>
@@ -709,8 +710,8 @@ Figure&nbsp;3.10: A Side-by-Side Bar Plot
 </div>
 </div>
 </section>
-<section id="side-by-side-bar-plot-with-error-bar" class="level4" data-number="3.2.3.3">
-<h4 data-number="3.2.3.3" class="anchored" data-anchor-id="side-by-side-bar-plot-with-error-bar"><span class="header-section-number">3.2.3.3</span> Side-by-side Bar Plot with Error Bar^*</h4>
+<section id="sec-04-error-bar" class="level4" data-number="3.2.3.3">
+<h4 data-number="3.2.3.3" class="anchored" data-anchor-id="sec-04-error-bar"><span class="header-section-number">3.2.3.3</span> Side-by-side Bar Plot with Error Bar</h4>
 <p><em>This topic is slightly advanced. It is much easier to use <code>ggplot2</code>. So, feel free to skip this or jump to <a href="#sec-ggplot-error-bar" class="quarto-xref"><span>Section 3.4.4.3</span></a>.</em></p>
 <p>The error bar represents the standard error of the mean (SEM). Here is the formula:</p>
 <p><span class="math display">\[\huge{\bar{x}\pm\frac{s}{\sqrt{n}}}\]</span> , where <span class="math inline">\(s\)</span> and <span class="math inline">\(n\)</span> are the standard deviation and sample size, respectively. In the bar plot you are going to plot, the height of the bar is <span class="math inline">\(\bar{x}\)</span>, and the error bars span above and below the bar’s top by <span class="math inline">\(\frac{s}{\sqrt{n}}\)</span> units.</p>
@@ -1117,9 +1118,10 @@ Figure&nbsp;3.20: A Multipanel Scatter Plot
 <li><p>Create a pie chart of the number of cylinders with labels like <a href="#fig-3-7" class="quarto-xref">Figure&nbsp;<span>3.7</span></a>.</p></li>
 <li><p>Use a mosaic plot to illustrate whether the number of cylinders and gears are independent.</p></li>
 <li><p>Use a side-by-side bar for part e).</p></li>
-<li><p>Create a scatter plot of <code>mpg</code> (x) by horsepower <code>hp</code> (y) with proper axis labels.</p></li>
+<li><p>Create a scatter plot of acceleration <code>qsec</code> (x) by horsepower <code>hp</code> (y) with proper axis labels.</p></li>
 <li><p>Create a multipanel plot of <code>mpg</code>, <code>hp</code>, <code>cyl</code>, <code>wt</code>, and <code>qsec</code> . Identify pairs of variables with a linear relationship.</p></li>
 </ol>
+<p>Q2. Create a line plot of the number of cylinders (x) vs.&nbsp;acceleration <code>qsec</code> (y) with error bars. See <a href="#sec-04-error-bar" class="quarto-xref"><span>Section 3.2.3.3</span></a> and <a href="#fig-3-14" class="quarto-xref">Figure&nbsp;<span>3.14</span></a> for reference.</p>
 </section>
 <section id="ggplot2" class="level2" data-number="3.4">
 <h2 data-number="3.4" class="anchored" data-anchor-id="ggplot2"><span class="header-section-number">3.4</span> <code>ggplot2</code></h2>
@@ -1818,8 +1820,13 @@ Figure&nbsp;3.43: A Multipanel Scatter Plot
 </div>
 </section>
 </section>
-<section id="sec-03-summary" class="level2" data-number="3.5">
-<h2 data-number="3.5" class="anchored" data-anchor-id="sec-03-summary"><span class="header-section-number">3.5</span> Summary</h2>
+<section id="exercises-for-ggplot2" class="level2" data-number="3.5">
+<h2 data-number="3.5" class="anchored" data-anchor-id="exercises-for-ggplot2"><span class="header-section-number">3.5</span> Exercises for <code>ggplot2</code></h2>
+<p>Q3. Repeat Q1 using <code>ggplot2</code>.</p>
+<p>Q4. Repeat Q2 using <code>ggplot2</code>.</p>
+</section>
+<section id="sec-03-summary" class="level2" data-number="3.6">
+<h2 data-number="3.6" class="anchored" data-anchor-id="sec-03-summary"><span class="header-section-number">3.6</span> Summary</h2>
 <p>This is a big chapter that has discussed an array of plot functions both from base R and <code>ggplot2</code>. It is more like a cookbook of various visualization recipes. So, instead of listing all the functions here, it is helpful to list several useful resources that you can fine-tune the graphs yourselves.</p>
 <p><strong>pch</strong></p>
 <p>If you type <code>help(pch)</code> at the console, R shows the <code>pch</code> section of the help page for <code>points</code>. Below is a snapshot of <code>pch</code> values and the corresponding plotting characters:</p>
@@ -1840,8 +1847,8 @@ Figure&nbsp;3.44: <code>pch</code> values
 <p><strong>Color</strong></p>
 <p>R supports a large number of colors and palettes. <a href="https://r-graph-gallery.com/colors.html">R Graph Gallery</a> is a great resource to see what choices are available and their names.</p>
 </section>
-<section id="exercises-for-ggplot2" class="level2" data-number="3.6">
-<h2 data-number="3.6" class="anchored" data-anchor-id="exercises-for-ggplot2"><span class="header-section-number">3.6</span> Exercises for <code>ggplot2</code></h2>
+<section id="section" class="level2" data-number="3.7">
+<h2 data-number="3.7" class="anchored" data-anchor-id="section"><span class="header-section-number">3.7</span> </h2>
 
 
 </section>
