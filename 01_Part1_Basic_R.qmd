@@ -146,6 +146,8 @@ One common composite variable in R is **`vectors`**. It is an ordered sequence o
 days_of_month <- c(31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31)
 ```
 
+![Illustration 1.2 Vectors.](images/Illustrate_1-2.png)
+
 `days_of_month` is a `vector` object in R. **`c()`** is the function that **combines or collates** several objects into a vector object. Items are indexed or numbered from 1 to the total number of items in the vector. You can extract a particular item by specifying the index within a pair of square brackets. E.g.,
 
 ```{r}
