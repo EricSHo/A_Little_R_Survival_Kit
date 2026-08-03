@@ -137,7 +137,7 @@ You can use `nchar()` function to figure out the number of characters, including
 nchar(course)
 ```
 
-### Vectors {#sec-vectors}
+### Vectors {#sec-01-vectors}
 
 One common composite variable in R is **`vectors`**. It is an ordered sequence of items that can be processed collectively as a whole, or individually. A vector can be viewed pictorially as a wagon train in which carriages are coupled one after the other. E.g.,
 
@@ -283,7 +283,7 @@ As columns are often named [^01_part1_basic_r-1], columns can be referenced by t
 iris[5,'Petal.Length']
 ```
 
-To access more than one column and row, pack the row indexes and column names in vectors using the `c(...)` function, which **c**ombines or **c**ollates several items into a vector object (see @sec-vectors). For example, show the `Petal.Length` and `Sepal.Length` of the 123^th^ and 96^th^ rows:
+To access more than one column and row, pack the row indexes and column names in vectors using the `c(...)` function, which **c**ombines or **c**ollates several items into a vector object (see @sec-01-vectors). For example, show the `Petal.Length` and `Sepal.Length` of the 123^th^ and 96^th^ rows:
 
 ```{r}
 iris[c(123,96),c('Petal.Length','Sepal.Length')]

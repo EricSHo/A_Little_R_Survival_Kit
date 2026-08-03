@@ -1,28 +1,27 @@
 # Dive Deeper
 
-So far, we have discussed the basic functions of R that are sufficient for most situations. Here, we will discuss several intermediate level features that are practical, and yet utilize additional R functions. That includes the how to create summary tables from published work, converting a dataset from a wide format to a long format, and vice versa, the family of `apply()` functions, and a second look at `group_by()`. 
+So far, we have discussed the basics of R that are sufficient for most situations. In this chapter, we will discuss several practical operations that require a more detailed discussion. That includes how to create summary tables from published work, create a small data set in a data frame, load a data set of any size into RStudio, convert a data set from a wide format to a long format, from a long format to a wide format, the family of `apply()` functions, and a second look at `group_by()`.
 
 ## Learning Objectives: {.unnumbered}
 
-- Recreate a summary table from published work in R.
+- Recreate a summary table from published work.
 
-- Create a small data frame with data in R.
+- Create a small data frame with data.
 
-- Load datasets into R.
+- Load a data set into RStudio.
 
-- Convert a dataset from a wide format to a long format.
+- Convert a data set from a wide format to a long format.
 
-- Convert a dataset from a long format to a wide format.
+- Convert a data set from a long format to a wide format.
 
-- Utilize the family of `apply()` functions.
+- Harness the family of `apply()` functions.
 
 - Revisit `group_by()`.
 
 ## Recreate a Summary Table in R
 
-If you see a data summary table as one in Figure (\@ref(fig:Fig4-1)), and you may want to reproduce the analysis. Unless the raw data, i.e., the data for each sample, is available, it cannot be reproduced in R using the `table()` or `group_by()` functions. In such a scenario, you will learn the way to create an R table in this section.
+<!-- Data prep for Figure 5-1 -->
 
-<!-- make an image. See images/Figures_A_Little_R_Survival_Kit.pptx -->
 ```{r echo=F, warning=FALSE}
 suppressMessages(require(tidyverse))
 
@@ -39,33 +38,53 @@ esoph %>% filter(agegp=="45-54") %>%
             Cases=sum(ncases))
 ```
 
-```{r Fig4-1, fig.cap="Recreate summary tables.", echo=FALSE}
-knitr::include_graphics(rep("images/Figure_4-1-SummaryTable.png"))
+You see the data summary tables as those in \@fig-5-1, so you want to recreate and analyze them yourself. The `table()` or `group_by()` functions mentioned in the previous chapters cannot help in this situation, as they require the raw data, like `iris`, where the information of each sample is accessible.
+
+```{r echo=FALSE}
+#| label: fig-5-1
+#| fig-cap: "Recreate summary tables"
+#| fig-show: hold
+#| out-width: "60%"
+#| fig-align: center
+knitr::include_graphics(rep("images/Figure_5-1-SummaryTable.png"))
 ```
 
-Here you will create the two tables in R as shown in Figure (\@ref(fig:Fig4-1)). Let us begin with the first table, which consists of four columns and two rows. As all the values are numeric, you can create a numeric vector for each row using the combine or collate function `c()` (\@ref(vector). But in here, you will specify the vectors a bit differently. To include the column names in the final table, you have to associate a name to each value for the first row. For the subsequent rows, make sure the order of the values corresponds to the intended columns. As a result, each column in the final table will have a name when rows are combined. Below is the R code to create two rows with names using a vector:
+Here you will create the two tables in R as shown in @fig-5-1. Let us begin with the first table, which is a contingency table with two rows and five columns. As all the values in the table are numeric, each row is represented by a numeric vector. Here, we will use the `c()` function to create it. See @sec-01-vectors. But the vector designated for the first row here is slightly different because we want to specify the column names and the values together (a **named vector**); as a result, the columns in the resultant table will be named.
 
 ```{r}
 row1 <- c(heart_disease=0, formerly=808, never=1802, smoke=728, unknown=1496)
 row2 <- c(1, 77, 90, 61, 48)
 ```
 
-Next, you create a table by stacking up the rows using the `rbind()` function as shown below. 
+Note that the order of the values in the named vector `row1` determines the order of the columns in the table. Ensure that the same order is maintained for subsequent rows.
+
+When all the rows have been defined, they will be stacked up into a table using the `rbind()` function as shown below.
 
 ```{r}
 my_tab1 <- rbind(row1, row2)
 my_tab1
 ```
 
-For example, you can plot the data, perform a $\chi^{2}$ test of independence, etc.
-```{r}
-barplot(my_tab1, main="Recreate a Table", beside=T, legend.text = c("No heart disease","heart disease"))
-```
+Note that names `row1` and `row2` on the left are the names of the rows (`rownames`), they do not constitute a column of the table. Hence, it is a 2x5 table as shown by the dimension function `dim()` below.
 
 ```{r}
-chisq.test(my_tab1)
+dim(my_tab1)
 ```
-For the second table, each row contains a mixture of character and numeric values. Therefore, vector objects cannot be used to represent rows \@ref(atomic-and-object-variables). Instead, use `list` objects for the **heterogeneous** rows. Below is an example to define rows as list objects:
+
+Now, you can plot the table @sec-03-contingency-table.
+
+```{r}
+barplot(my_tab1, main="Recreate a Table", beside=T,
+        legend.text = c("No heart disease","heart disease"))
+```
+
+Or, perform a $\chi^{2}$ test of independence.
+
+```{r}
+chisq.test(my_tab1, correct=F)
+```
+
+The second table in @fig-5-1 is different from the first one as each row contains a mixture of character (`daily tobacco onsumption` ) and numeric values (`controls` and `cases`), making vectors unsuitable for this situation. R provides an object similar to vectors, ordered sequences, that is the `list` object. The main difference between a vector and a list is that the latter allows values to have different data types, i.e., **heterogeneous**. Below is an example to define rows as list objects:
 
 ```{r}
 A <- list(group="A", daily_toba="0-9", ncontrols=90, ncases=14)
@@ -74,15 +93,18 @@ C <- list("C", "20-29", 25, 8)
 D <- list("D", "30+", 8, 11)
 ```
 
-Similarly, rows as lists are stacked up together to form a table.
+Similarly, the row (`A`) defines the values and column names of the resultant table. Now, rows are stacked up together to form a 4x4 table.
 
 ```{r}
 my_tab2 <- rbind(A,B,C,D)
 my_tab2
+
+print(dim(my_tab2))
 ```
+
 ## Create a small data frame with data in R
 
-In this section, you will learn two approaches to store a small dataset in an R's `data.frame` object. If you have a large dataset, this approach might not be the best choice. Instead, you should prepare the dataset using a spreadsheet software, e.g., Google Sheets or Microsoft Excel. Read the next section for more details.  
+In this section, you will learn two approaches to store a small dataset in an R's `data.frame` object. If you have a large dataset, this approach might not be the best choice. Instead, you should prepare the dataset using a spreadsheet software, e.g., Google Sheets or Microsoft Excel. Read the next section for more details.
 
 ### Use `data.frame()` Function
 
@@ -126,15 +148,18 @@ small_df2
 
 In this section, you will learn several ways to load a data file into R. Data files are usually in two formats: comma-separated (`.csv`) or tab-separated (`.txt` or `.tsv`). In a `.csv` file, comma (`,`) is used as the separator to separate data in one column from the other column as shown in Figure 4-2A (\@ref(fig:Fig4-2)). The other commonly used separator is the `tab` symbol, which is usually invisible, but it is made visible deliberately in Figure 4-2B.
 
-```{r Fig4-2, fig.cap="File formats.", echo=FALSE}
-knitr::include_graphics(rep("images/Figure_4-2-FileFormats.png"))
+```{r echo=FALSE}
+#| label: fig-5-2
+#| fig-cap: "File formats"
+#| fig-show: hold
+#| out-width: "60%"
+#| fig-align: center
+knitr::include_graphics(rep("images/Figure_5-2-FileFormats.png"))
 ```
 
 ### `read.csv()` Function
 
-
-### Import data in RStudio 
-
+### Import data in RStudio
 
 ## `group_by()`
 

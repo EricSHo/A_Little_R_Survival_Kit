@@ -540,7 +540,7 @@ hist(versicolor$Sepal.Length, col=rgb(0, 1, 0, 0.5), add = TRUE) # green with 50
 hist(virginica$Sepal.Length, col=rgb(0, 0, 1, 0.5), add = TRUE)  # blue with 50% transparency
 ```
 
-### Contingency Table
+### Contingency Table {#sec-03-contingency-table}
 
 Here we deal with a data set that comprises two categorical variables. A two-dimensional contingency table is used to tally the number of samples for different combinations of categories of the two categorical variables.
 

@@ -571,7 +571,7 @@ E.g.,
 [1] 7
 \end{verbatim}
 
-\subsection{Vectors}\label{sec-vectors}
+\subsection{Vectors}\label{sec-01-vectors}
 
 One common composite variable in R is \textbf{\texttt{vectors}}. It is
 an ordered sequence of items that can be processed collectively as a
@@ -917,7 +917,7 @@ the 5\textsuperscript{th} row:
 To access more than one column and row, pack the row indexes and column
 names in vectors using the \texttt{c(...)} function, which
 \textbf{c}ombines or \textbf{c}ollates several items into a vector
-object (see Section~\ref{sec-vectors}). For example, show the
+object (see Section~\ref{sec-01-vectors}). For example, show the
 \texttt{Petal.Length} and \texttt{Sepal.Length} of the
 123\textsuperscript{th} and 96\textsuperscript{th} rows:
 
@@ -4334,7 +4334,7 @@ red, no green and blue at all, and transparency is 50\%.
 
 \end{figure}%
 
-\subsection{Contingency Table}\label{contingency-table}
+\subsection{Contingency Table}\label{sec-03-contingency-table}
 
 Here we deal with a data set that comprises two categorical variables. A
 two-dimensional contingency table is used to tally the number of samples
@@ -5401,7 +5401,7 @@ x- and y-limits of \texttt{ggplot2}.
 
 \end{figure}%
 
-\subsection{Contingency Table}\label{contingency-table-1}
+\subsection{Contingency Table}\label{contingency-table}
 
 The \texttt{penguins} data set is used to illustrate how to create a
 side-by-side bar plot or a mosaic plot for displaying count data.
@@ -6497,12 +6497,13 @@ acceleration, horsepower, weight, and MPG.
 
 \chapter{Dive Deeper}\label{dive-deeper}
 
-So far, we have discussed the basic functions of R that are sufficient
-for most situations. Here, we will discuss several intermediate level
-features that are practical, and yet utilize additional R functions.
-That includes the how to create summary tables from published work,
-converting a dataset from a wide format to a long format, and vice
-versa, the family of \texttt{apply()} functions, and a second look at
+So far, we have discussed the basics of R that are sufficient for most
+situations. In this chapter, we will discuss several practical
+operations that require a more detailed discussion. That includes how to
+create summary tables from published work, create a small data set in a
+data frame, load a data set of any size into RStudio, convert a data set
+from a wide format to a long format, from a long format to a wide
+format, the family of \texttt{apply()} functions, and a second look at
 \texttt{group\_by()}.
 
 \section*{Learning Objectives:}\label{learning-objectives-4}
@@ -6512,29 +6513,23 @@ versa, the family of \texttt{apply()} functions, and a second look at
 
 \begin{itemize}
 \item
-  Recreate a summary table from published work in R.
+  Recreate a summary table from published work.
 \item
-  Create a small data frame with data in R.
+  Create a small data frame with data.
 \item
-  Load datasets into R.
+  Load a data set into RStudio.
 \item
-  Convert a dataset from a wide format to a long format.
+  Convert a data set from a wide format to a long format.
 \item
-  Convert a dataset from a long format to a wide format.
+  Convert a data set from a long format to a wide format.
 \item
-  Utilize the family of \texttt{apply()} functions.
+  Harness the family of \texttt{apply()} functions.
 \item
   Revisit \texttt{group\_by()}.
 \end{itemize}
 
 \section{Recreate a Summary Table in
 R}\label{recreate-a-summary-table-in-r}
-
-If you see a data summary table as one in Figure (@ref(fig:Fig4-1)), and
-you may want to reproduce the analysis. Unless the raw data, i.e., the
-data for each sample, is available, it cannot be reproduced in R using
-the \texttt{table()} or \texttt{group\_by()} functions. In such a
-scenario, you will learn the way to create an R table in this section.
 
 \begin{verbatim}
 `summarise()` has regrouped the output.
@@ -6556,27 +6551,33 @@ i Use `summarise(.by = c(agegp, tobgp))` for per-operation grouping
 4 45-54 30+             8    11
 \end{verbatim}
 
-\begin{figure}[H]
+You see the data summary tables as those in @fig-5-1, so you want to
+recreate and analyze them yourself. The \texttt{table()} or
+\texttt{group\_by()} functions mentioned in the previous chapters cannot
+help in this situation, as they require the raw data, like
+\texttt{iris}, where the information of each sample is accessible.
 
-{\centering \pandocbounded{\includegraphics[keepaspectratio]{images/Figure_4-1-SummaryTable.png}}
+\begin{figure}
+
+\centering{
+
+\includegraphics[width=0.6\linewidth,height=\textheight,keepaspectratio]{images/Figure_5-1-SummaryTable.png}
 
 }
 
-\caption{Recreate summary tables.}
+\caption{\label{fig-5-1}Recreate summary tables}
 
 \end{figure}%
 
-Here you will create the two tables in R as shown in Figure
-(@ref(fig:Fig4-1)). Let us begin with the first table, which consists of
-four columns and two rows. As all the values are numeric, you can create
-a numeric vector for each row using the combine or collate function
-\texttt{c()} (@ref(vector). But in here, you will specify the vectors a
-bit differently. To include the column names in the final table, you
-have to associate a name to each value for the first row. For the
-subsequent rows, make sure the order of the values corresponds to the
-intended columns. As a result, each column in the final table will have
-a name when rows are combined. Below is the R code to create two rows
-with names using a vector:
+Here you will create the two tables in R as shown in
+Figure~\ref{fig-5-1}. Let us begin with the first table, which is a
+contingency table with two rows and five columns. As all the values in
+the table are numeric, each row is represented by a numeric vector.
+Here, we will use the \texttt{c()} function to create it. See
+Section~\ref{sec-01-vectors}. But the vector designated for the first
+row here is slightly different because we want to specify the column
+names and the values together (a \textbf{named vector}); as a result,
+the columns in the resultant table will be named.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -6585,8 +6586,12 @@ with names using a vector:
 \end{Highlighting}
 \end{Shaded}
 
-Next, you create a table by stacking up the rows using the
-\texttt{rbind()} function as shown below.
+Note that the order of the values in the named vector \texttt{row1}
+determines the order of the columns in the table. Ensure that the same
+order is maintained for subsequent rows.
+
+When all the rows have been defined, they will be stacked up into a
+table using the \texttt{rbind()} function as shown below.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -6601,25 +6606,43 @@ row1             0      808  1802   728    1496
 row2             1       77    90    61      48
 \end{verbatim}
 
-For example, you can plot the data, perform a \(\chi^{2}\) test of
-independence, etc.
+Note that names \texttt{row1} and \texttt{row2} on the left are the
+names of the rows (\texttt{rownames}), they do not constitute a column
+of the table. Hence, it is a 2x5 table as shown by the dimension
+function \texttt{dim()} below.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{barplot}\NormalTok{(my\_tab1, }\AttributeTok{main=}\StringTok{"Recreate a Table"}\NormalTok{, }\AttributeTok{beside=}\NormalTok{T, }\AttributeTok{legend.text =} \FunctionTok{c}\NormalTok{(}\StringTok{"No heart disease"}\NormalTok{,}\StringTok{"heart disease"}\NormalTok{))}
-\end{Highlighting}
-\end{Shaded}
-
-\pandocbounded{\includegraphics[keepaspectratio]{05_Dive_Deeper_files/figure-pdf/unnamed-chunk-4-1.pdf}}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{chisq.test}\NormalTok{(my\_tab1)}
+\FunctionTok{dim}\NormalTok{(my\_tab1)}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
-Warning in chisq.test(my_tab1): Chi-squared approximation may be incorrect
+[1] 2 5
+\end{verbatim}
+
+Now, you can plot the table Section~\ref{sec-03-contingency-table}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{barplot}\NormalTok{(my\_tab1, }\AttributeTok{main=}\StringTok{"Recreate a Table"}\NormalTok{, }\AttributeTok{beside=}\NormalTok{T,}
+        \AttributeTok{legend.text =} \FunctionTok{c}\NormalTok{(}\StringTok{"No heart disease"}\NormalTok{,}\StringTok{"heart disease"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{05_Dive_Deeper_files/figure-pdf/unnamed-chunk-5-1.pdf}}
+
+Or, perform a \(\chi^{2}\) test of independence.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{chisq.test}\NormalTok{(my\_tab1, }\AttributeTok{correct=}\NormalTok{F)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Warning in chisq.test(my_tab1, correct = F): Chi-squared approximation may be
+incorrect
 \end{verbatim}
 
 \begin{verbatim}
@@ -6630,11 +6653,15 @@ data:  my_tab1
 X-squared = 61.967, df = 4, p-value = 1.119e-12
 \end{verbatim}
 
-For the second table, each row contains a mixture of character and
-numeric values. Therefore, vector objects cannot be used to represent
-rows @ref(atomic-and-object-variables). Instead, use \texttt{list}
-objects for the \textbf{heterogeneous} rows. Below is an example to
-define rows as list objects:
+The second table in Figure~\ref{fig-5-1} is different from the first one
+as each row contains a mixture of character
+(\texttt{daily\ tobacco\ onsumption} ) and numeric values
+(\texttt{controls} and \texttt{cases}), making vectors unsuitable for
+this situation. R provides an object similar to vectors, ordered
+sequences, that is the \texttt{list} object. The main difference between
+a vector and a list is that the latter allows values to have different
+data types, i.e., \textbf{heterogeneous}. Below is an example to define
+rows as list objects:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -6645,7 +6672,9 @@ define rows as list objects:
 \end{Highlighting}
 \end{Shaded}
 
-Similarly, rows as lists are stacked up together to form a table.
+Similarly, the row (\texttt{A}) defines the values and column names of
+the resultant table. Now, rows are stacked up together to form a 4x4
+table.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -6660,6 +6689,16 @@ A "A"   "0-9"      90        14
 B "B"   "10-19"    44        13    
 C "C"   "20-29"    25        8     
 D "D"   "30+"      8         11    
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{print}\NormalTok{(}\FunctionTok{dim}\NormalTok{(my\_tab2))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] 4 4
 \end{verbatim}
 
 \section{Create a small data frame with data in
@@ -6762,13 +6801,15 @@ one column from the other column as shown in Figure 4-2A
 \texttt{tab} symbol, which is usually invisible, but it is made visible
 deliberately in Figure 4-2B.
 
-\begin{figure}[H]
+\begin{figure}
 
-{\centering \pandocbounded{\includegraphics[keepaspectratio]{images/Figure_4-2-FileFormats.png}}
+\centering{
+
+\includegraphics[width=0.6\linewidth,height=\textheight,keepaspectratio]{images/Figure_5-2-FileFormats.png}
 
 }
 
-\caption{File formats.}
+\caption{\label{fig-5-2}File formats}
 
 \end{figure}%
 
