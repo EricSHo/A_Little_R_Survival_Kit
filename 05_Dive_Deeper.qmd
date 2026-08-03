@@ -104,11 +104,11 @@ print(dim(my_tab2))
 
 ## Create a small data frame with data in R
 
-In this section, you will learn two approaches to store a small dataset in an R's `data.frame` object. If you have a large dataset, this approach might not be the best choice. Instead, you should prepare the dataset using a spreadsheet software, e.g., Google Sheets or Microsoft Excel. Read the next section for more details.
+Here we will discuss two approaches to store a small data set in a `data.frame` object. If the data set is large, my recommendation is to store the data in a spreadsheet, e.g., Google Sheets or Microsoft Excel, and then upload it into RStudio. See the next section for more details.
 
 ### Use `data.frame()` Function
 
-Besides reproducing a table, you might want to create a small dataset as a data frame in R. It can be done in two steps, like creating a table above. The first step is to define each column (variable) as a vector, and then use the `data.frame()` function to combine them into a data frame. Here is an example to create a data frame that consists of two columns (group, and systolic blood pressure (sbp)), where each column contains eight samples. The first step is to create two vectors, one for each column
+Here is the first approach to create a data frame that takes two steps. The first step is to define each column (variable) as a vector, and then use the `data.frame()` function to combine them into a data frame. Here is an example to create a data frame with two columns: `group`, and systolic blood pressure (`sbp`), and eight rows. Two vectors, each with eight values, are created below:
 
 ```{r}
 group_data <- c("A","A","A","A","A","B","B","B")
@@ -125,7 +125,7 @@ small_df1
 
 ### Use `read.table()` Function
 
-An equivalent approach is to type out the values in columns as the example below, and feed it to the `read.table()` function through the `text=` parameter.
+The second approach is to type out the values in columns as in the example below, and feed it to the `read.table()` function through the `text=` parameter.
 
 ```{r}
 content = ("
@@ -144,22 +144,80 @@ small_df2 <- read.table(text = content, header = TRUE)
 small_df2
 ```
 
-## Load datasets into R
+There is no good or bad of either approach unless you want to use some R functions to generate the column vectors. In such a case, the first approach using `data.frame()` function is more trackable.
 
-In this section, you will learn several ways to load a data file into R. Data files are usually in two formats: comma-separated (`.csv`) or tab-separated (`.txt` or `.tsv`). In a `.csv` file, comma (`,`) is used as the separator to separate data in one column from the other column as shown in Figure 4-2A (\@ref(fig:Fig4-2)). The other commonly used separator is the `tab` symbol, which is usually invisible, but it is made visible deliberately in Figure 4-2B.
+## Load Data Sets into RStudio
+
+Data sets are usually too large to be typed using the methods discussed in the previous section. Here, you will learn several ways to load a data set stored in a file into RStudio. The two common data file formats are: comma-separated (`.csv`) or tab-separated (`.txt` or `.tsv`). In a `.csv` file, the comma (`,`) serves as a column separator, separating data in one column from the other column, as shown in panel A of @fig-5-2. The other common separator is the `tab` value, which is usually invisible but is deliberately made visible in panel B.
 
 ```{r echo=FALSE}
 #| label: fig-5-2
 #| fig-cap: "File formats"
 #| fig-show: hold
-#| out-width: "60%"
+#| out-width: "80%"
 #| fig-align: center
 knitr::include_graphics(rep("images/Figure_5-2-FileFormats.png"))
 ```
 
-### `read.csv()` Function
+### `read.csv()` and `read.table()` Functions
+
+R provides two functions to read the data file directly into RStudio. `read.csv()` reads a `.csv` file from the location provided. The location can be a URL or a file path to a file on your computer. For example, load the flight delays file from here: <https://www.openintro.org/data/csv/airline_delay.csv>. The first parameter is the file location. Make sure that it is in quotes.
+
+```{r}
+delays1 <- read.csv("https://www.openintro.org/data/csv/airline_delay.csv", stringsAsFactors = T)
+head(delays1)
+```
+
+The `stringAsFactors=T` tells the function to treat columns with text values as a categorical variable (factor), which is common in statistical analysis.
+
+If the separator is a `tab` or something else, `read.table()` allows us to specify the actual separator. For example, another version of the same flight delays file is in tab-separated format. So, `tab` is used as the column separator of flight delays.
+
+```{r}
+delays2 <- read.table("https://www.openintro.org/data/tab-delimited/airline_delay.txt",
+                      header = T,
+                      sep = "\t",
+                      stringsAsFactors = T)
+head(delays2)
+```
+
+The `tab` on the keyboard is denoted by `\t`, no space between the two characters. Additionally, not all data files contain a column heading in the first row. By default, R does not assume one exists. To override the default, like the above example, specify `header=T`.
 
 ### Import data in RStudio
+
+Suppose the data file has been downloaded on your computer in the `Downloads` subfolder. The first step is to upload it to the RStudio Cloud Drive via **Files-\>Upload** inside the Files panel, usually on the bottom right.
+
+Next, import the data file into RStudio via **Environment -\> Import Dataset -\> From Text (base)** as shown below:
+
+```{r echo=FALSE}
+#| label: fig-5-3
+#| fig-cap: "Import Data Set"
+#| fig-show: hold
+#| out-width: "80%"
+#| fig-align: center
+knitr::include_graphics(rep("images/Figure_5-3-Environ-Import.png"))
+
+```
+
+Select the file to be imported as shown in Figure 5-4 below:
+
+```{r echo=FALSE}
+#| label: fig-5-4
+#| fig-cap: "Select file"
+#| fig-show: hold
+#| out-width: "80%"
+#| fig-align: center
+knitr::include_graphics(rep("images/Figure_5-4-select-file.png"))
+```
+
+A window will pop up as shown in Figure 5-4, which is a preview of the data. Do the following:
+
+- Check `heading is Yes` box.
+
+- Check `StringAsFactors` box.
+
+- Click the `Import` button at the bottom.
+
+This imports the data file into RStudio and reflects it in the **Environment** panel on the top right.
 
 ## `group_by()`
 

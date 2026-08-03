@@ -6704,23 +6704,21 @@ D "D"   "30+"      8         11
 \section{Create a small data frame with data in
 R}\label{create-a-small-data-frame-with-data-in-r}
 
-In this section, you will learn two approaches to store a small dataset
-in an R's \texttt{data.frame} object. If you have a large dataset, this
-approach might not be the best choice. Instead, you should prepare the
-dataset using a spreadsheet software, e.g., Google Sheets or Microsoft
-Excel. Read the next section for more details.
+Here we will discuss two approaches to store a small data set in a
+\texttt{data.frame} object. If the data set is large, my recommendation
+is to store the data in a spreadsheet, e.g., Google Sheets or Microsoft
+Excel, and then upload it into RStudio. See the next section for more
+details.
 
 \subsection{\texorpdfstring{Use \texttt{data.frame()}
 Function}{Use data.frame() Function}}\label{use-data.frame-function}
 
-Besides reproducing a table, you might want to create a small dataset as
-a data frame in R. It can be done in two steps, like creating a table
-above. The first step is to define each column (variable) as a vector,
-and then use the \texttt{data.frame()} function to combine them into a
-data frame. Here is an example to create a data frame that consists of
-two columns (group, and systolic blood pressure (sbp)), where each
-column contains eight samples. The first step is to create two vectors,
-one for each column
+Here is the first approach to create a data frame that takes two steps.
+The first step is to define each column (variable) as a vector, and then
+use the \texttt{data.frame()} function to combine them into a data
+frame. Here is an example to create a data frame with two columns:
+\texttt{group}, and systolic blood pressure (\texttt{sbp}), and eight
+rows. Two vectors, each with eight values, are created below:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -6755,7 +6753,7 @@ a data frame.
 \subsection{\texorpdfstring{Use \texttt{read.table()}
 Function}{Use read.table() Function}}\label{use-read.table-function}
 
-An equivalent approach is to type out the values in columns as the
+The second approach is to type out the values in columns as in the
 example below, and feed it to the \texttt{read.table()} function through
 the \texttt{text=} parameter.
 
@@ -6790,22 +6788,27 @@ the \texttt{text=} parameter.
 8     B 158
 \end{verbatim}
 
-\section{Load datasets into R}\label{load-datasets-into-r}
+There is no good or bad of either approach unless you want to use some R
+functions to generate the column vectors. In such a case, the first
+approach using \texttt{data.frame()} function is more trackable.
 
-In this section, you will learn several ways to load a data file into R.
-Data files are usually in two formats: comma-separated (\texttt{.csv})
-or tab-separated (\texttt{.txt} or \texttt{.tsv}). In a \texttt{.csv}
-file, comma (\texttt{,}) is used as the separator to separate data in
-one column from the other column as shown in Figure 4-2A
-(@ref(fig:Fig4-2)). The other commonly used separator is the
-\texttt{tab} symbol, which is usually invisible, but it is made visible
-deliberately in Figure 4-2B.
+\section{Load Data Sets into RStudio}\label{load-data-sets-into-rstudio}
+
+Data sets are usually too large to be typed using the methods discussed
+in the previous section. Here, you will learn several ways to load a
+data set stored in a file into RStudio. The two common data file formats
+are: comma-separated (\texttt{.csv}) or tab-separated (\texttt{.txt} or
+\texttt{.tsv}). In a \texttt{.csv} file, the comma (\texttt{,}) serves
+as a column separator, separating data in one column from the other
+column, as shown in panel A of Figure~\ref{fig-5-2}. The other common
+separator is the \texttt{tab} value, which is usually invisible but is
+deliberately made visible in panel B.
 
 \begin{figure}
 
 \centering{
 
-\includegraphics[width=0.6\linewidth,height=\textheight,keepaspectratio]{images/Figure_5-2-FileFormats.png}
+\includegraphics[width=0.8\linewidth,height=\textheight,keepaspectratio]{images/Figure_5-2-FileFormats.png}
 
 }
 
@@ -6813,10 +6816,192 @@ deliberately in Figure 4-2B.
 
 \end{figure}%
 
-\subsection{\texorpdfstring{\texttt{read.csv()}
-Function}{read.csv() Function}}\label{read.csv-function}
+\subsection{\texorpdfstring{\texttt{read.csv()} and
+\texttt{read.table()}
+Functions}{read.csv() and read.table() Functions}}\label{read.csv-and-read.table-functions}
+
+R provides two functions to read the data file directly into RStudio.
+\texttt{read.csv()} reads a \texttt{.csv} file from the location
+provided. The location can be a URL or a file path to a file on your
+computer. For example, load the flight delays file from here:
+\url{https://www.openintro.org/data/csv/airline_delay.csv}. The first
+parameter is the file location. Make sure that it is in quotes.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{delays1 }\OtherTok{\textless{}{-}} \FunctionTok{read.csv}\NormalTok{(}\StringTok{"https://www.openintro.org/data/csv/airline\_delay.csv"}\NormalTok{, }\AttributeTok{stringsAsFactors =}\NormalTok{ T)}
+\FunctionTok{head}\NormalTok{(delays1)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+  year month carrier      carrier_name airport
+1 2020    12      9E Endeavor Air Inc.     ABE
+2 2020    12      9E Endeavor Air Inc.     ABY
+3 2020    12      9E Endeavor Air Inc.     AEX
+4 2020    12      9E Endeavor Air Inc.     AGS
+5 2020    12      9E Endeavor Air Inc.     ALB
+6 2020    12      9E Endeavor Air Inc.     ATL
+                                                 airport_name arr_flights
+1 Allentown/Bethlehem/Easton, PA: Lehigh Valley International          44
+2                      Albany, GA: Southwest Georgia Regional          90
+3                    Alexandria, LA: Alexandria International          88
+4                 Augusta, GA: Augusta Regional at Bush Field         184
+5                            Albany, NY: Albany International          76
+6       Atlanta, GA: Hartsfield-Jackson Atlanta International        5985
+  arr_del15 carrier_ct weather_ct nas_ct security_ct late_aircraft_ct
+1         3       1.63       0.00   0.12           0             1.25
+2         1       0.96       0.00   0.04           0             0.00
+3         8       5.75       0.00   1.60           0             0.65
+4         9       4.17       0.00   1.83           0             3.00
+5        11       4.78       0.00   5.22           0             1.00
+6       445     142.89      11.96 161.37           1           127.79
+  arr_cancelled arr_diverted arr_delay carrier_delay weather_delay nas_delay
+1             0            1        89            56             0         3
+2             0            0        23            22             0         1
+3             0            1       338           265             0        45
+4             0            0       508           192             0        92
+5             1            0       692           398             0       178
+6             5            0     30756         16390          1509      5060
+  security_delay late_aircraft_delay
+1              0                  30
+2              0                   0
+3              0                  28
+4              0                 224
+5              0                 116
+6             16                7781
+\end{verbatim}
+
+The \texttt{stringAsFactors=T} tells the function to treat columns with
+text values as a categorical variable (factor), which is common in
+statistical analysis.
+
+If the separator is a \texttt{tab} or something else,
+\texttt{read.table()} allows us to specify the actual separator. For
+example, another version of the same flight delays file is in
+tab-separated format. So, \texttt{tab} is used as the column separator
+of flight delays.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{delays2 }\OtherTok{\textless{}{-}} \FunctionTok{read.table}\NormalTok{(}\StringTok{"https://www.openintro.org/data/tab{-}delimited/airline\_delay.txt"}\NormalTok{,}
+                      \AttributeTok{header =}\NormalTok{ T,}
+                      \AttributeTok{sep =} \StringTok{"}\SpecialCharTok{\textbackslash{}t}\StringTok{"}\NormalTok{,}
+                      \AttributeTok{stringsAsFactors =}\NormalTok{ T)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Warning in scan(file = file, what = what, sep = sep, quote = quote, dec = dec,
+: EOF within quoted string
+\end{verbatim}
+
+\begin{verbatim}
+Warning in scan(file = file, what = what, sep = sep, quote = quote, dec = dec,
+: number of items read is not a multiple of the number of columns
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{head}\NormalTok{(delays2)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+  year month carrier      carrier_name airport
+1 2020    12      9E Endeavor Air Inc.     ABE
+2 2020    12      9E Endeavor Air Inc.     ABY
+3 2020    12      9E Endeavor Air Inc.     AEX
+4 2020    12      9E Endeavor Air Inc.     AGS
+5 2020    12      9E Endeavor Air Inc.     ALB
+6 2020    12      9E Endeavor Air Inc.     ATL
+                                                 airport_name arr_flights
+1 Allentown/Bethlehem/Easton, PA: Lehigh Valley International          44
+2                      Albany, GA: Southwest Georgia Regional          90
+3                    Alexandria, LA: Alexandria International          88
+4                 Augusta, GA: Augusta Regional at Bush Field         184
+5                            Albany, NY: Albany International          76
+6       Atlanta, GA: Hartsfield-Jackson Atlanta International        5985
+  arr_del15 carrier_ct weather_ct nas_ct security_ct late_aircraft_ct
+1         3       1.63       0.00   0.12           0             1.25
+2         1       0.96       0.00   0.04           0             0.00
+3         8       5.75       0.00   1.60           0             0.65
+4         9       4.17       0.00   1.83           0             3.00
+5        11       4.78       0.00   5.22           0             1.00
+6       445     142.89      11.96 161.37           1           127.79
+  arr_cancelled arr_diverted arr_delay carrier_delay weather_delay nas_delay
+1             0            1        89            56             0         3
+2             0            0        23            22             0         1
+3             0            1       338           265             0        45
+4             0            0       508           192             0        92
+5             1            0       692           398             0       178
+6             5            0     30756         16390          1509      5060
+  security_delay late_aircraft_delay
+1              0                  30
+2              0                   0
+3              0                  28
+4              0                 224
+5              0                 116
+6             16                7781
+\end{verbatim}
+
+The \texttt{tab} on the keyboard is denoted by
+\texttt{\textbackslash{}t}, no space between the two characters.
+Additionally, not all data files contain a column heading in the first
+row. By default, R does not assume one exists. To override the default,
+like the above example, specify \texttt{header=T}.
 
 \subsection{Import data in RStudio}\label{import-data-in-rstudio}
+
+Suppose the data file has been downloaded on your computer in the
+\texttt{Downloads} subfolder. The first step is to upload it to the
+RStudio Cloud Drive via \textbf{Files-\textgreater Upload} inside the
+Files panel, usually on the bottom right.
+
+Next, import the data file into RStudio via \textbf{Environment
+-\textgreater{} Import Dataset -\textgreater{} From Text (base)} as
+shown below:
+
+\begin{figure}
+
+\centering{
+
+\includegraphics[width=0.8\linewidth,height=\textheight,keepaspectratio]{images/Figure_5-3-Environ-Import.png}
+
+}
+
+\caption{\label{fig-5-3}Import Data Set}
+
+\end{figure}%
+
+Select the file to be imported as shown in Figure 5-4 below:
+
+\begin{figure}
+
+\centering{
+
+\includegraphics[width=0.8\linewidth,height=\textheight,keepaspectratio]{images/Figure_5-4-select-file.png}
+
+}
+
+\caption{\label{fig-5-4}Select file}
+
+\end{figure}%
+
+A window will pop up as shown in Figure 5-4, which is a preview of the
+data. Do the following:
+
+\begin{itemize}
+\item
+  Check \texttt{heading\ is\ Yes} box.
+\item
+  Check \texttt{StringAsFactors} box.
+\item
+  Click the \texttt{Import} button at the bottom.
+\end{itemize}
+
+This imports the data file into RStudio and reflects it in the
+\textbf{Environment} panel on the top right.
 
 \section{\texorpdfstring{\texttt{group\_by()}}{group\_by()}}\label{group_by}
 
