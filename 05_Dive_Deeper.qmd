@@ -192,7 +192,7 @@ Next, import the data file into RStudio via **Environment -\> Import Dataset -\>
 #| label: fig-5-3
 #| fig-cap: "Import Data Set"
 #| fig-show: hold
-#| out-width: "80%"
+#| out-width: "60%"
 #| fig-align: center
 knitr::include_graphics(rep("images/Figure_5-3-Environ-Import.png"))
 
@@ -204,7 +204,7 @@ Select the file to be imported as shown in Figure 5-4 below:
 #| label: fig-5-4
 #| fig-cap: "Select file"
 #| fig-show: hold
-#| out-width: "80%"
+#| out-width: "60%"
 #| fig-align: center
 knitr::include_graphics(rep("images/Figure_5-4-select-file.png"))
 ```
