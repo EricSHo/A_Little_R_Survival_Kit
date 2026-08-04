@@ -300,26 +300,6 @@ window.Quarto = {
 <section id="recreate-a-summary-table-in-r" class="level2" data-number="5.1">
 <h2 data-number="5.1" class="anchored" data-anchor-id="recreate-a-summary-table-in-r"><span class="header-section-number">5.1</span> Recreate a Summary Table in R</h2>
 <!-- Data prep for Figure 5-1 -->
-<div class="cell">
-<div class="cell-output cell-output-stderr">
-<pre><code>`summarise()` has regrouped the output.
-ℹ Summaries were computed grouped by agegp and tobgp.
-ℹ Output is grouped by agegp.
-ℹ Use `summarise(.groups = "drop_last")` to silence this message.
-ℹ Use `summarise(.by = c(agegp, tobgp))` for per-operation grouping
-  (`?dplyr::dplyr_by`) instead.</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 4 × 4
-# Groups:   agegp [1]
-  agegp tobgp    Controls Cases
-  &lt;ord&gt; &lt;ord&gt;       &lt;dbl&gt; &lt;dbl&gt;
-1 45-54 0-9g/day       90    14
-2 45-54 10-19          44    13
-3 45-54 20-29          25     8
-4 45-54 30+             8    11</code></pre>
-</div>
-</div>
 <p>You see the data summary tables as those in @fig-5-1, so you want to recreate and analyze them yourself. The <code>table()</code> or <code>group_by()</code> functions mentioned in the previous chapters cannot help in this situation, as they require the raw data, like <code>iris</code>, where the information of each sample is accessible.</p>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
@@ -337,14 +317,14 @@ Figure&nbsp;5.1: Recreate summary tables
 </div>
 <p>Here you will create the two tables in R as shown in <a href="#fig-5-1" class="quarto-xref">Figure&nbsp;<span>5.1</span></a>. Let us begin with the first table, which is a contingency table with two rows and five columns. As all the values in the table are numeric, each row is represented by a numeric vector. Here, we will use the <code>c()</code> function to create it. See <a href="01_Part1_Basic_R.html#sec-01-vectors" class="quarto-xref"><span>Section 1.2.3</span></a>. But the vector designated for the first row here is slightly different because we want to specify the column names and the values together (a <strong>named vector</strong>); as a result, the columns in the resultant table will be named.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>row1 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="at">heart_disease=</span><span class="dv">0</span>, <span class="at">formerly=</span><span class="dv">808</span>, <span class="at">never=</span><span class="dv">1802</span>, <span class="at">smoke=</span><span class="dv">728</span>, <span class="at">unknown=</span><span class="dv">1496</span>)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>row2 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">77</span>, <span class="dv">90</span>, <span class="dv">61</span>, <span class="dv">48</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>row1 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="at">heart_disease=</span><span class="dv">0</span>, <span class="at">formerly=</span><span class="dv">808</span>, <span class="at">never=</span><span class="dv">1802</span>, <span class="at">smoke=</span><span class="dv">728</span>, <span class="at">unknown=</span><span class="dv">1496</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>row2 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">77</span>, <span class="dv">90</span>, <span class="dv">61</span>, <span class="dv">48</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Note that the order of the values in the named vector <code>row1</code> determines the order of the columns in the table. Ensure that the same order is maintained for subsequent rows.</p>
 <p>When all the rows have been defined, they will be stacked up into a table using the <code>rbind()</code> function as shown below.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>my_tab1 <span class="ot">&lt;-</span> <span class="fu">rbind</span>(row1, row2)</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>my_tab1</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>my_tab1 <span class="ot">&lt;-</span> <span class="fu">rbind</span>(row1, row2)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>my_tab1</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     heart_disease formerly never smoke unknown
 row1             0      808  1802   728    1496
@@ -353,15 +333,15 @@ row2             1       77    90    61      48</code></pre>
 </div>
 <p>Note that names <code>row1</code> and <code>row2</code> on the left are the names of the rows (<code>rownames</code>), they do not constitute a column of the table. Hence, it is a 2x5 table as shown by the dimension function <code>dim()</code> below.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(my_tab1)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(my_tab1)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 2 5</code></pre>
 </div>
 </div>
 <p>Now, you can plot the table <a href="03_Data_Visualization.html#sec-03-contingency-table" class="quarto-xref"><span>Section 3.2.4</span></a>.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">barplot</span>(my_tab1, <span class="at">main=</span><span class="st">"Recreate a Table"</span>, <span class="at">beside=</span>T,</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.text =</span> <span class="fu">c</span>(<span class="st">"No heart disease"</span>,<span class="st">"heart disease"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">barplot</span>(my_tab1, <span class="at">main=</span><span class="st">"Recreate a Table"</span>, <span class="at">beside=</span>T,</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.text =</span> <span class="fu">c</span>(<span class="st">"No heart disease"</span>,<span class="st">"heart disease"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -372,7 +352,7 @@ row2             1       77    90    61      48</code></pre>
 </div>
 <p>Or, perform a <span class="math inline">\(\chi^{2}\)</span> test of independence.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">chisq.test</span>(my_tab1, <span class="at">correct=</span>F)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">chisq.test</span>(my_tab1, <span class="at">correct=</span>F)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning in chisq.test(my_tab1, correct = F): Chi-squared approximation may be
 incorrect</code></pre>
@@ -387,15 +367,15 @@ X-squared = 61.967, df = 4, p-value = 1.119e-12</code></pre>
 </div>
 <p>The second table in <a href="#fig-5-1" class="quarto-xref">Figure&nbsp;<span>5.1</span></a> is different from the first one as each row contains a mixture of character (<code>daily tobacco onsumption</code> ) and numeric values (<code>controls</code> and <code>cases</code>), making vectors unsuitable for this situation. R provides an object similar to vectors, ordered sequences, that is the <code>list</code> object. The main difference between a vector and a list is that the latter allows values to have different data types, i.e., <strong>heterogeneous</strong>. Below is an example to define rows as list objects:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>A <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">group=</span><span class="st">"A"</span>, <span class="at">daily_toba=</span><span class="st">"0-9"</span>, <span class="at">ncontrols=</span><span class="dv">90</span>, <span class="at">ncases=</span><span class="dv">14</span>)</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>B <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="st">"B"</span>, <span class="st">"10-19"</span>, <span class="dv">44</span>, <span class="dv">13</span>)</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>C <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="st">"C"</span>, <span class="st">"20-29"</span>, <span class="dv">25</span>, <span class="dv">8</span>)</span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>D <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="st">"D"</span>, <span class="st">"30+"</span>, <span class="dv">8</span>, <span class="dv">11</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>A <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">group=</span><span class="st">"A"</span>, <span class="at">daily_toba=</span><span class="st">"0-9"</span>, <span class="at">ncontrols=</span><span class="dv">90</span>, <span class="at">ncases=</span><span class="dv">14</span>)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>B <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="st">"B"</span>, <span class="st">"10-19"</span>, <span class="dv">44</span>, <span class="dv">13</span>)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>C <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="st">"C"</span>, <span class="st">"20-29"</span>, <span class="dv">25</span>, <span class="dv">8</span>)</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>D <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="st">"D"</span>, <span class="st">"30+"</span>, <span class="dv">8</span>, <span class="dv">11</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Similarly, the row (<code>A</code>) defines the values and column names of the resultant table. Now, rows are stacked up together to form a 4x4 table.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>my_tab2 <span class="ot">&lt;-</span> <span class="fu">rbind</span>(A,B,C,D)</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>my_tab2</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>my_tab2 <span class="ot">&lt;-</span> <span class="fu">rbind</span>(A,B,C,D)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>my_tab2</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  group daily_toba ncontrols ncases
 A "A"   "0-9"      90        14    
@@ -403,7 +383,7 @@ B "B"   "10-19"    44        13
 C "C"   "20-29"    25        8     
 D "D"   "30+"      8         11    </code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">dim</span>(my_tab2))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">dim</span>(my_tab2))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 4 4</code></pre>
 </div>
@@ -416,14 +396,14 @@ D "D"   "30+"      8         11    </code></pre>
 <h3 data-number="5.2.1" class="anchored" data-anchor-id="use-data.frame-function"><span class="header-section-number">5.2.1</span> Use <code>data.frame()</code> Function</h3>
 <p>Here is the first approach to create a data frame that takes two steps. The first step is to define each column (variable) as a vector, and then use the <code>data.frame()</code> function to combine them into a data frame. Here is an example to create a data frame with two columns: <code>group</code>, and systolic blood pressure (<code>sbp</code>), and eight rows. Two vectors, each with eight values, are created below:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>group_data <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"A"</span>,<span class="st">"A"</span>,<span class="st">"A"</span>,<span class="st">"A"</span>,<span class="st">"A"</span>,<span class="st">"B"</span>,<span class="st">"B"</span>,<span class="st">"B"</span>)</span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>sbp_data <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">120</span>,<span class="dv">135</span>,<span class="dv">133</span>,<span class="dv">128</span>,<span class="dv">130</span>,<span class="dv">150</span>,<span class="dv">160</span>,<span class="dv">158</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>group_data <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"A"</span>,<span class="st">"A"</span>,<span class="st">"A"</span>,<span class="st">"A"</span>,<span class="st">"A"</span>,<span class="st">"B"</span>,<span class="st">"B"</span>,<span class="st">"B"</span>)</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>sbp_data <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">120</span>,<span class="dv">135</span>,<span class="dv">133</span>,<span class="dv">128</span>,<span class="dv">130</span>,<span class="dv">150</span>,<span class="dv">160</span>,<span class="dv">158</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Next, use the <code>data.frame()</code> function to combine the vectors into a data frame.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>small_df1 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">group =</span> group_data,</span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>                       <span class="at">sbp =</span> sbp_data)</span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>small_df1</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>small_df1 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">group =</span> group_data,</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>                       <span class="at">sbp =</span> sbp_data)</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>small_df1</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  group sbp
 1     A 120
@@ -441,20 +421,20 @@ D "D"   "30+"      8         11    </code></pre>
 <h3 data-number="5.2.2" class="anchored" data-anchor-id="use-read.table-function"><span class="header-section-number">5.2.2</span> Use <code>read.table()</code> Function</h3>
 <p>The second approach is to type out the values in columns as in the example below, and feed it to the <code>read.table()</code> function through the <code>text=</code> parameter.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>content <span class="ot">=</span> (<span class="st">"</span></span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="st">group sbp</span></span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="st">A 120</span></span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="st">A 135</span></span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a><span class="st">A 133</span></span>
-<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a><span class="st">A 128</span></span>
-<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a><span class="st">A 130</span></span>
-<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a><span class="st">B 150</span></span>
-<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a><span class="st">B 160</span></span>
-<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a><span class="st">B 158</span></span>
-<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a><span class="st">"</span>)</span>
-<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>small_df2 <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="at">text =</span> content, <span class="at">header =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>small_df2</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>content <span class="ot">=</span> (<span class="st">"</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="st">group sbp</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="st">A 120</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="st">A 135</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="st">A 133</span></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="st">A 128</span></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="st">A 130</span></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a><span class="st">B 150</span></span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a><span class="st">B 160</span></span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a><span class="st">B 158</span></span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a><span class="st">"</span>)</span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>small_df2 <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="at">text =</span> content, <span class="at">header =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a>small_df2</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  group sbp
 1     A 120
@@ -491,8 +471,8 @@ Figure&nbsp;5.2: File formats
 <h3 data-number="5.3.1" class="anchored" data-anchor-id="read.csv-and-read.table-functions"><span class="header-section-number">5.3.1</span> <code>read.csv()</code> and <code>read.table()</code> Functions</h3>
 <p>R provides two functions to read the data file directly into RStudio. <code>read.csv()</code> reads a <code>.csv</code> file from the location provided. The location can be a URL or a file path to a file on your computer. For example, load the flight delays file from here: <a href="https://www.openintro.org/data/csv/airline_delay.csv" class="uri">https://www.openintro.org/data/csv/airline_delay.csv</a>. The first parameter is the file location. Make sure that it is in quotes.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>delays1 <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"https://www.openintro.org/data/csv/airline_delay.csv"</span>, <span class="at">stringsAsFactors =</span> T)</span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(delays1)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>delays1 <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"https://www.openintro.org/data/csv/airline_delay.csv"</span>, <span class="at">stringsAsFactors =</span> T)</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(delays1)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  year month carrier      carrier_name airport
 1 2020    12      9E Endeavor Air Inc.     ABE
@@ -534,10 +514,10 @@ Figure&nbsp;5.2: File formats
 <p>The <code>stringAsFactors=T</code> tells the function to treat columns with text values as a categorical variable (factor), which is common in statistical analysis.</p>
 <p>If the separator is a <code>tab</code> or something else, <code>read.table()</code> allows us to specify the actual separator. For example, another version of the same flight delays file is in tab-separated format. So, <code>tab</code> is used as the column separator of flight delays.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>delays2 <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">"https://www.openintro.org/data/tab-delimited/airline_delay.txt"</span>,</span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>                      <span class="at">header =</span> T,</span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>                      <span class="at">sep =</span> <span class="st">"</span><span class="sc">\t</span><span class="st">"</span>,</span>
-<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>                      <span class="at">stringsAsFactors =</span> T)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>delays2 <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">"https://www.openintro.org/data/tab-delimited/airline_delay.txt"</span>,</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>                      <span class="at">header =</span> T,</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>                      <span class="at">sep =</span> <span class="st">"</span><span class="sc">\t</span><span class="st">"</span>,</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>                      <span class="at">stringsAsFactors =</span> T)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning in scan(file = file, what = what, sep = sep, quote = quote, dec = dec,
 : EOF within quoted string</code></pre>
@@ -546,7 +526,7 @@ Figure&nbsp;5.2: File formats
 <pre><code>Warning in scan(file = file, what = what, sep = sep, quote = quote, dec = dec,
 : number of items read is not a multiple of the number of columns</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(delays2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(delays2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  year month carrier      carrier_name airport
 1 2020    12      9E Endeavor Air Inc.     ABE
@@ -647,22 +627,22 @@ Figure&nbsp;5.4: Select file
 </ul>
 <p>Suppose we want to convert temperature from Fahrenheit to Celsius, <span class="math inline">\(C=\frac{5}{9} \times (F-32)\)</span>, with specified precision; the default is zero. Here is the function definition:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>F2C <span class="ot">&lt;-</span> <span class="cf">function</span>(f, <span class="at">decimals =</span> <span class="dv">0</span>) {</span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(<span class="fu">round</span>((f<span class="dv">-32</span>)<span class="sc">*</span><span class="dv">5</span><span class="sc">/</span><span class="dv">9</span>, decimals))</span>
-<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>F2C <span class="ot">&lt;-</span> <span class="cf">function</span>(f, <span class="at">decimals =</span> <span class="dv">0</span>) {</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(<span class="fu">round</span>((f<span class="dv">-32</span>)<span class="sc">*</span><span class="dv">5</span><span class="sc">/</span><span class="dv">9</span>, decimals))</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>The function name is <code>F2C</code>. The function takes two arguments: <code>f</code> that denotes the temperature in Fahrenheit, and the number of decimals, with the default zero. Note that arguments are not required to have default values. The body consists of one line of code: <code>return(round((f-32)*5/9, decimals))</code>. The output is the result of the arithmetic expression.</p>
 <p>Let’s test it out.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>temp1 <span class="ot">&lt;-</span> <span class="fu">F2C</span>(<span class="dv">100</span>)</span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">paste</span>(<span class="st">"100 F is equivalent to"</span>,temp1, <span class="st">"celsius"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>temp1 <span class="ot">&lt;-</span> <span class="fu">F2C</span>(<span class="dv">100</span>)</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">paste</span>(<span class="st">"100 F is equivalent to"</span>,temp1, <span class="st">"celsius"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "100 F is equivalent to 38 celsius"</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>temp2 <span class="ot">&lt;-</span> <span class="fu">F2C</span>(<span class="sc">-</span><span class="dv">10</span>, <span class="at">decimals =</span> <span class="dv">2</span>)</span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">paste</span>(<span class="st">"-10 F is equivalent to"</span>,temp2, <span class="st">"celsius"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>temp2 <span class="ot">&lt;-</span> <span class="fu">F2C</span>(<span class="sc">-</span><span class="dv">10</span>, <span class="at">decimals =</span> <span class="dv">2</span>)</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">paste</span>(<span class="st">"-10 F is equivalent to"</span>,temp2, <span class="st">"celsius"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "-10 F is equivalent to -23.33 celsius"</code></pre>
 </div>
@@ -686,7 +666,7 @@ Figure&nbsp;5.4: Select file
 
 -->
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lapply</span>(state.name, <span class="at">FUN=</span>toupper)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lapply</span>(state.name, <span class="at">FUN=</span>toupper)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[[1]]
 [1] "ALABAMA"
@@ -843,15 +823,15 @@ Figure&nbsp;5.4: Select file
 <p>Let’s look at another example of how to pass an argument to the function. The built-in data <code>precip</code> recorded the average amount of annual precipitation (in inches) for 70 US cities. Suppose we want to convert inches to centimeters (cm) with precision provided by the caller; the default is zero.</p>
 <p>Let’s define a customized function for the conversion.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>inch2cm <span class="ot">&lt;-</span> <span class="cf">function</span>(inches, <span class="at">decimals =</span> <span class="dv">0</span>) {</span>
-<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>  cm <span class="ot">&lt;-</span> <span class="fu">round</span>(inches <span class="sc">*</span> <span class="fl">2.54</span>, decimals)</span>
-<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(cm)</span>
-<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>inch2cm <span class="ot">&lt;-</span> <span class="cf">function</span>(inches, <span class="at">decimals =</span> <span class="dv">0</span>) {</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>  cm <span class="ot">&lt;-</span> <span class="fu">round</span>(inches <span class="sc">*</span> <span class="fl">2.54</span>, decimals)</span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(cm)</span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Next, convert all values in <code>precip</code> to cm using <code>lapply()</code>. In this call, the conversion is rounded up to the nearest whole number.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>precip_cm <span class="ot">&lt;-</span> <span class="fu">lapply</span>(precip, <span class="at">FUN=</span>inch2cm)</span>
-<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(precip_cm[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>precip_cm <span class="ot">&lt;-</span> <span class="fu">lapply</span>(precip, <span class="at">FUN=</span>inch2cm)</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(precip_cm[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>$Mobile
 [1] 170
@@ -866,8 +846,8 @@ $Phoenix
 <p>You may notice the output looks strange, despite the conversion being correct. Please hold on to the question until the next section.</p>
 <p>Pass an additional argument, decimals=2, to <code>inch2cm</code> in the <code>lapply()</code> function.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>precip_cm <span class="ot">&lt;-</span> <span class="fu">lapply</span>(precip, <span class="at">FUN=</span>inch2cm, <span class="dv">2</span>)</span>
-<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(precip_cm[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>precip_cm <span class="ot">&lt;-</span> <span class="fu">lapply</span>(precip, <span class="at">FUN=</span>inch2cm, <span class="dv">2</span>)</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(precip_cm[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>$Mobile
 [1] 170.18
@@ -885,8 +865,8 @@ $Phoenix
 <p>The “s” of <code>sapply()</code> stands for simplified. It functions almost exactly like <code>lapply()</code> except that it returns a vector or matrix. Recall that <code>lappy()</code> always returns a <code>list</code> regardless of the input.</p>
 <p>Here’s the same process to convert precipitation from inches to cm but using <code>sapply()</code>.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>precip_cm_vector <span class="ot">&lt;-</span> <span class="fu">sapply</span>(precip, <span class="at">FUN =</span> inch2cm, <span class="dv">2</span>)</span>
-<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(precip_cm_vector[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>precip_cm_vector <span class="ot">&lt;-</span> <span class="fu">sapply</span>(precip, <span class="at">FUN =</span> inch2cm, <span class="dv">2</span>)</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(precip_cm_vector[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> Mobile  Juneau Phoenix 
  170.18  138.94   17.78 </code></pre>
@@ -904,7 +884,7 @@ $Phoenix
 </div>
 <p>For example, calculate the column mean of the four numeric variables in <code>iris</code>.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">apply</span>(iris[,<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>], <span class="at">MARGIN =</span> <span class="dv">2</span>, <span class="at">FUN=</span>mean)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">apply</span>(iris[,<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>], <span class="at">MARGIN =</span> <span class="dv">2</span>, <span class="at">FUN=</span>mean)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Sepal.Length  Sepal.Width Petal.Length  Petal.Width 
     5.843333     3.057333     3.758000     1.199333 </code></pre>
@@ -912,8 +892,8 @@ $Phoenix
 </div>
 <p>Convert all values from inches to cm in <code>iris</code></p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>iris_cm <span class="ot">&lt;-</span> <span class="fu">apply</span>(iris[,<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>], <span class="at">MARGIN =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>), <span class="at">FUN =</span> inch2cm)</span>
-<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(iris_cm)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>iris_cm <span class="ot">&lt;-</span> <span class="fu">apply</span>(iris[,<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>], <span class="at">MARGIN =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>), <span class="at">FUN =</span> inch2cm)</span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(iris_cm)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     Sepal.Length Sepal.Width Petal.Length Petal.Width
 [1,]           13           9            4           1

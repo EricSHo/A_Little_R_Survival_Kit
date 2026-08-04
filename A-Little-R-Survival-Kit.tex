@@ -6525,26 +6525,6 @@ function, and leverage the family of \texttt{apply()} functions.
 \section{Recreate a Summary Table in
 R}\label{recreate-a-summary-table-in-r}
 
-\begin{verbatim}
-`summarise()` has regrouped the output.
-i Summaries were computed grouped by agegp and tobgp.
-i Output is grouped by agegp.
-i Use `summarise(.groups = "drop_last")` to silence this message.
-i Use `summarise(.by = c(agegp, tobgp))` for per-operation grouping
-  (`?dplyr::dplyr_by`) instead.
-\end{verbatim}
-
-\begin{verbatim}
-# A tibble: 4 x 4
-# Groups:   agegp [1]
-  agegp tobgp    Controls Cases
-  <ord> <ord>       <dbl> <dbl>
-1 45-54 0-9g/day       90    14
-2 45-54 10-19          44    13
-3 45-54 20-29          25     8
-4 45-54 30+             8    11
-\end{verbatim}
-
 You see the data summary tables as those in @fig-5-1, so you want to
 recreate and analyze them yourself. The \texttt{table()} or
 \texttt{group\_by()} functions mentioned in the previous chapters cannot

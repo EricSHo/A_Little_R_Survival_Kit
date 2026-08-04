@@ -20,7 +20,7 @@ So far, we have discussed the basics of R that are sufficient for most situation
 
 <!-- Data prep for Figure 5-1 -->
 
-```{r echo=F, warning=FALSE}
+```{r echo=F, eval=F, warning=FALSE}
 suppressMessages(require(tidyverse))
 
 # Figure 4-1A
