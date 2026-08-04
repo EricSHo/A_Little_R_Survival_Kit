@@ -252,9 +252,14 @@ window.Quarto = {
   <li><a href="#read.csv-and-read.table-functions" id="toc-read.csv-and-read.table-functions" class="nav-link" data-scroll-target="#read.csv-and-read.table-functions"><span class="header-section-number">5.3.1</span> <code>read.csv()</code> and <code>read.table()</code> Functions</a></li>
   <li><a href="#import-data-in-rstudio" id="toc-import-data-in-rstudio" class="nav-link" data-scroll-target="#import-data-in-rstudio"><span class="header-section-number">5.3.2</span> Import data in RStudio</a></li>
   </ul></li>
-  <li><a href="#group_by" id="toc-group_by" class="nav-link" data-scroll-target="#group_by"><span class="header-section-number">5.4</span> <code>group_by()</code></a></li>
-  <li><a href="#different-apply-functions" id="toc-different-apply-functions" class="nav-link" data-scroll-target="#different-apply-functions"><span class="header-section-number">5.5</span> Different <code>apply</code> Functions</a></li>
-  <li><a href="#wide-to-long" id="toc-wide-to-long" class="nav-link" data-scroll-target="#wide-to-long"><span class="header-section-number">5.6</span> Wide to Long</a></li>
+  <li><a href="#define-functions" id="toc-define-functions" class="nav-link" data-scroll-target="#define-functions"><span class="header-section-number">5.4</span> Define Functions</a></li>
+  <li><a href="#the-apply-like-family" id="toc-the-apply-like-family" class="nav-link" data-scroll-target="#the-apply-like-family"><span class="header-section-number">5.5</span> The Apply-Like Family</a>
+  <ul class="collapse">
+  <li><a href="#mechanic-of-apply-like-functions" id="toc-mechanic-of-apply-like-functions" class="nav-link" data-scroll-target="#mechanic-of-apply-like-functions"><span class="header-section-number">5.5.1</span> Mechanic of Apply-Like Functions</a></li>
+  <li><a href="#lappy" id="toc-lappy" class="nav-link" data-scroll-target="#lappy"><span class="header-section-number">5.5.2</span> <code>lappy()</code></a></li>
+  <li><a href="#sapply" id="toc-sapply" class="nav-link" data-scroll-target="#sapply"><span class="header-section-number">5.5.3</span> <code>sapply()</code></a></li>
+  <li><a href="#apply" id="toc-apply" class="nav-link" data-scroll-target="#apply"><span class="header-section-number">5.5.4</span> <code>apply()</code></a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -280,18 +285,17 @@ window.Quarto = {
 </header>
 
 
-<p>So far, we have discussed the basics of R that are sufficient for most situations. In this chapter, we will discuss several practical operations that require a more detailed discussion. That includes how to create summary tables from published work, create a small data set in a data frame, load a data set of any size into RStudio, convert a data set from a wide format to a long format, from a long format to a wide format, the family of <code>apply()</code> functions, and a second look at <code>group_by()</code>.</p>
+<p>So far, we have discussed the basics of R that are sufficient for most situations. In this chapter, we will discuss several practical operations that require a more detailed discussion. That includes how to create summary tables from published work, create a small data set in a data frame, load a data set of any size into RStudio, define your own function, and leverage the family of <code>apply()</code> functions.</p>
 <section id="learning-objectives" class="level2 unnumbered">
 <h2 class="unnumbered anchored" data-anchor-id="learning-objectives">Learning Objectives:</h2>
 <ul>
 <li><p>Recreate a summary table from published work.</p></li>
 <li><p>Create a small data frame with data.</p></li>
 <li><p>Load a data set into RStudio.</p></li>
-<li><p>Convert a data set from a wide format to a long format.</p></li>
-<li><p>Convert a data set from a long format to a wide format.</p></li>
+<li><p>Define your own functions.</p></li>
 <li><p>Harness the family of <code>apply()</code> functions.</p></li>
-<li><p>Revisit <code>group_by()</code>.</p></li>
 </ul>
+<!--# long to wide, wide to long group_by() revisit-->
 </section>
 <section id="recreate-a-summary-table-in-r" class="level2" data-number="5.1">
 <h2 data-number="5.1" class="anchored" data-anchor-id="recreate-a-summary-table-in-r"><span class="header-section-number">5.1</span> Recreate a Summary Table in R</h2>
@@ -625,17 +629,305 @@ Figure&nbsp;5.4: Select file
 <p>This imports the data file into RStudio and reflects it in the <strong>Environment</strong> panel on the top right.</p>
 </section>
 </section>
-<section id="group_by" class="level2" data-number="5.4">
-<h2 data-number="5.4" class="anchored" data-anchor-id="group_by"><span class="header-section-number">5.4</span> <code>group_by()</code></h2>
+<section id="define-functions" class="level2" data-number="5.4">
+<h2 data-number="5.4" class="anchored" data-anchor-id="define-functions"><span class="header-section-number">5.4</span> Define Functions</h2>
+<p>When no built-in functions do what you want, it is the occasion to write your own functions. A function consists of input, process, and output. A daily analogy is the vending machine. The inputs are money and choice; the process is the mechanical system to fetch the selected beverage, snack, etc., and the output is the dispensed item.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/Illustrate_5-1.png" class="img-fluid figure-img"></p>
+<figcaption>Illustration 5.1 Function.</figcaption>
+</figure>
+</div>
+<p>Here are the four components required to define a function: a function name, argument(s), the body, and the output(s).</p>
+<ul>
+<li><p>Function name: same as the rules in defining variables.</p></li>
+<li><p>Argument(s): A function may have zero, 1, 2+ arguments or inputs.</p></li>
+<li><p>Body: R code that takes the input argument(s), if any, performs the task, and returns the output.</p></li>
+<li><p>Output(s): the value(s), object(s), or none returned to the caller.</p></li>
+</ul>
+<p>Suppose we want to convert temperature from Fahrenheit to Celsius, <span class="math inline">\(C=\frac{5}{9} \times (F-32)\)</span>, with specified precision; the default is zero. Here is the function definition:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>F2C <span class="ot">&lt;-</span> <span class="cf">function</span>(f, <span class="at">decimals =</span> <span class="dv">0</span>) {</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(<span class="fu">round</span>((f<span class="dv">-32</span>)<span class="sc">*</span><span class="dv">5</span><span class="sc">/</span><span class="dv">9</span>, decimals))</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>The function name is <code>F2C</code>. The function takes two arguments: <code>f</code> that denotes the temperature in Fahrenheit, and the number of decimals, with the default zero. Note that arguments are not required to have default values. The body consists of one line of code: <code>return(round((f-32)*5/9, decimals))</code>. The output is the result of the arithmetic expression.</p>
+<p>Let’s test it out.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>temp1 <span class="ot">&lt;-</span> <span class="fu">F2C</span>(<span class="dv">100</span>)</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">paste</span>(<span class="st">"100 F is equivalent to"</span>,temp1, <span class="st">"celsius"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "100 F is equivalent to 38 celsius"</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>temp2 <span class="ot">&lt;-</span> <span class="fu">F2C</span>(<span class="sc">-</span><span class="dv">10</span>, <span class="at">decimals =</span> <span class="dv">2</span>)</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">paste</span>(<span class="st">"-10 F is equivalent to"</span>,temp2, <span class="st">"celsius"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "-10 F is equivalent to -23.33 celsius"</code></pre>
+</div>
+</div>
 </section>
-<section id="different-apply-functions" class="level2" data-number="5.5">
-<h2 data-number="5.5" class="anchored" data-anchor-id="different-apply-functions"><span class="header-section-number">5.5</span> Different <code>apply</code> Functions</h2>
+<section id="the-apply-like-family" class="level2" data-number="5.5">
+<h2 data-number="5.5" class="anchored" data-anchor-id="the-apply-like-family"><span class="header-section-number">5.5</span> The Apply-Like Family</h2>
+<p>The <code>apply()</code> family has seven members. Here we will focus on three members that will do 80% of the job: <code>apply()</code>, <code>sapply()</code>, and <code>lappy()</code>.</p>
+<section id="mechanic-of-apply-like-functions" class="level3" data-number="5.5.1">
+<h3 data-number="5.5.1" class="anchored" data-anchor-id="mechanic-of-apply-like-functions"><span class="header-section-number">5.5.1</span> Mechanic of Apply-Like Functions</h3>
+<p>Generally, apply-like functions execute a function over every value of an R composite object <a href="01_Part1_Basic_R.html#sec-01-atomic-and-composite-variables" class="quarto-xref"><span>Section 1.2.2</span></a>. While <code>apply()</code> evaluates along the rows or columns of 2D objects like matrices and data frames, functions like <code>lapply()</code> or <code>sapply()</code> iterate over elements in 1D objects like vectors and lists. The function that acts on each value of the targeted object can be an R built-in function or a user-defined function. More details about the apply-like functions will be discussed below.</p>
 </section>
-<section id="wide-to-long" class="level2" data-number="5.6">
-<h2 data-number="5.6" class="anchored" data-anchor-id="wide-to-long"><span class="header-section-number">5.6</span> Wide to Long</h2>
-<p>Use AirPassengers dataset</p>
+<section id="lappy" class="level3" data-number="5.5.2">
+<h3 data-number="5.5.2" class="anchored" data-anchor-id="lappy"><span class="header-section-number">5.5.2</span> <code>lappy()</code></h3>
+<p>It executes a function over every value of a <code>list</code> or a <code>vector</code>, not 2D objects, and returns a <code>list</code>. For example, change the 50 state names specified in the built-in list <code>state.name</code> to uppercase.</p>
+<!--
+
+**`toupper(state.name)`** returns a standard, unnamed character vector. It simply transforms the text and gives you the exact same structure back.
+
+**`sapply(state.name, FUN=toupper)`** returns a **named character vector**. By default, `sapply()` takes the original input values and uses them as the names for the new output values.
+
+-->
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lapply</span>(state.name, <span class="at">FUN=</span>toupper)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[[1]]
+[1] "ALABAMA"
+
+[[2]]
+[1] "ALASKA"
+
+[[3]]
+[1] "ARIZONA"
+
+[[4]]
+[1] "ARKANSAS"
+
+[[5]]
+[1] "CALIFORNIA"
+
+[[6]]
+[1] "COLORADO"
+
+[[7]]
+[1] "CONNECTICUT"
+
+[[8]]
+[1] "DELAWARE"
+
+[[9]]
+[1] "FLORIDA"
+
+[[10]]
+[1] "GEORGIA"
+
+[[11]]
+[1] "HAWAII"
+
+[[12]]
+[1] "IDAHO"
+
+[[13]]
+[1] "ILLINOIS"
+
+[[14]]
+[1] "INDIANA"
+
+[[15]]
+[1] "IOWA"
+
+[[16]]
+[1] "KANSAS"
+
+[[17]]
+[1] "KENTUCKY"
+
+[[18]]
+[1] "LOUISIANA"
+
+[[19]]
+[1] "MAINE"
+
+[[20]]
+[1] "MARYLAND"
+
+[[21]]
+[1] "MASSACHUSETTS"
+
+[[22]]
+[1] "MICHIGAN"
+
+[[23]]
+[1] "MINNESOTA"
+
+[[24]]
+[1] "MISSISSIPPI"
+
+[[25]]
+[1] "MISSOURI"
+
+[[26]]
+[1] "MONTANA"
+
+[[27]]
+[1] "NEBRASKA"
+
+[[28]]
+[1] "NEVADA"
+
+[[29]]
+[1] "NEW HAMPSHIRE"
+
+[[30]]
+[1] "NEW JERSEY"
+
+[[31]]
+[1] "NEW MEXICO"
+
+[[32]]
+[1] "NEW YORK"
+
+[[33]]
+[1] "NORTH CAROLINA"
+
+[[34]]
+[1] "NORTH DAKOTA"
+
+[[35]]
+[1] "OHIO"
+
+[[36]]
+[1] "OKLAHOMA"
+
+[[37]]
+[1] "OREGON"
+
+[[38]]
+[1] "PENNSYLVANIA"
+
+[[39]]
+[1] "RHODE ISLAND"
+
+[[40]]
+[1] "SOUTH CAROLINA"
+
+[[41]]
+[1] "SOUTH DAKOTA"
+
+[[42]]
+[1] "TENNESSEE"
+
+[[43]]
+[1] "TEXAS"
+
+[[44]]
+[1] "UTAH"
+
+[[45]]
+[1] "VERMONT"
+
+[[46]]
+[1] "VIRGINIA"
+
+[[47]]
+[1] "WASHINGTON"
+
+[[48]]
+[1] "WEST VIRGINIA"
+
+[[49]]
+[1] "WISCONSIN"
+
+[[50]]
+[1] "WYOMING"</code></pre>
+</div>
+</div>
+<p>A note about the syntax. <code>toupper()</code> is a built-in function that changes the input text to uppercase. When we provide the function to any apply-like functions, <strong>specify the function’s name; do not include the parenthesis <code>( )</code>.</strong></p>
+<p>Let’s look at another example of how to pass an argument to the function. The built-in data <code>precip</code> recorded the average amount of annual precipitation (in inches) for 70 US cities. Suppose we want to convert inches to centimeters (cm) with precision provided by the caller; the default is zero.</p>
+<p>Let’s define a customized function for the conversion.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>inch2cm <span class="ot">&lt;-</span> <span class="cf">function</span>(inches, <span class="at">decimals =</span> <span class="dv">0</span>) {</span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>  cm <span class="ot">&lt;-</span> <span class="fu">round</span>(inches <span class="sc">*</span> <span class="fl">2.54</span>, decimals)</span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(cm)</span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Next, convert all values in <code>precip</code> to cm using <code>lapply()</code>. In this call, the conversion is rounded up to the nearest whole number.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>precip_cm <span class="ot">&lt;-</span> <span class="fu">lapply</span>(precip, <span class="at">FUN=</span>inch2cm)</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(precip_cm[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$Mobile
+[1] 170
+
+$Juneau
+[1] 139
+
+$Phoenix
+[1] 18</code></pre>
+</div>
+</div>
+<p>You may notice the output looks strange, despite the conversion being correct. Please hold on to the question until the next section.</p>
+<p>Pass an additional argument, decimals=2, to <code>inch2cm</code> in the <code>lapply()</code> function.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>precip_cm <span class="ot">&lt;-</span> <span class="fu">lapply</span>(precip, <span class="at">FUN=</span>inch2cm, <span class="dv">2</span>)</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(precip_cm[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$Mobile
+[1] 170.18
+
+$Juneau
+[1] 138.94
+
+$Phoenix
+[1] 17.78</code></pre>
+</div>
+</div>
+</section>
+<section id="sapply" class="level3" data-number="5.5.3">
+<h3 data-number="5.5.3" class="anchored" data-anchor-id="sapply"><span class="header-section-number">5.5.3</span> <code>sapply()</code></h3>
+<p>The “s” of <code>sapply()</code> stands for simplified. It functions almost exactly like <code>lapply()</code> except that it returns a vector or matrix. Recall that <code>lappy()</code> always returns a <code>list</code> regardless of the input.</p>
+<p>Here’s the same process to convert precipitation from inches to cm but using <code>sapply()</code>.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>precip_cm_vector <span class="ot">&lt;-</span> <span class="fu">sapply</span>(precip, <span class="at">FUN =</span> inch2cm, <span class="dv">2</span>)</span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(precip_cm_vector[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> Mobile  Juneau Phoenix 
+ 170.18  138.94   17.78 </code></pre>
+</div>
+</div>
+</section>
+<section id="apply" class="level3" data-number="5.5.4">
+<h3 data-number="5.5.4" class="anchored" data-anchor-id="apply"><span class="header-section-number">5.5.4</span> <code>apply()</code></h3>
+<p>Here we will expand the apply operation on 2D objects like matrices or data frames using <code>apply()</code>. You can direct the function to all values in a row, a column, or both. The <code>apply()</code> function takes three arguments: a 1D or 2D object, margin, and function. Margin 1 means to apply the function row by row; 2 means column by column. If both are given, the function will process all values of the 2D object.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/Illustrate_5-2.png" class="img-fluid figure-img"></p>
+<figcaption>Illustration 5.1 Margins of apply().</figcaption>
+</figure>
+</div>
+<p>For example, calculate the column mean of the four numeric variables in <code>iris</code>.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">apply</span>(iris[,<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>], <span class="at">MARGIN =</span> <span class="dv">2</span>, <span class="at">FUN=</span>mean)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Sepal.Length  Sepal.Width Petal.Length  Petal.Width 
+    5.843333     3.057333     3.758000     1.199333 </code></pre>
+</div>
+</div>
+<p>Convert all values from inches to cm in <code>iris</code></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>iris_cm <span class="ot">&lt;-</span> <span class="fu">apply</span>(iris[,<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>], <span class="at">MARGIN =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>), <span class="at">FUN =</span> inch2cm)</span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(iris_cm)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     Sepal.Length Sepal.Width Petal.Length Petal.Width
+[1,]           13           9            4           1
+[2,]           12           8            4           1
+[3,]           12           8            3           1
+[4,]           12           8            4           1
+[5,]           13           9            4           1
+[6,]           14          10            4           1</code></pre>
+</div>
+</div>
+<!--# In programming, a ragged array (often called a jagged array) is a two-dimensional data structure where the rows do not all have the same length. Think of it as a table with jagged edges instead of a perfect rectangle. -->
 
 
+</section>
 </section>
 
 </main> <!-- /main -->

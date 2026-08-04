@@ -1,6 +1,6 @@
 # Dive Deeper
 
-So far, we have discussed the basics of R that are sufficient for most situations. In this chapter, we will discuss several practical operations that require a more detailed discussion. That includes how to create summary tables from published work, create a small data set in a data frame, load a data set of any size into RStudio, convert a data set from a wide format to a long format, from a long format to a wide format, the family of `apply()` functions, and a second look at `group_by()`.
+So far, we have discussed the basics of R that are sufficient for most situations. In this chapter, we will discuss several practical operations that require a more detailed discussion. That includes how to create summary tables from published work, create a small data set in a data frame, load a data set of any size into RStudio, define your own function, and leverage the family of `apply()` functions.
 
 ## Learning Objectives: {.unnumbered}
 
@@ -10,13 +10,11 @@ So far, we have discussed the basics of R that are sufficient for most situation
 
 - Load a data set into RStudio.
 
-- Convert a data set from a wide format to a long format.
-
-- Convert a data set from a long format to a wide format.
+- Define your own functions.
 
 - Harness the family of `apply()` functions.
 
-- Revisit `group_by()`.
+<!--# long to wide, wide to long group_by() revisit-->
 
 ## Recreate a Summary Table in R
 
@@ -219,10 +217,127 @@ A window will pop up as shown in Figure 5-4, which is a preview of the data. Do 
 
 This imports the data file into RStudio and reflects it in the **Environment** panel on the top right.
 
-## `group_by()`
+## Define Functions
 
-## Different `apply` Functions
+When no built-in functions do what you want, it is the occasion to write your own functions. A function consists of input, process, and output. A daily analogy is the vending machine. The inputs are money and choice; the process is the mechanical system to fetch the selected beverage, snack, etc., and the output is the dispensed item.
 
-## Wide to Long
+![Illustration 5.1 Function.](images/Illustrate_5-1.png)
 
-Use AirPassengers dataset
+Here are the four components required to define a function: a function name, argument(s), the body, and the output(s).
+
+- Function name: same as the rules in defining variables.
+
+- Argument(s): A function may have zero, 1, 2+ arguments or inputs.
+
+- Body: R code that takes the input argument(s), if any, performs the task, and returns the output.
+
+- Output(s): the value(s), object(s), or none returned to the caller.
+
+Suppose we want to convert temperature from Fahrenheit to Celsius, $C=\frac{5}{9} \times (F-32)$, with specified precision; the default is zero. Here is the function definition:
+
+```{r}
+F2C <- function(f, decimals = 0) {
+  return(round((f-32)*5/9, decimals))
+}
+```
+
+The function name is `F2C`. The function takes two arguments: `f` that denotes the temperature in Fahrenheit, and the number of decimals, with the default zero. Note that arguments are not required to have default values. The body consists of one line of code: `return(round((f-32)*5/9, decimals))`. The output is the result of the arithmetic expression.
+
+Let's test it out.
+
+```{r}
+temp1 <- F2C(100)
+print(paste("100 F is equivalent to",temp1, "celsius"))
+```
+
+```{r}
+temp2 <- F2C(-10, decimals = 2)
+print(paste("-10 F is equivalent to",temp2, "celsius"))
+```
+
+## The Apply-Like Family
+
+The `apply()` family has seven members. Here we will focus on three members that will do 80% of the job: `apply()`, `sapply()`, and `lappy()`.
+
+### Mechanic of Apply-Like Functions
+
+Generally, apply-like functions execute a function over every value of an R composite object @sec-01-atomic-and-composite-variables. While `apply()` evaluates along the rows or columns of 2D objects like matrices and data frames, functions like `lapply()` or `sapply()` iterate over elements in 1D objects like vectors and lists. The function that acts on each value of the targeted object can be an R built-in function or a user-defined function. More details about the apply-like functions will be discussed below.
+
+### `lappy()`
+
+It executes a function over every value of a `list` or a `vector`, not 2D objects, and returns a `list`. For example, change the 50 state names specified in the built-in list `state.name` to uppercase.
+
+```{=html}
+<!--
+
+**`toupper(state.name)`** returns a standard, unnamed character vector. It simply transforms the text and gives you the exact same structure back.
+
+**`sapply(state.name, FUN=toupper)`** returns a **named character vector**. By default, `sapply()` takes the original input values and uses them as the names for the new output values.
+
+-->
+```
+
+```{r}
+lapply(state.name, FUN=toupper)
+```
+
+A note about the syntax. `toupper()` is a built-in function that changes the input text to uppercase. When we provide the function to any apply-like functions, **specify the function's name; do not include the parenthesis `( )`.**
+
+Let's look at another example of how to pass an argument to the function. The built-in data `precip` recorded the average amount of annual precipitation (in inches) for 70 US cities. Suppose we want to convert inches to centimeters (cm) with precision provided by the caller; the default is zero.
+
+Let's define a customized function for the conversion.
+
+```{r}
+inch2cm <- function(inches, decimals = 0) {
+  cm <- round(inches * 2.54, decimals)
+  return(cm)
+}
+```
+
+Next, convert all values in `precip` to cm using `lapply()`. In this call, the conversion is rounded up to the nearest whole number.
+
+```{r}
+precip_cm <- lapply(precip, FUN=inch2cm)
+print(precip_cm[1:3])
+```
+
+You may notice the output looks strange, despite the conversion being correct. Please hold on to the question until the next section.
+
+Pass an additional argument, decimals=2, to `inch2cm` in the `lapply()` function.
+
+```{r}
+precip_cm <- lapply(precip, FUN=inch2cm, 2)
+print(precip_cm[1:3])
+```
+
+### `sapply()`
+
+The "s" of `sapply()` stands for simplified. It functions almost exactly like `lapply()` except that it returns a vector or matrix. Recall that `lappy()` always returns a `list` regardless of the input.
+
+Here's the same process to convert precipitation from inches to cm but using `sapply()`.
+
+```{r}
+precip_cm_vector <- sapply(precip, FUN = inch2cm, 2)
+print(precip_cm_vector[1:3])
+```
+
+### `apply()`
+
+Here we will expand the apply operation on 2D objects like matrices or data frames using `apply()`. You can direct the function to all values in a row, a column, or both. The `apply()` function takes three arguments: a 1D or 2D object, margin, and function. Margin 1 means to apply the function row by row; 2 means column by column. If both are given, the function will process all values of the 2D object.
+
+![Illustration 5.1 Margins of apply().](images/Illustrate_5-2.png)
+
+For example, calculate the column mean of the four numeric variables in `iris`.
+
+```{r}
+apply(iris[,1:4], MARGIN = 2, FUN=mean)
+```
+
+Convert all values from inches to cm in `iris`
+
+```{r}
+iris_cm <- apply(iris[,1:4], MARGIN = c(1,2), FUN = inch2cm)
+head(iris_cm)
+```
+
+<!--# In programming, a ragged array (often called a jagged array) is a two-dimensional data structure where the rows do not all have the same length. Think of it as a table with jagged edges instead of a perfect rectangle. -->

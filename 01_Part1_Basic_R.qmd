@@ -70,7 +70,7 @@ R supports six data types:
 
 `*` We will only discuss the first four types in this book; you can ignore complex and raw types.
 
-### Atomic and Composite Variables {#sec-atomic-and-composite-variables}
+### Atomic and Composite Variables {#sec-01-atomic-and-composite-variables}
 
 From a practical perspective, R variables can be viewed as **atomic variables** and **composite variables**. An atomic variable contains a single value, and a composite variable consists of a collection of values. Let us begin with two atomic variables: **`numeric`**, and **`character`**.
 

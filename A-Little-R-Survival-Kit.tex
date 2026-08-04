@@ -439,7 +439,7 @@ R supports six data types:
 can ignore complex and raw types.
 
 \subsection{Atomic and Composite
-Variables}\label{sec-atomic-and-composite-variables}
+Variables}\label{sec-01-atomic-and-composite-variables}
 
 From a practical perspective, R variables can be viewed as
 \textbf{atomic variables} and \textbf{composite variables}. An atomic
@@ -6501,10 +6501,8 @@ So far, we have discussed the basics of R that are sufficient for most
 situations. In this chapter, we will discuss several practical
 operations that require a more detailed discussion. That includes how to
 create summary tables from published work, create a small data set in a
-data frame, load a data set of any size into RStudio, convert a data set
-from a wide format to a long format, from a long format to a wide
-format, the family of \texttt{apply()} functions, and a second look at
-\texttt{group\_by()}.
+data frame, load a data set of any size into RStudio, define your own
+function, and leverage the family of \texttt{apply()} functions.
 
 \section*{Learning Objectives:}\label{learning-objectives-4}
 \addcontentsline{toc}{section}{Learning Objectives:}
@@ -6519,13 +6517,9 @@ format, the family of \texttt{apply()} functions, and a second look at
 \item
   Load a data set into RStudio.
 \item
-  Convert a data set from a wide format to a long format.
-\item
-  Convert a data set from a long format to a wide format.
+  Define your own functions.
 \item
   Harness the family of \texttt{apply()} functions.
-\item
-  Revisit \texttt{group\_by()}.
 \end{itemize}
 
 \section{Recreate a Summary Table in
@@ -7003,14 +6997,407 @@ data. Do the following:
 This imports the data file into RStudio and reflects it in the
 \textbf{Environment} panel on the top right.
 
-\section{\texorpdfstring{\texttt{group\_by()}}{group\_by()}}\label{group_by}
+\section{Define Functions}\label{define-functions}
 
-\section{\texorpdfstring{Different \texttt{apply}
-Functions}{Different apply Functions}}\label{different-apply-functions}
+When no built-in functions do what you want, it is the occasion to write
+your own functions. A function consists of input, process, and output. A
+daily analogy is the vending machine. The inputs are money and choice;
+the process is the mechanical system to fetch the selected beverage,
+snack, etc., and the output is the dispensed item.
 
-\section{Wide to Long}\label{wide-to-long}
+\begin{figure}[H]
 
-Use AirPassengers dataset
+{\centering \pandocbounded{\includegraphics[keepaspectratio]{images/Illustrate_5-1.png}}
+
+}
+
+\caption{Illustration 5.1 Function.}
+
+\end{figure}%
+
+Here are the four components required to define a function: a function
+name, argument(s), the body, and the output(s).
+
+\begin{itemize}
+\item
+  Function name: same as the rules in defining variables.
+\item
+  Argument(s): A function may have zero, 1, 2+ arguments or inputs.
+\item
+  Body: R code that takes the input argument(s), if any, performs the
+  task, and returns the output.
+\item
+  Output(s): the value(s), object(s), or none returned to the caller.
+\end{itemize}
+
+Suppose we want to convert temperature from Fahrenheit to Celsius,
+\(C=\frac{5}{9} \times (F-32)\), with specified precision; the default
+is zero. Here is the function definition:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{F2C }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(f, }\AttributeTok{decimals =} \DecValTok{0}\NormalTok{) \{}
+  \FunctionTok{return}\NormalTok{(}\FunctionTok{round}\NormalTok{((f}\DecValTok{{-}32}\NormalTok{)}\SpecialCharTok{*}\DecValTok{5}\SpecialCharTok{/}\DecValTok{9}\NormalTok{, decimals))}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+The function name is \texttt{F2C}. The function takes two arguments:
+\texttt{f} that denotes the temperature in Fahrenheit, and the number of
+decimals, with the default zero. Note that arguments are not required to
+have default values. The body consists of one line of code:
+\texttt{return(round((f-32)*5/9,\ decimals))}. The output is the result
+of the arithmetic expression.
+
+Let's test it out.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{temp1 }\OtherTok{\textless{}{-}} \FunctionTok{F2C}\NormalTok{(}\DecValTok{100}\NormalTok{)}
+\FunctionTok{print}\NormalTok{(}\FunctionTok{paste}\NormalTok{(}\StringTok{"100 F is equivalent to"}\NormalTok{,temp1, }\StringTok{"celsius"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] "100 F is equivalent to 38 celsius"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{temp2 }\OtherTok{\textless{}{-}} \FunctionTok{F2C}\NormalTok{(}\SpecialCharTok{{-}}\DecValTok{10}\NormalTok{, }\AttributeTok{decimals =} \DecValTok{2}\NormalTok{)}
+\FunctionTok{print}\NormalTok{(}\FunctionTok{paste}\NormalTok{(}\StringTok{"{-}10 F is equivalent to"}\NormalTok{,temp2, }\StringTok{"celsius"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] "-10 F is equivalent to -23.33 celsius"
+\end{verbatim}
+
+\section{The Apply-Like Family}\label{the-apply-like-family}
+
+The \texttt{apply()} family has seven members. Here we will focus on
+three members that will do 80\% of the job: \texttt{apply()},
+\texttt{sapply()}, and \texttt{lappy()}.
+
+\subsection{Mechanic of Apply-Like
+Functions}\label{mechanic-of-apply-like-functions}
+
+Generally, apply-like functions execute a function over every value of
+an R composite object
+Section~\ref{sec-01-atomic-and-composite-variables}. While
+\texttt{apply()} evaluates along the rows or columns of 2D objects like
+matrices and data frames, functions like \texttt{lapply()} or
+\texttt{sapply()} iterate over elements in 1D objects like vectors and
+lists. The function that acts on each value of the targeted object can
+be an R built-in function or a user-defined function. More details about
+the apply-like functions will be discussed below.
+
+\subsection{\texorpdfstring{\texttt{lappy()}}{lappy()}}\label{lappy}
+
+It executes a function over every value of a \texttt{list} or a
+\texttt{vector}, not 2D objects, and returns a \texttt{list}. For
+example, change the 50 state names specified in the built-in list
+\texttt{state.name} to uppercase.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{lapply}\NormalTok{(state.name, }\AttributeTok{FUN=}\NormalTok{toupper)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[[1]]
+[1] "ALABAMA"
+
+[[2]]
+[1] "ALASKA"
+
+[[3]]
+[1] "ARIZONA"
+
+[[4]]
+[1] "ARKANSAS"
+
+[[5]]
+[1] "CALIFORNIA"
+
+[[6]]
+[1] "COLORADO"
+
+[[7]]
+[1] "CONNECTICUT"
+
+[[8]]
+[1] "DELAWARE"
+
+[[9]]
+[1] "FLORIDA"
+
+[[10]]
+[1] "GEORGIA"
+
+[[11]]
+[1] "HAWAII"
+
+[[12]]
+[1] "IDAHO"
+
+[[13]]
+[1] "ILLINOIS"
+
+[[14]]
+[1] "INDIANA"
+
+[[15]]
+[1] "IOWA"
+
+[[16]]
+[1] "KANSAS"
+
+[[17]]
+[1] "KENTUCKY"
+
+[[18]]
+[1] "LOUISIANA"
+
+[[19]]
+[1] "MAINE"
+
+[[20]]
+[1] "MARYLAND"
+
+[[21]]
+[1] "MASSACHUSETTS"
+
+[[22]]
+[1] "MICHIGAN"
+
+[[23]]
+[1] "MINNESOTA"
+
+[[24]]
+[1] "MISSISSIPPI"
+
+[[25]]
+[1] "MISSOURI"
+
+[[26]]
+[1] "MONTANA"
+
+[[27]]
+[1] "NEBRASKA"
+
+[[28]]
+[1] "NEVADA"
+
+[[29]]
+[1] "NEW HAMPSHIRE"
+
+[[30]]
+[1] "NEW JERSEY"
+
+[[31]]
+[1] "NEW MEXICO"
+
+[[32]]
+[1] "NEW YORK"
+
+[[33]]
+[1] "NORTH CAROLINA"
+
+[[34]]
+[1] "NORTH DAKOTA"
+
+[[35]]
+[1] "OHIO"
+
+[[36]]
+[1] "OKLAHOMA"
+
+[[37]]
+[1] "OREGON"
+
+[[38]]
+[1] "PENNSYLVANIA"
+
+[[39]]
+[1] "RHODE ISLAND"
+
+[[40]]
+[1] "SOUTH CAROLINA"
+
+[[41]]
+[1] "SOUTH DAKOTA"
+
+[[42]]
+[1] "TENNESSEE"
+
+[[43]]
+[1] "TEXAS"
+
+[[44]]
+[1] "UTAH"
+
+[[45]]
+[1] "VERMONT"
+
+[[46]]
+[1] "VIRGINIA"
+
+[[47]]
+[1] "WASHINGTON"
+
+[[48]]
+[1] "WEST VIRGINIA"
+
+[[49]]
+[1] "WISCONSIN"
+
+[[50]]
+[1] "WYOMING"
+\end{verbatim}
+
+A note about the syntax. \texttt{toupper()} is a built-in function that
+changes the input text to uppercase. When we provide the function to any
+apply-like functions, \textbf{specify the function's name; do not
+include the parenthesis \texttt{(\ )}.}
+
+Let's look at another example of how to pass an argument to the
+function. The built-in data \texttt{precip} recorded the average amount
+of annual precipitation (in inches) for 70 US cities. Suppose we want to
+convert inches to centimeters (cm) with precision provided by the
+caller; the default is zero.
+
+Let's define a customized function for the conversion.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{inch2cm }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(inches, }\AttributeTok{decimals =} \DecValTok{0}\NormalTok{) \{}
+\NormalTok{  cm }\OtherTok{\textless{}{-}} \FunctionTok{round}\NormalTok{(inches }\SpecialCharTok{*} \FloatTok{2.54}\NormalTok{, decimals)}
+  \FunctionTok{return}\NormalTok{(cm)}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+Next, convert all values in \texttt{precip} to cm using
+\texttt{lapply()}. In this call, the conversion is rounded up to the
+nearest whole number.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{precip\_cm }\OtherTok{\textless{}{-}} \FunctionTok{lapply}\NormalTok{(precip, }\AttributeTok{FUN=}\NormalTok{inch2cm)}
+\FunctionTok{print}\NormalTok{(precip\_cm[}\DecValTok{1}\SpecialCharTok{:}\DecValTok{3}\NormalTok{])}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+$Mobile
+[1] 170
+
+$Juneau
+[1] 139
+
+$Phoenix
+[1] 18
+\end{verbatim}
+
+You may notice the output looks strange, despite the conversion being
+correct. Please hold on to the question until the next section.
+
+Pass an additional argument, decimals=2, to \texttt{inch2cm} in the
+\texttt{lapply()} function.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{precip\_cm }\OtherTok{\textless{}{-}} \FunctionTok{lapply}\NormalTok{(precip, }\AttributeTok{FUN=}\NormalTok{inch2cm, }\DecValTok{2}\NormalTok{)}
+\FunctionTok{print}\NormalTok{(precip\_cm[}\DecValTok{1}\SpecialCharTok{:}\DecValTok{3}\NormalTok{])}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+$Mobile
+[1] 170.18
+
+$Juneau
+[1] 138.94
+
+$Phoenix
+[1] 17.78
+\end{verbatim}
+
+\subsection{\texorpdfstring{\texttt{sapply()}}{sapply()}}\label{sapply}
+
+The ``s'' of \texttt{sapply()} stands for simplified. It functions
+almost exactly like \texttt{lapply()} except that it returns a vector or
+matrix. Recall that \texttt{lappy()} always returns a \texttt{list}
+regardless of the input.
+
+Here's the same process to convert precipitation from inches to cm but
+using \texttt{sapply()}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{precip\_cm\_vector }\OtherTok{\textless{}{-}} \FunctionTok{sapply}\NormalTok{(precip, }\AttributeTok{FUN =}\NormalTok{ inch2cm, }\DecValTok{2}\NormalTok{)}
+\FunctionTok{print}\NormalTok{(precip\_cm\_vector[}\DecValTok{1}\SpecialCharTok{:}\DecValTok{3}\NormalTok{])}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+ Mobile  Juneau Phoenix 
+ 170.18  138.94   17.78 
+\end{verbatim}
+
+\subsection{\texorpdfstring{\texttt{apply()}}{apply()}}\label{apply}
+
+Here we will expand the apply operation on 2D objects like matrices or
+data frames using \texttt{apply()}. You can direct the function to all
+values in a row, a column, or both. The \texttt{apply()} function takes
+three arguments: a 1D or 2D object, margin, and function. Margin 1 means
+to apply the function row by row; 2 means column by column. If both are
+given, the function will process all values of the 2D object.
+
+\begin{figure}[H]
+
+{\centering \pandocbounded{\includegraphics[keepaspectratio]{images/Illustrate_5-2.png}}
+
+}
+
+\caption{Illustration 5.1 Margins of apply().}
+
+\end{figure}%
+
+For example, calculate the column mean of the four numeric variables in
+\texttt{iris}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{apply}\NormalTok{(iris[,}\DecValTok{1}\SpecialCharTok{:}\DecValTok{4}\NormalTok{], }\AttributeTok{MARGIN =} \DecValTok{2}\NormalTok{, }\AttributeTok{FUN=}\NormalTok{mean)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Sepal.Length  Sepal.Width Petal.Length  Petal.Width 
+    5.843333     3.057333     3.758000     1.199333 
+\end{verbatim}
+
+Convert all values from inches to cm in \texttt{iris}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{iris\_cm }\OtherTok{\textless{}{-}} \FunctionTok{apply}\NormalTok{(iris[,}\DecValTok{1}\SpecialCharTok{:}\DecValTok{4}\NormalTok{], }\AttributeTok{MARGIN =} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{), }\AttributeTok{FUN =}\NormalTok{ inch2cm)}
+\FunctionTok{head}\NormalTok{(iris\_cm)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+     Sepal.Length Sepal.Width Petal.Length Petal.Width
+[1,]           13           9            4           1
+[2,]           12           8            4           1
+[3,]           12           8            3           1
+[4,]           12           8            4           1
+[5,]           13           9            4           1
+[6,]           14          10            4           1
+\end{verbatim}
 
 
 \bibliography{book.bib,packages.bib}
