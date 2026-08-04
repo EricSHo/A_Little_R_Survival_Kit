@@ -666,7 +666,8 @@ Figure&nbsp;5.4: Select file
 
 -->
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lapply</span>(state.name, <span class="at">FUN=</span>toupper)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>state.name.upper <span class="ot">&lt;-</span> <span class="fu">lapply</span>(state.name, <span class="at">FUN=</span>toupper)</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(state.name.upper[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[[1]]
 [1] "ALABAMA"
@@ -681,144 +682,10 @@ Figure&nbsp;5.4: Select file
 [1] "ARKANSAS"
 
 [[5]]
-[1] "CALIFORNIA"
-
-[[6]]
-[1] "COLORADO"
-
-[[7]]
-[1] "CONNECTICUT"
-
-[[8]]
-[1] "DELAWARE"
-
-[[9]]
-[1] "FLORIDA"
-
-[[10]]
-[1] "GEORGIA"
-
-[[11]]
-[1] "HAWAII"
-
-[[12]]
-[1] "IDAHO"
-
-[[13]]
-[1] "ILLINOIS"
-
-[[14]]
-[1] "INDIANA"
-
-[[15]]
-[1] "IOWA"
-
-[[16]]
-[1] "KANSAS"
-
-[[17]]
-[1] "KENTUCKY"
-
-[[18]]
-[1] "LOUISIANA"
-
-[[19]]
-[1] "MAINE"
-
-[[20]]
-[1] "MARYLAND"
-
-[[21]]
-[1] "MASSACHUSETTS"
-
-[[22]]
-[1] "MICHIGAN"
-
-[[23]]
-[1] "MINNESOTA"
-
-[[24]]
-[1] "MISSISSIPPI"
-
-[[25]]
-[1] "MISSOURI"
-
-[[26]]
-[1] "MONTANA"
-
-[[27]]
-[1] "NEBRASKA"
-
-[[28]]
-[1] "NEVADA"
-
-[[29]]
-[1] "NEW HAMPSHIRE"
-
-[[30]]
-[1] "NEW JERSEY"
-
-[[31]]
-[1] "NEW MEXICO"
-
-[[32]]
-[1] "NEW YORK"
-
-[[33]]
-[1] "NORTH CAROLINA"
-
-[[34]]
-[1] "NORTH DAKOTA"
-
-[[35]]
-[1] "OHIO"
-
-[[36]]
-[1] "OKLAHOMA"
-
-[[37]]
-[1] "OREGON"
-
-[[38]]
-[1] "PENNSYLVANIA"
-
-[[39]]
-[1] "RHODE ISLAND"
-
-[[40]]
-[1] "SOUTH CAROLINA"
-
-[[41]]
-[1] "SOUTH DAKOTA"
-
-[[42]]
-[1] "TENNESSEE"
-
-[[43]]
-[1] "TEXAS"
-
-[[44]]
-[1] "UTAH"
-
-[[45]]
-[1] "VERMONT"
-
-[[46]]
-[1] "VIRGINIA"
-
-[[47]]
-[1] "WASHINGTON"
-
-[[48]]
-[1] "WEST VIRGINIA"
-
-[[49]]
-[1] "WISCONSIN"
-
-[[50]]
-[1] "WYOMING"</code></pre>
+[1] "CALIFORNIA"</code></pre>
 </div>
 </div>
+<p>You may notice the output looks strange, despite the conversion being correct. Please hold on to the question until the next section.</p>
 <p>A note about the syntax. <code>toupper()</code> is a built-in function that changes the input text to uppercase. When we provide the function to any apply-like functions, <strong>specify the function’s name; do not include the parenthesis <code>( )</code>.</strong></p>
 <p>Let’s look at another example of how to pass an argument to the function. The built-in data <code>precip</code> recorded the average amount of annual precipitation (in inches) for 70 US cities. Suppose we want to convert inches to centimeters (cm) with precision provided by the caller; the default is zero.</p>
 <p>Let’s define a customized function for the conversion.</p>
@@ -843,7 +710,6 @@ $Phoenix
 [1] 18</code></pre>
 </div>
 </div>
-<p>You may notice the output looks strange, despite the conversion being correct. Please hold on to the question until the next section.</p>
 <p>Pass an additional argument, decimals=2, to <code>inch2cm</code> in the <code>lapply()</code> function.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>precip_cm <span class="ot">&lt;-</span> <span class="fu">lapply</span>(precip, <span class="at">FUN=</span>inch2cm, <span class="dv">2</span>)</span>

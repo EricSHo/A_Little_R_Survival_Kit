@@ -278,8 +278,11 @@ It executes a function over every value of a `list` or a `vector`, not 2D object
 ```
 
 ```{r}
-lapply(state.name, FUN=toupper)
+state.name.upper <- lapply(state.name, FUN=toupper)
+print(state.name.upper[1:5])
 ```
+
+You may notice the output looks strange, despite the conversion being correct. Please hold on to the question until the next section.
 
 A note about the syntax. `toupper()` is a built-in function that changes the input text to uppercase. When we provide the function to any apply-like functions, **specify the function's name; do not include the parenthesis `( )`.**
 
@@ -300,8 +303,6 @@ Next, convert all values in `precip` to cm using `lapply()`. In this call, the c
 precip_cm <- lapply(precip, FUN=inch2cm)
 print(precip_cm[1:3])
 ```
-
-You may notice the output looks strange, despite the conversion being correct. Please hold on to the question until the next section.
 
 Pass an additional argument, decimals=2, to `inch2cm` in the `lapply()` function.
 
