@@ -239,7 +239,7 @@ ncol(iris)
 
 So, we know that `iris` contains 150 rows (flower samples) and five columns.
 
-#### Accessing Rows and Columns of a Data Frame {#sec-access-rows-columns}
+#### Accessing Rows and Columns of a Data Frame {#sec-01-access-rows-columns}
 
 Each element in a data frame can be referenced by row and column indexes like an X-Y Cartesian system. Rows are automatically indexed (numbered), where the 1st row is index 1, the 2nd row is index 2, and the index of the last row is the total number of rows; similarly for columns.
 

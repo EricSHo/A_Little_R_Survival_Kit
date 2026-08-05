@@ -236,25 +236,29 @@
 
 In the 21st century, nobody does statistics by pen and paper. Those
 statistical tables found at the back of statistics textbooks belong in
-the museum. Statistics you hear from the news and research are produced
-by computers. This book uses R. You may ask why not using a spreadsheet,
-such as Microsoft Excel or Google Sheets. While they are excellent tools
-- easy to use, they have significant shortcomings. In particular, they
-lack of reproducibility, as they operate through point-clicking,
-drag-and-drop, etc.
+the museum. The statistics you hear about in the news and research are
+produced by computers, the theme of this little book.
 
-This book intends to provide readers with the bare minimum of R to start
-analyzing data. In particular, this book is written for readers who have
-scant experience in computer programming or scripting. I want them to
-focus on deploying R's rich library of statistical tools to get the
-desired results rather than being bogged down by the technical details
-and cryptic syntax of the R language. Although most people think a book
-like this is about R programming, I prefer to call it
-\textbf{scripting}. The nuance is that the goal of programming is to
-implement algorithms - a step-by-step procedure to tackle a problem like
-a cooking recipe. Here we focus on what (expected results) instead of
-how (algorithms); just tells the R functions here is the data and the
-parameters, please process them and return the results.
+This book uses R. You may ask why not use a spreadsheet, such as
+Microsoft Excel or Google Sheets. While they are excellent tools - easy
+to use - they have significant shortcomings. In particular, they lack
+automation, as they operate through point-clicking, drag-and-drop, etc.,
+hampering reproducibility.
+
+This book is written for readers who have scant experience in computer
+programming or scripting. R is a big language. At times, it is dizzying
+to navigate a vast amount of materials in the ocean of the Internet.
+Therefore, this book intends to provide readers with the bare minimum of
+R to start analyzing data. Specifically, I want them to focus on using R
+fast and get things done rather than being bogged down by the technical
+details and cryptic syntax of the R language. Although most people think
+a book like this is about R programming, I prefer to call it
+\textbf{scripting}. In a nutshell, programming encapsulates algorithms -
+a step-by-step procedure to tackle a problem like a cooking recipe.
+While it is an important topic, here we focus on the what (the expected
+results) instead of the how (algorithms). You tell the R functions: here
+is the data and the parameters; please process them and return the
+results.
 
 \section*{Usage}\label{usage}
 \addcontentsline{toc}{section}{Usage}
@@ -262,7 +266,7 @@ parameters, please process them and return the results.
 \markright{Usage}
 
 The book consists of two parts. Part I focuses on the basics. Chapter 1
-discusses R objects and operations act on these objects, including
+discusses R objects and operations that act on these objects, including
 descriptive statistical functions. Chapter 2 deals with data wrangling -
 the process of acquiring, selecting, and organizing data stored in a
 spreadsheet-like format. Both base R and \texttt{tidyverse} data
@@ -282,30 +286,30 @@ accelerate execution time.
 \markright{RStudio}
 
 Scripting is best learned through hands-on practice; it is like learning
-to swim. You don't just listen to lectures. You've got to jump into the
-water and get wet! To try out the examples and exercises, you need to
-use RStudio. There are two options to gain access to RStudio: cloud
-service (Posit Cloud) and installing RStudio on your own computers. For
-the first option, no software installation is required. All you need is
-a Web Browser with Internet connection. For the first time, you can sign
-up for an account and choose the plan from
+to swim. You don't just listen to instructions. You've got to jump into
+the water and get wet! To try out the examples and exercises, you need
+to use RStudio. There are two options to access RStudio: a cloud service
+(Posit Cloud) and installing RStudio on your own computer. For the first
+option, no software installation is required. All you need is a Web
+Browser with an internet connection. The first time, you can sign up for
+an account and choose a plan from
 \href{https://posit.cloud/plans?utm_source=Website&utm_medium=IDE_Download}{Posit
 Cloud}. As this book covers the foundational R features, the basic, free
 plan will work. Your work will be saved in the cloud under your account,
-regardless what computer you use, as long as you log in to the same
+regardless of what computer you use, as long as you log in to the same
 account.
 
-Alternatively, if you prefer to have a better control of RStudio, you
-can install R and RStudio on your own computers. However, it becomes
-your responsibility to maintain and update them in the future. Why do
-you need to install two programs instead of just RStudio? In a car
-analogy, R is like the engine, and RStudio is like the dashboard.
+Alternatively, if you prefer better control of RStudio, you can install
+two software packages, R and RStudio, on your own computers. However, it
+becomes your responsibility to maintain and update them in the future.
+Why do you need to install two programs instead of just RStudio? In a
+car analogy, R is like the engine, and RStudio is like the dashboard.
 RStudio provides a user-friendly Interactive Development Environment
 (IDE) for users to instruct R to perform the actual work. A favorable
 feature of R is that it can be installed on a Windows or a Mac computer.
-If your computer is a Chromebook, Posit Cloud is a preferred, as the
-installation of R and RStudio on a Chromebook is less straightforward.
-For Windows and Mac, the installation is simple; it only takes a few
+If your computer is a Chromebook, Posit Cloud is preferred, as
+installing R and RStudio on a Chromebook is less straightforward. For
+Windows and Mac, the installation is simple; it only takes a few
 double-clicks. Note that you must install R before RStudio. Here are the
 links to download \href{https://cran.r-project.org/}{R} and
 \href{https://posit.co/download/rstudio-desktop/}{RStudio}.
@@ -815,7 +819,7 @@ So, we know that \texttt{iris} contains 150 rows (flower samples) and
 five columns.
 
 \subsubsection{Accessing Rows and Columns of a Data
-Frame}\label{sec-access-rows-columns}
+Frame}\label{sec-01-access-rows-columns}
 
 Each element in a data frame can be referenced by row and column indexes
 like an X-Y Cartesian system. Rows are automatically indexed (numbered),
@@ -1883,8 +1887,9 @@ this chapter, you should be able to:
 \subsection{Select Rows by
 Condition(s)}\label{select-rows-by-conditions}
 
-The \texttt{subset()} function selects rows if they satisfy the
-condition(s). Below are six relational operators:
+The \texttt{subset()} function selects rows from a data frame if they
+satisfy the condition(s). Below are six relational operators used in
+specifying the conditions:
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -1917,6 +1922,9 @@ multi-part conditions:
 \item
   \texttt{!} denotes the logical NOT.
 \end{enumerate}
+
+Let's begin how \texttt{subset()} works with vectors, followed by data
+frames.
 
 \subsubsection{\texorpdfstring{\texttt{subset()} with
 Vectors}{subset() with Vectors}}\label{subset-with-vectors}
@@ -1964,6 +1972,31 @@ Select pumpkins between 6 and 7 lbs, inclusive.
 
 \begin{verbatim}
 [1] 6.85 6.56 6.23 6.62 7.00
+\end{verbatim}
+
+Let's use the logical NOT to negate the above query, meaning to select
+pumpkins either lighter than 6 or heavier than 7.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{subset}\NormalTok{(pumpkins, }\SpecialCharTok{!}\NormalTok{(pumpkins}\SpecialCharTok{\textgreater{}=}\DecValTok{6} \SpecialCharTok{\&}\NormalTok{ pumpkins}\SpecialCharTok{\textless{}=}\DecValTok{7}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1]  7.55  4.45 10.14  3.52  3.76  7.62
+\end{verbatim}
+
+The above query can be rewritten using the logical OR as follows:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{subset}\NormalTok{(pumpkins, pumpkins}\SpecialCharTok{\textless{}}\DecValTok{6} \SpecialCharTok{|}\NormalTok{ pumpkins}\SpecialCharTok{\textgreater{}}\DecValTok{7}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1]  7.55  4.45 10.14  3.52  3.76  7.62
 \end{verbatim}
 
 \subsubsection{\texorpdfstring{\texttt{subset()} with Data
@@ -2099,7 +2132,7 @@ Select everything except for \texttt{setosa}.
 \subsection{Random Sampling}\label{random-sampling}
 
 It is quite common to randomly sample a subset of items from a vector or
-rows from a data frame.
+rows from a data frame in statistics.
 
 \subsubsection{Sample Items Randomly from a
 Vector}\label{sample-items-randomly-from-a-vector}
@@ -2120,7 +2153,7 @@ Randomly pick 5 samples without replacement.
 \end{Shaded}
 
 \begin{verbatim}
-[1] 7.00 3.52 6.56 4.45 6.62
+[1] 6.62 3.76 3.52 7.55 7.00
 \end{verbatim}
 
 The \texttt{replace=} option can be twisted to simulate tossing a coin N
@@ -2133,25 +2166,24 @@ times. E.g.,
 \end{Shaded}
 
 \begin{verbatim}
- [1] "H" "H" "H" "T" "H" "H" "T" "H" "T" "T"
+ [1] "H" "H" "T" "H" "T" "T" "H" "T" "T" "T"
 \end{verbatim}
 
 \subsubsection{Sample Rows Randomly from a Data
 Frame}\label{sample-rows-randomly-from-a-data-frame}
 
 Let's say we want to pick 5 samples randomly from \texttt{iris}. It
-takes two steps to do that:
+takes two steps to achieve that:
 
 \textbf{Step 1:} Create a list (vector) of random row indexes by the
-\texttt{sample()} function. Specify the following parameters:
-
-a.) The range of indexes. In this example, the range is from 1 to the
-last row of \texttt{iris}, which can be obtained from
-\texttt{nrow(iris)}.
+\texttt{sample()} function by specifying the following parameters:
 
 \begin{enumerate}
-\def\labelenumi{\alph{enumi})}
-\setcounter{enumi}{1}
+\def\labelenumi{\alph{enumi}.}
+\item
+  The range of indexes. In this example, the indexes must be in the
+  range from 1 to the last row of \texttt{iris}, which can be obtained
+  from \texttt{nrow(iris)}.
 \item
   How many samples, e.g., \texttt{size\ =\ 5}.
 \item
@@ -2166,14 +2198,14 @@ last row of \texttt{iris}, which can be obtained from
 \end{Shaded}
 
 \begin{verbatim}
-[1]  4 58 11 84 47
+[1]  22  37  78 111  35
 \end{verbatim}
 
-\texttt{seq(nrow(iris))} generates a vector containing 1, 2, 3, \ldots,
-150.
+\texttt{seq(nrow(iris))} above generates a vector containing 1, 2, 3,
+\ldots, 150, as \texttt{iris} contains 150 rows.
 
-\textbf{Step 2:} Select rows from iris according to the indexes in
-\texttt{rnd\_idx}.
+\textbf{Step 2:} Select rows from \texttt{iris} according to the random
+indexes in \texttt{rnd\_idx}.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2184,22 +2216,26 @@ last row of \texttt{iris}, which can be obtained from
 \end{Shaded}
 
 \begin{verbatim}
-   Sepal.Length Sepal.Width Petal.Length Petal.Width    Species
-4           4.6         3.1          1.5         0.2     setosa
-58          4.9         2.4          3.3         1.0 versicolor
-11          5.4         3.7          1.5         0.2     setosa
-84          6.0         2.7          5.1         1.6 versicolor
-47          5.1         3.8          1.6         0.2     setosa
+    Sepal.Length Sepal.Width Petal.Length Petal.Width    Species
+22           5.1         3.7          1.5         0.4     setosa
+37           5.5         3.5          1.3         0.2     setosa
+78           6.7         3.0          5.0         1.7 versicolor
+111          6.5         3.2          5.1         2.0  virginica
+35           4.9         3.1          1.5         0.2     setosa
 \end{verbatim}
 
-The indexing method is based on the previous chapter. Check out here:
-Section~\ref{sec-access-rows-columns}.
+The indexing method has been discussed in the previous chapter. Check
+out here: Section~\ref{sec-01-access-rows-columns}. A note about
+\texttt{iris{[}rnd\_idx,{]}} . Do not omit the comma (\texttt{,}) after
+\texttt{rnd\_idx} inside the square brackets. It means all columns are
+selected for the output.
 
 \subsection{Sort Items}\label{sort-items}
 
 \subsubsection{Sort Items in a Vector}\label{sort-items-in-a-vector}
 
-It can be done using the \texttt{sort()} function.
+It can be done using the \texttt{sort()} function. By default, the
+sorting order is ascending (from small to large).
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2227,10 +2263,11 @@ Sort it in descending order (large to small).
 Frame}\label{sort-rows-in-a-data-frame}
 
 Unfortunately, the \texttt{sort()} function does not work for the
-two-dimensional data frame. We have to use a method similar to sampling
-rows. It takes two steps to sort rows in a certain order. Suppose you
-want to sort rows in \texttt{iris} by \texttt{Sepal.Length} in ascending
-order (small to large).
+two-dimensional data frame as conveniently as it does for vectors. We
+have to use a method similar to sampling rows. It takes two steps to
+sort rows in a certain order. Suppose you want to sort rows in
+\texttt{iris} by \texttt{Sepal.Length} in ascending order (small to
+large).
 
 \textbf{Step 1:} Obtain a list (vector) of row indexes that reflects the
 sorting order of the data frame.
@@ -2253,6 +2290,9 @@ sorting order of the data frame.
 [127] 125 141 145 146  77 113 144  53 121 140 142  51 103 110 126 130 108 131
 [145] 106 118 119 123 136 132
 \end{verbatim}
+
+Note that the length of \texttt{sorted\_idx} is the same as the number
+of rows in \texttt{iris}.
 
 \textbf{Step 2:} Rearrange the rows in the data frame according to the
 sorted row indexes.
@@ -2410,6 +2450,11 @@ position. It can be done in two ways.
 6  setosa          5.4         3.9          1.7         0.4
 \end{verbatim}
 
+Do not overlook the comma (\texttt{,}). It is used to retrieve all the
+rows in the data frame.
+
+An alternative approach is to make use of column indexes as below:
+
 \begin{Shaded}
 \begin{Highlighting}[]
 \CommentTok{\# Reorder columns by index}
@@ -2489,12 +2534,13 @@ code:
 6          5.4         3.9          1.7         0.4  setosa    1.384615
 \end{verbatim}
 
-You can see the new column \texttt{Sepal.Ratio} is added to the
-rightmost position.
+New columns are always added to the rightmost position, as you can see
+\texttt{Sepal.Ratio}.
 
 Suppose you want to add a new column that records the name of the
-researcher who collected the sample. If one researcher does it, you
-don't have to repeat the same name in a vector. Here is the code:
+researcher who collected the sample. If one researcher does it for all
+samples, you don't have to repeat the same name in a vector. Here is the
+code:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2864,11 +2910,11 @@ With \texttt{tidyverse}, you can do it in one step by using the
 
 \begin{verbatim}
   Sepal.Length Sepal.Width Petal.Length Petal.Width    Species
-1          4.8         3.1          1.6         0.2     setosa
-2          6.8         3.0          5.5         2.1  virginica
-3          6.8         3.2          5.9         2.3  virginica
-4          5.2         2.7          3.9         1.4 versicolor
-5          7.9         3.8          6.4         2.0  virginica
+1          4.8         3.0          1.4         0.1     setosa
+2          5.1         3.8          1.5         0.3     setosa
+3          5.2         3.4          1.4         0.2     setosa
+4          6.6         3.0          4.4         1.4 versicolor
+5          4.4         2.9          1.4         0.2     setosa
 \end{verbatim}
 
 \subsection{Sort Rows in a Data

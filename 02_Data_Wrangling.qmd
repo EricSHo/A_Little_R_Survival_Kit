@@ -22,7 +22,7 @@ This chapter covers common data wrangling techniques. After finishing this chapt
 
 ### Select Rows by Condition(s)
 
-The `subset()` function selects rows if they satisfy the condition(s). Below are six relational operators:
+The `subset()` function selects rows from a data frame if they satisfy the condition(s). Below are six relational operators used in specifying the conditions:
 
 1.  `>` greater than.
 
@@ -52,6 +52,8 @@ If the selection involves multiple conditions, they must be joined by relational
 
 3.  `!` denotes the logical NOT.
 
+Let's begin how `subset()` works with vectors, followed by data frames.
+
 #### `subset()` with Vectors
 
 Let's define a vector.
@@ -77,6 +79,18 @@ Select pumpkins between 6 and 7 lbs, inclusive.
 
 ```{r}
 subset(pumpkins, pumpkins>=6 & pumpkins<=7)
+```
+
+Let's use the logical NOT to negate the above query, meaning to select pumpkins either lighter than 6 or heavier than 7.
+
+```{r}
+subset(pumpkins, !(pumpkins>=6 & pumpkins<=7))
+```
+
+The above query can be rewritten using the logical OR as follows:
+
+```{r}
+subset(pumpkins, pumpkins<6 | pumpkins>7)
 ```
 
 #### `subset()` with Data Frames
@@ -132,7 +146,7 @@ head(iris_no_setosa_eg)
 
 ### Random Sampling
 
-It is quite common to randomly sample a subset of items from a vector or rows from a data frame.
+It is quite common to randomly sample a subset of items from a vector or rows from a data frame in statistics.
 
 #### Sample Items Randomly from a Vector
 
@@ -155,24 +169,24 @@ sample(c('H','T'), size=10, replace=T)
 
 #### Sample Rows Randomly from a Data Frame
 
-Let's say we want to pick 5 samples randomly from `iris`. It takes two steps to do that:
+Let's say we want to pick 5 samples randomly from `iris`. It takes two steps to achieve that:
 
-**Step 1:** Create a list (vector) of random row indexes by the `sample()` function. Specify the following parameters:
+**Step 1:** Create a list (vector) of random row indexes by the `sample()` function by specifying the following parameters:
 
-a.) The range of indexes. In this example, the range is from 1 to the last row of `iris`, which can be obtained from `nrow(iris)`.
+a.  The range of indexes. In this example, the indexes must be in the range from 1 to the last row of `iris`, which can be obtained from `nrow(iris)`.
 
-b)  How many samples, e.g., `size = 5`.
+b.  How many samples, e.g., `size = 5`.
 
-c)  Can a sample be drawn repeatedly? If not, `replace = F`.
+c.  Can a sample be drawn repeatedly? If not, `replace = F`.
 
 ```{r}
 rnd_idx <- sample(seq(nrow(iris)), size = 5, replace = F)
 rnd_idx
 ```
 
-`seq(nrow(iris))` generates a vector containing 1, 2, 3, ..., 150.
+`seq(nrow(iris))` above generates a vector containing 1, 2, 3, ..., 150, as `iris` contains 150 rows.
 
-**Step 2:** Select rows from iris according to the indexes in `rnd_idx`.
+**Step 2:** Select rows from `iris` according to the random indexes in `rnd_idx`.
 
 ```{r}
 a_random_sample <- iris[rnd_idx,]
@@ -180,13 +194,13 @@ a_random_sample <- iris[rnd_idx,]
 a_random_sample
 ```
 
-The indexing method is based on the previous chapter. Check out here: @sec-access-rows-columns.
+The indexing method has been discussed in the previous chapter. Check out here: @sec-01-access-rows-columns. A note about `iris[rnd_idx,]` . Do not omit the comma (`,`) after `rnd_idx` inside the square brackets. It means all columns are selected for the output.
 
 ### Sort Items
 
 #### Sort Items in a Vector
 
-It can be done using the `sort()` function.
+It can be done using the `sort()` function. By default, the sorting order is ascending (from small to large).
 
 ```{r}
 sort(pumpkins)
@@ -200,7 +214,7 @@ sort(pumpkins, decreasing = TRUE)
 
 #### Sort Rows in a Data Frame
 
-Unfortunately, the `sort()` function does not work for the two-dimensional data frame. We have to use a method similar to sampling rows. It takes two steps to sort rows in a certain order. Suppose you want to sort rows in `iris` by `Sepal.Length` in ascending order (small to large).
+Unfortunately, the `sort()` function does not work for the two-dimensional data frame as conveniently as it does for vectors. We have to use a method similar to sampling rows. It takes two steps to sort rows in a certain order. Suppose you want to sort rows in `iris` by `Sepal.Length` in ascending order (small to large).
 
 **Step 1:** Obtain a list (vector) of row indexes that reflects the sorting order of the data frame.
 
@@ -208,6 +222,8 @@ Unfortunately, the `sort()` function does not work for the two-dimensional data 
 sorted_idx <- order(iris$Sepal.Length)
 sorted_idx
 ```
+
+Note that the length of `sorted_idx` is the same as the number of rows in `iris`.
 
 **Step 2:** Rearrange the rows in the data frame according to the sorted row indexes.
 
@@ -252,6 +268,10 @@ new_iris <- iris[,c("Species","Sepal.Length","Sepal.Width","Petal.Length","Petal
 head(new_iris)
 ```
 
+Do not overlook the comma (`,`). It is used to retrieve all the rows in the data frame.
+
+An alternative approach is to make use of column indexes as below:
+
 ```{r}
 # Reorder columns by index
 new_iris <- iris[,c(5,1,2,3,4)]
@@ -280,9 +300,9 @@ iris$Sepal.Ratio <- iris$Sepal.Length/iris$Sepal.Width
 head(iris)
 ```
 
-You can see the new column `Sepal.Ratio` is added to the rightmost position.
+New columns are always added to the rightmost position, as you can see `Sepal.Ratio`.
 
-Suppose you want to add a new column that records the name of the researcher who collected the sample. If one researcher does it, you don't have to repeat the same name in a vector. Here is the code:
+Suppose you want to add a new column that records the name of the researcher who collected the sample. If one researcher does it for all samples, you don't have to repeat the same name in a vector. Here is the code:
 
 ```{r}
 iris$Researcher <- "Brian"
