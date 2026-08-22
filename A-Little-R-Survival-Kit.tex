@@ -280,40 +280,6 @@ deeper into intermediate R functions, Chapter 5 discusses R functions
 that create or import data sets from files, restructure data sets, and
 accelerate execution time.
 
-\section*{RStudio}\label{rstudio}
-\addcontentsline{toc}{section}{RStudio}
-
-\markright{RStudio}
-
-Scripting is best learned through hands-on practice; it is like learning
-to swim. You don't just listen to instructions. You've got to jump into
-the water and get wet! To try out the examples and exercises, you need
-to use RStudio. There are two options to access RStudio: a cloud service
-(Posit Cloud) and installing RStudio on your own computer. For the first
-option, no software installation is required. All you need is a Web
-Browser with an internet connection. The first time, you can sign up for
-an account and choose a plan from
-\href{https://posit.cloud/plans?utm_source=Website&utm_medium=IDE_Download}{Posit
-Cloud}. As this book covers the foundational R features, the basic, free
-plan will work. Your work will be saved in the cloud under your account,
-regardless of what computer you use, as long as you log in to the same
-account.
-
-Alternatively, if you prefer better control of RStudio, you can install
-two software packages, R and RStudio, on your own computers. However, it
-becomes your responsibility to maintain and update them in the future.
-Why do you need to install two programs instead of just RStudio? In a
-car analogy, R is like the engine, and RStudio is like the dashboard.
-RStudio provides a user-friendly Interactive Development Environment
-(IDE) for users to instruct R to perform the actual work. A favorable
-feature of R is that it can be installed on a Windows or a Mac computer.
-If your computer is a Chromebook, Posit Cloud is preferred, as
-installing R and RStudio on a Chromebook is less straightforward. For
-Windows and Mac, the installation is simple; it only takes a few
-double-clicks. Note that you must install R before RStudio. Here are the
-links to download \href{https://cran.r-project.org/}{R} and
-\href{https://posit.co/download/rstudio-desktop/}{RStudio}.
-
 Lastly, this is a live book that I will continue to update with topics
 to help readers like you. I invite you to check back periodically to
 discover new material.
@@ -730,7 +696,7 @@ As you can see above, the last line (\texttt{Levels}) shows the
 hypertension levels in ascending order, and levels are connected by a
 less than sign (\texttt{\textless{}}).
 
-\subsection{Data Frames}\label{data-frames}
+\subsection{Data Frames}\label{sec-01-data-frames}
 
 Besides \texttt{vector}, another common R object is
 \texttt{data\ frame}. Almost all the datasets used for data analysis are
@@ -6673,6 +6639,8 @@ data:  my_tab1
 X-squared = 61.967, df = 4, p-value = 1.119e-12
 \end{verbatim}
 
+\subsection{List Objects}\label{sec-05-list-objects}
+
 The second table in Figure~\ref{fig-5-1} is different from the first one
 as each row contains a mixture of character
 (\texttt{daily\ tobacco\ onsumption} ) and numeric values
@@ -6971,7 +6939,8 @@ Additionally, not all data files contain a column heading in the first
 row. By default, R does not assume one exists. To override the default,
 like the above example, specify \texttt{header=T}.
 
-\subsection{Import data in RStudio}\label{import-data-in-rstudio}
+\subsection{Import data in
+RStudio}\label{sec-05-3-2-Import-Data-RStudio}
 
 Suppose the data file has been downloaded on your computer in the
 \texttt{Downloads} subfolder. The first step is to upload it to the
@@ -7023,7 +6992,7 @@ data. Do the following:
 This imports the data file into RStudio and reflects it in the
 \textbf{Environment} panel on the top right.
 
-\section{Define Functions}\label{define-functions}
+\section{Define Functions}\label{sec-05-define-functions}
 
 When no built-in functions do what you want, it is the occasion to write
 your own functions. A function consists of input, process, and output. A
@@ -7290,6 +7259,209 @@ Convert all values from inches to cm in \texttt{iris}
 [5,]           13           9            4           1
 [6,]           14          10            4           1
 \end{verbatim}
+
+\chapter{R and RStudio}\label{r-and-rstudio}
+
+This chapter primarily focuses on using RStudio for data and statistical
+analysis. If you are new to RStudio, this chapter provides a quick
+overview of this indispensable interactive development environment
+(IDE). A note about names. You will come across the name Posit here. In
+2022, the management team of RStudio wanted to expand the tool to
+support other programming languages, including Python and Julia.
+Therefore, they renamed it \textbf{Posit}. Since our focus is on R
+scripting, we will continue to refer to the IDE as RStudio. And RStudio
+is still a popular name in the R community. Without further delay, let's
+get started.
+
+\section*{Learning Objectives:}\label{learning-objectives-5}
+\addcontentsline{toc}{section}{Learning Objectives:}
+
+\markright{Learning Objectives:}
+
+\begin{itemize}
+\item
+  Understand the differences between R and RStudio.
+\item
+  Understand different options for accessing RStudio.
+\item
+  Understand the basic components of the RStudio user interface.
+\end{itemize}
+
+\section{R vs.~RStudio}\label{r-vs.-rstudio}
+
+RStudio depends on R. Using a car analogy, nobody drives a car by
+pulling the engine's throttle directly. R is like the engine, and
+RStudio is like the dashboard. RStudio provides a user-friendly
+Interactive Development Environment (IDE) that lets users instruct R to
+perform the actual work.
+
+\begin{figure}[H]
+
+{\centering \pandocbounded{\includegraphics[keepaspectratio]{images/Figure_6-1-R_vs_rstudio.png}}
+
+}
+
+\caption{Figure 6.1: R vs.~RStudio}
+
+\end{figure}%
+
+\section{Accessing RStudio}\label{accessing-rstudio}
+
+There are two options for accessing RStudio: using a cloud service
+(Posit Cloud) or installing RStudio on your own computer. For the first
+option, no software installation is required. All you need is a web
+browser and an internet connection. For the first time, sign up for a
+Posit account from here:
+\href{https://posit.cloud/plans?utm_source=Website&utm_medium=IDE_Download}{Posit
+Cloud} and choose a plan. A basic free plan is sufficient for everything
+discussed in this book. Your work will be saved in the cloud under your
+account. Regardless of what computer you use and where you work,
+everything you have saved will be available in your account.
+
+Alternatively, if you prefer better control of RStudio, you can install
+two software packages, R and RStudio, in that sequence, on your own
+computers. Then it becomes your responsibility to maintain and update
+them. A favorable feature of R is that it can be installed on a Windows
+or a Mac computer. If your computer is a Chromebook, Posit Cloud is
+preferred, as installing R and RStudio on a Chromebook is less
+straightforward. For Windows and Mac, the installation is simple; it
+only takes a few double-clicks. Note that you must install R before
+RStudio. Here are the links to download
+\href{https://cran.r-project.org/}{R} and
+\href{https://posit.co/download/rstudio-desktop/}{RStudio}.
+
+\section{Basic Components of RStudio}\label{basic-components-of-rstudio}
+
+Below is a typical, default appearance of the RStudio interface.
+
+\begin{figure}
+
+\centering{
+
+\pandocbounded{\includegraphics[keepaspectratio]{images/Figure_6-2-RStudio_Panels.png}}
+
+}
+
+\caption{\label{fig-6-2}Figure 6.2: RStudio user interface}
+
+\end{figure}%
+
+The interface is divided into \textbf{four panes}, each with a different
+function. The two panes on the left are designated for doing things. The
+two right panes are for viewing.
+
+\subsection{Files/Plots/Help}\label{filesplotshelp}
+
+Let's begin with the lower right pane. Treat it like Finder on Mac or
+Explorer on Windows. The \textbf{Files} tab helps you navigate the cloud
+storage or local drive. The \textbf{Plots} tab stores the graphs created
+in the current session. They will be removed once you sign off from the
+cloud or quit RStudio. The \textbf{Help} tab shows the help
+documentation.
+
+\subsection{Console}\label{console}
+
+The lower left pane is called the \textbf{console}. When you move the
+mouse anywhere within the console and click it, attention is on the
+console as shown below:
+
+\begin{figure}[H]
+
+{\centering \pandocbounded{\includegraphics[keepaspectratio]{images/Figure_6-3-Console-REP.png}}
+
+}
+
+\caption{Figure 6.3: Console and REP cycle}
+
+\end{figure}%
+
+The \texttt{\textgreater{}} symbol in Figure 6-3A is the prompt. Next to
+it is a blinking cursor, usually a vertical bar \texttt{\textbar{}}. At
+this stage, the R engine is waiting for an instruction. For example, you
+enter \texttt{head(iris)} and hit the \texttt{return} button (Figure
+6-3B), the R engine will go through the REP
+(\textbf{R}ead-\textbf{E}val-\textbf{P}rint) execution cycle (Figure
+6-3C). At the Read stage, the R engine listens to incoming commands,
+e.g., \texttt{head(iris)}. It will then evaluate whether the command(s)
+are valid (in terms of syntax and required input values). If the command
+is correct, the R engine will execute it and print the results, if any,
+at the console. If the command is invalid, an error message will be
+printed at the console, usually in red.
+
+The console is usually the place for rapid try-and-error, or
+\textbf{prototyping}. Additionally, all commands entered at the console
+are saved to a history log (discussed below).
+
+\subsection{Environment/History}\label{environmenthistory}
+
+The \textbf{Environment} tab in the top right pane is like a CT scan of
+one's memory. It shows all the variables created in the current session.
+This feature is extremely useful for troubleshooting scripting problems.
+
+RStudio splits the variables into three categories: \textbf{Data,}
+\textbf{Values,} and \textbf{Functions}. The Data subsection keeps data
+frames Section~\ref{sec-01-data-frames}. There is a little play button
+next to each data frame. Clicking it will expand to a list of variables
+belonging to the data frame. The Values subsection lists other types of
+variables and a glimpse of their values, such as atomic variables
+Section~\ref{sec-01-atomic-and-composite-variables}, vectors
+Section~\ref{sec-01-vectors}, and list objects
+Section~\ref{sec-05-list-objects}. Lastly, the Functions subsection
+shows the user-defined functions and the arguments
+Section~\ref{sec-05-define-functions}.
+
+The Environment tab also provides a function to import data into
+RStudio. See Section~\ref{sec-05-3-2-Import-Data-RStudio}.
+
+Another useful feature is the \textbf{History} tab. All commands
+executed, correct or incorrect, in the current session will be recorded
+in the History tab.
+
+\begin{figure}[H]
+
+{\centering \pandocbounded{\includegraphics[keepaspectratio]{images/Figure_6-4-History.png}}
+
+}
+
+\caption{Figure 6.4: History tab}
+
+\end{figure}%
+
+One way to make script development more convenient is to copy previously
+executed, tested commands from the History log to the console or a file
+without retyping them. Let's say you want to re-execute
+\texttt{head(iris)} again. You can highlight that command in the History
+tab and click the \textbf{``To Console''} button. The command will be
+copied to the console. Likewise, you can direct the copying to a script
+file opened by the editor (top left pane in Figure~\ref{fig-6-2}) by
+clicking the \textbf{``To Source''} button.
+
+\subsection{Editor}\label{editor}
+
+The last pane is the editor function on the top left. It is the place to
+write the R script that contains several R commands. To create a new R
+script file, click the menu option (top left) \textbf{File
+-\textgreater{} New File -\textgreater{} R Script}. A blank file is
+shown, and you can start writing R commands in it. Once you are done,
+you can save it by clicking the floppy disk icon near the top left or by
+selecting the File menu option \textbf{Save}. You can also use the File
+menu option to open an existing R script file.
+
+There are two ways to execute the command(s) in the current script. To
+run the entire script file from the first line to the last line, click
+the \textbf{``Source''} button near the top left of the editor window.
+To run specific command(s), use the mouse to select the line(s) of
+interest and click the \textbf{``Run''} button, which is located next to
+the \textbf{``Source''} button.
+
+\section{Summary}\label{summary-3}
+
+Here is a short overview of essential RStudio features. They should be
+adequate for 80\% of the task. Scripting is a practical skill. It is
+best learned through hands-on practice; it is like learning to swim. You
+don't just listen to instructions. You've got to jump into the water and
+get wet! Therefore, I highly encourage you to try out the examples and
+exercises in the RStudio environment.
 
 
 \bibliography{book.bib,packages.bib}

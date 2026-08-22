@@ -208,7 +208,7 @@ patients
 
 As you can see above, the last line (`Levels`) shows the hypertension levels in ascending order, and levels are connected by a less than sign (`<`).
 
-### Data Frames
+### Data Frames {#sec-01-data-frames}
 
 Besides `vector`, another common R object is `data frame`. Almost all the datasets used for data analysis are organized in data frames. Simply speaking, a data frame is a **tabular** or spreadsheet-like object where values are organized in rows and columns. Each row represents a sample, and each column represents a variable. Rows are expected to have equal length, i.e., the same number of columns. If not, R will either complain or pad the missing columns with a special value `NA` (it stands for not available). Let's take a look at R's built-in data frame `iris`:
 

@@ -82,6 +82,8 @@ Or, perform a $\chi^{2}$ test of independence.
 chisq.test(my_tab1, correct=F)
 ```
 
+### List Objects {#sec-05-list-objects}
+
 The second table in @fig-5-1 is different from the first one as each row contains a mixture of character (`daily tobacco onsumption` ) and numeric values (`controls` and `cases`), making vectors unsuitable for this situation. R provides an object similar to vectors, ordered sequences, that is the `list` object. The main difference between a vector and a list is that the latter allows values to have different data types, i.e., **heterogeneous**. Below is an example to define rows as list objects:
 
 ```{r}
@@ -180,7 +182,7 @@ head(delays2)
 
 The `tab` on the keyboard is denoted by `\t`, no space between the two characters. Additionally, not all data files contain a column heading in the first row. By default, R does not assume one exists. To override the default, like the above example, specify `header=T`.
 
-### Import data in RStudio
+### Import data in RStudio {#sec-05-3-2-Import-Data-RStudio}
 
 Suppose the data file has been downloaded on your computer in the `Downloads` subfolder. The first step is to upload it to the RStudio Cloud Drive via **Files-\>Upload** inside the Files panel, usually on the bottom right.
 
@@ -217,7 +219,7 @@ A window will pop up as shown in Figure 5-4, which is a preview of the data. Do 
 
 This imports the data file into RStudio and reflects it in the **Environment** panel on the top right.
 
-## Define Functions
+## Define Functions {#sec-05-define-functions}
 
 When no built-in functions do what you want, it is the occasion to write your own functions. A function consists of input, process, and output. A daily analogy is the vending machine. The inputs are money and choice; the process is the mechanical system to fetch the selected beverage, snack, etc., and the output is the dispensed item.
 

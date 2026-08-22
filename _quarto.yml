@@ -24,6 +24,7 @@ book:
       chapters:
       - 04_Statistical_Tests.qmd
       - 05_Dive_Deeper.qmd
+      - 06_R_RStudio.qmd
 
 bibliography:
   - book.bib
