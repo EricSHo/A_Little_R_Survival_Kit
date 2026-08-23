@@ -242,23 +242,24 @@ produced by computers, the theme of this little book.
 This book uses R. You may ask why not use a spreadsheet, such as
 Microsoft Excel or Google Sheets. While they are excellent tools - easy
 to use - they have significant shortcomings. In particular, they lack
-automation, as they operate through point-clicking, drag-and-drop, etc.,
-hampering reproducibility.
+automation, relying on point-and-click, drag-and-drop, etc., which
+hampers reproducibility.
 
 This book is written for readers who have scant experience in computer
 programming or scripting. R is a big language. At times, it is dizzying
 to navigate a vast amount of materials in the ocean of the Internet.
 Therefore, this book intends to provide readers with the bare minimum of
 R to start analyzing data. Specifically, I want them to focus on using R
-fast and get things done rather than being bogged down by the technical
-details and cryptic syntax of the R language. Although most people think
-a book like this is about R programming, I prefer to call it
-\textbf{scripting}. In a nutshell, programming encapsulates algorithms -
-a step-by-step procedure to tackle a problem like a cooking recipe.
-While it is an important topic, here we focus on the what (the expected
-results) instead of the how (algorithms). You tell the R functions: here
-is the data and the parameters; please process them and return the
-results.
+quickly and getting things done, rather than getting bogged down in the
+language's technical details and cryptic syntax. Although most people
+think a book like this is about R programming, I prefer to call it
+\textbf{scripting}. Programming encapsulates the development of
+algorithms - a step-by-step procedure to tackle a problem like a cooking
+recipe. On the other hand, scripting is more straightforward. Most of
+the time, a task can be solved by a few lines of code. Therefore, here
+we focus on the what (the expected results) instead of the how
+(algorithms). You tell the R functions: here is the data and the
+parameters; please process them and return the results.
 
 \section*{Usage}\label{usage}
 \addcontentsline{toc}{section}{Usage}
@@ -278,7 +279,10 @@ to the intended message and properties of data. Both base R and
 common statistical tests in Chapter 4. For readers who want to dive
 deeper into intermediate R functions, Chapter 5 discusses R functions
 that create or import data sets from files, restructure data sets, and
-accelerate execution time.
+accelerate execution time. Chapter 6 provides an overview of RStudio, an
+Interactive Development Environment (IDE) for crafting R scripts. If R
+is new to you or you don't have access to RStudio, start with Chapter 6
+and then jump back to Chapter 1.
 
 Lastly, this is a live book that I will continue to update with topics
 to help readers like you. I invite you to check back periodically to
@@ -7268,10 +7272,10 @@ overview of this indispensable interactive development environment
 (IDE). A note about names. You will come across the name Posit here. In
 2022, the management team of RStudio wanted to expand the tool to
 support other programming languages, including Python and Julia.
-Therefore, they renamed it \textbf{Posit}. Since our focus is on R
-scripting, we will continue to refer to the IDE as RStudio. And RStudio
-is still a popular name in the R community. Without further delay, let's
-get started.
+Therefore, they renamed RStudio to \textbf{Posit}. Since our focus is on
+R scripting, we will continue to refer to the IDE as RStudio, which is
+still very popular in the R community. Without further delay, let's get
+started.
 
 \section*{Learning Objectives:}\label{learning-objectives-5}
 \addcontentsline{toc}{section}{Learning Objectives:}
@@ -7354,10 +7358,29 @@ two right panes are for viewing.
 
 Let's begin with the lower right pane. Treat it like Finder on Mac or
 Explorer on Windows. The \textbf{Files} tab helps you navigate the cloud
-storage or local drive. The \textbf{Plots} tab stores the graphs created
-in the current session. They will be removed once you sign off from the
-cloud or quit RStudio. The \textbf{Help} tab shows the help
-documentation.
+storage or local drive. It also provides basic file operations, such as
+renaming (\textbf{Rename} button) and deleting (\textbf{Delete} button)
+files. In the cloud version, you can use the \textbf{Upload} function to
+upload files from the local drive to the cloud. Likewise, files can be
+downloaded from the cloud to the local drive by checking the box next to
+the file(s) you want to download, then clicking the gear icon and
+selecting the \textbf{Export} option in the pull-down menu.
+
+The \textbf{Plots} tab stores the graphs created in the current session.
+They will be removed once you sign off from the cloud or quit RStudio.
+
+The \textbf{Help} tab shows the help documentation. E.g., if you invoke
+help for the following function, the help text will be shown in the Help
+window.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{?hist}
+\end{Highlighting}
+\end{Shaded}
+
+Often, I have found the examples at the bottom of help text the most
+helpful.
 
 \subsection{Console}\label{console}
 
@@ -7375,6 +7398,10 @@ console as shown below:
 
 \end{figure}%
 
+The console is usually the place for rapid try-and-error, or
+\textbf{prototyping}. Additionally, all commands entered at the console
+are saved to a history log (discussed below).
+
 The \texttt{\textgreater{}} symbol in Figure 6-3A is the prompt. Next to
 it is a blinking cursor, usually a vertical bar \texttt{\textbar{}}. At
 this stage, the R engine is waiting for an instruction. For example, you
@@ -7387,10 +7414,6 @@ are valid (in terms of syntax and required input values). If the command
 is correct, the R engine will execute it and print the results, if any,
 at the console. If the command is invalid, an error message will be
 printed at the console, usually in red.
-
-The console is usually the place for rapid try-and-error, or
-\textbf{prototyping}. Additionally, all commands entered at the console
-are saved to a history log (discussed below).
 
 \subsection{Environment/History}\label{environmenthistory}
 
@@ -7456,12 +7479,35 @@ the \textbf{``Source''} button.
 
 \section{Summary}\label{summary-3}
 
-Here is a short overview of essential RStudio features. They should be
-adequate for 80\% of the task. Scripting is a practical skill. It is
-best learned through hands-on practice; it is like learning to swim. You
-don't just listen to instructions. You've got to jump into the water and
-get wet! Therefore, I highly encourage you to try out the examples and
-exercises in the RStudio environment.
+This is a short overview of essential RStudio features. They should be
+adequate for 80\% of the tasks. The two panes on the right side of the
+IDE are mainly for viewing, and the panes on the left side are mostly
+for doing.
+
+You can use the \textbf{Files} tab to navigate through the files in the
+cloud drive or local drive. It also supports basic file operations such
+as deleting, renaming, uploading, and downloading files. The
+\textbf{Environment} tab is used to track variables (data frames, atomic
+variables, vectors, lists, etc.) created in the current session. The
+\textbf{History} tab contains a log of all the commands executed. Those
+commands can be copied to the console or an editing R script file
+conveniently using the ``\textbf{To Console}'' or ``\textbf{To Source}''
+button.
+
+The \textbf{Console} (usually in the lower-left) is the place to rapidly
+prototype command syntax and outcomes. To keep the commands you tested
+in a file, you can use the ``\textbf{To Source}'' function under the
+History tab.
+
+The \textbf{Editor} pane is for creating or modifying R scripts. It
+provides functions to execute selected command(s) (\textbf{Run}) or the
+entire script file (\textbf{Source}).
+
+Scripting is a practical skill. It is best learned through hands-on
+practice; it is like learning to swim. You don't just listen to
+instructions. You've got to jump into the water and get wet! Therefore,
+I highly encourage you to try out the examples and exercises in the
+RStudio environment.
 
 
 \bibliography{book.bib,packages.bib}

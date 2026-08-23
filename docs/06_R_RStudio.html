@@ -20,6 +20,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -218,7 +253,7 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>This chapter primarily focuses on using RStudio for data and statistical analysis. If you are new to RStudio, this chapter provides a quick overview of this indispensable interactive development environment (IDE). A note about names. You will come across the name Posit here. In 2022, the management team of RStudio wanted to expand the tool to support other programming languages, including Python and Julia. Therefore, they renamed it <strong>Posit</strong>. Since our focus is on R scripting, we will continue to refer to the IDE as RStudio. And RStudio is still a popular name in the R community. Without further delay, let’s get started.</p>
+<p>This chapter primarily focuses on using RStudio for data and statistical analysis. If you are new to RStudio, this chapter provides a quick overview of this indispensable interactive development environment (IDE). A note about names. You will come across the name Posit here. In 2022, the management team of RStudio wanted to expand the tool to support other programming languages, including Python and Julia. Therefore, they renamed RStudio to <strong>Posit</strong>. Since our focus is on R scripting, we will continue to refer to the IDE as RStudio, which is still very popular in the R community. Without further delay, let’s get started.</p>
 <section id="learning-objectives" class="level2 unnumbered">
 <h2 class="unnumbered anchored" data-anchor-id="learning-objectives">Learning Objectives:</h2>
 <ul>
@@ -258,7 +293,13 @@ Figure&nbsp;6.1: Figure 6.2: RStudio user interface
 <p>The interface is divided into <strong>four panes</strong>, each with a different function. The two panes on the left are designated for doing things. The two right panes are for viewing.</p>
 <section id="filesplotshelp" class="level3" data-number="6.3.1">
 <h3 data-number="6.3.1" class="anchored" data-anchor-id="filesplotshelp"><span class="header-section-number">6.3.1</span> Files/Plots/Help</h3>
-<p>Let’s begin with the lower right pane. Treat it like Finder on Mac or Explorer on Windows. The <strong>Files</strong> tab helps you navigate the cloud storage or local drive. The <strong>Plots</strong> tab stores the graphs created in the current session. They will be removed once you sign off from the cloud or quit RStudio. The <strong>Help</strong> tab shows the help documentation.</p>
+<p>Let’s begin with the lower right pane. Treat it like Finder on Mac or Explorer on Windows. The <strong>Files</strong> tab helps you navigate the cloud storage or local drive. It also provides basic file operations, such as renaming (<strong>Rename</strong> button) and deleting (<strong>Delete</strong> button) files. In the cloud version, you can use the <strong>Upload</strong> function to upload files from the local drive to the cloud. Likewise, files can be downloaded from the cloud to the local drive by checking the box next to the file(s) you want to download, then clicking the gear icon and selecting the <strong>Export</strong> option in the pull-down menu.</p>
+<p>The <strong>Plots</strong> tab stores the graphs created in the current session. They will be removed once you sign off from the cloud or quit RStudio.</p>
+<p>The <strong>Help</strong> tab shows the help documentation. E.g., if you invoke help for the following function, the help text will be shown in the Help window.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>?hist</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Often, I have found the examples at the bottom of help text the most helpful.</p>
 </section>
 <section id="console" class="level3" data-number="6.3.2">
 <h3 data-number="6.3.2" class="anchored" data-anchor-id="console"><span class="header-section-number">6.3.2</span> Console</h3>
@@ -269,8 +310,8 @@ Figure&nbsp;6.1: Figure 6.2: RStudio user interface
 <figcaption>Figure 6.3: Console and REP cycle</figcaption>
 </figure>
 </div>
-<p>The <code>&gt;</code> symbol in Figure 6-3A is the prompt. Next to it is a blinking cursor, usually a vertical bar <code>|</code>. At this stage, the R engine is waiting for an instruction. For example, you enter <code>head(iris)</code> and hit the <code>return</code> button (Figure 6-3B), the R engine will go through the REP (<strong>R</strong>ead-<strong>E</strong>val-<strong>P</strong>rint) execution cycle (Figure 6-3C). At the Read stage, the R engine listens to incoming commands, e.g., <code>head(iris)</code>. It will then evaluate whether the command(s) are valid (in terms of syntax and required input values). If the command is correct, the R engine will execute it and print the results, if any, at the console. If the command is invalid, an error message will be printed at the console, usually in red.</p>
 <p>The console is usually the place for rapid try-and-error, or <strong>prototyping</strong>. Additionally, all commands entered at the console are saved to a history log (discussed below).</p>
+<p>The <code>&gt;</code> symbol in Figure 6-3A is the prompt. Next to it is a blinking cursor, usually a vertical bar <code>|</code>. At this stage, the R engine is waiting for an instruction. For example, you enter <code>head(iris)</code> and hit the <code>return</code> button (Figure 6-3B), the R engine will go through the REP (<strong>R</strong>ead-<strong>E</strong>val-<strong>P</strong>rint) execution cycle (Figure 6-3C). At the Read stage, the R engine listens to incoming commands, e.g., <code>head(iris)</code>. It will then evaluate whether the command(s) are valid (in terms of syntax and required input values). If the command is correct, the R engine will execute it and print the results, if any, at the console. If the command is invalid, an error message will be printed at the console, usually in red.</p>
 </section>
 <section id="environmenthistory" class="level3" data-number="6.3.3">
 <h3 data-number="6.3.3" class="anchored" data-anchor-id="environmenthistory"><span class="header-section-number">6.3.3</span> Environment/History</h3>
@@ -294,7 +335,11 @@ Figure&nbsp;6.1: Figure 6.2: RStudio user interface
 </section>
 <section id="summary" class="level2" data-number="6.4">
 <h2 data-number="6.4" class="anchored" data-anchor-id="summary"><span class="header-section-number">6.4</span> Summary</h2>
-<p>Here is a short overview of essential RStudio features. They should be adequate for 80% of the task. Scripting is a practical skill. It is best learned through hands-on practice; it is like learning to swim. You don’t just listen to instructions. You’ve got to jump into the water and get wet! Therefore, I highly encourage you to try out the examples and exercises in the RStudio environment.</p>
+<p>This is a short overview of essential RStudio features. They should be adequate for 80% of the tasks. The two panes on the right side of the IDE are mainly for viewing, and the panes on the left side are mostly for doing.</p>
+<p>You can use the <strong>Files</strong> tab to navigate through the files in the cloud drive or local drive. It also supports basic file operations such as deleting, renaming, uploading, and downloading files. The <strong>Environment</strong> tab is used to track variables (data frames, atomic variables, vectors, lists, etc.) created in the current session. The <strong>History</strong> tab contains a log of all the commands executed. Those commands can be copied to the console or an editing R script file conveniently using the “<strong>To Console</strong>” or “<strong>To Source</strong>” button.</p>
+<p>The <strong>Console</strong> (usually in the lower-left) is the place to rapidly prototype command syntax and outcomes. To keep the commands you tested in a file, you can use the “<strong>To Source</strong>” function under the History tab.</p>
+<p>The <strong>Editor</strong> pane is for creating or modifying R scripts. It provides functions to execute selected command(s) (<strong>Run</strong>) or the entire script file (<strong>Source</strong>).</p>
+<p>Scripting is a practical skill. It is best learned through hands-on practice; it is like learning to swim. You don’t just listen to instructions. You’ve got to jump into the water and get wet! Therefore, I highly encourage you to try out the examples and exercises in the RStudio environment.</p>
 
 
 </section>

@@ -1,6 +1,6 @@
 # R and RStudio
 
-This chapter primarily focuses on using RStudio for data and statistical analysis. If you are new to RStudio, this chapter provides a quick overview of this indispensable interactive development environment (IDE). A note about names. You will come across the name Posit here. In 2022, the management team of RStudio wanted to expand the tool to support other programming languages, including Python and Julia. Therefore, they renamed it **Posit**. Since our focus is on R scripting, we will continue to refer to the IDE as RStudio. And RStudio is still a popular name in the R community. Without further delay, let's get started.
+This chapter primarily focuses on using RStudio for data and statistical analysis. If you are new to RStudio, this chapter provides a quick overview of this indispensable interactive development environment (IDE). A note about names. You will come across the name Posit here. In 2022, the management team of RStudio wanted to expand the tool to support other programming languages, including Python and Julia. Therefore, they renamed RStudio to **Posit**. Since our focus is on R scripting, we will continue to refer to the IDE as RStudio, which is still very popular in the R community. Without further delay, let's get started.
 
 ## Learning Objectives: {.unnumbered}
 
@@ -32,7 +32,17 @@ The interface is divided into **four panes**, each with a different function. Th
 
 ### Files/Plots/Help
 
-Let's begin with the lower right pane. Treat it like Finder on Mac or Explorer on Windows. The **Files** tab helps you navigate the cloud storage or local drive. The **Plots** tab stores the graphs created in the current session. They will be removed once you sign off from the cloud or quit RStudio. The **Help** tab shows the help documentation.
+Let's begin with the lower right pane. Treat it like Finder on Mac or Explorer on Windows. The **Files** tab helps you navigate the cloud storage or local drive. It also provides basic file operations, such as renaming (**Rename** button) and deleting (**Delete** button) files. In the cloud version, you can use the **Upload** function to upload files from the local drive to the cloud. Likewise, files can be downloaded from the cloud to the local drive by checking the box next to the file(s) you want to download, then clicking the gear icon and selecting the **Export** option in the pull-down menu.
+
+The **Plots** tab stores the graphs created in the current session. They will be removed once you sign off from the cloud or quit RStudio.
+
+The **Help** tab shows the help documentation. E.g., if you invoke help for the following function, the help text will be shown in the Help window.
+
+```{r}
+?hist
+```
+
+Often, I have found the examples at the bottom of help text the most helpful.
 
 ### Console
 
@@ -40,9 +50,9 @@ The lower left pane is called the **console**. When you move the mouse anywhere 
 
 ![Figure 6.3: Console and REP cycle](images/Figure_6-3-Console-REP.png)
 
-The `>` symbol in Figure 6-3A is the prompt. Next to it is a blinking cursor, usually a vertical bar `|`. At this stage, the R engine is waiting for an instruction. For example, you enter `head(iris)` and hit the `return` button (Figure 6-3B), the R engine will go through the REP (**R**ead-**E**val-**P**rint) execution cycle (Figure 6-3C). At the Read stage, the R engine listens to incoming commands, e.g., `head(iris)`. It will then evaluate whether the command(s) are valid (in terms of syntax and required input values). If the command is correct, the R engine will execute it and print the results, if any, at the console. If the command is invalid, an error message will be printed at the console, usually in red.
-
 The console is usually the place for rapid try-and-error, or **prototyping**. Additionally, all commands entered at the console are saved to a history log (discussed below).
+
+The `>` symbol in Figure 6-3A is the prompt. Next to it is a blinking cursor, usually a vertical bar `|`. At this stage, the R engine is waiting for an instruction. For example, you enter `head(iris)` and hit the `return` button (Figure 6-3B), the R engine will go through the REP (**R**ead-**E**val-**P**rint) execution cycle (Figure 6-3C). At the Read stage, the R engine listens to incoming commands, e.g., `head(iris)`. It will then evaluate whether the command(s) are valid (in terms of syntax and required input values). If the command is correct, the R engine will execute it and print the results, if any, at the console. If the command is invalid, an error message will be printed at the console, usually in red.
 
 ### Environment/History
 
@@ -66,4 +76,12 @@ There are two ways to execute the command(s) in the current script. To run the e
 
 ## Summary
 
-Here is a short overview of essential RStudio features. They should be adequate for 80% of the task. Scripting is a practical skill. It is best learned through hands-on practice; it is like learning to swim. You don't just listen to instructions. You've got to jump into the water and get wet! Therefore, I highly encourage you to try out the examples and exercises in the RStudio environment.
+This is a short overview of essential RStudio features. They should be adequate for 80% of the tasks. The two panes on the right side of the IDE are mainly for viewing, and the panes on the left side are mostly for doing.
+
+You can use the **Files** tab to navigate through the files in the cloud drive or local drive. It also supports basic file operations such as deleting, renaming, uploading, and downloading files. The **Environment** tab is used to track variables (data frames, atomic variables, vectors, lists, etc.) created in the current session. The **History** tab contains a log of all the commands executed. Those commands can be copied to the console or an editing R script file conveniently using the "**To Console**" or "**To Source**" button.
+
+The **Console** (usually in the lower-left) is the place to rapidly prototype command syntax and outcomes. To keep the commands you tested in a file, you can use the "**To Source**" function under the History tab.
+
+The **Editor** pane is for creating or modifying R scripts. It provides functions to execute selected command(s) (**Run**) or the entire script file (**Source**).
+
+Scripting is a practical skill. It is best learned through hands-on practice; it is like learning to swim. You don't just listen to instructions. You've got to jump into the water and get wet! Therefore, I highly encourage you to try out the examples and exercises in the RStudio environment.
