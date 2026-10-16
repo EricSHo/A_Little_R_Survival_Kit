@@ -2123,7 +2123,7 @@ Randomly pick 5 samples without replacement.
 \end{Shaded}
 
 \begin{verbatim}
-[1] 6.62 3.76 3.52 7.55 7.00
+[1] 7.62 6.85 6.56 6.62 7.55
 \end{verbatim}
 
 The \texttt{replace=} option can be twisted to simulate tossing a coin N
@@ -2136,7 +2136,7 @@ times. E.g.,
 \end{Shaded}
 
 \begin{verbatim}
- [1] "H" "H" "T" "H" "T" "T" "H" "T" "T" "T"
+ [1] "T" "H" "T" "H" "H" "H" "H" "T" "T" "H"
 \end{verbatim}
 
 \subsubsection{Sample Rows Randomly from a Data
@@ -2168,7 +2168,7 @@ takes two steps to achieve that:
 \end{Shaded}
 
 \begin{verbatim}
-[1]  22  37  78 111  35
+[1]  61  85   7   5 142
 \end{verbatim}
 
 \texttt{seq(nrow(iris))} above generates a vector containing 1, 2, 3,
@@ -2187,11 +2187,11 @@ indexes in \texttt{rnd\_idx}.
 
 \begin{verbatim}
     Sepal.Length Sepal.Width Petal.Length Petal.Width    Species
-22           5.1         3.7          1.5         0.4     setosa
-37           5.5         3.5          1.3         0.2     setosa
-78           6.7         3.0          5.0         1.7 versicolor
-111          6.5         3.2          5.1         2.0  virginica
-35           4.9         3.1          1.5         0.2     setosa
+61           5.0         2.0          3.5         1.0 versicolor
+85           5.4         3.0          4.5         1.5 versicolor
+7            4.6         3.4          1.4         0.3     setosa
+5            5.0         3.6          1.4         0.2     setosa
+142          6.9         3.1          5.1         2.3  virginica
 \end{verbatim}
 
 The indexing method has been discussed in the previous chapter. Check
@@ -2880,11 +2880,11 @@ With \texttt{tidyverse}, you can do it in one step by using the
 
 \begin{verbatim}
   Sepal.Length Sepal.Width Petal.Length Petal.Width    Species
-1          4.8         3.0          1.4         0.1     setosa
-2          5.1         3.8          1.5         0.3     setosa
-3          5.2         3.4          1.4         0.2     setosa
-4          6.6         3.0          4.4         1.4 versicolor
-5          4.4         2.9          1.4         0.2     setosa
+1          6.7         3.1          5.6         2.4  virginica
+2          5.2         2.7          3.9         1.4 versicolor
+3          7.2         3.2          6.0         1.8  virginica
+4          5.0         3.4          1.6         0.4     setosa
+5          6.5         3.0          5.2         2.0  virginica
 \end{verbatim}
 
 \subsection{Sort Rows in a Data
@@ -4463,17 +4463,18 @@ independent categorical variables}
 
 \end{figure}%
 
-\subsection{Two Numeric Variables}\label{sec-baseR-scatter-plot}
+\subsection{Two Numeric Variables}\label{two-numeric-variables}
+
+\subsubsection{Scatterplot}\label{sec-baseR-scatter-plot}
 
 A scatter plot is the default choice to visualize the relationship
-between two numeric variables. The relationship can be manifold, ranging
-from linear to cyclical. So, visualizing how the data points are
-distributed in a 2D plane is an intuitive way to learn about their
-relationship. Importantly, visualization should be done before
-performing any statistical analysis, e.g., linear regression. Here is
-how to create a scatter plot that shows the relationship between sepal
-width and sepal length. Note that each point \((x_{i},y_{i})\) is a pair
-of values from one sample.
+between two numeric variables. The relationship can vary, from linear to
+cyclical. Visualizing how the data points are distributed in a 2D plane
+is an intuitive way to understand their relationship. Importantly,
+visualization should be done before performing any statistical analysis,
+e.g., linear regression. Here is how to create a scatter plot that shows
+the relationship between sepal width and sepal length. Note that each
+point \((x_{i},y_{i})\) is a pair of values from one sample.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -4595,6 +4596,40 @@ on top of the data points. Here is an example: regress
 
 \end{figure}%
 
+\subsubsection{Side-by-side
+Boxplot}\label{sec-baseR-side-by-side-boxplot}
+
+If the comparison is between the descriptive statistics of two or more
+groups, a side-by-side plot is suggested. Suppose our interest is the
+sepal width between \texttt{setosa} and \texttt{versicolor}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{setosa }\OtherTok{\textless{}{-}} \FunctionTok{subset}\NormalTok{(iris, Species }\SpecialCharTok{==} \StringTok{\textquotesingle{}setosa\textquotesingle{}}\NormalTok{)}
+\NormalTok{versicolor }\OtherTok{\textless{}{-}} \FunctionTok{subset}\NormalTok{(iris, Species }\SpecialCharTok{==} \StringTok{\textquotesingle{}versicolor\textquotesingle{}}\NormalTok{)}
+
+\FunctionTok{par}\NormalTok{(}\AttributeTok{mfrow=}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{))}
+
+\CommentTok{\# Left}
+\FunctionTok{boxplot}\NormalTok{(setosa}\SpecialCharTok{$}\NormalTok{Sepal.Width, versicolor}\SpecialCharTok{$}\NormalTok{Sepal.Width)}
+
+\CommentTok{\# Right}
+\FunctionTok{boxplot}\NormalTok{(setosa}\SpecialCharTok{$}\NormalTok{Sepal.Width, versicolor}\SpecialCharTok{$}\NormalTok{Sepal.Width, }\AttributeTok{names=}\FunctionTok{c}\NormalTok{(}\StringTok{\textquotesingle{}setosa\textquotesingle{}}\NormalTok{,}\StringTok{\textquotesingle{}versicolor\textquotesingle{}}\NormalTok{), }\AttributeTok{xlab=}\StringTok{"Species"}\NormalTok{, }\AttributeTok{ylab=}\StringTok{\textquotesingle{}Sepal Width\textquotesingle{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}[H]
+
+\centering{
+
+\pandocbounded{\includegraphics[keepaspectratio]{03_Data_Visualization_files/figure-pdf/fig-3-20-1.pdf}}
+
+}
+
+\caption{\label{fig-3-20}A Side-by-side Boxplot}
+
+\end{figure}%
+
 \subsection{Multipanel Scatter
 Plot}\label{sec-baseR-multipanel-scatter-plot}
 
@@ -4614,11 +4649,11 @@ function.
 
 \centering{
 
-\pandocbounded{\includegraphics[keepaspectratio]{03_Data_Visualization_files/figure-pdf/fig-3-20-1.pdf}}
+\pandocbounded{\includegraphics[keepaspectratio]{03_Data_Visualization_files/figure-pdf/fig-3-21-1.pdf}}
 
 }
 
-\caption{\label{fig-3-20}A Multipanel Scatter Plot}
+\caption{\label{fig-3-21}A Multipanel Scatter Plot}
 
 \end{figure}%
 
@@ -4726,7 +4761,7 @@ font size, etc.
 
 }
 
-\caption{\label{fig-3-21}Anatomy of \texttt{ggplot2}}
+\caption{\label{fig-3-22}Anatomy of \texttt{ggplot2}}
 
 \end{figure}%
 
@@ -4762,11 +4797,11 @@ Here is the bare minimum of a \texttt{ggplot2} histogram:
 
 \centering{
 
-\pandocbounded{\includegraphics[keepaspectratio]{03_Data_Visualization_files/figure-pdf/fig-3-22-1.pdf}}
+\pandocbounded{\includegraphics[keepaspectratio]{03_Data_Visualization_files/figure-pdf/fig-3-23-1.pdf}}
 
 }
 
-\caption{\label{fig-3-22}\texttt{ggplot2} Histogram.}
+\caption{\label{fig-3-23}\texttt{ggplot2} Histogram.}
 
 \end{figure}%
 
@@ -4800,11 +4835,11 @@ it.
 
 \centering{
 
-\pandocbounded{\includegraphics[keepaspectratio]{03_Data_Visualization_files/figure-pdf/fig-3-23-1.pdf}}
+\pandocbounded{\includegraphics[keepaspectratio]{03_Data_Visualization_files/figure-pdf/fig-3-24-1.pdf}}
 
 }
 
-\caption{\label{fig-3-23}A \texttt{ggplot2} Histogram with customized
+\caption{\label{fig-3-24}A \texttt{ggplot2} Histogram with customized
 labels and title.}
 
 \end{figure}%
@@ -4832,11 +4867,11 @@ additional parameters to the \texttt{geom\_histogram()}.
 
 \centering{
 
-\pandocbounded{\includegraphics[keepaspectratio]{03_Data_Visualization_files/figure-pdf/fig-3-24-1.pdf}}
+\pandocbounded{\includegraphics[keepaspectratio]{03_Data_Visualization_files/figure-pdf/fig-3-25-1.pdf}}
 
 }
 
-\caption{\label{fig-3-24}A \texttt{ggplot2} Histogram with a customized
+\caption{\label{fig-3-25}A \texttt{ggplot2} Histogram with a customized
 color.}
 
 \end{figure}%
@@ -4860,11 +4895,11 @@ The bin width of a histogram is calculated automatically by
 
 \centering{
 
-\pandocbounded{\includegraphics[keepaspectratio]{03_Data_Visualization_files/figure-pdf/fig-3-25-1.pdf}}
+\pandocbounded{\includegraphics[keepaspectratio]{03_Data_Visualization_files/figure-pdf/fig-3-26-1.pdf}}
 
 }
 
-\caption{\label{fig-3-25}A \texttt{ggplot2} Histogram with a non-default
+\caption{\label{fig-3-26}A \texttt{ggplot2} Histogram with a non-default
 bin width.}
 
 \end{figure}%
@@ -4924,11 +4959,11 @@ histograms above are initially stored in variables, \texttt{p1},
 
 \centering{
 
-\pandocbounded{\includegraphics[keepaspectratio]{03_Data_Visualization_files/figure-pdf/fig-3-26-1.pdf}}
+\pandocbounded{\includegraphics[keepaspectratio]{03_Data_Visualization_files/figure-pdf/fig-3-27-1.pdf}}
 
 }
 
-\caption{\label{fig-3-26}\texttt{ggplot2} Grid System by
+\caption{\label{fig-3-27}\texttt{ggplot2} Grid System by
 \texttt{patchwork}. Top left: Default (bare minimum). Top right: with
 labels and title. Bottom left: change the color. Bottom right: change
 the number of bins.}
@@ -4977,11 +5012,11 @@ the x-axis, and don't forget to specify an x-axis label.
 
 \centering{
 
-\pandocbounded{\includegraphics[keepaspectratio]{03_Data_Visualization_files/figure-pdf/fig-3-27-1.pdf}}
+\pandocbounded{\includegraphics[keepaspectratio]{03_Data_Visualization_files/figure-pdf/fig-3-28-1.pdf}}
 
 }
 
-\caption{\label{fig-3-27}box plot using \texttt{ggplot2}. Top left:
+\caption{\label{fig-3-28}box plot using \texttt{ggplot2}. Top left:
 default (bare minimum). Top right: with y-label and title. Bottom left:
 change color. Bottom right: horizontal box plot.}
 
@@ -5028,11 +5063,11 @@ Here we will show how to make a bar plot and a pie chart using
 
 \centering{
 
-\pandocbounded{\includegraphics[keepaspectratio]{03_Data_Visualization_files/figure-pdf/fig-3-28-1.pdf}}
+\pandocbounded{\includegraphics[keepaspectratio]{03_Data_Visualization_files/figure-pdf/fig-3-29-1.pdf}}
 
 }
 
-\caption{\label{fig-3-28}Barplot using \texttt{ggplot2}. Top left:
+\caption{\label{fig-3-29}Barplot using \texttt{ggplot2}. Top left:
 default (bare minimum).}
 
 \end{figure}%
@@ -5055,11 +5090,11 @@ Suppose we want to create a pie chart like the one below:
 
 \centering{
 
-\pandocbounded{\includegraphics[keepaspectratio]{03_Data_Visualization_files/figure-pdf/fig-3-29-1.pdf}}
+\pandocbounded{\includegraphics[keepaspectratio]{03_Data_Visualization_files/figure-pdf/fig-3-30-1.pdf}}
 
 }
 
-\caption{\label{fig-3-29}Pie chart or a donut chart}
+\caption{\label{fig-3-30}Pie chart or a donut chart}
 
 \end{figure}%
 
@@ -5083,11 +5118,11 @@ placed at the position 2 units on the right from the origin
 
 \centering{
 
-\pandocbounded{\includegraphics[keepaspectratio]{03_Data_Visualization_files/figure-pdf/fig-3-30-1.pdf}}
+\pandocbounded{\includegraphics[keepaspectratio]{03_Data_Visualization_files/figure-pdf/fig-3-31-1.pdf}}
 
 }
 
-\caption{\label{fig-3-30}A stacked barplot}
+\caption{\label{fig-3-31}A stacked barplot}
 
 \end{figure}%
 
@@ -5107,7 +5142,7 @@ axis} in a counter-clockwise direction.
 
 }
 
-\caption{\label{fig-3-31}Polar Coordinate. (generated by Gemini)}
+\caption{\label{fig-3-32}Polar Coordinate. (generated by Gemini)}
 
 \end{figure}%
 
@@ -5131,11 +5166,11 @@ quarter, the angle \(\theta=360^{\circ}\times\frac{1}{4}=90^{\circ}\).
 
 \centering{
 
-\pandocbounded{\includegraphics[keepaspectratio]{03_Data_Visualization_files/figure-pdf/fig-3-32-1.pdf}}
+\pandocbounded{\includegraphics[keepaspectratio]{03_Data_Visualization_files/figure-pdf/fig-3-33-1.pdf}}
 
 }
 
-\caption{\label{fig-3-32}A Piechart by changing to the polar coordinate
+\caption{\label{fig-3-33}A Piechart by changing to the polar coordinate
 system.}
 
 \end{figure}%
@@ -5158,11 +5193,11 @@ aesthetic reasons. But this modification is optional.
 
 \centering{
 
-\pandocbounded{\includegraphics[keepaspectratio]{03_Data_Visualization_files/figure-pdf/fig-3-33-1.pdf}}
+\pandocbounded{\includegraphics[keepaspectratio]{03_Data_Visualization_files/figure-pdf/fig-3-34-1.pdf}}
 
 }
 
-\caption{\label{fig-3-33}A Piechart using \texttt{ggplot2}.}
+\caption{\label{fig-3-34}A Piechart using \texttt{ggplot2}.}
 
 \end{figure}%
 
@@ -5186,11 +5221,11 @@ journey!
 
 \centering{
 
-\pandocbounded{\includegraphics[keepaspectratio]{03_Data_Visualization_files/figure-pdf/fig-3-34-1.pdf}}
+\pandocbounded{\includegraphics[keepaspectratio]{03_Data_Visualization_files/figure-pdf/fig-3-35-1.pdf}}
 
 }
 
-\caption{\label{fig-3-34}Piechart using \texttt{ggplot2} without no
+\caption{\label{fig-3-35}Piechart using \texttt{ggplot2} without no
 background.}
 
 \end{figure}%
@@ -5224,11 +5259,11 @@ Here you want to compare the robust statistics among different species.
 
 \centering{
 
-\pandocbounded{\includegraphics[keepaspectratio]{03_Data_Visualization_files/figure-pdf/fig-3-35-1.pdf}}
+\pandocbounded{\includegraphics[keepaspectratio]{03_Data_Visualization_files/figure-pdf/fig-3-36-1.pdf}}
 
 }
 
-\caption{\label{fig-3-35}A side-by-side box plot}
+\caption{\label{fig-3-36}A side-by-side box plot}
 
 \end{figure}%
 
@@ -5276,11 +5311,11 @@ function to set up the height of the bars according to the face value of
 
 \centering{
 
-\pandocbounded{\includegraphics[keepaspectratio]{03_Data_Visualization_files/figure-pdf/fig-3-36-1.pdf}}
+\pandocbounded{\includegraphics[keepaspectratio]{03_Data_Visualization_files/figure-pdf/fig-3-37-1.pdf}}
 
 }
 
-\caption{\label{fig-3-36}A side-by-side bar plot}
+\caption{\label{fig-3-37}A side-by-side bar plot}
 
 \end{figure}%
 
@@ -5329,11 +5364,11 @@ calculated, it can be used to calculate the minimum (lower) and maximum
 
 \centering{
 
-\pandocbounded{\includegraphics[keepaspectratio]{03_Data_Visualization_files/figure-pdf/fig-3-37-1.pdf}}
+\pandocbounded{\includegraphics[keepaspectratio]{03_Data_Visualization_files/figure-pdf/fig-3-38-1.pdf}}
 
 }
 
-\caption{\label{fig-3-37}A side-by-side bar plot with error bar.}
+\caption{\label{fig-3-38}A side-by-side bar plot with error bar.}
 
 \end{figure}%
 
@@ -5381,11 +5416,11 @@ Incorporate the SE into a line plot.
 
 \centering{
 
-\pandocbounded{\includegraphics[keepaspectratio]{03_Data_Visualization_files/figure-pdf/fig-3-38-1.pdf}}
+\pandocbounded{\includegraphics[keepaspectratio]{03_Data_Visualization_files/figure-pdf/fig-3-39-1.pdf}}
 
 }
 
-\caption{\label{fig-3-38}A line plot with error bar.}
+\caption{\label{fig-3-39}A line plot with error bar.}
 
 \end{figure}%
 
@@ -5409,11 +5444,11 @@ x- and y-limits of \texttt{ggplot2}.
 
 \centering{
 
-\pandocbounded{\includegraphics[keepaspectratio]{03_Data_Visualization_files/figure-pdf/fig-3-39-1.pdf}}
+\pandocbounded{\includegraphics[keepaspectratio]{03_Data_Visualization_files/figure-pdf/fig-3-40-1.pdf}}
 
 }
 
-\caption{\label{fig-3-39}A side-by-side histogram.}
+\caption{\label{fig-3-40}A side-by-side histogram.}
 
 \end{figure}%
 
@@ -5478,11 +5513,11 @@ Now we can plot \texttt{mydf}.
 
 \centering{
 
-\pandocbounded{\includegraphics[keepaspectratio]{03_Data_Visualization_files/figure-pdf/fig-3-40-1.pdf}}
+\pandocbounded{\includegraphics[keepaspectratio]{03_Data_Visualization_files/figure-pdf/fig-3-41-1.pdf}}
 
 }
 
-\caption{\label{fig-3-40}Plotting a contingency table using a
+\caption{\label{fig-3-41}Plotting a contingency table using a
 side-by-side bar plot.}
 
 \end{figure}%

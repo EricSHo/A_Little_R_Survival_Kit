@@ -369,7 +369,9 @@ subset(islands, islands >= 100 & islands <= 200)
 
 #c
 print("Q1c")
-subset(islands, islands >= 5000 | islands <= 50)
+subset(islands, islands >= 1000 | islands <= 100)
+# or
+subset(islands, !(islands < 1000 & islands > 100))
 
 #d
 print("Q1d")
