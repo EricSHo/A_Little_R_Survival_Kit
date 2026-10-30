@@ -1,0 +1,3 @@
+# Part II {#sec-part2}
+
+Part II covers topics beyond basic data manipulation functions and data visualization. It begins with Chapter 4, which discusses common statistical tests (a classical frequentist perspective). For readers who want to dive deeper into intermediate R functions, Chapter 5 covers R functions that create or import data sets from files, restructure data sets, and speed up execution. Chapter 6 provides an overview of RStudio, an Interactive Development Environment (IDE) for crafting R scripts.

@@ -24,7 +24,7 @@
     "href": "part1.html",
     "title": "Part I",
     "section": "",
-    "text": "Part I has three chapters, moving from basics to data wrangling to data visualization. Beginners are advised to read them in sequence. The first chapter discusses R objects and operations that act on these objects, including descriptive statistical functions. Chapter 2 deals with data wrangling - the process of acquiring, selecting, and organizing data stored in a spreadsheet-like format. Both base R and tidyverse data wrangling functions will be discussed. Chapter 3 focuses on data visualization. A picture is worth a thousand words. The chapter offers guidelines for choosing the most suitable graph based on the intended message and the data’s properties. Both base R and ggplot2 graphical systems will be discussed.",
+    "text": "Part I has three chapters, moving from basics to data wrangling to data visualization. Beginners are advised to read them in sequence. The first chapter discusses R objects and operations that act on these objects, including descriptive statistical functions. Chapter 2 deals with data wrangling - the process of acquiring, selecting, and organizing data stored in a spreadsheet-like format. Both base R and tidyverse data wrangling functions will be discussed. Chapter 3 focuses on data visualization. A picture is worth a thousand words. The chapter offers guidelines for choosing the most suitable graph based on the intended message and the data’s properties. Both base R and ggplot2 graphical systems will be discussed.\nIf R is new to you or you don’t have access to RStudio, start with Chapter 6 and then jump back to Chapter 1.",
     "crumbs": [
       "Part I"
     ]
@@ -302,6 +302,16 @@
     "crumbs": [
       "Part I",
       "<span class='chapter-number'>3</span>  <span class='chapter-title'>Data Visualization</span>"
+    ]
+  },
+  {
+    "objectID": "part2.html",
+    "href": "part2.html",
+    "title": "Part II",
+    "section": "",
+    "text": "Part II covers topics beyond basic data manipulation functions and data visualization. It begins with Chapter 4, which discusses common statistical tests (a classical frequentist perspective). For readers who want to dive deeper into intermediate R functions, Chapter 5 covers R functions that create or import data sets from files, restructure data sets, and speed up execution. Chapter 6 provides an overview of RStudio, an Interactive Development Environment (IDE) for crafting R scripts.",
+    "crumbs": [
+      "Part II"
     ]
   },
   {

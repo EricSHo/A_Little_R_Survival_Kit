@@ -20,7 +20,7 @@ book:
       - 02_Data_Wrangling.qmd
       - 03_Data_Visualization.qmd
       
-    - part: "Part II"
+    - part: part2.qmd
       chapters:
       - 04_Statistical_Tests.qmd
       - 05_Dive_Deeper.qmd
