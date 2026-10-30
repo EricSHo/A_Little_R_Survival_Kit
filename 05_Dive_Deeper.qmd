@@ -1,4 +1,4 @@
-# Dive Deeper
+# Dive Deeper {#sec-05-dive-deeper}
 
 So far, we have discussed the basics of R that are sufficient for most situations. In this chapter, we will discuss several practical operations that require a more detailed discussion. That includes how to create summary tables from published work, create a small data set in a data frame, load a data set of any size into RStudio, define your own function, and leverage the family of `apply()` functions.
 

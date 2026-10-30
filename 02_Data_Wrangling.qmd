@@ -338,25 +338,61 @@ The data frame can be tallied by more than one categorical variable. Let's use a
 with(CO2, table(Plant, Type))
 ```
 
+### Data Cleaning
+
+It is not unusual to encounter missing values in variables. R represents missing values by `NA`'s. For example, variables `Ozone` and `Solar.R` in the built-in data set `airquality` contain several `NA`'s.
+
+```{r}
+summary(airquality)
+```
+
+Some R functions may give you trouble if they encounter `NA`'s, the `mean()` will return `NA` instead of the mean in the example below:
+
+```{r}
+mean(airquality$Ozone)
+```
+
+There are two ways to fix it: 1. set the `na.rm` option to `TRUE`, or 2. remove rows that contain `NA`'s.
+
+Option 1: `na.rm = TRUE`
+
+```{r}
+mean(airquality$Ozone, na.rm = TRUE)
+```
+
+Option 2: remove rows that contain `NA` in any variables, use `na.omit()` function. Here's an example:
+
+```{r}
+airquality_cleaned <- na.omit(airquality)
+summary(airquality_cleaned) # No more NA's
+```
+
+If you are curious what rows contain at least one `NA`, here is an example of `complete.cases()`:
+
+```{r}
+airquality_NAs <- airquality[!complete.cases(airquality),]
+head(airquality_NAs)
+```
+
 That's all for data wrangling using base R.
 
 ## Exercises for Base R
 
-Q1. Use the built-in data set `islands` to answer this question. `islands` is a named vector containing the landmass areas of the world's major continents and islands, where the unit of landmass is in thousands of square miles.
+Q1. Use the built-in data set `islands` to answer this question. `islands` is a named vector containing the landmass areas of the world's major continents and islands, where the unit of landmass is measured in thousands of square miles.
 
-a)  Show places with landmass less than 50.
+a.  Show places with landmass less than 50.
 
-b)  Show places with landmass between 100 and 200, inclusive.
+b.  Show places with landmass between 100 and 200, inclusive.
 
-c)  Show places with landmass either greater than 1000 or smaller than 100, inclusive.
+c.  Show places with landmass either greater than 1000 or smaller than 100, inclusive.
 
-d)  Show places with landmass 30.
+d.  Show places with landmass 30.
 
-e)  Randomly sample 10 places with no replacement.
+e.  Randomly sample 10 places with no replacement.
 
-f)  Show the five largest places.
+f.  Show the five largest places.
 
-g)  Show the five smallest places.
+g.  Show the five smallest places.
 
 ```{r echo=F, eval=F}
 #a
@@ -479,6 +515,31 @@ mtcars$efficiency <- factor(mtcars$efficiency)
 # View the result
 table(mtcars$efficiency)
 
+```
+
+Q4. Data Cleaning
+
+Use the `attenu` built-in data set to answer the following questions.
+
+a.  Find out which column(s) contain `NA`s and how many.
+
+b.  Create a new data frame of `attenu` called `attenu_cleaned` that contain no `NA`s. How many rows does the cleaned data frame contain?
+
+c.  Create a new data frame of `attenu` called `attenu_dirty` in which at least one variable contains a `NA`. How many rows does it contain?
+
+```{r}
+# a.
+summary(attenu)
+# station contains 16 NAs.
+
+# b.
+attenu_cleaned <- na.omit(attenu)
+summary(attenu_cleaned)
+dim(attenu_cleaned)
+
+# c.
+attenu_dirty <- attenu[!complete.cases(attenu), ]
+dim(attenu_dirty) # 16 5
 ```
 
 ## `tidyverse`
@@ -727,6 +788,44 @@ CO2 %>%
 
 2.  The type of variables fed to `group_by()` must be factors, i.e., categorical.
 
+### Data Cleaning
+
+It is not unusual to encounter missing values in variables. R represents missing values by `NA`'s. For example, variables `Ozone` and `Solar.R` in the built-in data set `airquality` contain several `NA`'s.
+
+```{r}
+summary(airquality)
+```
+
+Some R functions may give you trouble if they encounter `NA`'s, the `mean()` will return `NA` instead of the mean in the example below:
+
+```{r}
+mean(airquality$Ozone)
+```
+
+There are two ways to fix it: 1. set the `na.rm` option to `TRUE`, or 2. remove rows that contain `NA`'s.
+
+Option 1: `na.rm = TRUE`
+
+```{r}
+mean(airquality$Ozone, na.rm = TRUE)
+```
+
+Option 2: remove rows that contain `NA` in any variables, use `na.omit()` function. Here's an example:
+
+```{r}
+airquality_cleaned <- airquality %>%
+                        drop_na()
+summary(airquality_cleaned) # No more NA's
+```
+
+If you are curious what rows contain at least one `NA`, here is an example of `complete.cases()`:
+
+```{r}
+airquality_NAs <- airquality %>%
+                    filter(if_any(everything(), is.na))
+head(airquality_NAs)
+```
+
 ### A Summary of `tidyverse` functions
 
 - `filter()`: select rows that satisfy the specified conditions.
@@ -751,7 +850,9 @@ Q5. Repeat the exercises in Q2 using `tidyverse`.
 
 Q6. Repeat the exercises in Q3 using `tidyverse`.
 
-Q7. Use the built-in data set `esoph` to answer this question about pipe `%>%`, `group_by()`, and `summarise()`. It is an epidemiological data set from a case-control study of esophageal cancer in Ille-et-Vilaine, France. Here is a description of the fields:
+Q7. Repeat the exercises in Q4 using `tidyverse`.
+
+Q8. Use the built-in data set `esoph` to answer this question about pipe `%>%`, `group_by()`, and `summarise()`. It is an epidemiological data set from a case-control study of esophageal cancer in Ille-et-Vilaine, France. Here is a description of the fields:
 
 - agegp: age group.
 
