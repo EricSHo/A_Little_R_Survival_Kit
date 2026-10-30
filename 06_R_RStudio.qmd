@@ -1,4 +1,4 @@
-# R and RStudio
+# R and RStudio {#sec-06-r-rstudio}
 
 This chapter primarily focuses on using RStudio for data and statistical analysis. If you are new to RStudio, this chapter provides a quick overview of this indispensable interactive development environment (IDE). A note about names. You will come across the name Posit here. In 2022, the management team of RStudio wanted to expand the tool to support other programming languages, including Python and Julia. Therefore, they renamed RStudio to **Posit**. Since our focus is on R scripting, we will continue to refer to the IDE as RStudio, which is still very popular in the R community. Without further delay, let's get started.
 
