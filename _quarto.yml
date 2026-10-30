@@ -14,7 +14,7 @@ book:
   chapters:
     - index.qmd                  # Preface
 
-    - part: "Part I"
+    - part: part1.qmd
       chapters:
       - 01_Part1_Basic_R.qmd
       - 02_Data_Wrangling.qmd
