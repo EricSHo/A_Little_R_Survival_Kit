@@ -11,6 +11,7 @@ book:
     style: "docked"
   author: "Eric S. Ho, Ph.D."
   date: "6/16/2026"
+  
   chapters:
     - index.qmd                  # Preface
 
@@ -25,6 +26,9 @@ book:
       - 04_Statistical_Tests.qmd
       - 05_Dive_Deeper.qmd
       - 06_R_RStudio.qmd
+
+date-modified: last-modified  # Automatically pulls the file's last modified timestamp
+date-format: "MMMM D, YYYY"   # Optional: Formats it clearly (e.g., November 3, 2026)
 
 bibliography:
   - book.bib

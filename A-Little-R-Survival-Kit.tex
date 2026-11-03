@@ -216,7 +216,7 @@
 
 \title{A Little R Survival Kit}
 \author{Eric S. Ho, Ph.D.}
-\date{2026-06-16}
+\date{June 16, 2026}
 \begin{document}
 \maketitle
 
@@ -2141,7 +2141,7 @@ Randomly pick 5 samples without replacement.
 \end{Shaded}
 
 \begin{verbatim}
-[1]  7.00  3.76  4.45  6.56 10.14
+[1] 6.23 3.52 3.76 4.45 6.62
 \end{verbatim}
 
 The \texttt{replace=} option can be twisted to simulate tossing a coin N
@@ -2154,7 +2154,7 @@ times. E.g.,
 \end{Shaded}
 
 \begin{verbatim}
- [1] "T" "T" "T" "H" "H" "T" "T" "H" "T" "T"
+ [1] "T" "H" "H" "T" "H" "T" "H" "T" "T" "H"
 \end{verbatim}
 
 \subsubsection{Sample Rows Randomly from a Data
@@ -2186,7 +2186,7 @@ takes two steps to achieve that:
 \end{Shaded}
 
 \begin{verbatim}
-[1]  28  45  46 111  19
+[1]  41  35  78  24 127
 \end{verbatim}
 
 \texttt{seq(nrow(iris))} above generates a vector containing 1, 2, 3,
@@ -2204,12 +2204,12 @@ indexes in \texttt{rnd\_idx}.
 \end{Shaded}
 
 \begin{verbatim}
-    Sepal.Length Sepal.Width Petal.Length Petal.Width   Species
-28           5.2         3.5          1.5         0.2    setosa
-45           5.1         3.8          1.9         0.4    setosa
-46           4.8         3.0          1.4         0.3    setosa
-111          6.5         3.2          5.1         2.0 virginica
-19           5.7         3.8          1.7         0.3    setosa
+    Sepal.Length Sepal.Width Petal.Length Petal.Width    Species
+41           5.0         3.5          1.3         0.3     setosa
+35           4.9         3.1          1.5         0.2     setosa
+78           6.7         3.0          5.0         1.7 versicolor
+24           5.1         3.3          1.7         0.5     setosa
+127          6.2         2.8          4.8         1.8  virginica
 \end{verbatim}
 
 The indexing method has been discussed in the previous chapter. Check
@@ -2684,7 +2684,7 @@ example below:
 There are two ways to fix it: 1. set the \texttt{na.rm} option to
 \texttt{TRUE}, or 2. remove rows that contain \texttt{NA}'s.
 
-Option 1: \texttt{na.rm\ =\ TRUE}
+\textbf{Option 1:} \texttt{na.rm\ =\ TRUE}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2696,8 +2696,8 @@ Option 1: \texttt{na.rm\ =\ TRUE}
 [1] 42.12931
 \end{verbatim}
 
-Option 2: remove rows that contain \texttt{NA} in any variables, use
-\texttt{na.omit()} function. Here's an example:
+\textbf{Option 2}: remove rows that contain \texttt{NA} in any
+variables, use \texttt{na.omit()} function. Here's an example:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -3102,11 +3102,11 @@ With \texttt{tidyverse}, you can do it in one step by using the
 
 \begin{verbatim}
   Sepal.Length Sepal.Width Petal.Length Petal.Width    Species
-1          5.7         2.8          4.1         1.3 versicolor
-2          5.7         2.8          4.5         1.3 versicolor
-3          5.2         2.7          3.9         1.4 versicolor
-4          6.4         2.9          4.3         1.3 versicolor
-5          6.0         3.4          4.5         1.6 versicolor
+1          5.5         2.4          3.8         1.1 versicolor
+2          5.7         4.4          1.5         0.4     setosa
+3          5.0         2.0          3.5         1.0 versicolor
+4          5.7         3.0          4.2         1.2 versicolor
+5          6.7         3.1          4.7         1.5 versicolor
 \end{verbatim}
 
 \subsection{Sort Rows in a Data
@@ -3677,7 +3677,7 @@ example below:
 There are two ways to fix it: 1. set the \texttt{na.rm} option to
 \texttt{TRUE}, or 2. remove rows that contain \texttt{NA}'s.
 
-Option 1: \texttt{na.rm\ =\ TRUE}
+\textbf{Option 1:} \texttt{na.rm\ =\ TRUE}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -3689,8 +3689,8 @@ Option 1: \texttt{na.rm\ =\ TRUE}
 [1] 42.12931
 \end{verbatim}
 
-Option 2: remove rows that contain \texttt{NA} in any variables, use
-\texttt{na.omit()} function. Here's an example:
+\textbf{Option 2:} remove rows that contain \texttt{NA} in any
+variables, use \texttt{drop\_na()} function. Here's an example:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -3718,7 +3718,7 @@ Option 2: remove rows that contain \texttt{NA} in any variables, use
 \end{verbatim}
 
 If you are curious what rows contain at least one \texttt{NA}, here is
-an example of \texttt{complete.cases()}:
+an example:
 
 \begin{Shaded}
 \begin{Highlighting}[]

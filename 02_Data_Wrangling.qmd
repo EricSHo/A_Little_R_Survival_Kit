@@ -354,13 +354,13 @@ mean(airquality$Ozone)
 
 There are two ways to fix it: 1. set the `na.rm` option to `TRUE`, or 2. remove rows that contain `NA`'s.
 
-Option 1: `na.rm = TRUE`
+**Option 1:** `na.rm = TRUE`
 
 ```{r}
 mean(airquality$Ozone, na.rm = TRUE)
 ```
 
-Option 2: remove rows that contain `NA` in any variables, use `na.omit()` function. Here's an example:
+**Option 2**: remove rows that contain `NA` in any variables, use `na.omit()` function. Here's an example:
 
 ```{r}
 airquality_cleaned <- na.omit(airquality)
@@ -804,13 +804,13 @@ mean(airquality$Ozone)
 
 There are two ways to fix it: 1. set the `na.rm` option to `TRUE`, or 2. remove rows that contain `NA`'s.
 
-Option 1: `na.rm = TRUE`
+**Option 1:** `na.rm = TRUE`
 
 ```{r}
 mean(airquality$Ozone, na.rm = TRUE)
 ```
 
-Option 2: remove rows that contain `NA` in any variables, use `na.omit()` function. Here's an example:
+**Option 2:** remove rows that contain `NA` in any variables, use `drop_na()` function. Here's an example:
 
 ```{r}
 airquality_cleaned <- airquality %>%
@@ -818,7 +818,7 @@ airquality_cleaned <- airquality %>%
 summary(airquality_cleaned) # No more NA's
 ```
 
-If you are curious what rows contain at least one `NA`, here is an example of `complete.cases()`:
+If you are curious what rows contain at least one `NA`, here is an example:
 
 ```{r}
 airquality_NAs <- airquality %>%
